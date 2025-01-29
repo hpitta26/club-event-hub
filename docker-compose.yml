@@ -1,0 +1,44 @@
+
+services:
+  backend:
+    build: ./backend
+    container_name: django_backend
+    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    # depends_on:
+    #   - db
+
+  frontend:
+    build: ./frontend
+    container_name: react_frontend
+    command: npm run dev
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    env_file:
+      - ./frontend/.env
+    depends_on:
+      - backend
+
+#   db:
+#     image: postgres:15
+#     container_name: postgres_db
+#     restart: always
+#     volumes:
+#       - db_data:/var/lib/postgresql/data
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: password
+#       POSTGRES_DB: mydatabase
+#     ports:
+#       - "5432:5432"
+
+# volumes:
+#   db_data:

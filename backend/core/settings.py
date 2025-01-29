@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-s#^a8mo+uu1qy^sd$j#q7%iw9yig2@m-roux5ea6bg(c&nb_&^'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-s#^a8mo+uu1qy^sd$j#q7%iw9yig2@m-roux5ea6bg(c&nb_&^')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
@@ -88,15 +88,28 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+USE_POSTGRES = all([os.getenv('dbName'), os.getenv('dbUser'), os.getenv('dbPw'), os.getenv('dbHost'), os.getenv('dbPort'),])
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if USE_POSTGRES:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('dbName'),        # PostgreSQL database name
+            'USER': os.getenv('dbUser'),        # PostgreSQL username
+            'PASSWORD': os.getenv('dbPw'),      # PostgreSQL password
+            'HOST': os.getenv('dbHost'),        # PostgreSQL host (e.g., 'localhost' or 'db' in Docker)
+            'PORT': os.getenv('dbPort'),        # PostgreSQL port (default: 5432)
+        }
     }
-
-    # 'default': dj_database_url.config(default=os.getenv('DATABASE_URL', 'sqlite:///db.sqlite3'))
-}
+    print("⚡ Using PostgreSQL as the database")
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / "db.sqlite3",
+        }
+    }
+    print("🔹 Using SQLite as the database")
 
 
 # Password validation

@@ -35,7 +35,8 @@ Copy and rename the example files.
 
 ```bash
 cd backend
-cp .env.example .env #copy to local .env
+
+cp .env.example .env # Copy to local .env
 
 # DJANGO_SECRET_KEY=your-secret-key
 # 1) Go to settings.py
@@ -45,6 +46,7 @@ cp .env.example .env #copy to local .env
 ```
 ```bash
 cd frontend
+
 cp .env.example .env
 
 # Leave as is for now
@@ -67,6 +69,72 @@ docker-compose up --build
 
 🔄 Restarting the App:
 ```bash
-docker-compose down #stop the containers
-docker-compose up --build #rebuild
+docker-compose down # Stop the containers
+docker-compose up --build # Rebuild
 ```
+
+---
+
+## **Additional**
+
+🔹 Backend Only (Django)
+
+```bash
+# Enter the Backend Docker container
+docker exec -it django_backend bash
+
+# Make DB migrations
+python manage.py makemigrations
+python manage.py migrate
+
+# Create superuse for Django Admin Panel
+# http://localhost:8000/admin/
+python manage.py createsuperuser 
+```
+
+🔹 Frontend Only (React)
+
+```bash
+cd frontend
+npm run dev
+```
+
+🔹 Docker
+```bash
+docker-compose up --build # Start containers
+docker-compose down # Stop containers
+
+# Since the containers run on your desktop Docker App you must do this to stop their execution.
+
+docker-compose restart frontend
+docker-compose restart backend
+# Restart both
+docker-compose restart frontend backend
+
+docker ps # Check running containers
+
+docker --version
+docker-compose --version
+```
+
+---
+
+## **5️⃣ Working with Git**
+🔹 Pull the latest changes before working
+```bash
+git pull origin main
+```
+🔹 Create a new feature branch
+```bash
+git checkout -b feature-branch-name
+# Can also be done on VSCode bottom left
+```
+🔹 Commit and push changes
+```bash
+git add .
+git commit -m "Added feature X"
+git push origin feature-branch-name
+```
+🔹 Open a pull request (PR) on GitHub
+- Once pushed, go to GitHub → Open a Pull Request (PR).
+- Request a code review from project leader.

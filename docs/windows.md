@@ -12,7 +12,7 @@
 
 ```bash
 # Convert Windows-style paths (C:\Users\Name) to Linux-style paths (/c/Users/Name)
-# Need to rerun everytime you start a new terminal session
+# Needs to be rerun everytime you start a new terminal session
 $Env:COMPOSE_CONVERT_WINDOWS_PATHS=1
 
 # Then

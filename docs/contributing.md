@@ -11,8 +11,8 @@ We use a structured **Git branching model** to keep development organized.
 ### **📌 Main Branches**
 | **Branch** | **Purpose** | **Who Can Push?** |
 |-----------|------------|----------------|
-| `main` | Production-ready code | **Only Admins** (PR required) |
-| `dev` | Active development branch | **All Contributors** |
+| `main` | Active development branch | **All Contributors** (PR required) |
+<!-- | `dev` | Active development branch | **All Contributors** | -->
 
 ### **📌 Feature & Bugfix Branches**
 | **Branch Naming Convention** | **Purpose** |
@@ -31,15 +31,16 @@ hotfix/security-patch
 
 ## **✅ 2️⃣ How to Contribute (Step-by-Step)**
 1️⃣ Pull the Latest Code:
-- Before making changes, always pull the latest code from dev:
+- Before making changes, always pull the latest code from main:
 ```bash
-git checkout dev
-git pull origin dev
+git checkout main
+git pull origin main
 ```
 2️⃣ Create a New Branch
 - Create a branch for your feature or bugfix:
 ```bash
-git checkout -b feature/add-event-filter
+git checkout -b feature/new-feature
+# git checkout -b feature/add-event-filter
 ```
 3️⃣ Make Your Changes
 
@@ -57,14 +58,14 @@ git push origin feature/add-event-filter
 6️⃣ Open a Pull Request (PR)
 1. Go to the GitHub repository.
 2. Click "New Pull Request".
-3. Select "dev" as the base branch and your feature branch as the compare branch.
+3. Select "main" as the base branch and your feature branch as the compare branch.
 4. Add a title & description for your PR.
 5. Request a code review from at least one team member.
 
 7️⃣ Get PR Approved & Merge
 - project leader will approve the PR if it meets project standards.
-- Once approved, merge the PR into dev.
-- DO NOT MERGE TO main DIRECTLY. Project leader will test code in dev before merging to main.
+- Once approved, merge the PR into main.
+- Do not Squash and Merge before consulting Project Leader
 
 ---
 

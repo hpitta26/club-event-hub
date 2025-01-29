@@ -26,6 +26,8 @@ Before you begin, make sure you have the following installed on your system:
 git clone https://github.com/hpitta26/club-event-hub.git
 
 cd club-event-hub
+
+git pull origin main
 ```
 ---
 

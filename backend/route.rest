@@ -1,0 +1,16 @@
+# Testing the Backend -- WORKING
+GET http://localhost:8000/restapi/events/
+
+###
+
+POST http://localhost:8000/restapi/events/
+Content-Type: application/json
+
+{
+    "name": "Club Meeting",
+    "description": "An event for club members",
+    "date": "2025-02-01T18:00:00Z",
+    "location": "FIU Campus"
+}
+
+###

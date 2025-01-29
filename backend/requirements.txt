@@ -1,24 +1,20 @@
-# Core Dependencies
-django>=4.2,<5.0
-djangorestframework>=3.14.0
-psycopg2-binary>=2.9.3  # PostgreSQL Database Adapter
-python-dotenv>=1.0.0  # Load environment variables
-dj-database-url>=2.0.0  # Database URL parser
-
-# CORS and Security
-django-cors-headers>=4.0.0  # Handle cross-origin requests
-django-environ>=0.10.0  # Better environment variable handling
-
-# Authentication (Optional: If Using Auth0)
-social-auth-app-django>=5.2.0  # OAuth2 authentication
-djangorestframework-simplejwt>=5.3.0  # JWT Authentication
-
-# Static & Media Files (If Needed)
-whitenoise>=6.5.0  # Serve static files in production
-boto3>=1.26.0  # AWS S3 file storage support
-
-# Performance & Caching (Optional)
-redis>=5.0.0  # Caching support (if using Redis)
-
-# Other Utilities
-gunicorn>=20.1.0  # Production WSGI server
+asgiref==3.8.1
+certifi==2024.8.30
+charset-normalizer==3.4.0
+distlib==0.3.9
+Django==4.2.6
+django-cors-headers==4.3.0
+djangorestframework==3.15.2
+filelock==3.16.1
+idna==3.10
+nulltype==2.3.1
+plaid-python==27.0.0
+platformdirs==4.3.6
+psycopg2==2.9.7
+python-dateutil==2.9.0.post0
+python-dotenv==1.0.0
+requests==2.31.0
+six==1.16.0
+sqlparse==0.5.1
+urllib3==2.2.3
+virtualenv==20.27.0

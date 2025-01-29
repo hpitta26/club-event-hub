@@ -128,3 +128,28 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+
+# General
+.env
+*.log
+node_modules/
+__pycache__/
+db.sqlite3
+static/
+media/
+
+# Backend (Django)
+*.pyc
+*.pyo
+*.db
+/migrations/
+
+# Frontend (React)
+build/
+.DS_Store
+
+# Ignore Docker, Vercel, Netlify
+docker-compose.override.yml
+.vercel
+.netlify

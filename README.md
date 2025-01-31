@@ -27,15 +27,6 @@ An event discovery platform designed to help **FIU students** find and RSVP to c
 
 ---
 
-## 📖 Documentation  
-🔹 [Onboarding Guide](docs/onboarding.md) – Step-by-step setup guide  
-🔹 [Database Schema](docs/database.md) – Models & relationships  
-🔹 [Contribution Guide](docs/contributing.md) – How to contribute  
-🔹 [Windows Setup Guide](docs/windows.md) – Windows-specific setup  
-<!-- 🔹 [API Documentation](docs/api.md) – REST API reference   -->
-
----
-
 ## 🚀 Getting Started  
 
 ### **Prerequisites**  
@@ -49,7 +40,16 @@ Before running the project, ensure you have:
 
 ---
 
+## 📖 Documentation  
+🔹 [Onboarding Guide](docs/onboarding.md) – Step-by-step setup guide  
+🔹 [Database Schema](docs/database.md) – Models & relationships  
+🔹 [Contribution Guide](docs/contributing.md) – How to contribute  
+🔹 [Windows Setup Guide](docs/windows.md) – Windows-specific setup  
+<!-- 🔹 [API Documentation](docs/api.md) – REST API reference   -->
+
+---
+
 ## 🎯 Team & Acknowledgements
 - Developed by: INIT BUILD WebDev Advanced Spring 2025
-- Special thanks to [contributors & mentors]
+- Special thanks to [ contributors ]
 

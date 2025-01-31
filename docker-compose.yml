@@ -27,6 +27,16 @@ services:
     depends_on:
       - backend
 
+  mock-api:
+    build: ./frontend
+    container_name: json_mock_server
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "8081:8081"
+    command: npm run server
+
 #   db:
 #     image: postgres:15
 #     container_name: postgres_db

@@ -40,6 +40,8 @@ cd backend
 
 cp .env.example .env # Copy to local .env
 
+python -m venv venv # Create virtual environment directory
+
 # DJANGO_SECRET_KEY=your-secret-key
 # 1) Go to settings.py
 # 2) SECRET_KEY copy this value to DJANGO_SECRET_KEY
@@ -82,8 +84,14 @@ docker-compose up --build # Rebuild
 🔹 Backend Only (Django)
 
 ```bash
-# Enter the Backend Docker container
+# Enter the Backend Docker container --> using Docker
 docker exec -it django_backend bash
+
+# Locally --> virtual environment
+python -m venv venv # or python3 --> should have already done this before
+source venv/bin/activate #activate the venv
+pip install -r requirements.txt #install dependencies for project
+deactivate # --> deactivate the venv
 
 # Make DB migrations
 python manage.py makemigrations

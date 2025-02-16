@@ -30,12 +30,12 @@ class ClubDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 
-# List all clubs or create a new club
+# List all clubs or create a new student
 class StudentListCreateView(generics.ListCreateAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
-# Retrieve, update, or delete a single club
+# Retrieve, update, or delete a single student
 class StudentDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer

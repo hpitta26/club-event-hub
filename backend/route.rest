@@ -1,5 +1,21 @@
-# Testing the Backend -- WORKING
-GET http://localhost:8000/restapi/events/
+
+###
+### ----------- EVENT TESTING -----------
+###
+### FULLY WORKING
+
+POST http://localhost:8000/restapi/events/
+Content-Type: application/json
+
+{
+  "club": 1,
+  "title": "Spring Festival",
+  "description": "A festival to celebrate the arrival of spring.",
+  "start_time": "2025-04-20T10:00:00Z",
+  "end_time": "2025-04-20T18:00:00Z",
+  "location": "Central Park",
+  "capacity": 200
+}
 
 ###
 
@@ -7,10 +23,189 @@ POST http://localhost:8000/restapi/events/
 Content-Type: application/json
 
 {
-    "name": "Club Meeting",
-    "description": "An event for club members",
-    "date": "2025-02-01T18:00:00Z",
-    "location": "FIU Campus"
+  "club": 1,
+  "title": "Spring Festival 2",
+  "description": "A festival to celebrate the arrival of spring. 2",
+  "start_time": "2025-04-20T10:00:00Z",
+  "end_time": "2025-04-20T18:00:00Z",
+  "location": "Central Park 2",
+  "capacity": 202
 }
 
 ###
+
+GET http://localhost:8000/restapi/events/
+
+###
+
+### PUT WORKING
+
+PUT http://localhost:8000/restapi/events/1/
+Content-Type: application/json
+
+{
+  "club": 1,
+  "title": "Updated Spring Festival",
+  "description": "A festival to celebrate the arrival of spring.",
+  "start_time": "2025-04-20T10:00:00Z",
+  "end_time": "2025-04-20T18:00:00Z",
+  "location": "Updated Central Park",
+  "capacity": 200
+}
+
+###
+
+DELETE http://localhost:8000/restapi/events/3/
+
+###
+
+
+
+
+
+
+
+
+###
+### ----------- CLUB TESTING -----------
+###
+### PUT NOT WORKING
+
+POST http://localhost:8000/restapi/clubs/
+Content-Type: application/json
+
+{
+    "user": {
+        "username": "clubowner",
+        "email": "owner@example.com",
+        "first_name": "Club",
+        "last_name": "Owner",
+        "password": "securepassword"
+    },
+    "name": "Awesome Club",
+    "description": "A description for Awesome Club.",
+    "social_media_handles": {"twitter": "@awesomeclubtw", "instagram": "@awesomeclubinsta"}
+}
+
+###
+
+POST http://localhost:8000/restapi/clubs/
+Content-Type: application/json
+
+{
+    "user": {
+        "username": "clubowner2",
+        "email": "owner2@example.com",
+        "first_name": "Club2",
+        "last_name": "Owner2",
+        "password": "securepassword2"
+    },
+    "name": "Awesome Club2",
+    "description": "A description for Awesome Club.2",
+    "social_media_handles": {"twitter": "@awesomeclubtw2", "instagram": "@awesomeclubinsta2"}
+}
+
+###
+
+GET http://localhost:8000/restapi/clubs/
+
+###
+
+GET http://localhost:8000/restapi/clubs/2/
+
+### PUT not Working --> "username": ["A user with that username already exists."]
+
+PUT http://localhost:8000/restapi/clubs/1/
+Content-Type: application/json
+
+{
+  "user": {
+    "username": "clubowner",
+    "email": "owner@example.com",
+    "first_name": "Club",
+    "last_name": "Owner",
+    "password": "securepassword"
+  },
+  "name": "Awesome Club Updated",
+  "description": "Updated description for Awesome Club.",
+  "social_media_handles": {"twitter": "@awesomeclubtw", "instagram": "@awesomeclubinsta"}
+}
+
+###
+
+DELETE http://localhost:8000/restapi/clubs/2/
+
+###
+
+
+
+
+
+
+
+
+###
+### ----------- STUDENT TESTING -----------
+###
+### PUT NOT WORKING
+
+POST http://localhost:8000/restapi/students/
+Content-Type: application/json
+
+{
+  "user": {
+    "username": "student1",
+    "email": "student1@example.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "password": "securepassword"
+  },
+  "major": "Computer Science",
+  "graduation_year": 2025
+}
+
+###
+
+POST http://localhost:8000/restapi/students/
+Content-Type: application/json
+
+{
+  "user": {
+    "username": "student2",
+    "email": "student2@example.com",
+    "first_name": "Jane",
+    "last_name": "Smith",
+    "password": "securepassword2"
+  },
+  "major": "Mathematics",
+  "graduation_year": 2024
+}
+
+###
+
+GET http://localhost:8000/restapi/students/
+
+###
+
+GET http://localhost:8000/restapi/students/2/
+
+### PUT not Working --> "username": ["A user with that username already exists."]
+
+PUT http://localhost:8000/restapi/students/1/
+Content-Type: application/json
+
+{
+  "user": {
+    "username": "student1",
+    "email": "student1@example.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "password": "securepassword"
+  },
+  "major": "Updated Software Engineering",
+  "graduation_year": 2025
+}
+
+###
+
+DELETE http://localhost:8000/restapi/students/2/

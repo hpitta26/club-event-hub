@@ -1,12 +1,86 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
+from django.core.validators import MinValueValidator, MaxValueValidator
 
-# Create your models here.
-class Event(models.Model):
-    name = models.CharField(max_length=255)
-    description = models.TextField()
-    date = models.DateTimeField()
-    location = models.CharField(max_length=255)
+
+class Club(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='club_profile') # Extend django auth User model
+    # User -->  username, password, first_name, last_name, email
+    # is_staff, is_active, is_superuser, last_login, date_joined
+
+    # profile_picture = models.ImageField(upload_to='club_profiles/', blank=True, null=True)
+    name = models.CharField(max_length=255, unique=True)
+    description = models.TextField(blank=True, null=True) # possibly change to required
+    social_media_handles = models.JSONField(blank=True, null=True)
+    spirit_rating = models.PositiveIntegerField(default=1, validators=[MinValueValidator(0), MaxValueValidator(100)])
+
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def upcoming_events(self):
+        return self.events.filter(start_time__gte=timezone.now())
+    
+    @property
+    def passed_events(self):
+        return self.events.filter(start_time__lt=timezone.now())
+    
     def __str__(self):
         return self.name
+    
+
+
+class Student(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile') # Extend django auth User model
+    # User -->  username, password, first_name, last_name, email
+    # is_staff, is_active, is_superuser, last_login, date_joined
+
+    # profile_picture = models.ImageField(upload_to='student_profiles/', blank=True, null=True)
+    major = models.CharField(max_length=255, blank=True, null=True)
+    graduation_year = models.PositiveIntegerField(blank=True, null=True)
+    spirit_points = models.PositiveIntegerField(default=0)
+
+    following_clubs = models.ManyToManyField(Club, related_name='followers', blank=True) # accessible through Club as followers
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.user.username
+
+
+
+class Event(models.Model):
+    club = models.ForeignKey(Club, on_delete=models.CASCADE, related_name='events') # accessible through Club as events
+    
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    location = models.CharField(max_length=255)
+    capacity = models.PositiveIntegerField()
+    # picture = models.ImageField(upload_to='event_thumbnails/', blank=True, null=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    # reverse relationship (from a Student) is accessible as "rsvp_events"
+    rsvps = models.ManyToManyField(Student, related_name='rsvp_events', blank=True)
+
+    def __str__(self):
+        return self.title
+
+    # Other Potential Ideas:
+    # expanded_card --> could be MarkDown file (allows for customizability like notion, obsidian, ...)
+
+
+
+
+
+# ---- Additional Fields ----:
+# blank=False --> required field (default)
+# blank=True --> optional field
+
+# null=False --> null not allowed (default)
+# null=True --> null allowed

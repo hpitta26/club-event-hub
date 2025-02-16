@@ -11,7 +11,7 @@ class Club(models.Model):
 
     # profile_picture = models.ImageField(upload_to='club_profiles/', blank=True, null=True)
     name = models.CharField(max_length=255, unique=True)
-    description = models.TextField(blank=True, null=True) # possibly change to required
+    description = models.TextField(blank=True, null=True) # possibly change to required --> depending on form in the frontend
     social_media_handles = models.JSONField(blank=True, null=True)
     spirit_rating = models.PositiveIntegerField(default=1, validators=[MinValueValidator(0), MaxValueValidator(100)])
 
@@ -65,8 +65,7 @@ class Event(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    # reverse relationship (from a Student) is accessible as "rsvp_events"
-    rsvps = models.ManyToManyField(Student, related_name='rsvp_events', blank=True)
+    rsvps = models.ManyToManyField(Student, related_name='rsvp_events', blank=True) # accessible through Student as rsvp_events
 
     def __str__(self):
         return self.title

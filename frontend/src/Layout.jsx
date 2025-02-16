@@ -9,7 +9,7 @@ import './index.css';
 function App() {
   return (
     <Router>
-      <Navbar /> {/* Navbar is now persistent across all pages */}
+      <Navbar /> 
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />

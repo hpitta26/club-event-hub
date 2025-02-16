@@ -5,6 +5,7 @@ import Register from './pages/Register.jsx';
 import NotFound from './pages/NotFound.jsx';
 
 import './index.css';
+import CreateEvent from "./pages/CreateEvent.jsx";
 
 function App() {
   return (
@@ -13,7 +14,9 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/create" element={<CreateEvent />} />
         <Route path="/*" element={<NotFound />} />
+
       </Routes>
     </Router>
   );

@@ -4,6 +4,8 @@ import Landing from './pages/Landing.jsx';
 import Register from './pages/Register.jsx';
 import NotFound from './pages/NotFound.jsx';
 
+import EventCard from "./components/EventCard/EventCard.jsx"; // Ignore. For Testing. Delete Later.
+
 import './index.css';
 
 function App() {
@@ -13,6 +15,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/eventcard" element={<EventCard />} /> {/* Ignore. For Testing. Delete Later.*/}
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </Router>

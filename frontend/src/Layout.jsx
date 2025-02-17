@@ -6,10 +6,10 @@ import Home from './pages/Home.jsx';
 import NotFound from './pages/NotFound.jsx';
 import VerifyEmail from "./pages/VerifyEmail.jsx";
 import Navbar from "./components/navbar.jsx";
+import CreateEvent from "./pages/CreateEvent.jsx";
 import { UserProvider } from "./context/userContext.jsx";
 
 import './index.css';
-import CreateEvent from "./pages/CreateEvent.jsx";
 
 function App() {
   return (

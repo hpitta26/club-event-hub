@@ -20,6 +20,8 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/*" element={<NotFound />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/verify/:token" element={<VerifyEmail />} />
             </Routes>
         </Router>
     </UserProvider>

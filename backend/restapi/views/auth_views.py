@@ -135,6 +135,7 @@ def user_login(request):
                 }, status=401)
 
             login(request, user)
+            # IMPORTANT: Send User data back to the frontend --> ONLY sending success message right now
             return Response({"status": "success", "redirect_url": "http://localhost:5173/home"}, status=200)
 
         return Response({

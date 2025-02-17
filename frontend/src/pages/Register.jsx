@@ -14,12 +14,25 @@ function Register () {
         console.log(formData);
         e.preventDefault();
         backend.post('/register', formData);
+
+        //  {
+        //     "user": {
+        //       "username": "student1",
+        //       "email": "student1@example.com",
+        //       "first_name": "John",
+        //       "last_name": "Doe",
+        //       "password": "securepassword"
+        //     },
+        //     "major": "Computer Science",
+        //     "graduation_year": 2025
+        //  }
     };
 
     const handleChange = (e) => {
         setFormData(prev => ({...prev, [e.target.name]: e.target.value}));
     };
 
+    
     return (
         <section className='min-h-screen bg-stone-900 flex justify-center items-center'>
             <div className='grid grid-rows-7 gap-4'>
@@ -47,7 +60,7 @@ function Register () {
                     <button type='submit' onClick={handleSubmit} className='bg-blue-600 w-full py-2 text-white hover:bg-blue-500 rounded-md'>Submit</button>
                 </div>
             </div>
-    </section>
+        </section>
     )
 };
 

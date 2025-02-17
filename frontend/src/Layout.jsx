@@ -3,7 +3,7 @@ import Login from './pages/Login.jsx';
 import Landing from './pages/Landing.jsx';
 import Register from './pages/Register.jsx';
 import NotFound from './pages/NotFound.jsx';
-import Navbar from "./components/navbar.jsx";  
+import Navbar from "./components/navbar.jsx";
 import './index.css';
 
 function App() {

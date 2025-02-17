@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': {
+      '/restapi': {
         target: 'http://localhost:8000',
         changeOrigin: true,
         secure: false

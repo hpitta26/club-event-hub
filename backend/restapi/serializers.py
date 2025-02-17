@@ -40,8 +40,6 @@ class UserSerializer(serializers.ModelSerializer):
        return instance
 
 
-
-
 class ClubSerializer(serializers.ModelSerializer):
    # Fields not serialized: followers, events
    user = UserSerializer()
@@ -84,8 +82,6 @@ class ClubSerializer(serializers.ModelSerializer):
        instance.spirit_rating = validated_data.get('spirit_rating', instance.spirit_rating)
        instance.save() # saves updated instance to the DB
        return instance
-
-
 
 
 

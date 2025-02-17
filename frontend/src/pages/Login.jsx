@@ -1,15 +1,19 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import backend from '../components/backend.jsx';
+import { UserContext } from '../context/userContext.jsx';
 
 function Login () {
     const [formData, setFormData] = useState({
         school_email: '',
         password: ''
     });
+    const { Login } = useContext(UserContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        backend.post('/login', formData);
+        // backend.post('/login', formData);
+        console.log('logging user in...')
+        Login({name: 'Kevin Pino'});
     };
 
     const handleChange = (e) => {

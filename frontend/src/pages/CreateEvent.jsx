@@ -15,7 +15,7 @@ function CreateEvent(/*inputClub*/) {
         start_time: '',
         end_time: '',
         location: '',
-        capacity: 0,
+        capacity: '',
     });
 
     const[errors,setErrors]=useState({})

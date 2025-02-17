@@ -1,57 +1,17 @@
+from ..models import Event, Student, Club
 from django.shortcuts import render, redirect
-from rest_framework import generics
-from django.contrib.auth.models import User
-from .models import Event, Student, Club
-from .serializers import EventSerializer, StudentSerializer, ClubSerializer
 from django.contrib.auth import login, authenticate, logout
 from django.core.mail import send_mail
-from restapi.forms import StudentCreationForm, LoginForm, UserSettingsForm
+from restapi.forms import StudentCreationForm
 import uuid
 from django.conf import settings
-from django.shortcuts import render, redirect
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django.views.decorators.csrf import ensure_csrf_cookie
 import uuid
-from django.contrib import messages
-from django.http import JsonResponse
 
 
-# List all events or create a new event
-class EventListCreateView(generics.ListCreateAPIView):
-   queryset = Event.objects.all()
-   serializer_class = EventSerializer
-
-
-# Retrieve, update, or delete a single event
-class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
-   queryset = Event.objects.all()
-   serializer_class = EventSerializer
-
-
-# List all clubs or create a new club
-class ClubListCreateView(generics.ListCreateAPIView):
-   queryset = Club.objects.all()
-   serializer_class = ClubSerializer
-
-
-# Retrieve, update, or delete a single club
-class ClubDetailView(generics.RetrieveUpdateDestroyAPIView):
-   queryset = Club.objects.all()
-   serializer_class = ClubSerializer
-
-
-# List all clubs or create a new student
-class StudentListCreateView(generics.ListCreateAPIView):
-   queryset = Student.objects.all()
-   serializer_class = StudentSerializer
-
-
-# Retrieve, update, or delete a single student
-class StudentDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Student.objects.all()
-    serializer_class = StudentSerializer
 
 
 @api_view(['GET', 'POST', 'OPTIONS'])
@@ -124,6 +84,10 @@ def signup(request):
                 'errors': form.errors
             }, status=400)
 
+
+
+
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def verify_email(request, token):
@@ -143,6 +107,8 @@ def verify_email(request, token):
         return Response({"status": "error", "message": "Invalid or expired token!"}, status=400)
 
 
+
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 @ensure_csrf_cookie
@@ -151,7 +117,7 @@ def user_login(request):
         school_email = request.data.get('school_email', '')
         password = request.data.get('password', '')
 
-        username = school_email.split('@')[0] if '@' in school_email else school_email
+        username = school_email.split('@')[0] if '@' in school_email else school_email # could be something different
 
         if not username or not password:
             return Response({
@@ -176,10 +142,9 @@ def user_login(request):
             'message': 'Invalid email or password'
         }, status=401)
 
-            
-def user_logout(request):
-    logout(request)
-    return redirect('users:login')
-   queryset = Student.objects.all()
-   serializer_class = StudentSerializer
 
+
+            
+# def user_logout(request):
+#     logout(request)
+#     return redirect('users:login')

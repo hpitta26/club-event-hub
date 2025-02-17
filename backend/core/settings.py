@@ -64,6 +64,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Frontend url
 ]
 CORS_ALLOW_CREDENTIALS = True
+
 # CSRF settings
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",  # Your Vite frontend

@@ -8,6 +8,9 @@ import VerifyEmail from "./pages/VerifyEmail.jsx";
 import Navbar from "./components/navbar.jsx";
 import { UserProvider } from "./context/userContext.jsx";
 
+/* Temporary Only */
+import TempPage from "./pages/TempPage.jsx";
+
 import './index.css';
 
 function App() {
@@ -22,6 +25,7 @@ function App() {
                 <Route path="/*" element={<NotFound />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/verify/:token" element={<VerifyEmail />} />
+                <Route  path="/event-card" element={<TempPage/>} />
             </Routes>
         </Router>
     </UserProvider>

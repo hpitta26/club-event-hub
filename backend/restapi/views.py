@@ -89,7 +89,7 @@ def signup(request):
                 try:
                     send_mail(
                         'Verify your FIU email',
-                        f'Click this link to verify your email: {verification_link}',
+                        f'Verify your FIU email, click this link to verify: {verification_link}',
                         settings.DEFAULT_FROM_EMAIL,
                         [user.email],
                         fail_silently=False,

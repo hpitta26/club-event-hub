@@ -1,11 +1,15 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import backend from '../components/backend.jsx';
+import { UserContext } from '../context/userContext.jsx';
 import { useNavigate } from 'react-router-dom';
+
 
 function Login() {
     const [formData, setFormData] = useState({
         school_email: '',
         password: ''
     });
+    const { Login } = useContext(UserContext);
 
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -28,6 +32,9 @@ function Login() {
             const data = await response.json();
             if (data.status === 'success') {
                 window.location.href = data.redirect_url; // Redirect to home page
+                // console.log('logging user in...')
+                // Login({name: 'Kevin Pino'});
+                // --> needs to match Student Model in models.py (accessed through data)
             } else {
                 setError(data.message);
             }

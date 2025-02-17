@@ -6,21 +6,23 @@ import Home from './pages/Home.jsx';
 import NotFound from './pages/NotFound.jsx';
 import VerifyEmail from "./pages/VerifyEmail.jsx";
 import Navbar from "./components/navbar.jsx";
+import { UserProvider } from "./context/userContext.jsx";
+
 import './index.css';
 
 function App() {
   return (
-    <Router>
-      <Navbar /> 
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/*" element={<NotFound />} />
-        <Route path="/verify/:token" element={<VerifyEmail />} />
-      </Routes>
-    </Router>
+    <UserProvider>
+        <Router>
+            <Navbar />
+            <Routes>
+                <Route path="/" element={<Landing />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/*" element={<NotFound />} />
+            </Routes>
+        </Router>
+    </UserProvider>
   );
 }
 

@@ -40,6 +40,12 @@ class Student(models.Model):
     major = models.CharField(max_length=255, blank=True, null=True)
     graduation_year = models.PositiveIntegerField(blank=True, null=True)
     spirit_points = models.PositiveIntegerField(default=0)
+    
+    email_verified = models.BooleanField(default=False)
+    verification_token = models.CharField(max_length=100, blank=True)
+    password_change_token = models.CharField(max_length=100, blank=True)
+    password_change_pending = models.BooleanField(default=False)
+    new_password_hash = models.CharField(max_length=128, blank=True)
 
     following_clubs = models.ManyToManyField(Club, related_name='followers', blank=True) # accessible through Club as followers
 

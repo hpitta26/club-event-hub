@@ -101,8 +101,10 @@ function Register() {
         console.log('Field updated:', name, value);
     };
 
+
     // Debug log for render
     console.log('Current form state:', formData);
+    
 
     return (
         <section className='min-h-screen bg-stone-900 flex justify-center items-center'>

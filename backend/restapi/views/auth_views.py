@@ -14,22 +14,19 @@ import uuid
 
 
 
-@api_view(['GET', 'POST', 'OPTIONS'])
+@api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
 @ensure_csrf_cookie    
-def signup(request):
-    print("Received request:", request.method)  # Debug print
+def student_signup(request):
+    print("Received signup request:", request.method)  # Debug print
     print("Request data:", request.data)  # Debug print
-    
-    if request.method == 'OPTIONS':
-        return Response(status=200)
         
-    if request.method == 'GET':
+    if request.method == 'GET': # when would this be hit?
         return Response({'message': 'CSRF cookie set'})
         
     if request.method == 'POST':
         print("Processing POST request")  # Debug print
-        form = StudentCreationForm(request.data)
+        form = StudentCreationForm(request.data) # verify if Data matches Student_Model --> redundant since already verified on frontend
         if form.is_valid():
             print("Form is valid")  # Debug print
             try:
@@ -45,9 +42,10 @@ def signup(request):
                     user=user,
                     major=form.cleaned_data.get('major'),
                     graduation_year=form.cleaned_data.get('graduation_year'),
-                    verification_token=verification_token
+                    verification_token=verification_token # token that will be sent through email
                 )
                 
+                # Send verification email to the Student
                 verification_link = f"http://localhost:5173/verify/{verification_token}"
                 try:
                     send_mail(
@@ -59,30 +57,20 @@ def signup(request):
                     )
                 except Exception as e:
                     print("Email error:", str(e))  # Debug print
-                    user.delete()  # Clean up if email fails
-                    return Response({
-                        'status': 'error',
-                        'message': 'Failed to send verification email'
-                    }, status=400)
+                    user.delete()  # Clean up if email fails --> could also store failed attempt?
+                    return Response({'status': 'error', 'message': 'Failed to send verification email'}, status=400)
                 
-                return Response({
-                    'status': 'success',
-                    'message': 'Please check your email to verify your account'
-                })
+                return Response({'status': 'success', 'message': 'Please check your email to verify your account'})
+        
             except Exception as e:
                 print("Error:", str(e))  # Debug print
                 if 'user' in locals():
                     user.delete()
-                return Response({
-                    'status': 'error',
-                    'message': str(e)
-                }, status=400)
+                return Response({'status': 'error', 'message': str(e)}, status=400)
+     
         else:
-            print("Form errors:", form.errors)  # Debug print
-            return Response({
-                'status': 'error',
-                'errors': form.errors
-            }, status=400)
+            print("Form errors:", form.errors)  # Debug print --> form was invalid (shouldn't happens because of frontend check)
+            return Response({'status': 'error', 'errors': form.errors}, status=400)
 
 
 
@@ -90,14 +78,14 @@ def signup(request):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def verify_email(request, token):
+def student_verify_email(request, token):
     try:
         student = Student.objects.get(verification_token=token)
         user = student.user
         user.is_active = True  # Activate user
         user.save()
 
-        student.email_verified = True
+        student.email_verified = True # Set email as verified
         student.verification_token = ''
         student.save()
 
@@ -109,43 +97,36 @@ def verify_email(request, token):
 
 
 
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 @ensure_csrf_cookie
-def user_login(request):
+def student_login(request):
     if request.method == 'POST':
-        school_email = request.data.get('school_email', '')
-        password = request.data.get('password', '')
+        school_email = request.data.get('school_email')
+        password = request.data.get('password')
 
-        username = school_email.split('@')[0] if '@' in school_email else school_email # could be something different
+        if not school_email or not password: # this will never hit since you are defaulting=''
+            return Response({'status': 'error', 'message': 'Please provide both email and password'}, status=400)
 
-        if not username or not password:
-            return Response({
-                'status': 'error',
-                'message': 'Please provide both email and password'
-            }, status=400)
+        username = school_email.split('@')[0] if '@' in school_email else school_email # username --> first part of email
 
         user = authenticate(username=username, password=password)
 
         if user is not None:
-            if not user.is_active:
-                return Response({
-                    'status': 'error',
-                    'message': 'Please verify your email before logging in'
-                }, status=401)
+            if not user.student_profile.email_verified:
+                return Response({'status': 'error', 'message': 'Please verify your email before logging in'}, status=401)
 
             login(request, user)
             # IMPORTANT: Send User data back to the frontend --> ONLY sending success message right now
             return Response({"status": "success", "redirect_url": "http://localhost:5173/home"}, status=200)
 
-        return Response({
-            'status': 'error',
-            'message': 'Invalid email or password'
-        }, status=401)
+        return Response({'status': 'error','message': 'Invalid email or password'}, status=401) # User DoesNotExist
 
 
 
-            
-# def user_logout(request):
+
+
+# def student_logout(request):
 #     logout(request)
 #     return redirect('users:login')

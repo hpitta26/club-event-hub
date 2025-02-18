@@ -5,8 +5,8 @@ from .models import Student
 
 class StudentCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
-    major = forms.CharField(required=False)
-    graduation_year = forms.IntegerField(required=False)
+    major = forms.CharField(required=False) # in the frontend should the form send if this is blank?
+    graduation_year = forms.IntegerField(required=False) # in the frontend should the form send if this is blank?
     
     class Meta:
         model = User
@@ -15,7 +15,7 @@ class StudentCreationForm(UserCreationForm):
     def clean_email(self):
         email = self.cleaned_data['email']
         if not email.endswith('@fiu.edu'):
-            raise forms.ValidationError('Must use an FIU email address')
+            raise forms.ValidationError('Must use an FIU email address') # check if email is valid
         return email
 
     def save(self, commit=True):
@@ -25,14 +25,14 @@ class StudentCreationForm(UserCreationForm):
         if commit:
             user.save()
             # Create associated Student profile
-            student = Student.objects.create(
+            Student.objects.create(
                 user=user,
                 major=self.cleaned_data.get('major'),
                 graduation_year=self.cleaned_data.get('graduation_year')
             )
         return user
 
-class LoginForm(forms.Form):
+class LoginForm(forms.Form): # Hasn't been Used
     school_email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
 

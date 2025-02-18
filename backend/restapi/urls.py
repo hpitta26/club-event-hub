@@ -11,9 +11,7 @@ urlpatterns = [
     path('students/', drf_views.StudentListCreateView.as_view(), name='student-list-create'),
     path('students/<int:pk>/', drf_views.StudentDetailView.as_view(), name='student-detail'),
 
-    path('register/', 
-         csrf_exempt(require_http_methods(['POST', 'OPTIONS'])(auth_views.signup)), # need to fix csrf_exempt
-         name='register'),
-    path('login/', csrf_exempt(require_http_methods(['POST', 'OPTIONS'])(auth_views.user_login)), name='login'), # need to fix csrf_exempt
-    path('verify/<str:token>/', auth_views.verify_email, name='verify_email'),
+    path('student-register/', csrf_exempt(require_http_methods(['POST', 'OPTIONS'])(auth_views.student_signup)), name='student-register'), # need to fix csrf_exempt
+    path('student-login/', csrf_exempt(require_http_methods(['POST', 'OPTIONS'])(auth_views.student_login)), name='student-login'), # need to fix csrf_exempt
+    path('student-verify/<str:token>/', auth_views.student_verify_email, name='student-verify-email'),
 ]

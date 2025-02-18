@@ -3,6 +3,7 @@ from ..models import Event, Student, Club
 from ..serializers import EventSerializer, StudentSerializer, ClubSerializer
 
 
+
 # List all events or create a new event
 class EventListCreateView(generics.ListCreateAPIView):
    queryset = Event.objects.all()
@@ -16,6 +17,7 @@ class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 
+
 # List all clubs or create a new club
 class ClubListCreateView(generics.ListCreateAPIView):
    queryset = Club.objects.all()
@@ -25,6 +27,7 @@ class ClubListCreateView(generics.ListCreateAPIView):
 class ClubDetailView(generics.RetrieveUpdateDestroyAPIView):
    queryset = Club.objects.all()
    serializer_class = ClubSerializer
+
 
 
 

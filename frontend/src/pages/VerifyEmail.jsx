@@ -7,7 +7,7 @@ function VerifyEmail() {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:8000/restapi/verify/${token}/`, {
+        fetch(`http://127.0.0.1:8000/restapi/student-verify/${token}/`, {
             method: "GET",
             credentials: "include"
         })
@@ -18,7 +18,7 @@ function VerifyEmail() {
                 setStatus("✅ Email successfully verified! Redirecting to login...");
                 setTimeout(() => {
                     window.location.href = "/login";
-                }, 20000);
+                }, 5000);
             } else {
                 setError("❌ Verification failed: " + data.message);
             }

@@ -47,6 +47,8 @@ class Student(models.Model):
     password_change_pending = models.BooleanField(default=False)
     new_password_hash = models.CharField(max_length=128, blank=True)
 
+    # admin --> is an admin of a specfic club
+
     following_clubs = models.ManyToManyField(Club, related_name='followers', blank=True) # accessible through Club as followers
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -70,6 +72,9 @@ class Event(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    # private/public boolean
+    # tags --> type of event
 
     rsvps = models.ManyToManyField(Student, related_name='rsvp_events', blank=True) # accessible through Student as rsvp_events
 

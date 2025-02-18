@@ -103,7 +103,7 @@ function Register() {
             <form onSubmit={handleSubmit} className='w-96 max-w-full px-4'>
                 <div className='space-y-4'>
                     <div>
-                        <h1 className='text-white text-4xl mb-4'>Club Register</h1>
+                        <h1 className='text-white text-4xl mb-4'>Student Register</h1>
                     </div>
                     
                     {error && (

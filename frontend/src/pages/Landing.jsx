@@ -55,10 +55,10 @@ function Landing () {
                         </button>
                     </div>
                     <div className="flex flex-col space-y-4">
-                        <button onClick={() => {navigate(`/student-${loginRegister}`)}} className="bg-blue-500 text-white font-medium rounded-md py-2 px-4 hover:bg-blue-600 transition">
+                        <button onClick={() => {navigate(`/student-${loginRegister}`); setLoginRegister(''); setIsOpen(false)}} className="bg-blue-500 text-white font-medium rounded-md py-2 px-4 hover:bg-blue-600 transition">
                             I am a student!
                         </button>
-                        <button onClick={() => {navigate(`/club-${loginRegister}`)}} className="bg-green-500 text-white font-medium rounded-md py-2 px-4 hover:bg-green-600 transition">
+                        <button onClick={() => {navigate(`/club-${loginRegister}`);setLoginRegister(''); setIsOpen(false)}} className="bg-green-500 text-white font-medium rounded-md py-2 px-4 hover:bg-green-600 transition">
                             I am a club!
                         </button>
                     </div>

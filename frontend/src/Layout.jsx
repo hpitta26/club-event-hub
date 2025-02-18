@@ -20,10 +20,10 @@ function App() {
                 <Route path="/" element={<Landing />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/*" element={<NotFound />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/create-event" element={<CreateEvent />} />
                 <Route path="/verify/:token" element={<VerifyEmail />} />
+                <Route path="/*" element={<NotFound />} />
             </Routes>
         </Router>
     </UserProvider>

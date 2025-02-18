@@ -18,7 +18,7 @@ function VerifyEmail() {
                 setStatus("✅ Email successfully verified! Redirecting to login...");
                 setTimeout(() => {
                     window.location.href = "/login";
-                }, 5000);
+                }, 3000);
             } else {
                 setError("❌ Verification failed: " + data.message);
             }

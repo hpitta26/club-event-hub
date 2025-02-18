@@ -49,8 +49,8 @@ const Navbar = () => {
           </a>
         </li>
         <li>
-          <a href="#" className="hover:text-gray-400">
-            Followed
+          <a href="/following" className="hover:text-gray-400">
+            Following
           </a>
         </li>
         <li>

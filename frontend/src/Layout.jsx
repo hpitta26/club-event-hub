@@ -9,6 +9,9 @@ import Navbar from "./components/navbar.jsx";
 import CreateEvent from "./pages/CreateEvent.jsx";
 import { UserProvider } from "./context/userContext.jsx";
 
+/* Temporary Only */
+import TempPage from "./pages/TempPage.jsx";
+
 import './index.css';
 
 function App() {
@@ -23,6 +26,7 @@ function App() {
                 <Route path="/home" element={<Home />} />
                 <Route path="/create-event" element={<CreateEvent />} />
                 <Route path="/verify/:token" element={<VerifyEmail />} />
+                <Route  path="/event-card" element={<TempPage/>} />
                 <Route path="/*" element={<NotFound />} />
             </Routes>
         </Router>

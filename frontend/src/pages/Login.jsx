@@ -19,24 +19,21 @@ function Login() {
         setError('');
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/restapi/student-login/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': document.cookie.split('csrftoken=')[1]?.split(';')[0] || ''
-                },
-                body: JSON.stringify(formData),
-                credentials: 'include',
-            });
-
-            const data = await response.json();
-            if (data.status === 'success') {
-                window.location.href = data.redirect_url; // Redirect to home page
-                // console.log('logging user in...')
-                // Login({name: 'Kevin Pino'});
-                // --> needs to match Student Model in models.py (accessed through data)
+            const response = await backend.post('/student-login/',
+                formData,
+                {
+                    headers: {
+                        'X-CSRFToken': document.cookie.split('csrftoken=')[1]?.split(';')[0] || ''
+                    }
+                }
+            );
+            console.log(response);
+            if (response.status === 200) {
+                console.log('logging user in...');
+                Login(response.data);
+                navigate('/home');
             } else {
-                setError(data.message);
+                setError(response.message);
             }
         } catch (err) {
             console.error("Login error:", err);

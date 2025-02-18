@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from './pages/Login.jsx';
 import Landing from './pages/Landing.jsx';
+import Logout from './pages/Logout.jsx';
 import Register from './pages/Register.jsx';
 import Home from './pages/Home.jsx';
 import NotFound from './pages/NotFound.jsx';
@@ -13,6 +14,7 @@ import { UserProvider } from "./context/userContext.jsx";
 import TempPage from "./pages/TempPage.jsx";
 
 import './index.css';
+import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 
 function App() {
   return (
@@ -23,10 +25,13 @@ function App() {
                 <Route path="/" element={<Landing />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/create-event" element={<CreateEvent />} /> 
-                <Route path="/verify/:token" element={<VerifyEmail />} />
-                <Route  path="/event-card" element={<TempPage/>} /> {/* DummyPage to visualize the EventCard component */}
+                <Route path="/logout" element={<Logout />} />
+                <Route element={<ProtectedRoute />}>
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/create-event" element={<CreateEvent />} /> 
+                    <Route path="/verify/:token" element={<VerifyEmail />} />
+                    <Route  path="/event-card" element={<TempPage/>} /> {/* DummyPage to visualize the EventCard component */}
+                </Route>
                 <Route path="/*" element={<NotFound />} />
             </Routes>
         </Router>

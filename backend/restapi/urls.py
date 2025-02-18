@@ -11,7 +11,9 @@ urlpatterns = [
     path('students/', drf_views.StudentListCreateView.as_view(), name='student-list-create'),
     path('students/<int:pk>/', drf_views.StudentDetailView.as_view(), name='student-detail'),
 
-    path('student-register/', csrf_exempt(require_http_methods(['POST', 'OPTIONS'])(student_auth_views.student_signup)), name='student-register'), # need to fix csrf_exempt
-    path('student-login/', csrf_exempt(require_http_methods(['POST', 'OPTIONS'])(student_auth_views.student_login)), name='student-login'), # need to fix csrf_exempt
-    path('student-verify/<str:token>/', student_auth_views.student_verify_email, name='student-verify-email'),
+    path('student-register/', require_http_methods(['POST', 'OPTIONS'])(student_auth_views.student_signup), name='student-register'),
+    path('student-login/', require_http_methods(['POST', 'OPTIONS'])(student_auth_views.student_login), name='student-login'),
+    path('student-logout/', require_http_methods(['GET'])(student_auth_views.student_logout), name='student-logout'),
+    path('student-verify-session/', require_http_methods(['GET'])(student_auth_views.student_verify_session), name='student-verify-session'),
+    path('student-verify-email/<str:token>/', student_auth_views.student_verify_email, name='student-verify-email'),
 ]

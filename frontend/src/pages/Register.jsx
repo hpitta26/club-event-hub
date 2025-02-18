@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import backend from '../components/backend';
 
 function Register() {
     const [formData, setFormData] = useState({
@@ -14,6 +16,7 @@ function Register() {
 
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -38,31 +41,19 @@ function Register() {
         try {
             // Debug log
             console.log('Making request to:', '/restapi/register/');
-            
-            const response = await fetch('http://127.0.0.1:8000/restapi/student-register/', {
-                method: 'POST',
+
+            const response = await backend.post('/student-register/', 
+            {...formData, username},
+            {
                 headers: {
-                    'Content-Type': 'application/json',
                     'X-CSRFToken': document.cookie.split('csrftoken=')[1]?.split(';')[0] || ''
-                },
-                body: JSON.stringify({
-                    username: username,
-                    email: formData.email,
-                    password1: formData.password1,
-                    password2: formData.password2,
-                    first_name: formData.first_name,
-                    last_name: formData.last_name,
-                    major: formData.major,
-                    graduation_year: formData.graduation_year || null
-                }),
-                credentials: 'include'
+                }
             });
 
             // Debug log
             console.log('Response:', response);
 
-            const data = await response.json();
-            if (data.status === 'success') {
+            if (response.status === 200) {
                 setSuccess('Registration successful! Please check your email for verification.');
                 setFormData({
                     username: '',
@@ -74,6 +65,7 @@ function Register() {
                     major: '',
                     graduation_year: ''
                 });
+                navigate('/login');
             } else {
                 setError(data.message || 'Registration failed. Please try again.');
             }

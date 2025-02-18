@@ -24,9 +24,9 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/home" element={<Home />} />
-                <Route path="/create-event" element={<CreateEvent />} />
+                <Route path="/create-event" element={<CreateEvent />} /> 
                 <Route path="/verify/:token" element={<VerifyEmail />} />
-                <Route  path="/event-card" element={<TempPage/>} />
+                <Route  path="/event-card" element={<TempPage/>} /> {/* DummyPage to visualize the EventCard component */}
                 <Route path="/*" element={<NotFound />} />
             </Routes>
         </Router>

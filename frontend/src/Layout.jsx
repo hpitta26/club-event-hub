@@ -6,6 +6,7 @@ import Home from './pages/Home.jsx';
 import NotFound from './pages/NotFound.jsx';
 import VerifyEmail from "./pages/VerifyEmail.jsx";
 import Navbar from "./components/navbar.jsx";
+import CreateEvent from "./pages/CreateEvent.jsx";
 import { UserProvider } from "./context/userContext.jsx";
 
 import './index.css';
@@ -21,6 +22,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/*" element={<NotFound />} />
                 <Route path="/home" element={<Home />} />
+                <Route path="/create-event" element={<CreateEvent />} />
                 <Route path="/verify/:token" element={<VerifyEmail />} />
             </Routes>
         </Router>

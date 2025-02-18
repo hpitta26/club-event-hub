@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import backend from '../components/backend';
+import backend from '../../components/backend';
 
 function Register() {
     const [formData, setFormData] = useState({
@@ -23,67 +23,67 @@ function Register() {
         setError('');
         setSuccess('');
 
-        // Form validation
-        if (!formData.email || !formData.email.endsWith('@fiu.edu')) {
-            setError('Please enter a valid FIU email address');
-            return;
-        }
+        // // Form validation
+        // if (!formData.email || !formData.email.endsWith('@fiu.edu')) {
+        //     setError('Please enter a valid FIU email address');
+        //     return;
+        // }
 
-        // Create username from email (before @fiu.edu)
-        const username = formData.email.split('@')[0];
+        // // Create username from email (before @fiu.edu)
+        // const username = formData.email.split('@')[0];
         
-        // Debug log
-        console.log('Submitting form data:', {
-            ...formData,
-            username
-        });
+        // // Debug log
+        // console.log('Submitting form data:', {
+        //     ...formData,
+        //     username
+        // });
 
-        try {
-            // Debug log
-            console.log('Making request to:', '/restapi/register/');
+        // try {
+        //     // Debug log
+        //     console.log('Making request to:', '/restapi/register/');
 
-            const response = await backend.post('/student-register/', 
-            {...formData, username},
-            {
-                headers: {
-                    'X-CSRFToken': document.cookie.split('csrftoken=')[1]?.split(';')[0] || ''
-                }
-            });
+        //     const response = await backend.post('/club-register/', 
+        //     {...formData, username},
+        //     {
+        //         headers: {
+        //             'X-CSRFToken': document.cookie.split('csrftoken=')[1]?.split(';')[0] || ''
+        //         }
+        //     });
 
-            // Debug log
-            console.log('Response:', response);
+        //     // Debug log
+        //     console.log('Response:', response);
 
-            if (response.status === 200) {
-                setSuccess('Registration successful! Please check your email for verification.');
-                setFormData({
-                    username: '',
-                    first_name: '',
-                    last_name: '',
-                    email: '',
-                    password1: '',
-                    password2: '',
-                    major: '',
-                    graduation_year: ''
-                });
-                navigate('/login');
-            } else {
-                setError(data.message || 'Registration failed. Please try again.');
-            }
-        } catch (err) {
-            // Debug log
-            console.error('Error details:', err);
-            console.error('Error response:', err.response);
+        //     if (response.status === 200) {
+        //         setSuccess('Registration successful! Please check your email for verification.');
+        //         setFormData({
+        //             username: '',
+        //             first_name: '',
+        //             last_name: '',
+        //             email: '',
+        //             password1: '',
+        //             password2: '',
+        //             major: '',
+        //             graduation_year: ''
+        //         });
+        //         navigate('/login');
+        //     } else {
+        //         setError(data.message || 'Registration failed. Please try again.');
+        //     }
+        // } catch (err) {
+        //     // Debug log
+        //     console.error('Error details:', err);
+        //     console.error('Error response:', err.response);
 
-            if (err.response?.data?.errors) {
-                const errors = err.response.data.errors;
-                const errorMessage = Object.entries(errors)
-                    .map(([key, value]) => `${key}: ${value.join(', ')}`)
-                    .join('\n');
-                setError(errorMessage);
-            } else {
-                setError(err.response?.data?.message || 'Registration failed. Please try again.');
-            }
-        }
+        //     if (err.response?.data?.errors) {
+        //         const errors = err.response.data.errors;
+        //         const errorMessage = Object.entries(errors)
+        //             .map(([key, value]) => `${key}: ${value.join(', ')}`)
+        //             .join('\n');
+        //         setError(errorMessage);
+        //     } else {
+        //         setError(err.response?.data?.message || 'Registration failed. Please try again.');
+        //     }
+        // }
     };
 
     const handleChange = (e) => {
@@ -103,7 +103,7 @@ function Register() {
             <form onSubmit={handleSubmit} className='w-96 max-w-full px-4'>
                 <div className='space-y-4'>
                     <div>
-                        <h1 className='text-white text-4xl mb-4'>Register</h1>
+                        <h1 className='text-white text-4xl mb-4'>Club Register</h1>
                     </div>
                     
                     {error && (

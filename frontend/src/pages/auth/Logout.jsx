@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
-import backend from '../components/backend.jsx';
-import { UserContext } from '../context/userContext.jsx';
+import backend from '../../components/backend.jsx';
+import { UserContext } from '../../context/userContext.jsx';
 
 
 function Login() {

@@ -1,14 +1,17 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from './pages/Login.jsx';
 import Landing from './pages/Landing.jsx';
-import Logout from './pages/Logout.jsx';
-import Register from './pages/Register.jsx';
 import Home from './pages/Home.jsx';
 import NotFound from './pages/NotFound.jsx';
 import VerifyEmail from "./pages/VerifyEmail.jsx";
 import Navbar from "./components/navbar.jsx";
 import CreateEvent from "./pages/CreateEvent.jsx";
 import { UserProvider } from "./context/userContext.jsx";
+
+import Logout from './pages/auth/Logout.jsx';
+import StudentLogin from './pages/auth/StudentLogin.jsx';
+import StudentRegister from './pages/auth/StudentRegister.jsx';
+import ClubLogin from './pages/auth/ClubLogin.jsx';
+import ClubRegister from './pages/auth/ClubRegister.jsx';
 
 /* Temporary Only */
 import TempPage from "./pages/TempPage.jsx";
@@ -23,8 +26,10 @@ function App() {
             <Navbar />
             <Routes>
                 <Route path="/" element={<Landing />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
+                <Route path="/student-login" element={<StudentLogin />} />
+                <Route path="/student-register" element={<StudentRegister />} />
+                <Route path="/club-login" element={<ClubLogin />} />
+                <Route path="/club-register" element={<ClubRegister />} />
                 <Route path="/logout" element={<Logout />} />
                 <Route element={<ProtectedRoute />}>
                     <Route path="/home" element={<Home />} />

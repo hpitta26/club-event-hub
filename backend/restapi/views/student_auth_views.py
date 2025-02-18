@@ -94,9 +94,8 @@ def student_verify_email(request, token):
 @permission_classes([AllowAny])
 def student_verify_session(request):
     try:
-        uid = request.session['id']
-        if uid:
-            user = Student.objects.get(id=uid)
+        if request.session.has_key('id'):
+            user = Student.objects.get(id=request.session['id'])
             if not user:
                 return Response(status=204)
             return Response({"user": {"name": request.session['name']}}, status=200)

@@ -22,7 +22,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/*" element={<NotFound />} />
                 <Route path="/home" element={<Home />} />
-                <Route path="/create" element={<CreateEvent />} />
+                <Route path="/create-event" element={<CreateEvent />} />
                 <Route path="/verify/:token" element={<VerifyEmail />} />
             </Routes>
         </Router>

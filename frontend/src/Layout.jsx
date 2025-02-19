@@ -13,8 +13,12 @@ import StudentRegister from './pages/auth/StudentRegister.jsx';
 import ClubLogin from './pages/auth/ClubLogin.jsx';
 import ClubRegister from './pages/auth/ClubRegister.jsx';
 
+
+
 /* Temporary Only */
 import TempPage from "./pages/TempPage.jsx";
+import UserSettings from "./pages/UserSettings.jsx"
+
 
 import './index.css';
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
@@ -33,6 +37,7 @@ function App() {
                 <Route path="/logout" element={<Logout />} />
                 <Route path="/verify/:token" element={<VerifyEmail />} />
                 <Route  path="/event-card" element={<TempPage/>} /> {/* DummyPage to visualize the EventCard component */}
+                <Route path="/user-settings" element={<UserSettings/>}/> {/*temporary to check how user settings is displayed*/}
                 <Route element={<ProtectedRoute />}> {/* Protected --> can only be accessed by logged-in users */}
                     <Route path="/home" element={<Home />} />
                     <Route path="/create-event" element={<CreateEvent />} /> 

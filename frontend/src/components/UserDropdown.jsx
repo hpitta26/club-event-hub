@@ -1,6 +1,8 @@
 import React from "react";
 import Dropdown from "./Dropdown";
 
+//settings should lead to settings
+
 const UserDropdown = ({ isOpen, onLogout, onClose }) => {
     const options = [
         { label: "Account Info", onClick: () => console.log("Go to Account Info") },

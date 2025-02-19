@@ -12,6 +12,7 @@ function ClubProfile () {
 
     useEffect(()=> {
         backend
+            //useParams() extracts the URL parameter as an object so clubId.clubId gets the clubId field of the object
             .get(`/clubs/${clubId.clubId}/`)
             .then((response) => {
                 setClub(response.data);

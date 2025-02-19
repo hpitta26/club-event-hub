@@ -98,7 +98,7 @@ def student_verify_session(request):
             user = Student.objects.get(id=request.session['id'])
             if not user:
                 return Response(status=204)
-            return Response({"user": {"name": request.session['name']}}, status=200)
+            return Response({"user": {"name": request.session['name']}}, status=200)  # pass to front-end
         else:
             return Response(status=204)
     except Exception as e:
@@ -125,10 +125,16 @@ def student_login(request):
                 return Response({'status': 'error', 'message': 'Please verify your email before logging in'}, status=401)
 
             login(request, user)
-            request.session['id'] = user.pk;
-            request.session['name'] = user.first_name;
+            """
+            pass only essential information that has to persist through several pages like:
+                profile_picture,
+                uuid,
+                name
+            """
+            request.session['id'] = user.pk; # populate session
+            request.session['name'] = user.first_name;  # populate session
         
-            return Response({"user": {"name": user.first_name}}, status=200)
+            return Response({"user": {"name": user.first_name}}, status=200)  # then pass to frontend
 
         return Response({'status': 'error','message': 'Invalid email or password'}, status=401) # User DoesNotExist
 

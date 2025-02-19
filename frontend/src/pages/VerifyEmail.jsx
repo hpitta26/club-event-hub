@@ -5,7 +5,7 @@ import backend from '../components/backend';
 function VerifyEmail() {
     const { token } = useParams();
     const [status, setStatus] = useState('Verifying...');
-    const [error, setError] = useState('');
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -19,10 +19,15 @@ function VerifyEmail() {
                     }, 3000);    
                 } else {
                     setError("❌ Verification failed: " + data.message);
+                    setTimeout(() => {
+                        setStatus(null);
+                        navigate('/');
+                    }, 3000);
                 }
             } catch (e) {
                 console.log(e);
-                setError("❌ An error occurred: " + error.message);
+                setError("❌ An error occurred: " + e);
+                setStatus(null);
             }
         };
         verifyToken();

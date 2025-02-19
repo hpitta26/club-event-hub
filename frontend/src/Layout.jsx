@@ -3,7 +3,7 @@ import Landing from './pages/Landing.jsx';
 import Home from './pages/Home.jsx';
 import NotFound from './pages/NotFound.jsx';
 import VerifyEmail from "./pages/VerifyEmail.jsx";
-import Navbar from "./components/navbar.jsx";
+import Navbar from "./components/navbar2.jsx";
 import CreateEvent from "./pages/CreateEvent.jsx";
 import { UserProvider } from "./context/userContext.jsx";
 

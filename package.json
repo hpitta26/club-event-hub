@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-datepicker": "^8.1.0",
+    "react-modal": "^3.16.3"
+  }
+}

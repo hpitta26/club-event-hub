@@ -11,6 +11,8 @@
     "server": "json-server db.json --port 8081 --host 0.0.0.0"
   },
   "dependencies": {
+    "@mui/icons-material": "^6.4.5",
+    "@mui/material": "^6.4.5",
     "axios": "^1.7.9",
     "date-fns": "^4.1.0",
     "react": "^18.3.1",

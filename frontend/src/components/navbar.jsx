@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import UserDropdown from "./UserDropDown";
 import NotificationsDropdown from "./NotificationsDropdown";
 import SearchIcon from "../assets/icons/SearchIcon";
@@ -6,12 +6,16 @@ import PlusIcon from "../assets/icons/PlusIcon";
 import InboxIcon from "../assets/icons/InboxIcon";
 import UserIcon from "../assets/icons/UserIcon";
 import pulseLogo from "../assets/icons/pulse_logo_1.png";
+import { UserContext } from "../context/userContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [dropdown, setDropdown] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
   const dropdownRef = useRef(null);
   const searchRef = useRef(null);
+  const { userContext } = useContext(UserContext)
+  const navigate = useNavigate();
 
   const toggleDropdown = (type) => {
     setDropdown(dropdown === type ? null : type);
@@ -19,6 +23,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     setDropdown(null);
+    navigate('/logout');
   };
 
   useEffect(() => {
@@ -44,26 +49,23 @@ const Navbar = () => {
       </div>
       <ul className="hidden md:flex space-x-6 absolute left-1/2 transform -translate-x-1/2">
         <li>
-          <a href="#" className="hover:text-gray-400">
+          <Link href="#" className="hover:text-gray-400">
             Events
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#" className="hover:text-gray-400">
+          <Link href="#" className="hover:text-gray-400">
             Followed
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#" className="hover:text-gray-400">
+          <Link href="#" className="hover:text-gray-400">
             Discover
-          </a>
+          </Link>
         </li>
       </ul>
       <div className="flex space-x-6 items-center relative" ref={dropdownRef}>
-        <a href="#" className="hover:text-gray-400">
-          <PlusIcon className="w-5 h-5 text-white hover:text-gray-400 transition duration-200" />
-        </a>
-        <div className="flex items-center relative" ref={searchRef}>
+      <div className="flex items-center relative" ref={searchRef}>
           <button
             onClick={() => {
               setDropdown(null);
@@ -82,27 +84,38 @@ const Navbar = () => {
             />
           )}
         </div>
-        <button
-          onClick={() => toggleDropdown("notifications")}
-          className="hover:text-gray-400 relative"
-        >
-          <InboxIcon className="w-5 h-5 text-white hover:text-gray-400 transition duration-200" />
-        </button>
-        <NotificationsDropdown
-          isOpen={dropdown === "notifications"}
-          onClose={() => setDropdown(null)}
-        />
-        <button
-          onClick={() => toggleDropdown("user")}
-          className="hover:text-gray-400 relative"
-        >
-          <UserIcon className="w-5 h-5 text-white hover:text-gray-400 transition duration-200" />
-        </button>
-        <UserDropdown
-          isOpen={dropdown === "user"}
-          onLogout={handleLogout}
-          onClose={() => setDropdown(null)}
-        />
+        {
+            userContext === null || userContext === undefined ?
+            <>
+            </>
+            :
+            <>
+                <Link href="#" className="hover:text-gray-400">
+                    <PlusIcon className="w-5 h-5 text-white hover:text-gray-400 transition duration-200" />
+                </Link>
+                <button
+                    onClick={() => toggleDropdown("notifications")}
+                    className="hover:text-gray-400 relative"
+                >
+                    <InboxIcon className="w-5 h-5 text-white hover:text-gray-400 transition duration-200" />
+                </button>
+                <NotificationsDropdown
+                    isOpen={dropdown === "notifications"}
+                    onClose={() => setDropdown(null)}
+                />
+                <button
+                    onClick={() => toggleDropdown("user")}
+                    className="hover:text-gray-400 relative"
+                >
+                    <UserIcon className="w-5 h-5 text-white hover:text-gray-400 transition duration-200" />
+                </button>
+                <UserDropdown
+                    isOpen={dropdown === "user"}
+                    onLogout={handleLogout}
+                    onClose={() => setDropdown(null)}
+                />
+            </>
+        }
       </div>
     </nav>
   );

@@ -72,10 +72,6 @@ def student_signup(request):
             print("Form errors:", form.errors)  # Debug print --> form was invalid (shouldn't happens because of frontend check)
             return Response({'status': 'error', 'errors': form.errors}, status=400)
 
-
-
-
-
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def student_verify_email(request, token):
@@ -94,9 +90,20 @@ def student_verify_email(request, token):
     except Student.DoesNotExist:
         return Response({"status": "error", "message": "Invalid or expired token!"}, status=400)
 
-
-
-
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def student_verify_session(request):
+    try:
+        if request.session.has_key('id'):
+            user = Student.objects.get(id=request.session['id'])
+            if not user:
+                return Response(status=204)
+            return Response({"user": {"name": request.session['name']}}, status=200)  # pass to front-end
+        else:
+            return Response(status=204)
+    except Exception as e:
+        print(e)
+        return Response({"status": "error", "message": "Server error!"}, status=500)
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -118,15 +125,25 @@ def student_login(request):
                 return Response({'status': 'error', 'message': 'Please verify your email before logging in'}, status=401)
 
             login(request, user)
-            # IMPORTANT: Send User data back to the frontend --> ONLY sending success message right now
-            return Response({"status": "success", "redirect_url": "http://localhost:5173/home"}, status=200)
+            """
+            pass only essential information that has to persist through several pages like:
+                profile_picture,
+                uuid,
+                name
+            """
+            request.session['id'] = user.pk; # populate session
+            request.session['name'] = user.first_name;  # populate session
+        
+            return Response({"user": {"name": user.first_name}}, status=200)  # then pass to frontend
 
         return Response({'status': 'error','message': 'Invalid email or password'}, status=401) # User DoesNotExist
 
-
-
-
-
-# def student_logout(request):
-#     logout(request)
-#     return redirect('users:login')
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def student_logout(request):
+    try:
+        logout(request)
+        request.session.clear()
+        return Response(status=200)
+    except Exception:
+        return Response({"status": "error", "message": "Server error!"}, status=500)

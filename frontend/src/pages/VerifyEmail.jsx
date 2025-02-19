@@ -1,29 +1,36 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import backend from '../components/backend';
 
 function VerifyEmail() {
     const { token } = useParams();
     const [status, setStatus] = useState('Verifying...');
-    const [error, setError] = useState('');
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:8000/restapi/student-verify/${token}/`, {
-            method: "GET",
-            credentials: "include"
-        })
-        .then(response => response.json())
-        .then(data => {
-            // working but with bugs, success status and failure status both displayed
-            if (data.status === "success") {
-                setStatus("✅ Email successfully verified! Redirecting to login...");
-                setTimeout(() => {
-                    window.location.href = "/login";
-                }, 3000);
-            } else {
-                setError("❌ Verification failed: " + data.message);
+        const verifyToken = async () => {
+            try {
+                const response = await backend.get(`/student-verify-email/${token}/`);
+                if (response.status === 200) {
+                    setStatus("✅ Email successfully verified! Redirecting to login...");
+                    setTimeout(() => {
+                        navigate('/student-login');
+                    }, 3000);    
+                } else {
+                    setError("❌ Verification failed: " + data.message);
+                    setTimeout(() => {
+                        setStatus(null);
+                        navigate('/');
+                    }, 3000);
+                }
+            } catch (e) {
+                console.log(e);
+                setError("❌ An error occurred: " + e);
+                setStatus(null);
             }
-        })
-        .catch(error => setError("❌ An error occurred: " + error.message));
+        };
+        verifyToken();
     }, [token]);
 
     return (

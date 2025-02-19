@@ -1,15 +1,16 @@
 import backend from "../components/backend.jsx";
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
+import {useNavigate, useParams} from "react-router-dom";
 
-//when the Club page that stores the button to create events is made, i would like to have the club automatically
-// input as a parameter for the function below when the user clicks the button so that it can be easily posted to the backend
+function CreateEvent() {
+    const clubId = useParams();
+    const navigate = useNavigate();
 
-function CreateEvent(/*inputClub*/) {
     const [formData, setFormData] = useState({
-        club: 1, //placeholder so that posting to the backend can be tested with a pk, we likely will transition to inputClub down the line
+        club: clubId.clubId,
         title: '',
         description: '',
         start_time: null,
@@ -20,7 +21,16 @@ function CreateEvent(/*inputClub*/) {
 
     const [errors, setErrors] = useState({})
 
-    const handleSubmit = (e) => {
+    //checks to see if club with the ID in the URL exists, returns 404 if not
+    useEffect(() => {
+        backend
+            .get(`/clubs/${clubId.clubId}/`)
+            .catch(() => {
+            navigate("/*");
+        })
+    },[])
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const formErrors = validateForm(formData);
         setErrors(formErrors)
@@ -31,7 +41,20 @@ function CreateEvent(/*inputClub*/) {
                 start_time:format(formData.start_time,"yyyy-MM-dd'T'HH:mm:ssXXX"),
                 end_time:format(formData.end_time,"yyyy-MM-dd'T'H:mm:ssXXX")
             }
-            backend.post("/events/", formattedData)
+            try {
+                const response = await backend.post("/events/",
+                    formattedData,
+                    {
+                        headers: {
+                            'X-CSRFToken': document.cookie.split('csrftoken=')[1]?.split(';')[0] || ''
+                        }
+                    }
+                );
+                console.log(response);
+            }
+            catch (err){
+                console.error("Error creating event ", err)
+                }
             console.log(formData)
         }
     };
@@ -170,4 +193,3 @@ function CreateEvent(/*inputClub*/) {
 }
 
 export default CreateEvent;
-

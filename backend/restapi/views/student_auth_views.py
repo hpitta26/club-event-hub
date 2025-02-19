@@ -72,6 +72,9 @@ def student_signup(request):
             print("Form errors:", form.errors)  # Debug print --> form was invalid (shouldn't happens because of frontend check)
             return Response({'status': 'error', 'errors': form.errors}, status=400)
 
+
+
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def student_verify_email(request, token):
@@ -90,6 +93,9 @@ def student_verify_email(request, token):
     except Student.DoesNotExist:
         return Response({"status": "error", "message": "Invalid or expired token!"}, status=400)
 
+
+
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def student_verify_session(request):
@@ -104,6 +110,9 @@ def student_verify_session(request):
     except Exception as e:
         print(e)
         return Response({"status": "error", "message": "Server error!"}, status=500)
+
+
+
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -137,6 +146,9 @@ def student_login(request):
             return Response({"user": {"name": user.first_name}}, status=200)  # then pass to frontend
 
         return Response({'status': 'error','message': 'Invalid email or password'}, status=401) # User DoesNotExist
+
+
+
 
 @api_view(['GET'])
 @permission_classes([AllowAny])

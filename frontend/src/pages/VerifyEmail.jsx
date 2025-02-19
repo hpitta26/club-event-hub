@@ -14,7 +14,9 @@ function VerifyEmail() {
                 const response = await backend.get(`/student-verify-email/${token}/`);
                 if (response.status === 200) {
                     setStatus("✅ Email successfully verified! Redirecting to login...");
-                    navigate('/student-login');
+                    setTimeout(() => {
+                        navigate('/student-login');
+                    }, 3000);    
                 } else {
                     setError("❌ Verification failed: " + data.message);
                 }

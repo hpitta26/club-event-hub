@@ -65,7 +65,7 @@ function Register() {
                     major: '',
                     graduation_year: ''
                 });
-                navigate('/login');
+                navigate('/student-login');
             } else {
                 setError(data.message || 'Registration failed. Please try again.');
             }

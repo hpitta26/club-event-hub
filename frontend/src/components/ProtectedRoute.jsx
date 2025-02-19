@@ -4,5 +4,5 @@ import { UserContext } from '../context/userContext';
 
 export const ProtectedRoute = () => {
     const { userContext } = useContext(UserContext);
-    return userContext === null || userContext === undefined ? <Navigate to='login' /> : <Outlet />;
+    return userContext === null || userContext === undefined ? <Navigate to='/' /> : <Outlet />;
 };

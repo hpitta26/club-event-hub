@@ -1,29 +1,29 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import backend from '../components/backend';
 
 function VerifyEmail() {
     const { token } = useParams();
     const [status, setStatus] = useState('Verifying...');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:8000/restapi/student-verify/${token}/`, {
-            method: "GET",
-            credentials: "include"
-        })
-        .then(response => response.json())
-        .then(data => {
-            // working but with bugs, success status and failure status both displayed
-            if (data.status === "success") {
-                setStatus("✅ Email successfully verified! Redirecting to login...");
-                setTimeout(() => {
-                    window.location.href = "/login";
-                }, 3000);
-            } else {
-                setError("❌ Verification failed: " + data.message);
+        const verifyToken = async () => {
+            try {
+                const response = await backend.get(`/student-verify-email/${token}/`);
+                if (response.status === 200) {
+                    setStatus("✅ Email successfully verified! Redirecting to login...");
+                    navigate('/student-login');
+                } else {
+                    setError("❌ Verification failed: " + data.message);
+                }
+            } catch (e) {
+                console.log(e);
+                setError("❌ An error occurred: " + error.message);
             }
-        })
-        .catch(error => setError("❌ An error occurred: " + error.message));
+        };
+        verifyToken();
     }, [token]);
 
     return (

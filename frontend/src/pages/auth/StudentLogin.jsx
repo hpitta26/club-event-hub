@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import backend from '../../components/backend.jsx';
 import { UserContext } from '../../context/userContext.jsx';
 import { useNavigate } from 'react-router-dom';
+import { CsrfContext } from '../../context/CsrfContext.jsx';
 
 
 function Login() {
@@ -10,7 +11,7 @@ function Login() {
         password: ''
     });
     const { Login } = useContext(UserContext);
-
+    const getCsrfToken = useContext(CsrfContext);
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -19,11 +20,12 @@ function Login() {
         setError('');
 
         try {
+            const csrfToken = await getCsrfToken();
             const response = await backend.post('/student-login/',
                 formData,
                 {
                     headers: {
-                        'X-CSRFToken': document.cookie.split('csrftoken=')[1]?.split(';')[0] || ''
+                        'X-CSRFToken': csrfToken
                     }
                 }
             );

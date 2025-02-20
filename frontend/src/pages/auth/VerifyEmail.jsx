@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import backend from '../components/backend';
+import backend from '../../components/backend';
 
 function VerifyEmail() {
     const { token } = useParams();
@@ -17,6 +17,11 @@ function VerifyEmail() {
                     setTimeout(() => {
                         navigate('/student-login');
                     }, 3000);    
+                } else if (response.status === 205) {
+                    setStatus("✅ Email was already verified, or user does not exist...");
+                    setTimeout(() => {
+                        navigate('/student-login');
+                    }, 3000); 
                 } else {
                     setError("❌ Verification failed: " + data.message);
                     setTimeout(() => {

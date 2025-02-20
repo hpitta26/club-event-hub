@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import backend from '../../components/backend';
+import { CsrfContext } from '../../context/CsrfContext';
 
 function Register() {
     const [formData, setFormData] = useState({
@@ -13,7 +14,7 @@ function Register() {
         major: '',
         graduation_year: ''
     });
-
+    const getCsrfToken = useContext(CsrfContext);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const navigate = useNavigate();
@@ -40,13 +41,13 @@ function Register() {
 
         try {
             // Debug log
+            const csrfToken = await getCsrfToken();
             console.log('Making request to:', '/restapi/register/');
-
             const response = await backend.post('/student-register/', 
             {...formData, username},
             {
                 headers: {
-                    'X-CSRFToken': document.cookie.split('csrftoken=')[1]?.split(';')[0] || ''
+                    'X-CSRFToken': csrfToken
                 }
             });
 

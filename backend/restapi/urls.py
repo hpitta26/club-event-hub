@@ -1,6 +1,5 @@
 from django.urls import path
 from .views import drf_views, student_auth_views
-from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
 urlpatterns = [
@@ -11,8 +10,10 @@ urlpatterns = [
     path('students/', drf_views.StudentListCreateView.as_view(), name='student-list-create'),
     path('students/<int:pk>/', drf_views.StudentDetailView.as_view(), name='student-detail'),
 
-    path('student-register/', require_http_methods(['POST', 'OPTIONS'])(student_auth_views.student_signup), name='student-register'),
-    path('student-login/', require_http_methods(['POST', 'OPTIONS'])(student_auth_views.student_login), name='student-login'),
+    path('csrf-provider/', require_http_methods(['GET'])(student_auth_views.csrf_provider), name='csrf-provider'),
+
+    path('student-register/', require_http_methods(['POST'])(student_auth_views.student_signup), name='student-register'),
+    path('student-login/', require_http_methods(['POST'])(student_auth_views.student_login), name='student-login'),
     path('student-logout/', require_http_methods(['GET'])(student_auth_views.student_logout), name='student-logout'),
     path('student-verify-session/', require_http_methods(['GET'])(student_auth_views.student_verify_session), name='student-verify-session'),
     path('student-verify-email/<str:token>/', student_auth_views.student_verify_email, name='student-verify-email'),

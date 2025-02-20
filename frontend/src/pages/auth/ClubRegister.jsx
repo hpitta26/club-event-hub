@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import backend from '../../components/backend';
+import { CsrfContext } from '../../context/CsrfContext';
 
 function Register() {
     const [formData, setFormData] = useState({
@@ -13,7 +14,7 @@ function Register() {
         major: '',
         graduation_year: ''
     });
-
+    const getCsrfToken = useContext(CsrfContext);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const navigate = useNavigate();
@@ -23,67 +24,67 @@ function Register() {
         setError('');
         setSuccess('');
 
-        // // Form validation
-        // if (!formData.email || !formData.email.endsWith('@fiu.edu')) {
-        //     setError('Please enter a valid FIU email address');
-        //     return;
-        // }
+        // Form validation
+        if (!formData.email || !formData.email.endsWith('@fiu.edu')) {
+            setError('Please enter a valid FIU email address');
+            return;
+        }
 
-        // // Create username from email (before @fiu.edu)
-        // const username = formData.email.split('@')[0];
+        // Create username from email (before @fiu.edu)
+        const username = formData.email.split('@')[0];
         
-        // // Debug log
-        // console.log('Submitting form data:', {
-        //     ...formData,
-        //     username
-        // });
+        // Debug log
+        console.log('Submitting form data:', {
+            ...formData,
+            username
+        });
 
-        // try {
-        //     // Debug log
-        //     console.log('Making request to:', '/restapi/register/');
+        try {
+            // Debug log
+            const csrfToken = await getCsrfToken();            
+            console.log('Making request to:', '/restapi/club-register/');
+            const response = await backend.post('/club-register/', 
+            {...formData, username},
+            {
+                headers: {
+                    'X-CSRFToken': csrfToken
+                }
+            });
 
-        //     const response = await backend.post('/club-register/', 
-        //     {...formData, username},
-        //     {
-        //         headers: {
-        //             'X-CSRFToken': document.cookie.split('csrftoken=')[1]?.split(';')[0] || ''
-        //         }
-        //     });
+            // Debug log
+            console.log('Response:', response);
 
-        //     // Debug log
-        //     console.log('Response:', response);
+            if (response.status === 200) {
+                setSuccess('Registration successful! Please check your email for verification.');
+                setFormData({
+                    username: '',
+                    first_name: '',
+                    last_name: '',
+                    email: '',
+                    password1: '',
+                    password2: '',
+                    major: '',
+                    graduation_year: ''
+                });
+                navigate('/login');
+            } else {
+                setError(data.message || 'Registration failed. Please try again.');
+            }
+        } catch (err) {
+            // Debug log
+            console.error('Error details:', err);
+            console.error('Error response:', err.response);
 
-        //     if (response.status === 200) {
-        //         setSuccess('Registration successful! Please check your email for verification.');
-        //         setFormData({
-        //             username: '',
-        //             first_name: '',
-        //             last_name: '',
-        //             email: '',
-        //             password1: '',
-        //             password2: '',
-        //             major: '',
-        //             graduation_year: ''
-        //         });
-        //         navigate('/login');
-        //     } else {
-        //         setError(data.message || 'Registration failed. Please try again.');
-        //     }
-        // } catch (err) {
-        //     // Debug log
-        //     console.error('Error details:', err);
-        //     console.error('Error response:', err.response);
-
-        //     if (err.response?.data?.errors) {
-        //         const errors = err.response.data.errors;
-        //         const errorMessage = Object.entries(errors)
-        //             .map(([key, value]) => `${key}: ${value.join(', ')}`)
-        //             .join('\n');
-        //         setError(errorMessage);
-        //     } else {
-        //         setError(err.response?.data?.message || 'Registration failed. Please try again.');
-        //     }
-        // }
+            if (err.response?.data?.errors) {
+                const errors = err.response.data.errors;
+                const errorMessage = Object.entries(errors)
+                    .map(([key, value]) => `${key}: ${value.join(', ')}`)
+                    .join('\n');
+                setError(errorMessage);
+            } else {
+                setError(err.response?.data?.message || 'Registration failed. Please try again.');
+            }
+        }
     };
 
     const handleChange = (e) => {
@@ -144,7 +145,7 @@ function Register() {
                             value={formData.email}
                             name='email' 
                             type='email'
-                            placeholder='FIU Email (@fiu.edu)' 
+                            placeholder='Email' 
                             required
                             pattern='.+@fiu\.edu'
                             className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 

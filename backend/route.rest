@@ -69,7 +69,8 @@ DELETE http://localhost:8000/restapi/events/3/
 ###
 ### ----------- CLUB TESTING -----------
 ###
-### PUT NOT WORKING
+### FULLY WORKING
+### use PATCH for updating
 
 POST http://localhost:8000/restapi/clubs/
 Content-Type: application/json
@@ -113,23 +114,27 @@ GET http://localhost:8000/restapi/clubs/
 
 GET http://localhost:8000/restapi/clubs/2/
 
-### PUT not Working --> "username": ["A user with that username already exists."]
+### 
 
-PUT http://localhost:8000/restapi/clubs/1/
+PATCH http://localhost:8000/restapi/clubs/1/
 Content-Type: application/json
 
 {
-  "user": {
-    "username": "clubowner",
-    "email": "owner@example.com",
-    "first_name": "Club",
-    "last_name": "Owner",
-    "password": "securepassword"
-  },
-  "name": "Awesome Club Updated",
-  "description": "Updated description for Awesome Club.",
-  "social_media_handles": {"twitter": "@awesomeclubtw", "instagram": "@awesomeclubinsta"}
-}
+    "user": {
+      "email": "owner@example.com",
+      "first_name": "Club",
+      "last_name": "Owner"
+    },
+    "name": "Updated Awesome Club",
+    "description": "A description for Awesome Club.",
+    "social_media_handles": {
+      "twitter": "@awesomeclubtw",
+      "instagram": "@awesomeclubinsta"
+    },
+    "spirit_rating": 1,
+    "followers_count": 0,
+    "events_count": 2
+  }
 
 ###
 
@@ -147,15 +152,16 @@ DELETE http://localhost:8000/restapi/clubs/2/
 ###
 ### ----------- STUDENT TESTING -----------
 ###
-### PUT NOT WORKING
+### FULLY WORKING
+### use PATCH for updating
 
 POST http://localhost:8000/restapi/students/
 Content-Type: application/json
 
 {
   "user": {
-    "username": "student1",
-    "email": "student1@example.com",
+    "username": "student2",
+    "email": "studen2@example.com",
     "first_name": "John",
     "last_name": "Doe",
     "password": "securepassword"
@@ -189,21 +195,18 @@ GET http://localhost:8000/restapi/students/
 
 GET http://localhost:8000/restapi/students/2/
 
-### PUT not Working --> "username": ["A user with that username already exists."]
+###
 
-PUT http://localhost:8000/restapi/students/1/
+PATCH http://localhost:8000/restapi/students/1/
 Content-Type: application/json
 
 {
-  "user": {
-    "username": "student1",
-    "email": "student1@example.com",
-    "first_name": "John",
-    "last_name": "Doe",
-    "password": "securepassword"
-  },
-  "major": "Updated Software Engineering",
-  "graduation_year": 2025
+    "user": {
+      "password": "updated_password2"
+    },
+    "major": "Updated Computer Science",
+    "graduation_year": 2025,
+    "spirit_points": 0
 }
 
 ###

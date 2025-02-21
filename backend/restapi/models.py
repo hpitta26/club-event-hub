@@ -38,7 +38,7 @@ class Student(models.Model):
 
     # profile_picture = models.ImageField(upload_to='student_profiles/', blank=True, null=True)
     major = models.CharField(max_length=255, blank=True, null=True)
-    graduation_year = models.PositiveIntegerField(blank=True, null=True)
+    graduation_year = models.PositiveIntegerField(blank=True, null=True, validators=[MinValueValidator(timezone.now().year)])
     spirit_points = models.PositiveIntegerField(default=0)
     
     email_verified = models.BooleanField(default=False)

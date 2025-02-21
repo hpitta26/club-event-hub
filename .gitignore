@@ -145,7 +145,7 @@ venv/
 *.pyo
 *.db
 /migrations/
-/migrations/0*.*
+**/migrations/0*.*
 
 # Frontend (React)
 build/

@@ -14,6 +14,9 @@ urlpatterns = [
     path('student-register/', require_http_methods(['POST'])(student_auth_views.student_signup), name='student-register'),
     path('student-login/', require_http_methods(['POST'])(student_auth_views.student_login), name='student-login'),
 
+    path('club-register/', require_http_methods(['POST'])(club_auth_views.club_register), name='club-register'),
+    path('club-login/', require_http_methods(['POST'])(club_auth_views.club_login), name='club-login'),
+
     path('csrf-provider/', require_http_methods(['GET'])(auth_views.csrf_provider), name='provider'),
     path('logout/', require_http_methods(['GET'])(auth_views.logout_view), name='logout'),
     path('verify-session/', require_http_methods(['GET'])(auth_views.verify_session), name='verify-session'),

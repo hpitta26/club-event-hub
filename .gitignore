@@ -145,6 +145,7 @@ venv/
 *.pyo
 *.db
 /migrations/
+/migrations/0*.*
 
 # Frontend (React)
 build/
@@ -154,3 +155,5 @@ build/
 docker-compose.override.yml
 .vercel
 .netlify
+
+*.sh

@@ -11,109 +11,88 @@ from django.conf import settings
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from restapi.forms import StudentCreationForm
-from restapi.models import Student
+from restapi.forms import ClubCreationForm
+from restapi.models import Club
 import uuid
 
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
 @csrf_protect
-def student_signup(request):
+def club_register(request):
     print("Received signup request:", request.method)  # Debug print
     print("Request data:", request.data)  # Debug print
-    form = StudentCreationForm(request.data)
+    form = ClubCreationForm(request.data)
     if form.is_valid():
         print("Form is valid")  # Debug print
-        try:
-            user = form.save(commit=False)
-            user.is_active = False
-            user.save()
+        user = form.save(commit=False)
+        user.is_active = False
+        user.save()
 
-            # Create verification token
-            verification_token = str(uuid.uuid4())
+        # Create club profile
+        Club.objects.create(
+            user=user,
+            club_name=form.cleaned_data.get('club_name'),
+            description=form.cleaned_data.get('description')
+        )
 
-            # Create student profile and save verification token
-            Student.objects.create(
-                user=user,
-                major=form.cleaned_data.get('major'),
-                graduation_year=form.cleaned_data.get('graduation_year'),
-                verification_token=verification_token  # token that will be sent through email
+        # Send verification email to the Club
+        verification_link = f"http://localhost:5173/verify/{user.verification_token}"
+        response = send_mail(
+                'Verify your email',
+                f'Verify your email, click this \
+                    link to verify: {verification_link}',
+                settings.DEFAULT_FROM_EMAIL,
+                [user.email],
+                fail_silently=False,
             )
-
-            # Send verification email to the Student
-            verification_link = f"http://localhost:5173/verify/{verification_token}"
-            response = send_mail(
-                    'Verify your FIU email',
-                    f'Verify your FIU email, click this \
-                        link to verify: {verification_link}',
-                    settings.DEFAULT_FROM_EMAIL,
-                    [user.email],
-                    fail_silently=False,
-                )
-            print(response)
-            # if response
-            #     return Response(
-            #         {'message': 'Failed to send verification email'},
-            #         status=400
-            #         )
-
+        if response != 1:
             return Response(
-                {'message': 'Please check your email to verify your account'},
-                status=200
+                {'message': 'Failed to send verification email'},
+                status=400
             )
 
-        except Exception as e:
-            print("Error:", str(e))  # Debug print
-            if 'user' in locals():
-                user.delete()
-            return Response({'status': 'error', 'message': str(e)}, status=400)
-    else:
-        # Debug print --> form was invalid
-        # (shouldn't happens because of frontend check)
-        print("Form errors:", form.errors) 
-        return Response({'status': 'error', 'errors': form.errors}, status=400)
+        return Response(
+            {'message': 'Please check your email to verify your account'},
+            status=200
+        )
+    print("Form errors:", form.errors)
+    return Response({'errors': form.errors}, status=400)
 
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
 @csrf_protect
-def student_login(request):
-    try:    
-        school_email = request.data.get('school_email')
-        password = request.data.get('password')
+def club_login(request):
+    email = request.data.get('email')
+    password = request.data.get('password')
 
-        if not school_email or not password:  # this will never hit since you are defaulting=''
+    if not email or not password:
+        return Response(
+            {'error': 'Please provide both email and password'},
+            status=400
+        )
+    user = authenticate(email=email, password=password)
+
+    if user is not None:
+        if not user.is_email_verified:
             return Response(
-                {'message': 'Please provide both email and password'},
-                status=400
+                {'error': 'Please verify your email before logging in'}, 
+                status=401
             )
 
-        username = school_email.split('@')[0]
-        user = authenticate(username=username, password=password)
+        login(request, user)
 
-        if user is not None:
-            if not user.student_profile.email_verified:
-                return Response(
-                    {'message': 'Please verify your email before logging in'}, 
-                    status=401
-                )
+        # pass only essential information that
+        # has to persist through several pages like:
+        #     profile_picture,
+        #     uuid,
+        #     name
 
-            login(request, user)
+        request.session['id'] = str(user.pk)  # populate session
+        request.session['role'] = user.role   # populate session
 
-            # pass only essential information that
-            # has to persist through several pages like:
-            #     profile_picture,
-            #     uuid,
-            #     name
-
-            request.session['id'] = user.pk  # populate session
-            request.session['name'] = user.first_name   # populate session
-
-            return Response({"user": {"name": user.first_name}}, status=200)
-        return Response(
-            {'message': 'Invalid email or password'}, status=401
-        )  # User DoesNotExist
-    except Exception as e:
-        print(e)
-        return Response({'error': 'Catastrophic server error!'}, status=500)
+        return Response({"user": {"role": user.role}}, status=200)
+    return Response(
+        {'error': 'Invalid email or password'}, status=401
+    )

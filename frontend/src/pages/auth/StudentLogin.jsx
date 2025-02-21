@@ -7,7 +7,7 @@ import { CsrfContext } from '../../context/CsrfContext.jsx';
 
 function Login() {
     const [formData, setFormData] = useState({
-        school_email: '',
+        email: '',
         password: ''
     });
     const { Login } = useContext(UserContext);
@@ -52,7 +52,7 @@ function Login() {
             <div className="grid grid-rows-4 gap-4">
                 <h1 className="text-white text-4xl mb-4">Student Login</h1>
                 {error && <div className="text-red-500">{error}</div>}
-                <input onChange={handleChange} name="school_email" value={formData.school_email} placeholder="School Email" className="bg-gray-700 text-white rounded-md ps-4 py-2" />
+                <input onChange={handleChange} name="email" value={formData.email} placeholder="School Email" className="bg-gray-700 text-white rounded-md ps-4 py-2" />
                 <input type="password" onChange={handleChange} name="password" value={formData.password} placeholder="Password" className="bg-gray-700 text-white rounded-md ps-4 py-2" />
                 <button type="submit" onClick={handleSubmit} className="bg-blue-600 w-full py-2 text-white rounded-md hover:bg-blue-500">Login</button>
             </div>

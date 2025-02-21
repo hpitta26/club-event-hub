@@ -5,14 +5,11 @@ import { CsrfContext } from '../../context/CsrfContext';
 
 function Register() {
     const [formData, setFormData] = useState({
-        username: '',
-        first_name: '',
-        last_name: '',
+        club_name: '',
+        description: '',
         email: '',
         password1: '',
-        password2: '',
-        major: '',
-        graduation_year: ''
+        password2: ''
     });
     const getCsrfToken = useContext(CsrfContext);
     const [error, setError] = useState('');
@@ -24,27 +21,15 @@ function Register() {
         setError('');
         setSuccess('');
 
-        // Form validation
-        if (!formData.email || !formData.email.endsWith('@fiu.edu')) {
-            setError('Please enter a valid FIU email address');
-            return;
-        }
-
-        // Create username from email (before @fiu.edu)
-        const username = formData.email.split('@')[0];
-        
         // Debug log
-        console.log('Submitting form data:', {
-            ...formData,
-            username
-        });
+        console.log('Submitting form data:', formData);
 
         try {
             // Debug log
             const csrfToken = await getCsrfToken();            
             console.log('Making request to:', '/restapi/club-register/');
             const response = await backend.post('/club-register/', 
-            {...formData, username},
+            formData,
             {
                 headers: {
                     'X-CSRFToken': csrfToken
@@ -57,16 +42,12 @@ function Register() {
             if (response.status === 200) {
                 setSuccess('Registration successful! Please check your email for verification.');
                 setFormData({
-                    username: '',
-                    first_name: '',
-                    last_name: '',
+                    club_name: '',
                     email: '',
                     password1: '',
-                    password2: '',
-                    major: '',
-                    graduation_year: ''
+                    password2: ''
                 });
-                navigate('/login');
+                navigate('/club-login');
             } else {
                 setError(data.message || 'Registration failed. Please try again.');
             }
@@ -122,19 +103,19 @@ function Register() {
                     <div>
                         <input 
                             onChange={handleChange} 
-                            value={formData.first_name}
-                            name='first_name' 
-                            placeholder='First Name' 
+                            value={formData.club_name}
+                            name='club_name' 
+                            placeholder='Club Name'
                             required
                             className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
                         />
                     </div>
                     <div>
-                        <input 
-                            onChange={handleChange}
-                            value={formData.last_name} 
-                            name='last_name' 
-                            placeholder='Last Name' 
+                        <textarea 
+                            onChange={handleChange} 
+                            value={formData.description}
+                            name='description' 
+                            placeholder='Description / Mission Statement'
                             required
                             className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
                         />
@@ -145,54 +126,30 @@ function Register() {
                             value={formData.email}
                             name='email' 
                             type='email'
-                            placeholder='Email' 
+                            placeholder='Club Email' 
                             required
-                            pattern='.+@fiu\.edu'
+                            pattern='.+@*\.*'
                             className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
                         />
                     </div>
                     <div>
                         <input 
-                            onChange={handleChange} 
-                            value={formData.major}
-                            name='major' 
-                            placeholder='Major' 
-                            className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
-                        />
-                    </div>
-                    <div>
-                        <input 
-                            onChange={handleChange} 
-                            value={formData.graduation_year}
-                            name='graduation_year' 
-                            type='number'
-                            min="2024"
-                            max="2030"
-                            placeholder='Graduation Year' 
-                            className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
-                        />
-                    </div>
-                    <div>
-                        <input 
-                            type='password' 
                             onChange={handleChange} 
                             value={formData.password1}
                             name='password1' 
+                            type='password'
                             placeholder='Password' 
-                            required
-                            minLength={8}
                             className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
                         />
                     </div>
                     <div>
                         <input 
-                            type='password' 
-                            onChange={handleChange} 
-                            value={formData.password2}
+                            onChange={handleChange}
+                            value={formData.password2} 
                             name='password2' 
-                            placeholder='Confirm Password' 
+                            placeholder='Confirm Password'
+                            type='password' 
                             required
-                            minLength={8}
                             className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
                         />
                     </div>

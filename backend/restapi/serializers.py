@@ -1,17 +1,20 @@
-from rest_framework import serializers
-from django.contrib.auth.models import User
-from .models import Club, Student, Event
+"""
+Used to convert between Model Instances and JSON Objects (both ways)
+Serialization and Deserialization (writing and reading)
+JSON Object is what is sent and received by APIs (in Request and Response Objects)
 
-# Used to convert between Model Instances and JSON Objects (both ways)
-# Serialization and Deserialization (writing and reading)
-# JSON Object is what is sent and received by APIs (in Request and Response Objects)
+Returns:
+    _type_: _description_
+"""
+from rest_framework import serializers
+from restapi.models import Club, Student, Event, CustomUser
 
 
 class UserSerializer(serializers.ModelSerializer):
    class Meta:
-       model = User
+       model = CustomUser
        fields = [ # Include the user fields you want to expose
-           'id', 'username', 'email', 'first_name', 'last_name', 'password'
+           'id', 'email', 'password'
        ]
        extra_kwargs = {
            'password': {'write_only': True},  # Do not return password in responses
@@ -20,19 +23,14 @@ class UserSerializer(serializers.ModelSerializer):
 
    def create(self, validated_data): # override create with hashed password
        password = validated_data.pop('password')
-       user = User(**validated_data)
+       user = CustomUser(**validated_data)
        user.set_password(password)
        user.save()
        return user
 
 
    def update(self, instance, validated_data):
-       instance.username = validated_data.get('username', instance.username)
        instance.email = validated_data.get('email', instance.email)
-       instance.first_name = validated_data.get('first_name', instance.first_name)
-       instance.last_name = validated_data.get('last_name', instance.last_name)
-
-
        password = validated_data.get('password', None) # hash new password if user wants to update it
        if password:
            instance.set_password(password)
@@ -48,7 +46,7 @@ class ClubSerializer(serializers.ModelSerializer):
    class Meta:
        model = Club
        fields = [ # expose fields that will be sent in API calls
-           'id', 'user', 'name', 'description', 'social_media_handles', 'spirit_rating', 'followers_count', 'events_count'
+           'id', 'user', 'club_name', 'description', 'social_media_handles', 'spirit_rating', 'followers_count', 'events_count'
        ]
 
 
@@ -76,7 +74,7 @@ class ClubSerializer(serializers.ModelSerializer):
            user_serializer.is_valid(raise_exception=True)
            user_serializer.save()
        # Update club-specific fields
-       instance.name = validated_data.get('name', instance.name)
+       instance.club_name = validated_data.get('club_name', instance.club_name)
        instance.description = validated_data.get('description', instance.description)
        instance.social_media_handles = validated_data.get('social_media_handles', instance.social_media_handles)
        instance.spirit_rating = validated_data.get('spirit_rating', instance.spirit_rating)
@@ -91,7 +89,7 @@ class StudentSerializer(serializers.ModelSerializer):
    class Meta:
        model = Student
        fields = [
-           'id', 'user', 'major', 'graduation_year', 'spirit_points',
+           'id', 'user', 'major', 'graduation_year', 'spirit_points', 'first_name', 'last_name'
        ]
   
    def create(self, validated_data):
@@ -110,6 +108,8 @@ class StudentSerializer(serializers.ModelSerializer):
            user_serializer.is_valid(raise_exception=True)
            user_serializer.save()
        # Update student-specific fields
+       instance.first_name = validated_data.get('first_name', instance.first_name)
+       instance.last_name = validated_data.get('last_name', instance.last_name)
        instance.major = validated_data.get('major', instance.major)
        instance.graduation_year = validated_data.get('graduation_year', instance.graduation_year)
        instance.spirit_points = validated_data.get('spirit_points', instance.spirit_points)

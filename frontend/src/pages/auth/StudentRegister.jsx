@@ -5,7 +5,6 @@ import { CsrfContext } from '../../context/CsrfContext';
 
 function Register() {
     const [formData, setFormData] = useState({
-        username: '',
         first_name: '',
         last_name: '',
         email: '',
@@ -30,21 +29,15 @@ function Register() {
             return;
         }
 
-        // Create username from email (before @fiu.edu)
-        const username = formData.email.split('@')[0];
-        
         // Debug log
-        console.log('Submitting form data:', {
-            ...formData,
-            username
-        });
+        console.log('Submitting form data:', formData);
 
         try {
             // Debug log
             const csrfToken = await getCsrfToken();
             console.log('Making request to:', '/restapi/register/');
             const response = await backend.post('/student-register/', 
-            {...formData, username},
+            formData,
             {
                 headers: {
                     'X-CSRFToken': csrfToken
@@ -57,7 +50,6 @@ function Register() {
             if (response.status === 200) {
                 setSuccess('Registration successful! Please check your email for verification.');
                 setFormData({
-                    username: '',
                     first_name: '',
                     last_name: '',
                     email: '',
@@ -142,7 +134,7 @@ function Register() {
                     <div>
                         <input 
                             onChange={handleChange} 
-                            value={formData.email}
+                            value={formData.school_email}
                             name='email' 
                             type='email'
                             placeholder='FIU Email (@fiu.edu)' 

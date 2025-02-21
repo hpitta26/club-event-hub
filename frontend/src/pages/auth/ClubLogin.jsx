@@ -7,7 +7,7 @@ import { CsrfContext } from '../../context/CsrfContext.jsx';
 
 function Login() {
     const [formData, setFormData] = useState({
-        school_email: '',
+        email: '',
         password: ''
     });
     const { Login } = useContext(UserContext);

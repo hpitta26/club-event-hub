@@ -10,6 +10,6 @@ function Home() {
             </div>
         </section>
     );
-}
+};
 
 export default Home;

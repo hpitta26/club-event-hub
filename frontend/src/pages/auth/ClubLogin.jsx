@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
-import backend from '../components/backend.jsx';
-import { UserContext } from '../context/userContext.jsx';
+import backend from '../../components/backend.jsx';
+import { UserContext } from '../../context/userContext.jsx';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -18,30 +18,27 @@ function Login() {
         e.preventDefault();
         setError('');
 
-        try {
-            const response = await fetch('http://127.0.0.1:8000/restapi/login/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': document.cookie.split('csrftoken=')[1]?.split(';')[0] || ''
-                },
-                body: JSON.stringify(formData),
-                credentials: 'include',
-            });
-
-            const data = await response.json();
-            if (data.status === 'success') {
-                window.location.href = data.redirect_url; // Redirect to home page
-                // console.log('logging user in...')
-                // Login({name: 'Kevin Pino'});
-                // --> needs to match Student Model in models.py (accessed through data)
-            } else {
-                setError(data.message);
-            }
-        } catch (err) {
-            console.error("Login error:", err);
-            setError('Login failed. Please try again.');
-        }
+        // try {
+        //     const response = await backend.post('/club-login/',
+        //         formData,
+        //         {
+        //             headers: {
+        //                 'X-CSRFToken': document.cookie.split('csrftoken=')[1]?.split(';')[0] || ''
+        //             }
+        //         }
+        //     );
+        //     console.log(response);
+        //     if (response.status === 200) {
+        //         console.log('logging user in...');
+        //         Login(response.data);
+        //         navigate('/home');
+        //     } else {
+        //         setError(response.message);
+        //     }
+        // } catch (err) {
+        //     console.error("Login error:", err);
+        //     setError('Login failed. Please try again.');
+        // }
     };
     
     const handleChange = (e) => {
@@ -51,7 +48,7 @@ function Login() {
     return (
         <section className="min-h-screen bg-stone-900 flex justify-center items-center">
             <div className="grid grid-rows-4 gap-4">
-                <h1 className="text-white text-4xl mb-4">Login</h1>
+                <h1 className="text-white text-4xl mb-4">Club Login</h1>
                 {error && <div className="text-red-500">{error}</div>}
                 <input onChange={handleChange} name="school_email" value={formData.school_email} placeholder="School Email" className="bg-gray-700 text-white rounded-md ps-4 py-2" />
                 <input type="password" onChange={handleChange} name="password" value={formData.password} placeholder="Password" className="bg-gray-700 text-white rounded-md ps-4 py-2" />

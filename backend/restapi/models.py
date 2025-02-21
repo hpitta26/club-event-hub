@@ -38,7 +38,7 @@ class Student(models.Model):
 
     # profile_picture = models.ImageField(upload_to='student_profiles/', blank=True, null=True)
     major = models.CharField(max_length=255, blank=True, null=True)
-    graduation_year = models.PositiveIntegerField(blank=True, null=True)
+    graduation_year = models.PositiveIntegerField(blank=True, null=True, validators=[MinValueValidator(timezone.now().year)])
     spirit_points = models.PositiveIntegerField(default=0)
     
     email_verified = models.BooleanField(default=False)
@@ -46,6 +46,8 @@ class Student(models.Model):
     password_change_token = models.CharField(max_length=100, blank=True)
     password_change_pending = models.BooleanField(default=False)
     new_password_hash = models.CharField(max_length=128, blank=True)
+
+    # admin --> is an admin of a specfic club
 
     following_clubs = models.ManyToManyField(Club, related_name='followers', blank=True) # accessible through Club as followers
 
@@ -70,6 +72,9 @@ class Event(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    # private/public boolean
+    # tags --> type of event
 
     rsvps = models.ManyToManyField(Student, related_name='rsvp_events', blank=True) # accessible through Student as rsvp_events
 

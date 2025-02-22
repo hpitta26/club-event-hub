@@ -14,7 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
    class Meta:
        model = CustomUser
        fields = [ # Include the user fields you want to expose
-           'id', 'email', 'password'
+           'email', 'password'
        ]
        extra_kwargs = {
            'password': {'write_only': True},  # Do not return password in responses

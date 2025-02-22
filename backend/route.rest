@@ -77,11 +77,9 @@ Content-Type: application/json
 {
     "user": {
         "email": "owner@example.com",
-        "first_name": "Club",
-        "last_name": "Owner",
         "password": "securepassword"
     },
-    "name": "Awesome Club",
+    "club_name": "Awesome Club",
     "description": "A description for Awesome Club.",
     "social_media_handles": {"twitter": "@awesomeclubtw", "instagram": "@awesomeclubinsta"}
 }
@@ -153,10 +151,10 @@ Content-Type: application/json
 {
   "user": {
     "email": "student1@example.com",
-    "first_name": "John",
-    "last_name": "Doe",
     "password": "securepassword"
   },
+  "first_name": "John",
+  "last_name": "Doe",
   "major": "Computer Science",
   "graduation_year": 2025
 }
@@ -183,7 +181,7 @@ GET http://localhost:8000/restapi/students/
 
 ###
 
-GET http://localhost:8000/restapi/students/2/
+GET http://localhost:8000/restapi/students/1/
 
 ### Use Patch for partial updates --> PUT requires all fields (creates issues with unique=True fields)
 

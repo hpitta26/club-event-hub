@@ -4,10 +4,14 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from restapi.models import CustomUser
+from django.views.decorators.csrf import csrf_protect
+from restapi.forms import ClubCreationForm, StudentCreationForm
+from django.contrib.auth import login, authenticate
 
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
+@csrf_protect
 def verify_email(request, token):
     try:
         user = CustomUser.objects.get_by_verify_token(token)
@@ -39,6 +43,7 @@ def csrf_provider(request):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
+@csrf_protect
 def verify_session(request):
     try:
         print("TEST")
@@ -58,7 +63,6 @@ def verify_session(request):
             status=500
         )
 
-
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def logout_view(request):
@@ -72,3 +76,68 @@ def logout_view(request):
         response = Response({"errors": "Server error!"}, status=500)
         response.delete_cookie('csrftoken')
         return response
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+@csrf_protect
+def register_view(request):
+    print("Register route with data:", request.data)
+    role = request.data.get("role")
+
+    if role == "CLUB":
+        form = ClubCreationForm(request.data)
+    elif role == "STUDENT":
+        form = StudentCreationForm(request.data)
+    else:
+        return Response({'error': 'Invalid form data'}, status=400)
+
+    if form.is_valid():
+        print("Form is valid")  # Debug print
+        user = form.save(commit=False)
+        user.is_active = False
+        user.save()
+
+        return Response(
+            {'message': 'Please check your email to verify your account'},
+            status=200
+        )
+    print("Form errors:", form.errors)
+    return Response({'errors': form.errors}, status=400)
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+@csrf_protect
+def login_view(request):
+    email = request.data.get('email')
+    password = request.data.get('password')
+
+    if not email or not password:
+        return Response(
+            {'error': 'Please provide both email and password'},
+            status=400
+        )
+
+    user = authenticate(email=email, password=password)
+
+    if user is not None:
+        if not user.is_email_verified:
+            return Response(
+                {'error': 'Please verify your email before logging in'}, 
+                status=401
+            )
+
+        login(request, user)
+
+        # pass only essential information that
+        # has to persist through several pages like:
+        #     profile_picture,
+        #     uuid,
+        #     name
+
+        request.session['id'] = str(user.pk)  # populate session
+        request.session['role'] = user.role   # populate session
+
+        return Response({"user": {"role": user.role}}, status=200)
+    return Response(
+        {'error': 'Invalid email or password'}, status=401
+    )

@@ -17,7 +17,7 @@ from restapi.models import Student
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
-@csrf_protect
+@csrf_protect # Ensures Requests include a valid CSRF token (if token if missing or invalid -> request is rejected with a 403 error)
 def student_signup(request):
     print("Received signup request:", request.method)  # Debug print
     print("Request data:", request.data)  # Debug print

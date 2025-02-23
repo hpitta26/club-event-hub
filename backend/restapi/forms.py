@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Student, CustomUser, Club
+from django.utils import timezone
 
 
 
@@ -35,11 +36,19 @@ class StudentCreationForm(CustomUserCreationForm):
         model = CustomUser
         fields = ("email",)
 
-    def clean_email(self):
+    def clean_email(self): # check if email is valid
         email = self.cleaned_data['email']
         if not email.endswith('@fiu.edu'):
-            raise forms.ValidationError('Must use an FIU email address') # check if email is valid
+            raise forms.ValidationError('Must use an FIU email address') 
         return email
+    
+    def clean_graduation_year(self): # check if graduation year is valid
+        graduation_year = self.cleaned_data['graduation_year']
+        current_year = timezone.now().year
+        valid_years = range(current_year, current_year + 5)
+        if graduation_year not in valid_years:
+            raise forms.ValidationError(f"Graduation year must be one of {list(valid_years)}.")
+        return graduation_year
 
     def save(self, commit=True):
         user = super().save(commit=False)

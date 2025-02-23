@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from restapi.models import CustomUser
 
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def verify_email(request, token):
@@ -32,7 +33,7 @@ def verify_email(request, token):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 @csrf_exempt
-@ensure_csrf_cookie
+@ensure_csrf_cookie # Ensures that the Response from this view sets a CSRF Cookie
 def csrf_provider(request):
     return Response({'csrfToken': request.META.get('CSRF_COOKIE', '')}, status=200)
 
@@ -64,6 +65,8 @@ def logout_view(request):
         logout(request)
         request.session.clear()
         response = Response(status=200)
+        # When you Delete the Cookie --> the browser will have no CSRF_token (so Login and Register will return a 403 error)
+        # When you refresh the page --> If a CSRF_token isn't present you will be assigned a new one
         response.delete_cookie('csrftoken')
         return response
     except AttributeError:

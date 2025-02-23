@@ -14,6 +14,9 @@ from django.contrib.auth.models import AbstractUser
 from .manager import CustomUserManager
 import uuid
 
+
+
+
 class CustomUser(AbstractUser):
     username = None
     first_name = None
@@ -48,6 +51,9 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.email
 
+
+
+
 class Club(models.Model):
     user = models.OneToOneField(
         CustomUser, on_delete=models.CASCADE, related_name='club_profile'
@@ -76,6 +82,9 @@ class Club(models.Model):
     def __str__(self):
         return str(self.club_name)
 
+
+
+
 class Student(models.Model):
     user = models.OneToOneField(
         CustomUser, on_delete=models.CASCADE, related_name='student_profile'
@@ -87,7 +96,7 @@ class Student(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     major = models.CharField(max_length=255, blank=True, null=True)
-    graduation_year = models.PositiveIntegerField(blank=True, null=True, validators=[MinValueValidator(timezone.now().year)])
+    graduation_year = models.PositiveIntegerField(blank=True, null=True) # current_year =< grad_year =< current_year + 4
     spirit_points = models.PositiveIntegerField(default=0)
 
     password_change_token = models.CharField(max_length=100, blank=True)
@@ -102,6 +111,7 @@ class Student(models.Model):
 
     def __str__(self):
         return str(self.user.email)
+
 
 
 
@@ -133,6 +143,9 @@ class Event(models.Model):
     # Other Potential Ideas:
     # expanded_card --> could be MarkDown file
     # (allows for customizability like notion, obsidian, ...)
+
+
+
 
 # ---- Additional Fields ----:
 # blank=False --> required field (default)

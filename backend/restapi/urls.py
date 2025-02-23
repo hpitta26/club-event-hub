@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import drf_views, student_auth_views, auth_views, club_auth_views, club_follow_views
+from .views import drf_views, auth_views, club_follow_views
 from django.views.decorators.http import require_http_methods
 
 urlpatterns = [

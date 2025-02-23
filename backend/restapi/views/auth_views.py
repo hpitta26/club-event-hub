@@ -46,7 +46,6 @@ def csrf_provider(request):
 @csrf_protect
 def verify_session(request):
     try:
-        print("TEST")
         if request.session.has_key('id'):
             user = CustomUser.objects.get(id=request.session['id'])
             if not user:
@@ -121,8 +120,10 @@ def login_view(request):
 
     if user is not None:
         if not user.is_email_verified:
+            error_message = 'Please verify your email before logging in'
+            print(error_message)
             return Response(
-                {'error': 'Please verify your email before logging in'}, 
+                {'error': error_message },
                 status=401
             )
 
@@ -138,6 +139,8 @@ def login_view(request):
         request.session['role'] = user.role   # populate session
 
         return Response({"user": {"role": user.role}}, status=200)
+    error_message = 'Please verify your email before logging in'
+    print(error_message)
     return Response(
-        {'error': 'Invalid email or password'}, status=401
+        {'error': error_message}, status=401
     )

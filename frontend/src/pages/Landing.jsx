@@ -4,7 +4,6 @@ import Modal from 'react-modal';
 
 function Landing () {
     const [modalIsOpen, setIsOpen] = useState(false);
-    const [loginRegister, setLoginRegister] = useState('');
     const navigate = useNavigate();
     useEffect(() => {
         Modal.setAppElement('#mainSection');
@@ -35,8 +34,8 @@ function Landing () {
                     </h1>
                 </div>
                 <div className='grid grid-cols-2 gap-3 text-center'>
-                    <button  onClick={() => {setIsOpen(true);setLoginRegister('register')}} className='text-2xl bg-emerald-600 py-2 rounded-sm hover:bg-emerald-500 px-5 text-white'>Register</button>
-                    <button onClick={() => {setIsOpen(true);setLoginRegister('login')}} className='text-2xl bg-emerald-600 py-2 rounded-sm hover:bg-emerald-500 px-5 text-white'>Login</button>
+                    <button  onClick={() => setIsOpen(true)} className='text-2xl bg-emerald-600 py-2 rounded-sm hover:bg-emerald-500 px-5 text-white'>Register</button>
+                    <button onClick={() => {navigate(`/login`)}} className='text-2xl bg-emerald-600 py-2 rounded-sm hover:bg-emerald-500 px-5 text-white'>Login</button>
                     {/* <button  onClick={() => navigate("/signup")} className='text-2xl bg-emerald-600 py-2 rounded-sm hover:bg-emerald-500 px-5 text-white'>Register</button>
                     <button onClick={() => navigate("/login")} className='text-2xl bg-emerald-600 py-2 rounded-sm hover:bg-emerald-500 px-5 text-white'>Login</button> */}
                 </div>
@@ -57,10 +56,10 @@ function Landing () {
                         </button>
                     </div>
                     <div className="flex flex-col space-y-4">
-                        <button onClick={() => {navigate(`/student-${loginRegister}`); setLoginRegister(''); setIsOpen(false)}} className="bg-blue-500 text-white font-medium rounded-md py-2 px-4 hover:bg-blue-600 transition">
+                        <button onClick={() => {navigate(`/student-register`); setIsOpen(false)}} className="bg-blue-500 text-white font-medium rounded-md py-2 px-4 hover:bg-blue-600 transition">
                             I am a student!
                         </button>
-                        <button onClick={() => {navigate(`/club-${loginRegister}`);setLoginRegister(''); setIsOpen(false)}} className="bg-green-500 text-white font-medium rounded-md py-2 px-4 hover:bg-green-600 transition">
+                        <button onClick={() => {navigate(`/club-register`); setIsOpen(false)}} className="bg-green-500 text-white font-medium rounded-md py-2 px-4 hover:bg-green-600 transition">
                             I am a club!
                         </button>
                     </div>

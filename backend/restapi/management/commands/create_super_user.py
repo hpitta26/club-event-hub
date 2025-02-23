@@ -1,6 +1,8 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth import get_user_model
 
+# CAN RUN (Mac Only) --> when resetting the backend:
+# python manage.py create_super_user something@gmail.com password123
 
 class Command(BaseCommand):
     help = 'Creates a superuser with specified email and password'

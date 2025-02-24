@@ -1,6 +1,6 @@
 import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 
-function EventSidebarCard() {
+function EventModalCard() {
   {
     /* Handle length of title */
   }
@@ -35,4 +35,4 @@ function EventSidebarCard() {
   );
 }
 
-export default EventSidebarCard;
+export default EventModalCard;

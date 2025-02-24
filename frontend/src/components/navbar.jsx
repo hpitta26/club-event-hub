@@ -8,7 +8,7 @@ import UserIcon from "../assets/icons/UserIcon";
 import pulseLogo from "../assets/icons/pulse_logo_1.png";
 import { UserContext } from "../context/userContext";
 import { Link, useNavigate } from "react-router-dom";
-import EventSidebar from "./EventSidebar";
+import EventModal from "./EventModal";
 
 const Navbar = () => {
   const [dropdown, setDropdown] = useState(null);
@@ -16,7 +16,7 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const searchRef = useRef(null);
   const sidebarRef = useRef(null); 
-  const [showSidebar, setShowSidebar] = useState(false); 
+  const [showEventModal, setShowEventModal] = useState(false); 
   const { userContext } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -29,10 +29,10 @@ const Navbar = () => {
     navigate("/logout");
   };
 
-  const displayEventsSideBar = () => {
-    setShowSidebar(()=>!showSidebar);
+  const displayEventModal = () => {
+    setShowEventModal(!showEventModal);
     setDropdown(null); 
-    setShowSearch(false)
+    setShowSearch(false);
   }
 
 
@@ -48,7 +48,7 @@ const Navbar = () => {
         setShowSearch(false);
       }
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)){
-        setShowSidebar(false); 
+        setShowEventModal(false); 
       }
     };
 
@@ -60,7 +60,7 @@ const Navbar = () => {
 
   return (
     <>
-    {showSidebar && <div ref={sidebarRef}><EventSidebar onClose={displayEventsSideBar}/></div>}
+    {showEventModal && <div ref={sidebarRef}><EventModal onClose={displayEventModal}/></div>}
     <nav className="bg-[#1F1F1F] text-white p-4 flex relative  items-center justify-between">
       <div className="flex items-center">
         <img src={pulseLogo} alt="pUlse Logo" className="h-8 w-auto" />
@@ -115,13 +115,13 @@ const Navbar = () => {
             >
               <InboxIcon className="w-5 h-5 text-white hover:text-gray-400 transition duration-200" />
             </button>
-            {/** Your events */}
+            {/* Event Modal */}
             <button
-              onClick={() => displayEventsSideBar()}
+              onClick={() => displayEventModal()}
               className="hover:text-gray-400 relative"
             >
               <p className="text-white  hover:text-gray-400 transition duration-200">
-                + Your Events
+                Your Events
               </p>
             </button>
             <NotificationsDropdown

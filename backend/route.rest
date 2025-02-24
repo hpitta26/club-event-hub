@@ -40,11 +40,10 @@ GET http://localhost:8000/restapi/events/
 
 ### PUT WORKING
 
-PUT http://localhost:8000/restapi/events/1/
+PATCH http://localhost:8000/restapi/events/1/
 Content-Type: application/json
 
 {
-  "club": 1,
   "title": "Updated Spring Festival",
   "description": "A festival to celebrate the arrival of spring.",
   "start_time": "2025-04-20T10:00:00Z",
@@ -69,20 +68,18 @@ DELETE http://localhost:8000/restapi/events/3/
 ###
 ### ----------- CLUB TESTING -----------
 ###
-### PUT NOT WORKING
+### Use PATCH for updates
+### FULLY WORKING
 
 POST http://localhost:8000/restapi/clubs/
 Content-Type: application/json
 
 {
     "user": {
-        "username": "clubowner",
         "email": "owner@example.com",
-        "first_name": "Club",
-        "last_name": "Owner",
         "password": "securepassword"
     },
-    "name": "Awesome Club",
+    "club_name": "Awesome Club",
     "description": "A description for Awesome Club.",
     "social_media_handles": {"twitter": "@awesomeclubtw", "instagram": "@awesomeclubinsta"}
 }
@@ -94,7 +91,6 @@ Content-Type: application/json
 
 {
     "user": {
-        "username": "clubowner2",
         "email": "owner2@example.com",
         "first_name": "Club2",
         "last_name": "Owner2",
@@ -113,18 +109,17 @@ GET http://localhost:8000/restapi/clubs/
 
 GET http://localhost:8000/restapi/clubs/2/
 
-### PUT not Working --> "username": ["A user with that username already exists."]
+### Use Patch for partial updates --> PUT requires all fields (creates issues with unique=True fields)
 
-PUT http://localhost:8000/restapi/clubs/1/
+PATCH http://localhost:8000/restapi/clubs/1/
 Content-Type: application/json
 
 {
   "user": {
-    "username": "clubowner",
     "email": "owner@example.com",
     "first_name": "Club",
     "last_name": "Owner",
-    "password": "securepassword"
+    "password": "updatedsecurepassword"
   },
   "name": "Awesome Club Updated",
   "description": "Updated description for Awesome Club.",
@@ -147,19 +142,19 @@ DELETE http://localhost:8000/restapi/clubs/2/
 ###
 ### ----------- STUDENT TESTING -----------
 ###
-### PUT NOT WORKING
+### Use PATCH for updates
+### FULLY WORKING
 
 POST http://localhost:8000/restapi/students/
 Content-Type: application/json
 
 {
   "user": {
-    "username": "student1",
     "email": "student1@example.com",
-    "first_name": "John",
-    "last_name": "Doe",
     "password": "securepassword"
   },
+  "first_name": "John",
+  "last_name": "Doe",
   "major": "Computer Science",
   "graduation_year": 2025
 }
@@ -171,7 +166,6 @@ Content-Type: application/json
 
 {
   "user": {
-    "username": "student2",
     "email": "student2@example.com",
     "first_name": "Jane",
     "last_name": "Smith",
@@ -187,16 +181,15 @@ GET http://localhost:8000/restapi/students/
 
 ###
 
-GET http://localhost:8000/restapi/students/2/
+GET http://localhost:8000/restapi/students/1/
 
-### PUT not Working --> "username": ["A user with that username already exists."]
+### Use Patch for partial updates --> PUT requires all fields (creates issues with unique=True fields)
 
 PUT http://localhost:8000/restapi/students/1/
 Content-Type: application/json
 
 {
   "user": {
-    "username": "student1",
     "email": "student1@example.com",
     "first_name": "John",
     "last_name": "Doe",

@@ -31,9 +31,9 @@ export const UserProvider = ({ children }) => {
     
     useEffect(() => {
         if (location.pathname === '/logout') return;
-        console.log(`userContext: ${userContext}`);
+        console.log(`userContext: ${JSON.stringify(userContext)}`);
         const verifySession = async () => {
-            const response = await backend.get('/student-verify-session/');
+            const response = await backend.get('/verify-session/');
     
             if (!response?.data?.user ||  Object.keys(response?.data?.user).length === 0) {
                 Logout();

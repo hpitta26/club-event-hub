@@ -7,7 +7,7 @@ function Login() {
     const { Logout } = useContext(UserContext);
 
     useEffect(() => {
-        backend.get('/student-logout/');
+        backend.get('/logout/');
         Logout();
     }, []);
     

@@ -31,48 +31,43 @@ function ClubProfile () {
         )
     }
 
-    return (
-            <section className='min-h-screen bg-stone-900 flex justify-center items-center'>
-                <div className='grid place-items-center space-y-5'>
-                    {/* Used to navigate to the "Create Event" screen for clubs,
-                        cannot be accessible to students so it's commented out for now
-                    <div className="ml-auto mt-10 mr-10 ">
-                        <button
-                            type="submit"
-                            className='bg-blue-600 w-full max-w-md py-2 text-white hover:bg-blue-500 rounded-md'
-                            onClick={() => navigate(`/create-event/${club.id}`)}
-                        >Create Event
-                        </button>
-                    </div>*/}
-                    <div>
-                        <h1 className="text-white text-4xl mt-3">{club.name}</h1>
-                    </div>
-                    <div>
-                        <img src={dummyInitLogo} alt="dummy picture" className="rounded h-52"/>
-                    </div>
-                    <div>
-                        <h5 className="text-white text-2xl m-2 w-3/4 mx-auto text-center ">{club.description}</h5>
-                    </div>
-                    <hr/>
-                    <div className="mt-3">
-                        <h3 className="text-white text-3xl "> Upcoming Events</h3>
-                    </div>
-                    <div className="flex flex-wrap justify-center gap-4 w-full">
-                        <EventCard/>
-                        <EventCard/>
-                        <EventCard/>
-                    </div>
-                    <div className="mt-3">
-                        <h3 className="text-white text-3xl "> Passed Events</h3>
-                    </div>
-                    <div className="flex flex-wrap justify-center gap-4 w-full">
-                        <EventCard/>
-                        <EventCard/>
-                        <EventCard/>
-                    </div>
+return (
+    <section className="min-h-screen bg-stone-900 flex flex-col items-center">
+        <div className="w-full max-w-4xl space-y-5">
+            <div>
+                <img src={dummyInitLogo} alt="dummy picture" className="rounded h-32 mt-6"/>
+            </div>
+            <div className="flex justify-between">
+                    <h1 className="text-white text-4xl mt-3">{club.name}</h1>
+                    <button className="bg-blue-600 text-white hover:bg-blue-500 rounded-md max-w-md h-10 w-2/12" onClick={()=>console.log("clicked")}>Follow</button>
+            </div>
+            <div>
+                <h5 className="text-gray-400 w-3/4 ">{club.description}</h5>
+            </div>
+        </div>
+        <hr className="w-full border-gray-600 my-5"/>
 
-                </div>
-            </section>
-    )
+        <div className="w-full flex flex-col items-center">
+            <div className="m-4">
+                <h3 className="text-white text-3xl">Upcoming Events</h3>
+            </div>
+            <div className="flex flex-wrap justify-center gap-4 w-full">
+                <EventCard/>
+                <EventCard/>
+                <EventCard/>
+            </div>
+
+            <div className="m-4">
+                <h3 className="text-white text-3xl">Passed Events</h3>
+            </div>
+            <div className="flex flex-wrap justify-center gap-4 w-full">
+                <EventCard/>
+                <EventCard/>
+                <EventCard/>
+            </div>
+        </div>
+    </section>
+);
 }
+
 export default ClubProfile;

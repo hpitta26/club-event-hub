@@ -1,17 +1,14 @@
 import backend from "../components/backend.jsx";
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
-import {useNavigate, useParams} from "react-router-dom";
 
 function CreateEvent() {
-    const clubId = useParams();
-    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-        //useParams() extracts the URL parameter as an object so clubId.clubId gets the clubId field of the object
-        club: clubId.clubId,
+        //for now the club that is posted to is hard-coded, UserContext will be used when finished implementing
+        club: 1,
         title: '',
         description: '',
         start_time: null,
@@ -21,15 +18,6 @@ function CreateEvent() {
     });
 
     const [errors, setErrors] = useState({})
-
-    //checks to see if club with the ID in the URL exists, returns 404 if not
-    useEffect(() => {
-        backend
-            .get(`/clubs/${clubId.clubId}/`)
-            .catch(() => {
-            navigate("/*");
-        })
-    },[])
 
     const handleSubmit = async (e) => {
         e.preventDefault();

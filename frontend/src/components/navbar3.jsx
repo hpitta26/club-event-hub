@@ -22,14 +22,14 @@ import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import gatherULogo from '../assets/icons/GatherUIcon.svg';
 
 function ResponsiveAppBar() {
-  const userType = 'user';
+  const userType = 'club';
 
   let leftPages = [];
   let rightPage = null;
   let mobilePages = [];
   let settings = [];
 
-  if (userType === 'club') {
+  if (userType === 'loggedout') {
     leftPages = ['Analytics', 'Events', 'Dashboard'];
     mobilePages = leftPages;
     settings = ['Manage Club', 'Logout'];

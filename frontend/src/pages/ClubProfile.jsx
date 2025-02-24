@@ -38,7 +38,7 @@ return (
                 <img src={dummyInitLogo} alt="dummy picture" className="rounded h-32 mt-6"/>
             </div>
             <div className="flex justify-between">
-                    <h1 className="text-white text-4xl mt-3">{club.name}</h1>
+                    <h1 className="text-white text-4xl mt-3">{club.club_name}</h1>
                     <button className="bg-blue-600 text-white hover:bg-blue-500 rounded-md max-w-md h-10 w-2/12" onClick={()=>console.log("clicked")}>Follow</button>
             </div>
             <div>

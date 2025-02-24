@@ -44,7 +44,7 @@ function App() {
               </Routes>
           </Router>
       </UserProvider>
-    <CsrfProvider>
+    </CsrfProvider>
   );
 }
 

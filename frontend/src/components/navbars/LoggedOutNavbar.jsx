@@ -3,6 +3,7 @@ import gatherULogo from '../../assets/icons/GatherUIcon.svg';
 import SearchBar from './navbarAssets/searchBar';
 import SearchBarTrigger from './navbarAssets/SearchBarIcon';
 import { useNavigate } from 'react-router-dom';
+import StudentOrClubModal from '../StudentOrClubModal';
 
 const LoggedOutNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -10,6 +11,7 @@ const LoggedOutNavbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [signupClicked, setSignupClicked] = useState(false);
   const [loginClicked, setLoginClicked] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLinkClick = (link) => {
@@ -23,6 +25,7 @@ const LoggedOutNavbar = () => {
   const handleSignupClick = () => {
     setSignupClicked(true);
     setTimeout(() => setSignupClicked(false), 300);
+    setIsOpen(true)
   };
 
   const handleLoginClick = () => {
@@ -126,6 +129,8 @@ const LoggedOutNavbar = () => {
           </div>
         </div>
       )}
+
+      <StudentOrClubModal modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} />
     </nav>
   );
 };

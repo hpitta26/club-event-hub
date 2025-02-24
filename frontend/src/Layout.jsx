@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Landing from './pages/Landing.jsx';
 import Home from './pages/Home.jsx';
 import NotFound from './pages/NotFound.jsx';
-import VerifyEmail from "./pages/auth/VerifyEmail.jsx";
+import VerifyEmail from "./pages/VerifyEmail.jsx";
 import Navbar from "./components/navbar.jsx";
 import CreateEvent from "./pages/CreateEvent.jsx";
 import { UserProvider } from "./context/userContext.jsx";

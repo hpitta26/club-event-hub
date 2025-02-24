@@ -37,7 +37,7 @@ function App() {
                 <Route  path="/event-card" element={<TempPage/>} /> {/* DummyPage to visualize the EventCard component */}
                 <Route element={<ProtectedRoute />}> {/* Protected --> can only be accessed by logged-in users */}
                     <Route path="/home" element={<Home />} />
-                    <Route path="/create-event/" element={<CreateEvent />} />
+                    <Route path="/create-event" element={<CreateEvent />} />
                 </Route>
                 <Route path="/*" element={<NotFound />} />
             </Routes>

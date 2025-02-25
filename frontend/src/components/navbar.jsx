@@ -8,13 +8,16 @@ import UserIcon from "../assets/icons/UserIcon";
 import pulseLogo from "../assets/icons/pulse_logo_1.png";
 import { UserContext } from "../context/userContext";
 import { Link, useNavigate } from "react-router-dom";
+import EventModal from "./EventModal";
 
 const Navbar = () => {
   const [dropdown, setDropdown] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
   const dropdownRef = useRef(null);
   const searchRef = useRef(null);
-  const { userContext } = useContext(UserContext)
+  const sidebarRef = useRef(null); 
+  const [showEventModal, setShowEventModal] = useState(false); 
+  const { userContext } = useContext(UserContext);
   const navigate = useNavigate();
 
   const toggleDropdown = (type) => {
@@ -23,8 +26,18 @@ const Navbar = () => {
 
   const handleLogout = () => {
     setDropdown(null);
-    navigate('/logout');
+    navigate("/logout");
   };
+
+  const displayEventModal = () => {
+    setShowEventModal(!showEventModal);
+    setDropdown(null); 
+    setShowSearch(false);
+  }
+
+
+
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -33,6 +46,9 @@ const Navbar = () => {
       }
       if (searchRef.current && !searchRef.current.contains(event.target)) {
         setShowSearch(false);
+      }
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)){
+        setShowEventModal(false); 
       }
     };
 
@@ -43,7 +59,9 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="bg-[#1F1F1F] text-white p-4 flex items-center justify-between">
+    <>
+    {showEventModal && <div ref={sidebarRef}><EventModal onClose={displayEventModal}/></div>}
+    <nav className="bg-[#1F1F1F] text-white p-4 flex relative  items-center justify-between">
       <div className="flex items-center">
         <img src={pulseLogo} alt="pUlse Logo" className="h-8 w-auto" />
       </div>
@@ -65,7 +83,7 @@ const Navbar = () => {
         </li>
       </ul>
       <div className="flex space-x-6 items-center relative" ref={dropdownRef}>
-      <div className="flex items-center relative" ref={searchRef}>
+        <div className="flex items-center relative" ref={searchRef}>
           <button
             onClick={() => {
               setDropdown(null);
@@ -84,40 +102,48 @@ const Navbar = () => {
             />
           )}
         </div>
-        {
-            userContext === null || userContext === undefined ?
-            <>
-            </>
-            :
-            <>
-                <Link href="#" className="hover:text-gray-400">
-                    <PlusIcon className="w-5 h-5 text-white hover:text-gray-400 transition duration-200" />
-                </Link>
-                <button
-                    onClick={() => toggleDropdown("notifications")}
-                    className="hover:text-gray-400 relative"
-                >
-                    <InboxIcon className="w-5 h-5 text-white hover:text-gray-400 transition duration-200" />
-                </button>
-                <NotificationsDropdown
-                    isOpen={dropdown === "notifications"}
-                    onClose={() => setDropdown(null)}
-                />
-                <button
-                    onClick={() => toggleDropdown("user")}
-                    className="hover:text-gray-400 relative"
-                >
-                    <UserIcon className="w-5 h-5 text-white hover:text-gray-400 transition duration-200" />
-                </button>
-                <UserDropdown
-                    isOpen={dropdown === "user"}
-                    onLogout={handleLogout}
-                    onClose={() => setDropdown(null)}
-                />
-            </>
-        }
+        {userContext === null || userContext === undefined ? (
+          <></>
+        ) : (
+          <>
+            <Link href="#" className="hover:text-gray-400">
+              <PlusIcon className="w-5 h-5 text-white hover:text-gray-400 transition duration-200" />
+            </Link>
+            <button
+              onClick={() => toggleDropdown("notifications")}
+              className="hover:text-gray-400 relative"
+            >
+              <InboxIcon className="w-5 h-5 text-white hover:text-gray-400 transition duration-200" />
+            </button>
+            {/* Event Modal */}
+            <button
+              onClick={() => displayEventModal()}
+              className="hover:text-gray-400 relative"
+            >
+              <p className="text-white  hover:text-gray-400 transition duration-200">
+                Your Events
+              </p>
+            </button>
+            <NotificationsDropdown
+              isOpen={dropdown === "notifications"}
+              onClose={() => setDropdown(null)}
+            />
+            <button
+              onClick={() => toggleDropdown("user")}
+              className="hover:text-gray-400 relative"
+            >
+              <UserIcon className="w-5 h-5 text-white  hover:text-gray-400 transition duration-200" />
+            </button>
+            <UserDropdown
+              isOpen={dropdown === "user"}
+              onLogout={handleLogout}
+              onClose={() => setDropdown(null)}
+            />
+          </>
+        )}
       </div>
     </nav>
+    </>
   );
 };
 

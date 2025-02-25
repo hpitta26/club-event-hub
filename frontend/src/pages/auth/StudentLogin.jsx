@@ -2,15 +2,16 @@ import { useState, useContext } from 'react';
 import backend from '../../components/backend.jsx';
 import { UserContext } from '../../context/userContext.jsx';
 import { useNavigate } from 'react-router-dom';
+import { CsrfContext } from '../../context/CsrfContext.jsx';
 
 
 function Login() {
     const [formData, setFormData] = useState({
-        school_email: '',
+        email: '',
         password: ''
     });
     const { Login } = useContext(UserContext);
-
+    const getCsrfToken = useContext(CsrfContext);
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -19,11 +20,12 @@ function Login() {
         setError('');
 
         try {
+            const csrfToken = await getCsrfToken();
             const response = await backend.post('/student-login/',
                 formData,
                 {
                     headers: {
-                        'X-CSRFToken': document.cookie.split('csrftoken=')[1]?.split(';')[0] || ''
+                        'X-CSRFToken': csrfToken
                     }
                 }
             );
@@ -50,7 +52,7 @@ function Login() {
             <div className="grid grid-rows-4 gap-4">
                 <h1 className="text-white text-4xl mb-4">Student Login</h1>
                 {error && <div className="text-red-500">{error}</div>}
-                <input onChange={handleChange} name="school_email" value={formData.school_email} placeholder="School Email" className="bg-gray-700 text-white rounded-md ps-4 py-2" />
+                <input onChange={handleChange} name="email" value={formData.email} placeholder="School Email" className="bg-gray-700 text-white rounded-md ps-4 py-2" />
                 <input type="password" onChange={handleChange} name="password" value={formData.password} placeholder="Password" className="bg-gray-700 text-white rounded-md ps-4 py-2" />
                 <button type="submit" onClick={handleSubmit} className="bg-blue-600 w-full py-2 text-white rounded-md hover:bg-blue-500">Login</button>
             </div>

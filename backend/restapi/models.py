@@ -11,6 +11,7 @@ from django.db import models
 from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import AbstractUser
+from django.utils.text import slugify
 from .manager import CustomUserManager
 import uuid
 
@@ -66,10 +67,16 @@ class Club(models.Model):
     description = models.TextField(
         blank=True, null=True
     )  # possibly change to required --> depending on form in the frontend
+    slug = models.SlugField(unique=True,blank=True)
     social_media_handles = models.JSONField(blank=True, null=True)
     spirit_rating = models.PositiveIntegerField(
         default=1, validators=[MinValueValidator(0), MaxValueValidator(100)]
     )
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.club_name)
+        super().save(*args,**kwargs)
 
     @property
     def upcoming_events(self):

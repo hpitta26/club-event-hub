@@ -29,6 +29,7 @@ class ClubListCreateView(generics.ListCreateAPIView):
 class ClubDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Club.objects.all()
     serializer_class = ClubSerializer
+    lookup_field = 'slug'
 
 
 

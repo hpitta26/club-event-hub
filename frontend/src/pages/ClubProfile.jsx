@@ -11,14 +11,14 @@ import { FaLinkedin } from "react-icons/fa";
 function ClubProfile () {
 
     const [club, setClub] = useState(null);
-    const[loading,setLoading] = useState(true);
-    const clubId = useParams();
+    const [loading,setLoading] = useState(true);
+    const slug = useParams();
     const navigate = useNavigate();
 
     useEffect(()=> {
         backend
-            //useParams() extracts the URL parameter as an object so clubId.clubId gets the clubId field of the object
-            .get(`/clubs/${clubId.clubId}/`)
+            //useParams() extracts the URL parameter as an object so slug.clubSlug gets the clubSlug field of the object
+            .get(`/clubs/${slug.clubSlug}/`)
             .then((response) => {
                 setClub(response.data);
                 setLoading(false);
@@ -26,7 +26,7 @@ function ClubProfile () {
             .catch(() => {
             navigate("/*");
         })
-    },[clubId])
+    },[slug])
 
     if(loading) {
         return (

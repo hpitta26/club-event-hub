@@ -8,18 +8,25 @@ const NavbarSelector = () => {
   const { userContext } = useContext(UserContext);
   const navbarType = '' // Just type in Student or Club here to test the different navbars for now
 
-  // if (navbarType === 'LoggedOut') {
-  //   return <LoggedOutNavbar />; //FOR TESTING CHANGE IT HERE !!!! STILL WORKING ON THIS LOGIC
-  // }
-
-  switch (navbarType) { // change between User,club and navbarlogic
-    case 'Student':
-      return <StudentNavbar />;
-    case 'Club':
-      return <ClubNavbar />;
-    default:
-      return <LoggedOutNavbar />; // Fallback for unexpected user types
+  if (userContext == null) {
+    console.log(`navbar rendering --> ${JSON.stringify(userContext)}`);
+    return <LoggedOutNavbar />;
+  } else if (userContext['role'] === 'STUDENT') {
+    console.log(`navbar rendering --> ${JSON.stringify(userContext)}`);
+    return <StudentNavbar />;
+  } else if (userContext['role'] === 'CLUB') {
+    console.log(`navbar rendering --> ${JSON.stringify(userContext)}`);
+    return <ClubNavbar />;
   }
+
+  // switch (navbarType) { // change between User,club and navbarlogic
+  //   case 'STUDENT':
+  //     return <StudentNavbar />;
+  //   case 'CLUB':
+  //     return <ClubNavbar />;
+  //   default:
+  //     return <LoggedOutNavbar />; // Fallback for unexpected user types
+  // }
 };
 
 export default NavbarSelector;

@@ -6,8 +6,8 @@ function useUserContextState() {
     const [userContext, setUserContext] = useState(user_data ? user_data : null);
 
     function Login(userData) {
-        console.log(`Updating user to: ${JSON.stringify(userContext)}`);
         setUserContext(userData);
+        console.log(`Updating user to: ${JSON.stringify(userData)}`);
         localStorage.setItem('user_data', JSON.stringify(userData));
     };
     
@@ -36,7 +36,7 @@ export const UserProvider = ({ children }) => {
             const response = await backend.get('/verify-session/');
     
             if (!response?.data?.user ||  Object.keys(response?.data?.user).length === 0) {
-                Logout();
+                Logout(); // This is being called everytime the page is refreshed
             } else {
                 Login(response.data.user);
             };

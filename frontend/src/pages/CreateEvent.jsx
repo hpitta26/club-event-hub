@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 
+// Will need to handle CSRF TOKENS in this component
 function CreateEvent() {
 
     const [formData, setFormData] = useState({

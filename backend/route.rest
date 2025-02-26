@@ -91,15 +91,16 @@ Content-Type: application/json
 
 {
     "user": {
-        "email": "owner2@example.com",
-        "first_name": "Club2",
-        "last_name": "Owner2",
-        "password": "securepassword2"
+      "email": "owner2@example.com",
+      "password": "securepassword"
     },
-    "name": "Awesome Club2",
-    "description": "A description for Awesome Club.2",
-    "social_media_handles": {"twitter": "@awesomeclubtw2", "instagram": "@awesomeclubinsta2"}
-}
+    "club_name": "Some Club",
+    "description": "A description for Awesome Club.",
+    "social_media_handles": {
+      "twitter": "@awesomeclubtw",
+      "instagram": "@awesomeclubinsta"
+    }
+  }
 
 ###
 
@@ -128,7 +129,7 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:8000/restapi/clubs/2/
+DELETE http://localhost:8000/restapi/clubs/1/
 
 ###
 

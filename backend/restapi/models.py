@@ -58,16 +58,14 @@ class CustomUser(AbstractUser):
 class Club(models.Model):
     user = models.OneToOneField(
         CustomUser, on_delete=models.CASCADE, related_name='club_profile'
-        )
+    )
 
     # profile_picture = models.ImageField(
     #     upload_to='club_profiles/', blank=True, null=True
     # )
-    club_name = models.CharField(max_length=255)
-    description = models.TextField(
-        blank=True, null=True
-    )  # possibly change to required --> depending on form in the frontend
-    slug = models.SlugField(unique=True,blank=True)
+    club_name = models.CharField(max_length=255, unique=True)
+    description = models.TextField(blank=True, null=True)  # possibly change to required --> depending on form in the frontend
+    slug = models.SlugField(unique=True, blank=True)
     social_media_handles = models.JSONField(blank=True, null=True)
     spirit_rating = models.PositiveIntegerField(
         default=1, validators=[MinValueValidator(0), MaxValueValidator(100)]

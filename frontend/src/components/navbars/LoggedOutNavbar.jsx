@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import gatherULogo from '../../assets/icons/GatherUIcon.svg';
 import SearchBar from './navbarAssets/searchBar';
 import SearchBarTrigger from './navbarAssets/SearchBarIcon';
+import { useNavigate } from 'react-router-dom';
 
 const LoggedOutNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -9,6 +10,7 @@ const LoggedOutNavbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [signupClicked, setSignupClicked] = useState(false);
   const [loginClicked, setLoginClicked] = useState(false);
+  const navigate = useNavigate();
 
   const handleLinkClick = (link) => {
     setClickedLink(link);
@@ -26,6 +28,7 @@ const LoggedOutNavbar = () => {
   const handleLoginClick = () => {
     setLoginClicked(true);
     setTimeout(() => setLoginClicked(false), 300);
+    navigate('/login');
   };
 
   useEffect(() => {

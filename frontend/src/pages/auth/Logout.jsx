@@ -18,6 +18,6 @@ function Login() {
             </div>
         </section>
     );
-}
+};
 
 export default Login;

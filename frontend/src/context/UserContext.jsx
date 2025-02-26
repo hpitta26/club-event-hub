@@ -1,9 +1,11 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import backend from '../components/backend';
+import { CsrfContext } from "./CsrfContext";
 
 function useUserContextState() {
     const user_data = JSON.parse(localStorage.getItem('user_data'));
     const [userContext, setUserContext] = useState(user_data ? user_data : null);
+    const { setCachedCsrfToken } = useContext(CsrfContext);
 
     function Login(userData) {
         setUserContext(userData);
@@ -15,6 +17,7 @@ function useUserContextState() {
         console.log(`Logging user out...`);
         localStorage.removeItem('user_data');
         setUserContext(null);
+        setCachedCsrfToken(null);
     };
 
     return [userContext, Login, Logout]

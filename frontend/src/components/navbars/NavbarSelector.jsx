@@ -6,7 +6,6 @@ import { UserContext } from '../../context/UserContext.jsx';
 
 const NavbarSelector = () => {
   const { userContext } = useContext(UserContext);
-  const navbarType = '' // Just type in Student or Club here to test the different navbars for now
 
   if (userContext == null) {
     console.log(`navbar rendering --> ${JSON.stringify(userContext)}`);
@@ -18,15 +17,6 @@ const NavbarSelector = () => {
     console.log(`navbar rendering --> ${JSON.stringify(userContext)}`);
     return <ClubNavbar />;
   }
-
-  // switch (navbarType) { // change between User,club and navbarlogic
-  //   case 'STUDENT':
-  //     return <StudentNavbar />;
-  //   case 'CLUB':
-  //     return <ClubNavbar />;
-  //   default:
-  //     return <LoggedOutNavbar />; // Fallback for unexpected user types
-  // }
 };
 
 export default NavbarSelector;

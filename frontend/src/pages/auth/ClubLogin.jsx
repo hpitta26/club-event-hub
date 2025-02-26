@@ -11,7 +11,7 @@ function Login() {
         password: ''
     });
     const { Login } = useContext(UserContext);
-    const getCsrfToken = useContext(CsrfContext);
+    const { getCsrfToken } = useContext(CsrfContext);
 
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -33,7 +33,7 @@ function Login() {
             console.log(response);
             if (response.status === 200) {
                 console.log('logging user in...');
-                Login(response.data);
+                Login(response.data.user);
                 navigate('/home');
             } else {
                 setError(response.message);

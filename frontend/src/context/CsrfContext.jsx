@@ -25,7 +25,7 @@ export const CsrfProvider = ({ children }) => {
     
     console.log('CSRF component loaded');
     return (
-        <CsrfContext.Provider value={getCsrfToken}>
+        <CsrfContext.Provider value={{getCsrfToken, setCachedCsrfToken}}>
             {children}
         </CsrfContext.Provider>
     );    

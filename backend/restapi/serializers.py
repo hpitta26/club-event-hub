@@ -46,7 +46,7 @@ class ClubSerializer(serializers.ModelSerializer):
    class Meta:
        model = Club
        fields = [ # expose fields that will be sent in API calls
-           'id', 'user', 'club_name', 'description', 'social_media_handles', 'spirit_rating', 'followers_count', 'events_count'
+           'id', 'slug', 'user', 'club_name', 'description', 'social_media_handles', 'spirit_rating', 'followers_count', 'events_count'
        ]
 
 

@@ -4,6 +4,9 @@ import glob
 import django
 from django.core import management
 
+# run script --> python reset.py
+# This script will delete the database, run migrations, and create a new superuser.
+
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../backend"))
 sys.path.insert(0, PROJECT_ROOT)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")

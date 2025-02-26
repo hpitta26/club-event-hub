@@ -5,7 +5,7 @@ import SearchBarTrigger from './navbarAssets/SearchBarIcon';
 import ProfileIcon from './navbarAssets/ProfileIcon';
 import { FaBell } from 'react-icons/fa';
 
-const UserNavBar = () => {
+const StudentNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [clickedLink, setClickedLink] = useState(null);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -73,6 +73,7 @@ const UserNavBar = () => {
         {/* Right: Events Button + Notification + Profile + Mobile Toggle */}
         <div className="pr-4 flex items-center space-x-4">
           <div className="flex items-center space-x-4">
+            <SearchBarTrigger onClick={handleSearchOpen} className="hidden md:block" /> {/* Hide on mobile */}
             <button
               className={`transition-all duration-300 ease-out transform border border-white/50 rounded-md
                 ${eventsClicked
@@ -81,7 +82,7 @@ const UserNavBar = () => {
                 md:text-sm md:px-2 md:py-1 text-xs px-1 py-0.5`}
               onClick={handleEventsClick}
             >
-              View Events!
+              View Events
             </button>
             <button className="text-[#F0EFEB] hover:text-gray-300">
               <FaBell className="w-5 h-5" />
@@ -144,4 +145,4 @@ const UserNavBar = () => {
   );
 };
 
-export default UserNavBar;
+export default StudentNavbar;

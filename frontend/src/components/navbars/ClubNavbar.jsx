@@ -73,7 +73,7 @@ const ClubNavbar = () => {
         {/* Right: Events Button + Notification + Profile + Mobile Toggle */}
         <div className="pr-4 flex items-center space-x-4">
           <div className="flex items-center space-x-4">
-            {/* SearchBarTrigger removed from here */}
+            <SearchBarTrigger onClick={handleSearchOpen} className="hidden md:block" /> {/* Hide on mobile */}
             <button
               className={`transition-all duration-300 ease-out transform border border-white/50 rounded-md
                 ${eventsClicked

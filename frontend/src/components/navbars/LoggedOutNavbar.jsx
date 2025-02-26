@@ -65,6 +65,7 @@ const LoggedOutNavbar = () => {
         {/* Right: Signup + Login + Mobile Toggle */}
         <div className="pr-4 flex items-center space-x-4">
           <div className="flex items-center space-x-4">
+            <SearchBarTrigger onClick={handleSearchOpen} className="hidden md:block" /> {/* Hide on mobile */}
             <button
               className={`text-sm transition-all duration-300 ease-out transform px-2 py-1 border border-white/50 rounded-md
                 ${signupClicked

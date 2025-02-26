@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+// Custom hook that listens for the Ctrl + K key and opens the search bar
 const useSearchKeyListener = (setOpenSearch) => {
   useEffect(() => {
     const handleKeyDown = (e) => {

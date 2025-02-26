@@ -6,7 +6,7 @@ import { UserContext } from '../../context/UserContext.jsx';
 
 const NavbarSelector = () => {
   const { userContext } = useContext(UserContext);
-  const navbarType = 'Student'
+  const navbarType = '' // Just type in Student or Club here to test the different navbars for now
 
   // if (navbarType === 'LoggedOut') {
   //   return <LoggedOutNavbar />; //FOR TESTING CHANGE IT HERE !!!! STILL WORKING ON THIS LOGIC

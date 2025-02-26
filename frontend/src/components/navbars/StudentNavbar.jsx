@@ -4,12 +4,14 @@ import SearchBar from './navbarAssets/searchBar';
 import SearchBarTrigger from './navbarAssets/SearchBarIcon';
 import ProfileIcon from './navbarAssets/ProfileIcon';
 import { FaBell } from 'react-icons/fa';
+import { useNavigate } from "react-router-dom";
 
 const StudentNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [clickedLink, setClickedLink] = useState(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [eventsClicked, setEventsClicked] = useState(false);
+  const navigate = useNavigate();
 
   const handleLinkClick = (link) => {
     setClickedLink(link);
@@ -22,6 +24,10 @@ const StudentNavbar = () => {
   const handleEventsClick = () => {
     setEventsClicked(true);
     setTimeout(() => setEventsClicked(false), 300);
+  };
+
+  const handleLogout = () => {
+    navigate("/logout");
   };
 
   useEffect(() => {
@@ -91,7 +97,7 @@ const StudentNavbar = () => {
               <div className="py-2">
                 <a href="#" className="block px-4 py-1 text-sm hover:bg-white/10">Profile</a>
                 <a href="#" className="block px-4 py-1 text-sm hover:bg-white/10">Settings</a>
-                <a href="#" className="block px-4 py-1 text-sm hover:bg-white/10">Logout</a>
+                <a onClick={handleLogout} className="block px-4 py-1 text-sm hover:bg-white/10">Logout</a>
               </div>
             </ProfileIcon>
             <SearchBar open={searchOpen} onClose={handleSearchClose} />

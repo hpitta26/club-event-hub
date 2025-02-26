@@ -5,7 +5,7 @@ import NotFound from './pages/NotFound.jsx';
 import VerifyEmail from "./pages/auth/VerifyEmail.jsx";
 import Navbar from "./components/navbar.jsx";
 import CreateEvent from "./pages/CreateEvent.jsx";
-import { UserProvider } from "./context/userContext.jsx";
+import { UserProvider } from "./context/UserContext.jsx";
 import { CsrfProvider } from "./context/CsrfContext.jsx";
 import Logout from './pages/auth/Logout.jsx';
 import StudentLogin from './pages/auth/StudentLogin.jsx';

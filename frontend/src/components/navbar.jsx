@@ -6,7 +6,7 @@ import PlusIcon from "../assets/icons/PlusIcon";
 import InboxIcon from "../assets/icons/InboxIcon";
 import UserIcon from "../assets/icons/UserIcon";
 import pulseLogo from "../assets/icons/pulse_logo_1.png";
-import { UserContext } from "../context/userContext";
+import { UserContext } from "../context/UserContext";
 import { Link, useNavigate } from "react-router-dom";
 import EventModal from "./EventModal";
 

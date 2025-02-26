@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import backend from '../../components/backend.jsx';
-import { UserContext } from '../../context/userContext.jsx';
+import { UserContext } from '../../context/UserContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import { CsrfContext } from '../../context/CsrfContext.jsx';
 

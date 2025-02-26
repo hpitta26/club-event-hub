@@ -11,6 +11,7 @@ from django.db import models
 from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import AbstractUser
+from django.utils.text import slugify
 from .manager import CustomUserManager
 import uuid
 
@@ -27,7 +28,7 @@ class CustomUser(AbstractUser):
     CLUB = 'CLUB'
 
     is_email_verified = models.BooleanField(default=False)
-    verification_token = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    verification_token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -57,19 +58,23 @@ class CustomUser(AbstractUser):
 class Club(models.Model):
     user = models.OneToOneField(
         CustomUser, on_delete=models.CASCADE, related_name='club_profile'
-        )
+    )
 
     # profile_picture = models.ImageField(
     #     upload_to='club_profiles/', blank=True, null=True
     # )
-    club_name = models.CharField(max_length=255)
-    description = models.TextField(
-        blank=True, null=True
-    )  # possibly change to required --> depending on form in the frontend
+    club_name = models.CharField(max_length=255, unique=True)
+    description = models.TextField(blank=True, null=True)  # possibly change to required --> depending on form in the frontend
+    slug = models.SlugField(unique=True, blank=True)
     social_media_handles = models.JSONField(blank=True, null=True)
     spirit_rating = models.PositiveIntegerField(
         default=1, validators=[MinValueValidator(0), MaxValueValidator(100)]
     )
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.club_name)
+        super().save(*args,**kwargs)
 
     @property
     def upcoming_events(self):

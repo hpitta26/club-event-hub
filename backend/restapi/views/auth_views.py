@@ -41,6 +41,7 @@ def csrf_provider(request):
 @permission_classes([AllowAny])
 def verify_session(request):
     try:
+        print("TEST")
         if request.session.has_key('id'):
             user = CustomUser.objects.get(id=request.session['id'])
             if not user:
@@ -51,7 +52,7 @@ def verify_session(request):
             )  # pass to front-end
 
         return Response(status=204)
-    except user.DoesNotExist:
+    except CustomUser.DoesNotExist:
         return Response(
             {"errors": "Server error!"},
             status=500
@@ -65,8 +66,6 @@ def logout_view(request):
         logout(request)
         request.session.clear()
         response = Response(status=200)
-        # When you Delete the Cookie --> the browser will have no CSRF_token (so Login and Register will return a 403 error)
-        # When you refresh the page --> If a CSRF_token isn't present you will be assigned a new one
         response.delete_cookie('csrftoken')
         return response
     except AttributeError:

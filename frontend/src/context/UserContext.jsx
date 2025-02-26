@@ -1,13 +1,15 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import backend from '../components/backend';
+import { CsrfContext } from "./CsrfContext";
 
 function useUserContextState() {
     const user_data = JSON.parse(localStorage.getItem('user_data'));
     const [userContext, setUserContext] = useState(user_data ? user_data : null);
+    const { setCachedCsrfToken } = useContext(CsrfContext);
 
     function Login(userData) {
-        console.log(`Updating user to: ${JSON.stringify(userContext)}`);
         setUserContext(userData);
+        console.log(`Updating user to: ${JSON.stringify(userData)}`);
         localStorage.setItem('user_data', JSON.stringify(userData));
     };
     
@@ -15,6 +17,7 @@ function useUserContextState() {
         console.log(`Logging user out...`);
         localStorage.removeItem('user_data');
         setUserContext(null);
+        setCachedCsrfToken(null);
     };
 
     return [userContext, Login, Logout]
@@ -36,7 +39,7 @@ export const UserProvider = ({ children }) => {
             const response = await backend.get('/verify-session/');
     
             if (!response?.data?.user ||  Object.keys(response?.data?.user).length === 0) {
-                Logout();
+                Logout(); // This is being called everytime the page is refreshed
             } else {
                 Login(response.data.user);
             };

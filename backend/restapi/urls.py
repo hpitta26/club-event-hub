@@ -8,6 +8,7 @@ urlpatterns = [
     path('events/<int:pk>/', drf_views.EventDetailView.as_view(), name='event-detail'),
     path('clubs/', drf_views.ClubListCreateView.as_view(), name='club-list-create'),
     path('clubs/<int:pk>/', drf_views.ClubDetailView.as_view(), name='club-detail'),
+    path('clubs/slug/<slug:slug>', drf_views.ClubDetailBySlugView.as_view(), name='club-detail-by-slug'),
     path('students/', drf_views.StudentListCreateView.as_view(), name='student-list-create'),
     path('students/<int:pk>/', drf_views.StudentDetailView.as_view(), name='student-detail'),
 

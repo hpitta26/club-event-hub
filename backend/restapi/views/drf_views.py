@@ -29,6 +29,11 @@ class ClubListCreateView(generics.ListCreateAPIView):
 class ClubDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Club.objects.all()
     serializer_class = ClubSerializer
+
+#Retrieve, update, or delete a single club through Slug instead of PK
+class ClubDetailBySlugView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Club.objects.all()
+    serializer_class = ClubSerializer
     lookup_field = 'slug'
 
 

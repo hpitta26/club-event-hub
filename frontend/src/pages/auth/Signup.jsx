@@ -47,65 +47,60 @@ function Signup() {
     e.preventDefault();
     setError("");
     setSuccess("");
-
-    // Form validation
-    if (!formData.email || !formData.email.endsWith("@fiu.edu")) {
-      setError("Please enter a valid FIU email address");
-      return;
-    }
+    setPhase(0); // reset the phase
 
     // Debug log
     console.log("Submitting form data:", formData);
 
-    try {
-      // Debug log
-      const csrfToken = await getCsrfToken();
-      console.log("Making request to:", "/restapi/register/");
-      const response = await backend.post("/student-register/", formData, {
-        headers: {
-          "X-CSRFToken": csrfToken,
-        },
-      });
+    // try {
+    //   // Debug log
+    //   const csrfToken = await getCsrfToken();
+    //   console.log("Making request to:", "/restapi/register/");
+    //   const response = await backend.post("/student-register/", formData, {
+    //     headers: {
+    //       "X-CSRFToken": csrfToken,
+    //     },
+    //   });
 
-      // Debug log
-      console.log("Response:", response);
+    //   // Debug log
+    //   console.log("Response:", response);
 
-      if (response.status === 200) {
-        setSuccess(
-          "Registration successful! Please check your email for verification."
-        );
-        setFormData({
-          first_name: "",
-          last_name: "",
-          email: "",
-          password1: "",
-          password2: "",
-          major: "",
-          graduation_year: "",
-        });
-        navigate("/student-login");
-      } else {
-        setError(data.message || "Registration failed. Please try again.");
-        setPhase(0);
-      }
-    } catch (err) {
-      // Debug log
-      console.error("Error details:", err);
-      console.error("Error response:", err.response);
+    //   if (response.status === 200) {
+    //     setSuccess(
+    //       "Registration successful! Please check your email for verification."
+    //     );
+    //     setFormData({
+    //       first_name: "",
+    //       last_name: "",
+    //       email: "",
+    //       password1: "",
+    //       password2: "",
+    //       major: "",
+    //       graduation_year: "",
+    //     });
+    //     navigate("/student-login");
+    //   } else {
+    //     setError(data.message || "Registration failed. Please try again.");
+    //     setPhase(0);
+    //   }
+    // } catch (err) {
+    //   // Debug log
+    //   console.error("Error details:", err);
+    //   console.error("Error response:", err.response);
 
-      if (err.response?.data?.errors) {
-        const errors = err.response.data.errors;
-        const errorMessage = Object.entries(errors)
-          .map(([key, value]) => `${key}: ${value.join(", ")}`)
-          .join("\n");
-        setError(errorMessage);
-      } else {
-        setError(
-          err.response?.data?.message ||
-            "Registration failed. Please try again."
-        );
-      }
-    }
+    //   if (err.response?.data?.errors) {
+    //     const errors = err.response.data.errors;
+    //     const errorMessage = Object.entries(errors)
+    //       .map(([key, value]) => `${key}: ${value.join(", ")}`)
+    //       .join("\n");
+    //     setError(errorMessage);
+    //   } else {
+    //     setError(
+    //       err.response?.data?.message ||
+    //         "Registration failed. Please try again."
+    //     );
+    //   }
+    // }
   };
 
   return (
@@ -113,14 +108,17 @@ function Signup() {
       <div className="flex flex-col gap-8">
         {phase === 0 && (
           <FormContainer
-            title="Welcome to PULSE"
+            title="Welcome to GatherU"
             subtitle="University Events at a Glance"
             fields={accountFields}
             formData={formData}
             handleChange={handleChange}
             onSubmit={(e) => {
               e.preventDefault();
-              if (formData.password !== formData.confirmPassword) {
+              if (!formData.email || !formData.email.endsWith("@fiu.edu")) {
+                alert("Email must end in @fiu.edu");
+                return;
+              } else if (formData.password !== formData.confirmPassword) {
                 alert("Passwords Don't Match");
                 return;
               }
@@ -139,7 +137,6 @@ function Signup() {
             handleChange={handleChange}
             onSubmit={(e) => {
               e.preventDefault();
-
               setPhase((prevPhase) => prevPhase + 1);
             }}
           >
@@ -155,7 +152,7 @@ function Signup() {
             fields={academicFields}
             formData={formData}
             handleChange={handleChange}
-            handleSubmit={handleSubmit}
+            onSubmit={handleSubmit}
           >
             Finish
           </FormContainer>

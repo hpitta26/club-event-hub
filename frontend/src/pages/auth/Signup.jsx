@@ -8,37 +8,37 @@ import { CsrfContext } from "../../context/CsrfContext";
 function Signup() {
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
-    confirmPassword: "",
-    lastName: "",
-    firstName: "",
+    password1: "",
+    password2: "",
+    last_name: "",
+    first_name: "",
     major: "",
-    graduationYear: "",
+    graduation_year: "",
   });
 
   const [phase, setPhase] = useState(0);
 
   const accountFields = [
     { name: "email", type: "email", label: "Email" },
-    { name: "password", type: "password", label: "Password" },
-    { name: "confirmPassword", type: "password", label: "Confirm Password" },
+    { name: "password1", type: "password", label: "Password" },
+    { name: "password2", type: "password", label: "Confirm Password" },
   ];
 
   const personalFields = [
-    { name: "firstName", type: "text", label: "First Name" },
-    { name: "lastName", type: "text", label: "Last Name" },
+    { name: "first_name", type: "text", label: "First Name" },
+    { name: "last_name", type: "text", label: "Last Name" },
   ];
 
   const academicFields = [
     { name: "major", type: "text", label: "Major" },
-    { name: "graduationYear", type: "number", label: "Graduation Year" },
+    { name: "graduation_year", type: "number", label: "Graduation Year" },
   ];
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const getCsrfToken = useContext(CsrfContext);
+  const { getCsrfToken } = useContext(CsrfContext);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
@@ -47,60 +47,60 @@ function Signup() {
     e.preventDefault();
     setError("");
     setSuccess("");
-    setPhase(0); // reset the phase
 
     // Debug log
     console.log("Submitting form data:", formData);
 
-    // try {
-    //   // Debug log
-    //   const csrfToken = await getCsrfToken();
-    //   console.log("Making request to:", "/restapi/register/");
-    //   const response = await backend.post("/student-register/", formData, {
-    //     headers: {
-    //       "X-CSRFToken": csrfToken,
-    //     },
-    //   });
+    try {
+      // Debug log
+      const csrfToken = await getCsrfToken();
+      console.log("Making request to:", "/restapi/student-register/");
+      const response = await backend.post("/student-register/", formData, {
+        headers: {
+          "X-CSRFToken": csrfToken,
+        },
+      });
 
-    //   // Debug log
-    //   console.log("Response:", response);
+      // Debug log
+      console.log("Response:", response);
 
-    //   if (response.status === 200) {
-    //     setSuccess(
-    //       "Registration successful! Please check your email for verification."
-    //     );
-    //     setFormData({
-    //       first_name: "",
-    //       last_name: "",
-    //       email: "",
-    //       password1: "",
-    //       password2: "",
-    //       major: "",
-    //       graduation_year: "",
-    //     });
-    //     navigate("/student-login");
-    //   } else {
-    //     setError(data.message || "Registration failed. Please try again.");
-    //     setPhase(0);
-    //   }
-    // } catch (err) {
-    //   // Debug log
-    //   console.error("Error details:", err);
-    //   console.error("Error response:", err.response);
+      if (response.status === 200) {
+        setSuccess(
+          "Registration successful! Please check your email for verification."
+        );
+        setFormData({
+          first_name: "",
+          last_name: "",
+          email: "",
+          password1: "",
+          password2: "",
+          major: "",
+          graduation_year: "",
+        });
+        setPhase(0); // reset the phase
+        navigate("/login");
+      } else {
+        setError(data.message || "Registration failed. Please try again.");
+        setPhase(0);
+      }
+    } catch (err) {
+      // Debug log
+      console.error("Error details:", err);
+      console.error("Error response:", err.response);
 
-    //   if (err.response?.data?.errors) {
-    //     const errors = err.response.data.errors;
-    //     const errorMessage = Object.entries(errors)
-    //       .map(([key, value]) => `${key}: ${value.join(", ")}`)
-    //       .join("\n");
-    //     setError(errorMessage);
-    //   } else {
-    //     setError(
-    //       err.response?.data?.message ||
-    //         "Registration failed. Please try again."
-    //     );
-    //   }
-    // }
+      if (err.response?.data?.errors) {
+        const errors = err.response.data.errors;
+        const errorMessage = Object.entries(errors)
+          .map(([key, value]) => `${key}: ${value.join(", ")}`)
+          .join("\n");
+        setError(errorMessage);
+      } else {
+        setError(
+          err.response?.data?.message ||
+            "Registration failed. Please try again."
+        );
+      }
+    }
   };
 
   return (
@@ -153,6 +153,7 @@ function Signup() {
             formData={formData}
             handleChange={handleChange}
             onSubmit={handleSubmit}
+            // Should most likely handle valid graduation_year here
           >
             Finish
           </FormContainer>

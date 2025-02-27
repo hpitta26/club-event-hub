@@ -12,6 +12,8 @@ import StudentLogin from './pages/auth/StudentLogin.jsx';
 import StudentRegister from './pages/auth/StudentRegister.jsx';
 import ClubLogin from './pages/auth/ClubLogin.jsx';
 import ClubRegister from './pages/auth/ClubRegister.jsx';
+import Login from "./pages/auth/Login.jsx";
+import StudentSignup from "./pages/auth/StudentSignup.jsx";
 
 /* Temporary Only */
 import TempPage from "./pages/TempPage.jsx";
@@ -28,10 +30,12 @@ function App() {
               <NavbarSelector /> 
               <Routes>
                   <Route path="/" element={<Landing />} />
-                  <Route path="/student-login" element={<StudentLogin />} />
-                  <Route path="/student-register" element={<StudentRegister />} />
-                  <Route path="/club-login" element={<ClubLogin />} />
+                  {/* <Route path="/student-login" element={<StudentLogin />} /> */}
+                  {/* <Route path="/student-register" element={<StudentRegister />} /> */}
+                  <Route path="/student-register" element={<StudentSignup/>}/> {/* Student Signup */}
                   <Route path="/club-register" element={<ClubRegister />} />
+                  <Route path="/club-login" element={<ClubLogin />} />
+                  <Route path="/student-login" element={<Login/>}/> {/* Student Login */}
                   <Route path="/verify/:token" element={<VerifyEmail />} />
                   <Route path="/club/:clubSlug" element={<ClubProfile />} />
                   <Route  path="/event-card" element={<TempPage/>} /> {/* DummyPage to visualize the EventCard component */}

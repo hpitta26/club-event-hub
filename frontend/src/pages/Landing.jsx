@@ -35,8 +35,10 @@ function Landing () {
                     </h1>
                 </div>
                 <div className='grid grid-cols-2 gap-3 text-center'>
-                    <button onClick={() => {setIsOpen(true);setLoginRegister('register')}} className='text-2xl bg-emerald-600 py-2 rounded-sm hover:bg-emerald-500 px-5 text-white'>Register</button>
+                    <button  onClick={() => {setIsOpen(true);setLoginRegister('register')}} className='text-2xl bg-emerald-600 py-2 rounded-sm hover:bg-emerald-500 px-5 text-white'>Register</button>
                     <button onClick={() => {setIsOpen(true);setLoginRegister('login')}} className='text-2xl bg-emerald-600 py-2 rounded-sm hover:bg-emerald-500 px-5 text-white'>Login</button>
+                    {/* <button  onClick={() => navigate("/signup")} className='text-2xl bg-emerald-600 py-2 rounded-sm hover:bg-emerald-500 px-5 text-white'>Register</button>
+                    <button onClick={() => navigate("/login")} className='text-2xl bg-emerald-600 py-2 rounded-sm hover:bg-emerald-500 px-5 text-white'>Login</button> */}
                 </div>
                 <Modal
                     isOpen={modalIsOpen}

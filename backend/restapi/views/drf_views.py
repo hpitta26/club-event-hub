@@ -16,6 +16,9 @@ class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
 
+
+
+
 # List all clubs or create a new club
 class ClubListCreateView(generics.ListCreateAPIView):
     queryset = Club.objects.all()
@@ -31,7 +34,6 @@ class ClubDetailBySlugView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Club.objects.all()
     serializer_class = ClubSerializer
     lookup_field = 'slug'
-
 
 
 

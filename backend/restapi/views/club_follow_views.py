@@ -1,5 +1,6 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
+from django.views.decorators.csrf import csrf_protect
 from rest_framework.permissions import IsAuthenticated
 from ..models import Student, Club
 from ..serializers import ClubSerializer
@@ -16,6 +17,7 @@ def get_following_clubs(request):
     except Student.DoesNotExist:
         return Response({'status': 'error', 'message': 'User is not a student'}, status=404)
 
+@csrf_protect
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def unfollow_club(request, pk):
@@ -25,7 +27,7 @@ def unfollow_club(request, pk):
 
         if club in student.following_clubs.all():
             student.following_clubs.remove(club)
-            return Response({'status': 'success', 'message': f'Unfollowed {club.name}'})
+            return Response({'status': 'success', 'message': f'Unfollowed {club.club_name}'})
         else:
             return Response({'status': 'error', 'message': 'Not following this club'}, status=400)
     

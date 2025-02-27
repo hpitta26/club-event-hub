@@ -14,7 +14,8 @@ class ClubAdmin(admin.ModelAdmin):
 class StudentAdmin(admin.ModelAdmin):
     list_display = ('get_username', 'get_email', 'major', 'graduation_year', 'get_following_clubs')
     search_fields = ('user__username', 'user__email')
-    filter_horizontal = ('following_clubs',)  # Makes club selection easier in admin panel
+    filter_horizontal = ('following_clubs',)
+    fields = ('user', 'major', 'graduation_year', 'following_clubs')
 
     def get_username(self, obj):
         return obj.user.username
@@ -25,7 +26,7 @@ class StudentAdmin(admin.ModelAdmin):
     get_email.short_description = 'Email'
 
     def get_following_clubs(self, obj):
-        return ", ".join([club.name for club in obj.following_clubs.all()]) if obj.following_clubs.exists() else "None"
+        return ", ".join([club.club_name for club in obj.following_clubs.all()]) if obj.following_clubs.exists() else "None"
     get_following_clubs.short_description = 'Following Clubs'
 
 class EventAdmin(admin.ModelAdmin):

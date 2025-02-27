@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
 
 function Landing () {
-    const [modalIsOpen, setIsOpen] = useState(false);
-    const [loginRegister, setLoginRegister] = useState('');
+    // const [modalIsOpen, setIsOpen] = useState(false);
+    // const [loginRegister, setLoginRegister] = useState('');
     const navigate = useNavigate();
-    useEffect(() => {
-        Modal.setAppElement('#mainSection');
-    }, []);
+    // useEffect(() => {
+    //     Modal.setAppElement('#mainSection');
+    // }, []);
 
     const customStyles = {
         overlay: {
@@ -35,10 +35,10 @@ function Landing () {
                     </h1>
                 </div>
                 <div className='grid grid-cols-2 gap-3 text-center'>
-                    <button onClick={() => {setIsOpen(true);setLoginRegister('register')}} className='text-2xl bg-emerald-600 py-2 rounded-sm hover:bg-emerald-500 px-5 text-white'>Register</button>
-                    <button onClick={() => {setIsOpen(true);setLoginRegister('login')}} className='text-2xl bg-emerald-600 py-2 rounded-sm hover:bg-emerald-500 px-5 text-white'>Login</button>
+                    <button  onClick={() => navigate("/signup")} className='text-2xl bg-emerald-600 py-2 rounded-sm hover:bg-emerald-500 px-5 text-white'>Register</button>
+                    <button onClick={() => navigate("/login")} className='text-2xl bg-emerald-600 py-2 rounded-sm hover:bg-emerald-500 px-5 text-white'>Login</button>
                 </div>
-                <Modal
+                {/* <Modal
                     isOpen={modalIsOpen}
                     style={customStyles}
                     onRequestClose={() => setIsOpen(false)}
@@ -62,7 +62,7 @@ function Landing () {
                             I am a club!
                         </button>
                     </div>
-                </Modal>
+                </Modal> */}
             </div>
         </section>
     );

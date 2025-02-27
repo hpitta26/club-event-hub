@@ -2,10 +2,10 @@ import { useState, useContext } from "react";
 import FormContainer from "../../components/FormContainer.jsx";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import backend from "../../components/backend";
-import { CsrfContext } from "../../context/CsrfContext";
+import backend from "../../components/backend.jsx";
+import { CsrfContext } from "../../context/CsrfContext.jsx";
 
-function Signup() {
+function StudentSignup() {
   const [formData, setFormData] = useState({
     email: "",
     password1: "",
@@ -78,7 +78,7 @@ function Signup() {
           graduation_year: "",
         });
         setPhase(0); // reset the phase
-        navigate("/login");
+        navigate("/student-login");
       } else {
         setError(data.message || "Registration failed. Please try again.");
         setPhase(0);
@@ -163,4 +163,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default StudentSignup;

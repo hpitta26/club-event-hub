@@ -31,11 +31,11 @@ function App() {
               <Routes>
                   <Route path="/" element={<Landing />} />
                   {/* <Route path="/student-login" element={<StudentLogin />} /> */}
-                  <Route path="/student-register" element={<StudentRegister />} />
-                  {/* <Route path="/club-login" element={<ClubLogin />} /> */}
-                  <Route path="/login" element={<Login/>}/>
-                  <Route path="/signup" element={<Signup/>}/>
+                  {/* <Route path="/student-register" element={<StudentRegister />} /> */}
+                  <Route path="/signup" element={<Signup/>}/> {/* Student Signup */}
                   <Route path="/club-register" element={<ClubRegister />} />
+                  <Route path="/club-login" element={<ClubLogin />} />
+                  <Route path="/login" element={<Login/>}/> {/* Student Login */}
                   <Route path="/verify/:token" element={<VerifyEmail />} />
                   <Route path="/club/:clubSlug" element={<ClubProfile />} />
                   <Route  path="/event-card" element={<TempPage/>} /> {/* DummyPage to visualize the EventCard component */}

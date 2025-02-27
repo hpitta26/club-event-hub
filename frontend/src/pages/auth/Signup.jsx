@@ -86,6 +86,7 @@ function Signup() {
         navigate("/student-login");
       } else {
         setError(data.message || "Registration failed. Please try again.");
+        setPhase(0);
       }
     } catch (err) {
       // Debug log

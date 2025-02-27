@@ -155,5 +155,3 @@ build/
 docker-compose.override.yml
 .vercel
 .netlify
-
-*.sh

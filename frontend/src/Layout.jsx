@@ -3,7 +3,7 @@ import Landing from './pages/Landing.jsx';
 import Home from './pages/Home.jsx';
 import NotFound from './pages/NotFound.jsx';
 import VerifyEmail from "./pages/auth/VerifyEmail.jsx";
-import Navbar from "./components/navbar.jsx";
+import NavbarSelector from "./components/navbars/NavbarSelector.jsx";
 import CreateEvent from "./pages/CreateEvent.jsx";
 import { UserProvider } from "./context/UserContext.jsx";
 import { CsrfProvider } from "./context/CsrfContext.jsx";
@@ -27,7 +27,7 @@ function App() {
     <CsrfProvider>
       <UserProvider>
           <Router>
-              <Navbar />
+              <NavbarSelector /> 
               <Routes>
                   <Route path="/" element={<Landing />} />
                   {/* <Route path="/student-login" element={<StudentLogin />} /> */}

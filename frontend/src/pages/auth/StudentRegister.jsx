@@ -13,7 +13,7 @@ function Register() {
         major: '',
         graduation_year: ''
     });
-    const getCsrfToken = useContext(CsrfContext);
+    const { getCsrfToken } = useContext(CsrfContext);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const navigate = useNavigate();

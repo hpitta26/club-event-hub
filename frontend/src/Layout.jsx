@@ -8,8 +8,6 @@ import CreateEvent from "./pages/CreateEvent.jsx";
 import { UserProvider } from "./context/UserContext.jsx";
 import { CsrfProvider } from "./context/CsrfContext.jsx";
 import Logout from './pages/auth/Logout.jsx';
-import StudentLogin from './pages/archive/StudentLogin.jsx';
-import StudentRegister from './pages/archive/StudentRegister.jsx';
 import ClubLogin from './pages/auth/ClubLogin.jsx';
 import ClubRegister from './pages/auth/ClubRegister.jsx';
 import Login from "./pages/auth/Login.jsx";
@@ -30,8 +28,6 @@ function App() {
               <NavbarSelector /> 
               <Routes>
                   <Route path="/" element={<Landing />} />
-                  {/* <Route path="/student-login" element={<StudentLogin />} /> */}
-                  {/* <Route path="/student-register" element={<StudentRegister />} /> */}
                   <Route path="/student-register" element={<StudentSignup/>}/> {/* Student Signup */}
                   <Route path="/club-register" element={<ClubRegister />} />
                   <Route path="/club-login" element={<ClubLogin />} />

@@ -35,8 +35,8 @@ function App() {
                   <Route path="/verify/:token" element={<VerifyEmail />} />
                   <Route path="/club/:clubSlug" element={<ClubProfile />} />
                   <Route  path="/event-card" element={<TempPage/>} /> {/* DummyPage to visualize the EventCard component */}
+                  <Route path="/discover" element={<Discover />} />
                   <Route element={<ProtectedRoute />}> {/* Protected --> can only be accessed by logged-in users */}
-                      <Route path="/discover" element={<Discover />} />
                       <Route path="/create-event" element={<CreateEvent />} />
                       <Route path="/logout" element={<Logout />} />
                   </Route>

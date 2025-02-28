@@ -76,10 +76,10 @@ Content-Type: application/json
 
 {
     "user": {
-        "email": "owner@example.com",
+        "email": "owner8@example.com",
         "password": "securepassword"
     },
-    "club_name": "Awesome Club",
+    "club_name": "Awesome Club 8",
     "description": "A description for Awesome Club.",
     "social_media_handles": {"twitter": "@awesomeclubtw", "instagram": "@awesomeclubinsta"}
 }
@@ -203,3 +203,7 @@ Content-Type: application/json
 ###
 
 DELETE http://localhost:8000/restapi/students/2/
+
+###
+
+

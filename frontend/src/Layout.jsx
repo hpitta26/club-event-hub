@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Landing from './pages/Landing.jsx';
-import Home from './pages/Home.jsx';
+import Discover from "./pages/Discover.jsx";
 import NotFound from './pages/NotFound.jsx';
 import VerifyEmail from "./pages/auth/VerifyEmail.jsx";
 import NavbarSelector from "./components/navbars/NavbarSelector.jsx";
@@ -36,7 +36,7 @@ function App() {
                   <Route path="/club/:clubSlug" element={<ClubProfile />} />
                   <Route  path="/event-card" element={<TempPage/>} /> {/* DummyPage to visualize the EventCard component */}
                   <Route element={<ProtectedRoute />}> {/* Protected --> can only be accessed by logged-in users */}
-                      <Route path="/home" element={<Home />} />
+                      <Route path="/discover" element={<Discover />} />
                       <Route path="/create-event" element={<CreateEvent />} />
                       <Route path="/logout" element={<Logout />} />
                   </Route>

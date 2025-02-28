@@ -35,7 +35,7 @@ function Login() {
       if (response.status === 200) {
         console.log("logging user in...");
         Login(response.data.user);
-        navigate("/home");
+        navigate("/discover");
       } else {
         setError(response.message);
       }

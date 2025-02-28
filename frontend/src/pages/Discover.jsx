@@ -1,4 +1,4 @@
-function Home() {
+function Discover() {
     return (
         <section className='min-h-screen bg-stone-900 flex justify-center items-center text-center'>
             <div className='grid grid-rows-1 gap-3'>
@@ -12,4 +12,4 @@ function Home() {
     );
 };
 
-export default Home;
+export default Discover;

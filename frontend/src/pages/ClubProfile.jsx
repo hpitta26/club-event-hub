@@ -39,14 +39,15 @@ function ClubProfile () {
 return (
     <section className="min-h-screen bg-stone-900 flex flex-col items-center">
         <div className="w-full max-w-4xl space-y-5 p-6">
-            <div>
-                <img src={dummyInitLogo} alt="dummy picture" className="rounded h-32 mt-6"/>
-            </div>
-            <div className="flex justify-between">
-                <h1 className="text-white text-4xl mt-3">{club.club_name}</h1>
-                <button className="bg-blue-600 text-white hover:bg-blue-500 rounded-md max-w-md h-10 w-2/12"
+            <div className="flex items-end justify-between">
+                <img src={dummyInitLogo} alt="dummy picture" className="rounded-full h-32 mt-6"/>
+                <button className="bg-blue-600 text-white hover:bg-blue-500 rounded-md max-w-md h-10 w-2/12 "
                         onClick={() => console.log("clicked")}>Follow
                 </button>
+
+            </div>
+            <div>
+                <h1 className="text-white text-4xl mt-3">{club.club_name}</h1>
             </div>
             <div>
                 <h5 className="text-gray-400 w-3/4 ">{club.description}</h5>
@@ -62,28 +63,41 @@ return (
                     <FaLinkedin className="text-gray-400 hover:text-gray-200 size-6"/>
                 </button>
             </div>
-            <hr className="w-full border-gray-600 my-5"/>
 
         </div>
 
-        <div className="w-full flex flex-col items-center">
-
+        <div className="w-full max-w-4xl ">
             <div className="m-4">
-                <h3 className="text-white text-3xl">Upcoming Events</h3>
+                <h3 className="text-white text-3xl">Events</h3>
             </div>
-            <div className="flex flex-wrap justify-center gap-4 w-full">
-                <EventCard/>
-                <EventCard/>
-                <EventCard/>
-            </div>
-
             <div className="m-4">
-                <h3 className="text-white text-3xl">Passed Events</h3>
+                <h5 className="text-white">This Week</h5>
             </div>
-            <div className="flex flex-wrap justify-center gap-4 w-full">
-                <EventCard/>
-                <EventCard/>
-                <EventCard/>
+            <div className="flex gap-4 overflow-x-auto whitespace-nowrap">
+                <div className="inline-flex gap-4">
+                    <EventCard className="min-w-[250px]"/>
+                    <EventCard className="min-w-[250px]"/>
+                    <EventCard className="min-w-[250px]"/>
+                    <EventCard className="min-w-[250px]"/>
+                    <EventCard className="min-w-[250px]"/>
+                </div>
+            </div>
+            <div className="flex items-end justify-between">
+                <div className="m-4">
+                    <h5 className="text-white">Upcoming</h5>
+                </div>
+                <button className="bg-stone-900 text-white hover:bg-stone-700  m-2 rounded-md max-w-md h-10 w-2/12 "
+                        onClick={() => console.log("See All")}>See All
+                </button>
+            </div>
+            <div className="flex gap-4 overflow-x-auto whitespace-nowrap">
+                <div className="inline-flex gap-4">
+                    <EventCard className="min-w-[250px]"/>
+                    <EventCard className="min-w-[250px]"/>
+                    <EventCard className="min-w-[250px]"/>
+                    <EventCard className="min-w-[250px]"/>
+                    <EventCard className="min-w-[250px]"/>
+                </div>
             </div>
         </div>
     </section>

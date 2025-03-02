@@ -3,7 +3,6 @@ import FormContainer from "../../components/FormContainer.jsx";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import backend from "../../components/backend.jsx";
-import { CsrfContext } from "../../context/CsrfContext.jsx";
 
 function StudentSignup() {
   const [formData, setFormData] = useState({
@@ -14,6 +13,7 @@ function StudentSignup() {
     first_name: "",
     major: "",
     graduation_year: "",
+    role: 'STUDENT'
   });
 
   const [phase, setPhase] = useState(0);
@@ -38,7 +38,6 @@ function StudentSignup() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const { getCsrfToken } = useContext(CsrfContext);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
@@ -53,13 +52,8 @@ function StudentSignup() {
 
     try {
       // Debug log
-      const csrfToken = await getCsrfToken();
-      console.log("Making request to:", "/restapi/student-register/");
-      const response = await backend.post("/student-register/", formData, {
-        headers: {
-          "X-CSRFToken": csrfToken,
-        },
-      });
+      console.log("Making request to:", "/restapi/register/");
+      const response = await backend.post("/register/", formData);
 
       // Debug log
       console.log("Response:", response);
@@ -78,7 +72,7 @@ function StudentSignup() {
           graduation_year: "",
         });
         setPhase(0); // reset the phase
-        navigate("/student-login");
+        navigate("/login");
       } else {
         setError(data.message || "Registration failed. Please try again.");
         setPhase(0);

@@ -32,14 +32,7 @@ function CreateEvent() {
                 end_time:format(formData.end_time,"yyyy-MM-dd'T'H:mm:ssXXX")
             }
             try {
-                const response = await backend.post("/events/",
-                    formattedData,
-                    {
-                        headers: {
-                            'X-CSRFToken': document.cookie.split('csrftoken=')[1]?.split(';')[0] || ''
-                        }
-                    }
-                );
+                const response = await backend.post("/events/", formattedData);
                 console.log(response);
             }
             catch (err){

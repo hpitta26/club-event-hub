@@ -2,12 +2,10 @@ import React, { useEffect, useState, useContext } from "react";
 import backend from "../components/backend";
 import CallToAction from "../components/CallToAction";
 import { CiSearch } from "react-icons/ci";
-import { CsrfContext } from "../context/CsrfContext.jsx";
 
 function FollowingModal({ isOpen, onClose }) {
   const [followingClubs, setFollowingClubs] = useState([]);
   const [searchCriteria, setSearchCriteria] = useState("");
-  const { getCsrfToken } = useContext(CsrfContext);
 
   const getFollowingClubs = () => {
     backend
@@ -23,12 +21,7 @@ function FollowingModal({ isOpen, onClose }) {
 
   const unfollowClub = async (clubPk) => {
     try {
-      const csrfToken = await getCsrfToken();
-      await backend.delete(`/unfollow-club/${clubPk}/`, {
-        headers: {
-          "X-CSRFToken": csrfToken,
-        },
-      });
+      await backend.delete(`/unfollow-club/${clubPk}/`);
       getFollowingClubs();
     } catch (err) {
       console.error("Unfollow club error:", err);

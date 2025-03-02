@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import drf_views, student_auth_views, auth_views, club_auth_views
+from .views import drf_views, student_auth_views, auth_views, club_auth_views, club_follow_views
 from django.views.decorators.http import require_http_methods
 
 urlpatterns = [
@@ -11,7 +11,6 @@ urlpatterns = [
     path('students/', drf_views.StudentListCreateView.as_view(), name='student-list-create'),
     path('students/<int:pk>/', drf_views.StudentDetailView.as_view(), name='student-detail'),
 
-
     path('student-register/', require_http_methods(['POST'])(student_auth_views.student_signup), name='student-register'),
     path('student-login/', require_http_methods(['POST'])(student_auth_views.student_login), name='student-login'),
 
@@ -22,4 +21,7 @@ urlpatterns = [
     path('logout/', require_http_methods(['GET'])(auth_views.logout_view), name='logout'),
     path('verify-session/', require_http_methods(['GET'])(auth_views.verify_session), name='verify-session'),
     path('verify-email/<str:token>/', auth_views.verify_email, name='verify-email'),
+
+    path('following-clubs/', club_follow_views.get_following_clubs, name='following-clubs'),
+    path('unfollow-club/<int:pk>/', club_follow_views.unfollow_club, name='unfollow-club'),
 ]

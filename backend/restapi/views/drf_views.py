@@ -3,8 +3,8 @@ _summary_
 """
 
 from rest_framework import generics
-from restapi.models import Event, Student, Club
-from restapi.serializers import EventSerializer, StudentSerializer, ClubSerializer
+from ..models import Event, Student, Club
+from ..serializers import EventSerializer, StudentSerializer, ClubSerializer
 
 # List all events or create a new event
 class EventListCreateView(generics.ListCreateAPIView):
@@ -15,7 +15,6 @@ class EventListCreateView(generics.ListCreateAPIView):
 class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-
 
 
 
@@ -35,7 +34,6 @@ class ClubDetailBySlugView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Club.objects.all()
     serializer_class = ClubSerializer
     lookup_field = 'slug'
-
 
 
 

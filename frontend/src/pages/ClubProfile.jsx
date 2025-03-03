@@ -40,7 +40,7 @@ function ClubProfile () {
 
 return (
     <section className="min-h-screen bg-stone-900 flex flex-col items-center">
-        <div className="bg-stone-500 min-h-56 w-full"></div>
+        <div className="bg-stone-500 min-h-40 w-full"></div>
         <div className="w-full max-w-4xl space-y-5 p-6">
             <div className="flex items-end justify-between">
                 <img src={dummyInitLogo} alt="dummy picture" className="rounded-full h-32 mt-6 -mt-28"/>

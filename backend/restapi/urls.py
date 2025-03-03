@@ -2,6 +2,12 @@ from django.urls import path
 from .views import drf_views, auth_views, club_follow_views
 from django.views.decorators.http import require_http_methods
 
+from .views.auth_views import protect_auth_views_w_csrf
+from .views.club_follow_views import protect_club_views_w_csrf
+
+protect_auth_views_w_csrf()
+protect_club_views_w_csrf()
+
 urlpatterns = [
     path('events/', drf_views.EventListCreateView.as_view(), name='event-list-create'),
     path('events/<int:pk>/', drf_views.EventDetailView.as_view(), name='event-detail'),

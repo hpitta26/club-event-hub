@@ -1,9 +1,20 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from django.views.decorators.csrf import csrf_protect
 from rest_framework.permissions import IsAuthenticated
 from ..models import Student, Club
 from ..serializers import ClubSerializer
+
+#
+# Protect all routes in this module with CSRF
+#
+import sys
+from django.views.decorators.csrf import csrf_protect
+import inspect
+
+def protect_club_views_w_csrf():
+    for name, view in inspect.getmembers(sys.modules[__name__]):
+        if callable(view):
+            globals()[name] = csrf_protect(view)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

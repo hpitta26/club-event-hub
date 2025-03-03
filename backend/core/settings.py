@@ -71,7 +71,8 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 CSRF_COOKIE_SECURE = False  # Set to True in production
 CSRF_COOKIE_SAMESITE = 'Lax'
-CSRF_COOKIE_HTTPONLY = False  # Needed for JS access
+CSRF_COOKIE_HTTPONLY = True
+CSRF_USE_SESSION = True
 
 ROOT_URLCONF = 'core.urls'
 

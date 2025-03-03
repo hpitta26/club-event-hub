@@ -6,7 +6,7 @@ const StudentOrClubModal = ({ modalIsOpen, setIsOpen }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        Modal.setAppElement('#mainSection');
+        Modal.setAppElement('#root');
     }, []);
 
     const customStyles = {

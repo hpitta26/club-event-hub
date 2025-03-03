@@ -6,6 +6,8 @@ import EventCard from "../components/EventCard.jsx";
 import { FaInstagram } from "react-icons/fa";
 import { RiTwitterXFill } from "react-icons/ri";
 import { FaLinkedin } from "react-icons/fa";
+import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
+import DummyEventCard from "../components/DummyEventCard.jsx";
 
 
 function ClubProfile () {
@@ -38,9 +40,10 @@ function ClubProfile () {
 
 return (
     <section className="min-h-screen bg-stone-900 flex flex-col items-center">
+        <div className="bg-stone-500 min-h-56 w-full"></div>
         <div className="w-full max-w-4xl space-y-5 p-6">
             <div className="flex items-end justify-between">
-                <img src={dummyInitLogo} alt="dummy picture" className="rounded-full h-32 mt-6"/>
+                <img src={dummyInitLogo} alt="dummy picture" className="rounded-full h-32 mt-6 -mt-28"/>
                 <button className="bg-blue-600 text-white hover:bg-blue-500 rounded-md max-w-md h-10 w-2/12 "
                         onClick={() => console.log("clicked")}>Follow
                 </button>
@@ -74,12 +77,13 @@ return (
                 <h5 className="text-white">This Week</h5>
             </div>
             <div className="flex gap-4 overflow-x-auto whitespace-nowrap">
-                <div className="inline-flex gap-4">
-                    <EventCard className="min-w-[250px]"/>
-                    <EventCard className="min-w-[250px]"/>
-                    <EventCard className="min-w-[250px]"/>
-                    <EventCard className="min-w-[250px]"/>
-                    <EventCard className="min-w-[250px]"/>
+                <div className="inline-flex gap-4 ml-4">
+                    <DummyEventCard/>
+                    <DummyEventCard/>
+                    <DummyEventCard/>
+                    <DummyEventCard/>
+                    <DummyEventCard/>
+                    <DummyEventCard/>
                 </div>
             </div>
             <div className="flex items-end justify-between">
@@ -91,12 +95,13 @@ return (
                 </button>
             </div>
             <div className="flex gap-4 overflow-x-auto whitespace-nowrap">
-                <div className="inline-flex gap-4">
-                    <EventCard className="min-w-[250px]"/>
-                    <EventCard className="min-w-[250px]"/>
-                    <EventCard className="min-w-[250px]"/>
-                    <EventCard className="min-w-[250px]"/>
-                    <EventCard className="min-w-[250px]"/>
+                <div className="inline-flex gap-4 ml-4">
+                    <DummyEventCard/>
+                    <DummyEventCard/>
+                    <DummyEventCard/>
+                    <DummyEventCard/>
+                    <DummyEventCard/>
+                    <DummyEventCard/>
                 </div>
             </div>
         </div>

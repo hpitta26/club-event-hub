@@ -6,21 +6,11 @@ from rest_framework.response import Response
 from restapi.models import CustomUser
 from restapi.forms import ClubCreationForm, StudentCreationForm
 from django.contrib.auth import login, authenticate
-
-#
-# Protect all routes in this module with CSRF
-#
-import sys
 from django.views.decorators.csrf import csrf_protect
-import inspect
-
-def protect_auth_views_w_csrf():
-    for name, view in inspect.getmembers(sys.modules[__name__]):
-        if callable(view):
-            globals()[name] = csrf_protect(view)
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
+@csrf_protect
 def verify_email(request, token):
     try:
         user = CustomUser.objects.get_by_verify_token(token)
@@ -52,6 +42,7 @@ def csrf_provider(request):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
+@csrf_protect
 def verify_session(request):
     try:
         if request.session.has_key('id'):
@@ -72,6 +63,7 @@ def verify_session(request):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
+@csrf_exempt
 def logout_view(request):
     try:
         logout(request)
@@ -86,6 +78,7 @@ def logout_view(request):
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
+@csrf_protect
 def register_view(request):
     print("Register route with data:", request.data)
     role = request.data.get("role")
@@ -112,6 +105,7 @@ def register_view(request):
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
+@csrf_protect
 def login_view(request):
     email = request.data.get('email')
     password = request.data.get('password')

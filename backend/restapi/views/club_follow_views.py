@@ -3,21 +3,11 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from ..models import Student, Club
 from ..serializers import ClubSerializer
-
-#
-# Protect all routes in this module with CSRF
-#
-import sys
 from django.views.decorators.csrf import csrf_protect
-import inspect
-
-def protect_club_views_w_csrf():
-    for name, view in inspect.getmembers(sys.modules[__name__]):
-        if callable(view):
-            globals()[name] = csrf_protect(view)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+@csrf_protect
 def get_following_clubs(request):
     try:
         student = Student.objects.get(user=request.user)
@@ -28,9 +18,9 @@ def get_following_clubs(request):
     except Student.DoesNotExist:
         return Response({'status': 'error', 'message': 'User is not a student'}, status=404)
 
-@csrf_protect
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
+@csrf_protect
 def unfollow_club(request, pk):
     try:
         student = Student.objects.get(user=request.user)

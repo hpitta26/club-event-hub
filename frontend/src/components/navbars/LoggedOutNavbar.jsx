@@ -3,6 +3,7 @@ import gatherULogo from '../../assets/icons/GatherUIcon.svg';
 import SearchBar from './navbarAssets/searchBar';
 import SearchBarTrigger from './navbarAssets/SearchBarIcon';
 import { useNavigate } from 'react-router-dom';
+import StudentOrClubModal from '../StudentOrClubModal';
 
 const LoggedOutNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -10,6 +11,7 @@ const LoggedOutNavbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [signupClicked, setSignupClicked] = useState(false);
   const [loginClicked, setLoginClicked] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLinkClick = (link) => {
@@ -23,6 +25,7 @@ const LoggedOutNavbar = () => {
   const handleSignupClick = () => {
     setSignupClicked(true);
     setTimeout(() => setSignupClicked(false), 300);
+    setIsOpen(true)
   };
 
   const handleLoginClick = () => {
@@ -43,18 +46,18 @@ const LoggedOutNavbar = () => {
   }, []);
 
   return (
-    <nav className="fixed w-full bg-black text-white z-50">
+    <nav className="fixed w-full bg-black text-white z-40">
       {/* Main row */}
       <div className="w-full relative flex items-center justify-between h-10">
         {/* Left: Logo */}
-        <div className="pl-4 flex items-center">
+        <a className="pl-4 flex items-center" href="/">
           <img src={gatherULogo} alt="GatherU Logo" className="h-5 w-auto" />
-        </div>
+        </a>
 
         {/* Center: Links (hidden on mobile) */}
         <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex space-x-8">
           <a
-            href="#"
+            href="/discover"
             className={`text-sm transition-all duration-300 ease-out transform px-2 py-1 rounded-md
               ${clickedLink === 'discover'
                 ? 'text-blue-500 bg-blue-500/20 scale-110 shadow-lg'
@@ -126,6 +129,8 @@ const LoggedOutNavbar = () => {
           </div>
         </div>
       )}
+
+      <StudentOrClubModal modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} />
     </nav>
   );
 };

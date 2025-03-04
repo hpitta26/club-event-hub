@@ -31,14 +31,14 @@ function ClubProfile () {
 
     if(loading) {
         return (
-            <section className="min-h-screen bg-stone-900 flex justify-center items-center">
+            <section className='min-h-screen bg-stone-900 flex justify-center items-center pt-10'>
                 <h1 className="text-white text-2xl">Loading ...</h1>
             </section>
         )
     }
 
     return (
-        <section className="min-h-screen bg-stone-900 flex flex-col items-center pb-20">
+        <section className="min-h-screen bg-stone-900 flex flex-col items-center pb-20 pt-10">
             <div className="bg-[#D9D9D9] min-h-56 w-full max-w-[860px]"></div>
             <div className="w-full space-y-5 p-6 max-w-[860px]">
                 <div className="flex items-end justify-between">
@@ -49,7 +49,6 @@ function ClubProfile () {
                     >
                         Follow
                     </button>
-
                 </div>
                 <div className="flex flex-col w-3/4">
                     <h1 className="font-inter text-white font-bold text-[42px]">{club.club_name}</h1>
@@ -66,7 +65,6 @@ function ClubProfile () {
                         <FaLinkedin className="text-gray-400 hover:text-gray-200 size-6"/>
                     </button>
                 </div>
-
             </div>
 
             <div className="w-full max-w-[860px]">

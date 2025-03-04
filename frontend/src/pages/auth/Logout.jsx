@@ -12,7 +12,7 @@ function Login() {
     }, []);
     
     return (
-        <section className="min-h-screen bg-stone-900 flex justify-center items-center">
+        <section className="min-h-screen bg-stone-900 flex justify-center items-center pt-10">
             <div>
                 <h1 className='text-4xl text-pink-100 hover:text-pink-200'>Successfully logged out!</h1>
             </div>

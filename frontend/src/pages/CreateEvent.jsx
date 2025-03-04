@@ -32,14 +32,7 @@ function CreateEvent() {
                 end_time:format(formData.end_time,"yyyy-MM-dd'T'H:mm:ssXXX")
             }
             try {
-                const response = await backend.post("/events/",
-                    formattedData,
-                    {
-                        headers: {
-                            'X-CSRFToken': document.cookie.split('csrftoken=')[1]?.split(';')[0] || ''
-                        }
-                    }
-                );
+                const response = await backend.post("/events/", formattedData);
                 console.log(response);
             }
             catch (err){
@@ -88,7 +81,7 @@ function CreateEvent() {
     };
 
     return (
-        <section className='min-h-screen bg-stone-900 flex justify-center items-center'>
+        <section className='min-h-screen bg-stone-900 flex justify-center items-center pt-10'>
             <div className='grid grid-rows-8 gap-8'>
                 <div>
                     <h1 className='text-white text-4xl mb-4'>

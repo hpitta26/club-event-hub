@@ -1,7 +1,6 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import backend from '../../components/backend';
-import { CsrfContext } from '../../context/CsrfContext';
 
 function Register() {
     const [formData, setFormData] = useState({
@@ -9,9 +8,9 @@ function Register() {
         description: '',
         email: '',
         password1: '',
-        password2: ''
+        password2: '',
+        role: 'CLUB'
     });
-    const { getCsrfToken } = useContext(CsrfContext);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const navigate = useNavigate();
@@ -25,16 +24,9 @@ function Register() {
         console.log('Submitting form data:', formData);
 
         try {
-            // Debug log
-            const csrfToken = await getCsrfToken();            
-            console.log('Making request to:', '/restapi/club-register/');
-            const response = await backend.post('/club-register/', 
-            formData,
-            {
-                headers: {
-                    'X-CSRFToken': csrfToken
-                }
-            });
+            // Debug log 
+            console.log('Making request to:', '/restapi/register/');
+            const response = await backend.post('/register/', formData);
 
             // Debug log
             console.log('Response:', response);
@@ -47,7 +39,7 @@ function Register() {
                     password1: '',
                     password2: ''
                 });
-                navigate('/club-login');
+                navigate('/login');
             } else {
                 setError(data.message || 'Registration failed. Please try again.');
             }
@@ -81,7 +73,7 @@ function Register() {
     
 
     return (
-        <section className='min-h-screen bg-stone-900 flex justify-center items-center'>
+        <section className='min-h-screen bg-stone-900 flex justify-center items-center pt-10'>
             <form onSubmit={handleSubmit} className='w-96 max-w-full px-4'>
                 <div className='space-y-4'>
                     <div>

@@ -50,14 +50,14 @@ const LoggedOutNavbar = () => {
       {/* Main row */}
       <div className="w-full relative flex items-center justify-between h-10">
         {/* Left: Logo */}
-        <div className="pl-4 flex items-center">
+        <a className="pl-4 flex items-center" href="/">
           <img src={gatherULogo} alt="GatherU Logo" className="h-5 w-auto" />
-        </div>
+        </a>
 
         {/* Center: Links (hidden on mobile) */}
         <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex space-x-8">
           <a
-            href="#"
+            href="/discover"
             className={`text-sm transition-all duration-300 ease-out transform px-2 py-1 rounded-md
               ${clickedLink === 'discover'
                 ? 'text-blue-500 bg-blue-500/20 scale-110 shadow-lg'

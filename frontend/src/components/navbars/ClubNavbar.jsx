@@ -24,6 +24,7 @@ const ClubNavbar = () => {
   const handleEventsClick = () => {
     setEventsClicked(true);
     setTimeout(() => setEventsClicked(false), 300);
+	navigate("/create-event");
   };
 
   const handleLogout = () => {
@@ -48,14 +49,14 @@ const ClubNavbar = () => {
       {/* Main row */}
       <div className="w-full relative flex items-center justify-between h-10">
         {/* Left: Logo */}
-        <div className="pl-4 flex items-center">
+        <a className="pl-4 flex items-center" href="/analytics">
           <img src={gatherULogo} alt="GatherU Logo" className="h-5 w-auto" />
-        </div>
+        </a>
 
         {/* Center: Links (hidden on mobile) */}
         <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex space-x-8">
           <a
-            href="#"
+            href="/analytics"
             className={`text-sm transition-all duration-300 ease-out transform px-2 py-1 rounded-md
               ${clickedLink === 'Analytics'
                 ? 'text-pink-500 bg-pink-500/20 scale-110 shadow-lg'
@@ -65,12 +66,12 @@ const ClubNavbar = () => {
             Analytics
           </a>
           <a
-            href="#"
+            href="/events"
             className={`text-sm transition-all duration-300 ease-out transform px-2 py-1 rounded-md
               ${clickedLink === 'Events'
                 ? 'text-blue-500 bg-blue-500/20 scale-110 shadow-lg'
                 : 'text-[#F0EFEB] bg-transparent scale-100 hover:text-blue-500'}`}
-            onClick={() => handleLinkClick('Events')}
+			  onClick={() => handleLinkClick("Events")}
           >
             Events
           </a>
@@ -86,7 +87,7 @@ const ClubNavbar = () => {
                   ? 'text-yellow-500 bg-yellow-500/20 scale-110 shadow-lg'
                   : 'text-[#F0EFEB] bg-transparent scale-100'}
                 md:text-sm md:px-2 md:py-1 text-xs px-1 py-0.5`}
-              onClick={handleEventsClick}
+			  onClick={handleEventsClick}
             >
               + Create Event
             </button>

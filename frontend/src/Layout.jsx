@@ -17,6 +17,9 @@ import TempPage from "./pages/TempPage.jsx";
 import './index.css';
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 import ClubProfile from "./pages/ClubProfile.jsx";
+import FollowingClubs from "./pages/FollowingClubs.jsx";
+import Analytics from "./pages/Analytics.jsx";
+import ClubEvents from "./pages/ClubEvents.jsx";
 
 function App() {
   return (
@@ -32,6 +35,9 @@ function App() {
             <Route path="/club/:clubSlug" element={<ClubProfile />} />
             <Route  path="/event-card" element={<TempPage/>} /> {/* DummyPage to visualize the EventCard component */}
             <Route path="/discover" element={<Discover />} />
+			<Route path="/following" element={<FollowingClubs/>} />
+			<Route path="/analytics" element={<Analytics/>} />
+			<Route path="/events" element={<ClubEvents/>} />
             <Route element={<ProtectedRoute />}> {/* Protected --> can only be accessed by logged-in users */}
               <Route path="/create-event" element={<CreateEvent />} />
               <Route path="/logout" element={<Logout />} />

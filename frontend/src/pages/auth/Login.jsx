@@ -28,8 +28,13 @@ function Login() {
       if (response.status === 200) {
         console.log("logging user in...");
         Login(response.data.user);
-        navigate("/discover");
-      } else {
+		  if(response.data.user['role'] == "STUDENT") {
+			navigate("/discover");
+		  }
+		  else {
+			navigate("/analytics");
+		  }
+	  } else {
         setError(response.message);
       }
     } catch (err) {

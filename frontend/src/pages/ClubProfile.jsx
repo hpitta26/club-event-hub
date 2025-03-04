@@ -30,14 +30,14 @@ function ClubProfile () {
 
     if(loading) {
         return (
-            <section className='min-h-screen bg-stone-900 flex justify-center items-center'>
+            <section className='min-h-screen bg-stone-900 flex justify-center items-center pt-10'>
                 <h1 className="text-white text-2xl">Loading ...</h1>
             </section>
         )
     }
 
 return (
-    <section className="min-h-screen bg-stone-900 flex flex-col items-center">
+    <section className="min-h-screen bg-stone-900 flex flex-col items-center pt-10">
         <div className="w-full max-w-4xl space-y-5 p-6">
             <div>
                 <img src={dummyInitLogo} alt="dummy picture" className="rounded h-32 mt-6"/>

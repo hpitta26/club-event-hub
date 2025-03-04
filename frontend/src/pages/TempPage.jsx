@@ -7,9 +7,9 @@ import EventModal from '../components/EventModal'
 
 function TempPage() {
   return (
-    <div className='flex flex-col items-center justify-center bg-slate-950 p-10 min-h-screen'>
+    <div className='flex flex-col items-center justify-center bg-slate-950 p-10 min-h-screen pt-10'>
       <EventCard />
-      <EventModal/>
+      <EventModal />
     </div>
   )
 }

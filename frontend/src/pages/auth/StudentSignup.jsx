@@ -98,7 +98,7 @@ function StudentSignup() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-900 flex justify-center items-center">
+    <div className="min-h-screen bg-stone-900 flex justify-center items-center pt-10">
       <div className="flex flex-col gap-8">
         {phase === 0 && (
           <FormContainer

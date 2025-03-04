@@ -81,7 +81,7 @@ function CreateEvent() {
     };
 
     return (
-        <section className='min-h-screen bg-stone-900 flex justify-center items-center'>
+        <section className='min-h-screen bg-stone-900 flex justify-center items-center pt-10'>
             <div className='grid grid-rows-8 gap-8'>
                 <div>
                     <h1 className='text-white text-4xl mb-4'>

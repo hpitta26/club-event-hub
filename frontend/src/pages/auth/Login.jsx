@@ -43,7 +43,7 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-900 flex justify-center items-center">
+    <div className="min-h-screen bg-stone-900 flex justify-center items-center pt-10">
       <FormContainer
         title={"Welcome to GatherU"}
         subtitle="University Events at a Glance"

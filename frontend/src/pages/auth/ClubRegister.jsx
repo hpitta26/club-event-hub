@@ -73,7 +73,7 @@ function Register() {
     
 
     return (
-        <section className='min-h-screen bg-stone-900 flex justify-center items-center'>
+        <section className='min-h-screen bg-stone-900 flex justify-center items-center pt-10'>
             <form onSubmit={handleSubmit} className='w-96 max-w-full px-4'>
                 <div className='space-y-4'>
                     <div>

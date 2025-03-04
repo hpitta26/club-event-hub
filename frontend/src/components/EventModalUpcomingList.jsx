@@ -7,7 +7,7 @@ const customScrollbarStyle = {
   scrollBehavior: "smooth",
   overflowY: "scroll",
   msOverflowStyle: "none",  
-  "&::-webkit-scrollbar": {
+  "&::WebkitScrollbar": {
     display: "none"  
   }
 };

@@ -29,10 +29,10 @@ function Login() {
         console.log("logging user in...");
         Login(response.data.user);
 		  if(response.data.user['role'] == "STUDENT") {
-			navigate("/discover");
+			  navigate("/discover");
 		  }
 		  else {
-			navigate("/analytics");
+			  navigate("/analytics");
 		  }
 	  } else {
         setError(response.message);

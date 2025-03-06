@@ -29,7 +29,7 @@ const FormContainer = ({
             />
           </div>
         ))}
-        <button className="bg-stone-200 rounded-md py-2 mt-2 hover:bg-stone-300 font-bold">
+        <button name="submit" className="bg-stone-200 rounded-md py-2 mt-2 hover:bg-stone-300 font-bold">
           {children}
         </button>
       </form>

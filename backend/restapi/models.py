@@ -87,17 +87,22 @@ class Club(models.Model):
     def __str__(self):
         return str(self.club_name)
 
+    def delete(self, *args, **kwargs):
+        self.user.delete()
+        super().delete(*args, **kwargs)
+
 
 
 
 class Student(models.Model):
     user = models.OneToOneField(
-        CustomUser, on_delete=models.CASCADE, related_name='student_profile'
+        CustomUser, on_delete=models.CASCADE, related_name='student_profile', primary_key=True
     )
 
     # profile_picture = models.ImageField(
     #     upload_to='student_profiles/', blank=True, null=True
     # )
+
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     major = models.CharField(max_length=255, blank=True, null=True)
@@ -116,6 +121,10 @@ class Student(models.Model):
 
     def __str__(self):
         return str(self.user.email)
+
+    def delete(self, *args, **kwargs):
+        self.user.delete()
+        super().delete(*args, **kwargs)
 
 
 

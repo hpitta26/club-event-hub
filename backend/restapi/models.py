@@ -57,7 +57,7 @@ class CustomUser(AbstractUser):
 
 class Club(models.Model):
     user = models.OneToOneField(
-        CustomUser, on_delete=models.CASCADE, related_name='club_profile'
+        CustomUser, on_delete=models.CASCADE, related_name='club_profile', primary_key=True # Link the pks
     )
 
     # profile_picture = models.ImageField(

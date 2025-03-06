@@ -22,8 +22,13 @@ class Command(BaseCommand):
     help = 'Resets the database, creates migrations, migrates, and creates a super user for administrative purposes'
 
     def handle(self, *args, **options):
-        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        self.stdout.write(self.style.WARNING('*** THIS SCRIPT WILL REMOVE ALL THE DATA IN YOUR db.sqlite3 FILE ***'))
+        self.stdout.write(self.style.WARNING('*** Are you sure you would like to continue? (Y/N) ***'))
+        use_default = input().strip().lower()
+        if use_default != 'y':
+            return
 
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
         DB_FILE = os.path.join(BASE_DIR, "../../../db.sqlite3")
         MIGRATIONS_DIR = os.path.join(BASE_DIR, "../../migrations/")
         MIGRATION_FILES = glob.glob(os.path.join(MIGRATIONS_DIR, '0*.*'))

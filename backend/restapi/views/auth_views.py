@@ -92,9 +92,7 @@ def register_view(request):
 
     if form.is_valid():
         print("Form is valid")  # Debug print
-        user = form.save(commit=False)
-        user.is_active = False
-        user.save()
+        user = form.save()
 
         return Response(
             {'message': 'Please check your email to verify your account'},

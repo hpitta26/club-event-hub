@@ -96,7 +96,7 @@ class Club(models.Model):
 
 class Student(models.Model):
     user = models.OneToOneField(
-        CustomUser, on_delete=models.CASCADE, related_name='student_profile', primary_key=True
+        CustomUser, on_delete=models.CASCADE, related_name='student_profile', primary_key=True # Link the pks
     )
 
     # profile_picture = models.ImageField(

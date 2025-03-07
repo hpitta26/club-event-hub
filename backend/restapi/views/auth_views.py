@@ -124,6 +124,13 @@ def login_view(request):
                 {'error': error_message },
                 status=401
             )
+        
+        if user.role == 'CLUB' and not user.club_profile.is_account_verified:
+            print('User is a club and account is not verified')
+            return Response(
+                {'error': 'Please wait... your account has not been manually verified yet' },
+                status=401
+            )
 
         login(request, user)
 
@@ -137,6 +144,7 @@ def login_view(request):
         request.session['role'] = user.role   # populate session
 
         return Response({"user": {"role": user.role}}, status=200)
+    
     error_message = 'Invalid account credentials'
     print(error_message)
     return Response(

@@ -70,6 +70,7 @@ class Club(models.Model):
     spirit_rating = models.PositiveIntegerField(
         default=1, validators=[MinValueValidator(0), MaxValueValidator(100)]
     )
+    is_account_verified = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if not self.slug:

@@ -4,7 +4,7 @@ from .models import Club, Student, Event, CustomUser
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 class ClubAdmin(admin.ModelAdmin):
-    list_display = ('get_email', 'club_name', 'description', 'spirit_rating')
+    list_display = ('get_email', 'club_name', 'is_account_verified', 'description', 'spirit_rating')
     search_fields = ('user__email',)
 
     def get_email(self, obj):

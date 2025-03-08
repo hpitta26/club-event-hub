@@ -2,7 +2,6 @@ import React from "react";
 import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
 import { FaLocationDot } from "react-icons/fa6";
-import { FaCircleUser } from "react-icons/fa6";
 import { IoMdPerson } from "react-icons/io";
 
 function EventCard({
@@ -16,64 +15,75 @@ function EventCard({
   hostLogo = dummyInitLogo,
 }) {
   function handleTitleLength(eventTitle) {
-    const maxLength = 23;
-    return eventTitle.length > maxLength ? eventTitle.slice(0, maxLength) + "..." : eventTitle;
+    const maxLength = 30;
+    return eventTitle.length > maxLength
+      ? eventTitle.slice(0, maxLength) + "..."
+      : eventTitle;
+  }
+  function formatDate(isoString) {
+    if (!isoString || isoString === "TBD") return "TBD"; // Handle empty or "TBD" dates
+
+    const dateObj = new Date(isoString);
+    return new Intl.DateTimeFormat("en-US", {
+      month: "short", // Abbreviated month (e.g., "Mar")
+      day: "numeric", // Day number (e.g., "8")
+      hour: "numeric", // Hour (e.g., "7 PM")
+      hour12: true, // Use 12-hour format
+    }).format(dateObj);
   }
 
+  const spotsLeft = capacity === "N/A" ? "N/A" : capacity;
+
   return (
-    <div className="flex flex-col bg-[#F5F5F5] w-full sm:w-80 min-h-[360px] p-4 rounded-3xl shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl">
-      <div className="flex flex-col justify-start gap-2 flex-grow">
-        
-        {/* Event Banner */}
-        <div className="relative w-full h-48">
-          <p className="absolute top-2 left-2 bg-gray-800 bg-opacity-75 text-white px-2 py-1 rounded-md text-xs">
-            {date}
-          </p>
-          <img
-            src={coverImage}
-            alt="Event Cover"
-            className="rounded-lg w-full h-full object-cover"
-          />
-        </div>
-
-        {/* Title */}
-        <p className="text-lg sm:text-xl font-extrabold">{handleTitleLength(title)}</p>
-
-        {/* Host Club */}
-        <div className="flex flex-row gap-2 items-center">
-          <div className="w-6 h-6 rounded-full overflow-hidden">
-            <img src={hostLogo} alt="Host Logo" className="w-full h-full object-cover" />
-          </div>
-          <p className="text-sm text-gray-700">{host}</p>
-        </div>
-
-        {/* Location */}
-        <div className="flex flex-row gap-2 items-center">
-          <FaLocationDot className="text-orange-400" />
-          <p className="text-sm font-semibold">{location}</p>
-        </div>
-
+    <div
+      className="relative w-72 min-h-[350px] bg-white border-4 border-black rounded-xl shadow-sm 
+                    hover:shadow-md transition-transform transform hover:scale-105 p-4 flex flex-col"
+    >
+      {/* Event Banner */}
+      <div className="relative w-full h-40 mb-3 border-2 border-black rounded-lg overflow-hidden">
+        <p
+          className="absolute top-2 left-2 bg-blue-500 text-white px-2 py-1 rounded-md text-sm font-medium 
+                  border-2 border-black"
+        >
+          {formatDate(date)}
+        </p>
+        <img
+          src={coverImage}
+          alt="Event Cover"
+          className="w-full h-full object-cover rounded-sm"
+        />
       </div>
 
-      {/* Bottom Section */}
-      <div className="flex flex-row gap-2 items-center mt-auto justify-between">
-        {/* People Going */}
-        <div className="flex -space-x-2 items-center">
-          {[...Array(4)].map((_, index) => (
-            <FaCircleUser key={index} className="text-gray-600 w-6 h-6 ring-2 bg-white ring-white rounded-full" />
-          ))}
-          <div className="w-8 h-6 px-4 bg-[#D0FDA0] text-black rounded-full ring-2 ring-white flex items-center justify-center text-center">
-            <p className="text-[10px] font-bold text-center">
-              <span className="font-black">+</span> {attendees}
-            </p>
-          </div>
+      {/* Title */}
+      <p className="text-xl font-bold mb-1 leading-tight">
+        {handleTitleLength(title)}
+      </p>
+
+      {/* Host & Location */}
+      <div className="flex items-center gap-2 mb-1">
+        <img
+          src={hostLogo}
+          alt="Host Logo"
+          className="w-6 h-6 object-cover rounded-full border border-gray-300"
+        />
+        <p className="text-sm font-semibold">{host}</p>
+      </div>
+      <div className="flex items-center gap-2">
+        <FaLocationDot className="text-gray-600" />
+        <p className="text-sm text-gray-700">{location}</p>
+      </div>
+
+      <div className="mt-auto flex justify-between items-center pt-2 border-t border-gray-300">
+        {/* Going */}
+        <div className="flex items-center gap-1">
+          <IoMdPerson className="text-gray-600" />
+          <p className="text-sm font-semibold">{attendees} GOING</p>
         </div>
 
-        {/* Capacity */}
-        <div className="flex flex-row gap-2 items-center">
-          <IoMdPerson className="text-xl" />
-          <p className="text-sm font-bold">{capacity}</p>
-        </div>
+        {/* Spots Left */}
+        <p className="text-sm font-semibold text-blue-600">
+          {spotsLeft} spots left
+        </p>
       </div>
     </div>
   );

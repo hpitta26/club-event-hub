@@ -1,24 +1,102 @@
-import React from "react";
+import React, { useState } from "react";
+//import EventModalCard from "../EventModalCard";
+import ClubCard from "./ClubCard";
+import dummyEventCardCover from "../../assets/dummyEventCardCover.jpg";
+import { IoMdArrowForward, IoMdArrowBack } from "react-icons/io";
 
 const Sidebar = () => {
-    return (
-        <aside className="w-72 md:w-1/4 lg:w-1/5 bg-black text-white min-h-screen p-6">
-            {/* New Events Section */}
-            <h2 className="font-semibold text-lg text-gray-300 mb-3 tracking-wide">New</h2>
-            <div className="space-y-3">
-                <div className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition">Event 1</div>
-                <div className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition">Event 2</div>
-                <div className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition">Event 3</div>
-            </div>
+  const [isOpen, setIsOpen] = useState(false);
 
-            {/* Featured Events Section */}
-            <h2 className="font-semibold text-lg text-gray-300 mt-8 mb-3 tracking-wide">Featured</h2>
-            <div className="space-y-3">
-                <div className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition">Featured 1</div>
-                <div className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition">Featured 2</div>
-            </div>
-        </aside>
-    );
+  // Static event data (replace with API data later)
+  const newEvents = [
+    {
+      id: 1,
+      title: "Code Camp",
+      date: "Aug 20 - 5:00 PM",
+      host: "CodeHub",
+      image: dummyEventCardCover,
+    },
+    {
+      id: 2,
+      title: "Yoga Session",
+      date: "Aug 21 - 6:00 PM",
+      host: "Wellness Club",
+      image: dummyEventCardCover,
+    },
+    {
+      id: 3,
+      title: "Basketball League",
+      date: "Aug 22 - 7:00 PM",
+      host: "Sports Society",
+      image: dummyEventCardCover,
+    },
+  ];
+
+  const featuredEvents = [
+    {
+      id: 4,
+      title: "AI Workshop",
+      date: "Aug 23 - 4:00 PM",
+      host: "Tech Innovators",
+      image: dummyEventCardCover,
+    },
+    {
+      id: 5,
+      title: "Nutrition Talk",
+      date: "Aug 24 - 5:30 PM",
+      host: "Healthy Living",
+      image: dummyEventCardCover,
+    },
+  ];
+
+  return (
+    <>
+      {/* Sidebar Toggle Button */}
+      <button
+        className={`fixed z-50 md:hidden bg-gray-800 text-black p-3 rounded-lg shadow-lg transition-all duration-300 hover:bg-gray-700
+        ${isOpen ? "top-8 left-56" : "top-10 left-0"}`}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {isOpen ? <IoMdArrowBack size={8} /> : <IoMdArrowForward size={8} />}
+      </button>
+
+      {/* Sidebar */}
+      <aside
+        className={`fixed top-0 left-0 w-64 bg-gray text-black p-6 transition-transform duration-300 z-40  mt-5
+    ${
+      isOpen ? "translate-x-0" : "-translate-x-full"
+    } md:translate-x-0 md:fixed min-h-screen overflow-y-auto`}
+      >
+        {/* New Events Section */}
+        <h2 className="font-semibold text-lg text-black-300 mb-3 tracking-wide">
+          New
+        </h2>
+        <div className="space-y-3">
+          {newEvents.map((event) => (
+            <ClubCard />
+          ))}
+        </div>
+
+        {/* Featured Events Section */}
+        <h2 className="font-semibold text-lg text-black mt-8 mb-3 tracking-wide">
+          Featured
+        </h2>
+        <div className="space-y-3">
+          {featuredEvents.map((event) => (
+            <ClubCard />
+          ))}
+        </div>
+      </aside>
+
+      {/* Overlay (for mobile when sidebar is open) */}
+      {isOpen && (
+        <div
+          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-30 md:hidden"
+          onClick={() => setIsOpen(false)}
+        ></div>
+      )}
+    </>
+  );
 };
 
 export default Sidebar;

@@ -133,8 +133,33 @@ DELETE http://localhost:8000/restapi/clubs/1/
 
 ###
 
+PATCH http://localhost:8000/restapi/clubs/slug/cool-club/
+Content-Type: application/json
 
+{
+  "slug": "cool-club",
+  "club_name": "Cool Club",
+  "description": "some updated description",
+  "social_media_handles": null,
+  "spirit_rating": 1,
+  "followers_count": 0,
+  "events_count": 0
+}
 
+###
+
+PATCH http://localhost:8000/restapi/clubs/slug/cool-club/
+Content-Type: application/json
+
+{
+    "club_name": "Cool Club",
+    "description": "some updated description",
+    "social_media_handles": {"twitter": "@awesomeclubtw", "instagram": "@awesomeclubinsta"}
+}
+
+###
+
+GET http://localhost:8000/restapi/clubs/slug/cool-club/
 
 
 

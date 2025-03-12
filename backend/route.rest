@@ -8,7 +8,7 @@ POST http://localhost:8000/restapi/events/
 Content-Type: application/json
 
 {
-  "club": 1,
+  "club": 4,
   "title": "Spring Festival",
   "description": "A festival to celebrate the arrival of spring.",
   "start_time": "2025-04-20T10:00:00Z",
@@ -230,5 +230,86 @@ Content-Type: application/json
 DELETE http://localhost:8000/restapi/students/2/
 
 ###
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### TESTING ROUTES - AFTER BUG CHANGES
+
+GET http://localhost:8000/restapi/clubs/
+###
+GET http://localhost:8000/restapi/clubs/4/
+###
+PATCH http://localhost:8000/restapi/clubs/4/
+Content-Type: application/json
+
+{
+  "club_name": "Cool Club",
+  "description": "some description updated",
+  "social_media_handles": {
+    "twitter": "@awesomeclubtw",
+    "instagram": "@awesomeclubinsta"
+  }
+}
+###
+PATCH http://localhost:8000/restapi/clubs/slug/your-club/
+Content-Type: application/json
+
+{
+  "club_name": "Your Club",
+  "description": "some",
+  "social_media_handles": {
+    "twitter": "@sometw"
+  }
+}
+###
+POST http://localhost:8000/restapi/clubs/
+Content-Type: application/json
+
+{
+  "user": {
+    "email": "owner3@example.com",
+    "password": "securepassword"
+  },
+  "club_name": "Some Club 2",
+  "description": "A description for Awesome Club.",
+  "social_media_handles": {
+    "twitter": "@awesomeclubtw",
+    "instagram": "@awesomeclubinsta"
+  }
+}
+###
+DELETE http://localhost:8000/restapi/clubs/6/
+###
+DELETE http://localhost:8000/restapi/clubs/slug/some-club-2/
+
+
+###
+
+GET http://localhost:8000/restapi/students/
+
+
+
+
+
+
+###
+
+GET http://localhost:8000/restapi/events/
 
 

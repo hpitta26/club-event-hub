@@ -67,7 +67,7 @@ function Register() {
         console.log('Field updated:', name, value);
     };
 
-
+    
     // Debug log for render
     console.log('Current form state:', formData);
     

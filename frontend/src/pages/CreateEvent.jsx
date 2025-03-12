@@ -9,7 +9,6 @@ function CreateEvent() {
 
     const [formData, setFormData] = useState({
         //for now the club that is posted to is hard-coded, UserContext will be used when finished implementing
-        club: 1,
         title: '',
         description: '',
         start_time: null,

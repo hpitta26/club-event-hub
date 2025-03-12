@@ -11,6 +11,11 @@ class EventListCreateView(generics.ListCreateAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
 
+    def create(self, request, *args, **kwargs):
+        request.data['club'] = request.session['id']
+        print(request.data)
+        return super().create(request, *args, **kwargs)
+
 # Retrieve, update, or delete a single event
 class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Event.objects.all()

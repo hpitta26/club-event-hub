@@ -7,6 +7,8 @@ from django.utils.text import slugify
 from django.utils import timezone
 from faker import Faker
 
+# Run using `python manage.py populate_random_data`
+
 from restapi.models import Club, Event, CustomUser  # Import models
 
 fake = Faker()

@@ -2,7 +2,7 @@ import React from "react";
 import EventCard from "../EventCard";
 const EventGrid = ({ events }) => {
     return (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-6 gap-y-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-8">
             {events.length > 0 ? (
                 events.map((event) => (
                     <div key={event.id} className="flex">

@@ -5,6 +5,7 @@ distlib==0.3.9
 Django==4.2.6
 django-cors-headers==4.3.0
 djangorestframework==3.15.2
+Faker==37.0.0
 filelock==3.16.1
 idna==3.10
 nulltype==2.3.1

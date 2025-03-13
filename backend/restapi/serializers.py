@@ -14,7 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
    class Meta:
        model = CustomUser
        fields = [ # Include the user fields you want to expose
-           'email', 'password'
+           'id', 'email', 'password'
        ]
        extra_kwargs = {
            'password': {'write_only': True},  # Do not return password in responses
@@ -46,7 +46,7 @@ class ClubSerializer(serializers.ModelSerializer):
    class Meta:
        model = Club
        fields = [ # expose fields that will be sent in API calls
-           'id', 'slug', 'user', 'club_name', 'description', 'social_media_handles', 'spirit_rating', 'followers_count', 'events_count'
+           'slug', 'user', 'club_name', 'description', 'social_media_handles', 'spirit_rating', 'followers_count', 'events_count'
        ]
 
 
@@ -89,7 +89,7 @@ class StudentSerializer(serializers.ModelSerializer):
    class Meta:
        model = Student
        fields = [
-           'id', 'user', 'major', 'graduation_year', 'spirit_points', 'first_name', 'last_name'
+           'user', 'major', 'graduation_year', 'spirit_points', 'first_name', 'last_name'
        ]
   
    def create(self, validated_data):

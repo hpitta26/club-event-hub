@@ -19,7 +19,7 @@ function ClubProfile () {
     useEffect(()=> {
         backend
             //useParams() extracts the URL parameter as an object so slug.clubSlug gets the clubSlug field of the object
-            .get(`/clubs/slug/${slug.clubSlug}`)
+            .get(`/clubs/slug/${slug.clubSlug}/`)
             .then((response) => {
                 setClub(response.data);
                 setLoading(false);

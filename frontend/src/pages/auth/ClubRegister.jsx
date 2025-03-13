@@ -4,7 +4,7 @@ import backend from "../../components/backend";
 import FormContainer from "../../components/FormContainer";
 import { FaArrowRight } from "react-icons/fa";
 
-function Register() {
+function ClubRegister() {
   const [formData, setFormData] = useState({
     club_name: "",
     description: "",
@@ -172,4 +172,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default ClubRegister;

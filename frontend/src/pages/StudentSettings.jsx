@@ -54,10 +54,19 @@ function StudentSettings(){
 
     const handleSubmit = async(e) => {
         e.preventDefault();
+        const requestData = {
+                    user: {
+            email: formData.email,  // Ensure the email is inside the 'user' object
+        },
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        major: formData.major,
+        graduation_year: formData.graduation_year,
+        };
+
+
         try {
-        const response = await backend.patch(
-            `/students/${userContext?.id}/`,
-            { first_name: formData.first_name });  // Send only one field
+            const response = await backend.patch(`/students/${userContext?.id}/`, requestData);
             console.log("Settings updated " + response.data);
             alert("Profile updated successfully!");
         }
@@ -88,24 +97,24 @@ function StudentSettings(){
                     <div className="flex items-end justify-between ">
                         <div className=" w-1/2 ">
                             <p className="text-sm text-white"> First Name</p>
-                            <input name="first_name" onClick={handleChange} className="text-white w-11/12 bg-gray-500 h-8 p-2" placeholder={formData.first_name}/>
+                            <input name="first_name" onChange={handleChange} className="text-white w-11/12 bg-gray-500 h-8 p-2" placeholder={formData.first_name}/>
                         </div>
                         <div className=" w-1/2 ">
                             <p className="text-sm text-white"> Last Name</p>
-                            <input name="last_name" onClick={handleChange} className="text-white w-full bg-gray-500 h-8 p-2" placeholder={formData.last_name}/>
+                            <input name="last_name" onChange={handleChange} className="text-white w-full bg-gray-500 h-8 p-2" placeholder={formData.last_name}/>
                         </div>
                     </div>
                     <div className=" w-full ">
                         <p className="text-sm text-white"> Email</p>
-                        <input name="email" onClick={handleChange} className="text-white bg-gray-500 w-full h-8 p-2" placeholder={formData.email}/>
+                        <input name="email" onChange={handleChange} className="text-white bg-gray-500 w-full h-8 p-2" placeholder={formData.email}/>
                     </div>
                     <div className="w-full">
                         <p className="text-sm text-white"> Major </p>
-                        <input name="major" onClick={handleChange} className="text-white bg-gray-500 w-full h-8 p-2"  placeholder={formData.major}/>
+                        <input name="major" onChange={handleChange} className="text-white bg-gray-500 w-full h-8 p-2"  placeholder={formData.major}/>
                     </div>
                     <div className="w-full">
                         <p className="text-sm text-white"> Grad Year</p>
-                        <input name="graduation_year" onClick={handleChange} type="number" className=" text-white bg-gray-500 w-full h-8 p-2" placeholder={formData.graduation_year}/>
+                        <input name="graduation_year" onChange={handleChange} type="number" className=" text-white bg-gray-500 w-full h-8 p-2" placeholder={formData.graduation_year}/>
                     </div>
                     <div className="w-full">
                         <button type= "submit" className="bg-white p-2" onClick={handleSubmit}>

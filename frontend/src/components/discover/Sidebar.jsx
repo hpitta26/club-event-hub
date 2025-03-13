@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-//import EventModalCard from "../EventModalCard";
 import ClubCard from "./ClubCard";
 import dummyEventCardCover from "../../assets/dummyEventCardCover.jpg";
 import { IoMdArrowForward, IoMdArrowBack } from "react-icons/io";
@@ -53,7 +52,7 @@ const Sidebar = () => {
     <div>
       {/* Sidebar Toggle Button */}
       <button
-        className={`fixed z-50 md:hidden bg-gray-800 text-black p-3 rounded-lg shadow-lg transition-all duration-300 hover:bg-gray-700
+        className={`fixed z-50 lg:hidden bg-gray-800 text-white p-3 rounded-lg shadow-lg transition-all duration-300 hover:bg-gray-700
         ${isOpen ? "top-8 left-56" : "top-10 left-0"}`}
         onClick={() => setIsOpen(!isOpen)}
       >
@@ -62,10 +61,10 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-5 left-0 w-64 bg-gray text-black p-6 transition-transform duration-300 z-40  mt-5
+        className={`fixed top-6 left-4 w-64 bg-gray text-black p-6 transition-transform duration-300 z-40 mt-5
     ${
       isOpen ? "translate-x-0" : "-translate-x-full"
-    } md:translate-x-0 md:fixed min-h-screen overflow-y-auto`}
+    } lg:translate-x-0 lg:fixed min-h-screen overflow-y-auto`}
       >
         {/* New Events Section */}
         <h2 className="font-semibold text-lg text-black-300 mb-3 tracking-wide">
@@ -91,7 +90,7 @@ const Sidebar = () => {
       {/* Overlay (for mobile when sidebar is open) */}
       {isOpen && (
         <div
-          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-30 md:hidden"
+          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-30 lg:hidden"
           onClick={() => setIsOpen(false)}
         ></div>
       )}

@@ -32,10 +32,12 @@ const Discover = () => {
 
   return (
     <div className="min-h-screen bg-gray-200 flex pt-10">
-      <Sidebar />
+      <div className="w-1/5 flex justify-center items-center">
+        <Sidebar />
+      </div>
 
       {/* Main Content */}
-      <main className="flex-1 p-6 transition-all duration-300 md:ml-64">
+      <main className="flex-1 p-6 transition-all duration-300">
         {/* Header */}
         <h1 className="text-2xl font-bold mb-4">Events This Week</h1>
 

@@ -20,6 +20,7 @@ import ClubProfile from "./pages/ClubProfile.jsx";
 import FollowingClubs from "./pages/FollowingClubs.jsx";
 import Analytics from "./pages/Analytics.jsx";
 import ClubEvents from "./pages/ClubEvents.jsx";
+import StudentSettings from "./pages/StudentSettings.jsx";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
             <Route element={<ProtectedRoute />}> {/* Protected --> can only be accessed by logged-in users */}
               <Route path="/create-event" element={<CreateEvent />} />
               <Route path="/logout" element={<Logout />} />
+              <Route path="/settings" element={<StudentSettings />}/>
             </Route>
             <Route path="/*" element={<NotFound />} />
           </Routes>

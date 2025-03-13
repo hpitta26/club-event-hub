@@ -86,6 +86,8 @@ class ClubSerializer(serializers.ModelSerializer):
 class StudentSerializer(serializers.ModelSerializer):
    # Fields not serialized: rsvp_events
    user = UserSerializer()
+   id = serializers.IntegerField(source='user.id', read_only=True)
+
    class Meta:
        model = Student
        fields = [

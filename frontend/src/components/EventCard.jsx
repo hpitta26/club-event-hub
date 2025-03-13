@@ -69,7 +69,7 @@ function EventCard({
         <p className="text-sm font-semibold">{host}</p>
       </div>
       <div className="flex items-center gap-2">
-        <FaLocationDot className="text-gray-600" />
+        <FaLocationDot className="text-gray-600 w-6 h-6" />
         <p className="text-sm text-gray-700">{location}</p>
       </div>
 

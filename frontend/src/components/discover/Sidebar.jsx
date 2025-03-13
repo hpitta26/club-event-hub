@@ -50,7 +50,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <>
+    <div>
       {/* Sidebar Toggle Button */}
       <button
         className={`fixed z-50 md:hidden bg-gray-800 text-black p-3 rounded-lg shadow-lg transition-all duration-300 hover:bg-gray-700
@@ -62,7 +62,7 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 w-64 bg-gray text-black p-6 transition-transform duration-300 z-40  mt-5
+        className={`fixed top-5 left-0 w-64 bg-gray text-black p-6 transition-transform duration-300 z-40  mt-5
     ${
       isOpen ? "translate-x-0" : "-translate-x-full"
     } md:translate-x-0 md:fixed min-h-screen overflow-y-auto`}
@@ -95,7 +95,7 @@ const Sidebar = () => {
           onClick={() => setIsOpen(false)}
         ></div>
       )}
-    </>
+    </div>
   );
 };
 

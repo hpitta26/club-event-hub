@@ -1,8 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.utils import timezone
-from django.core.mail import send_mail
-from django.conf import settings
 from restapi.models import Student, CustomUser, Club
 
 class CustomUserCreationForm(UserCreationForm):
@@ -18,18 +16,6 @@ class CustomUserCreationForm(UserCreationForm):
 
         if commit:
             user.save()
-
-        verification_link = f"http://localhost:5173/verify/{user.verification_token}"
-        response = send_mail(
-                'Verify your email',
-                f'Verify your email, click this \
-                    link to verify: {verification_link}',
-                settings.DEFAULT_FROM_EMAIL,
-                [user.email],
-                fail_silently=False,
-            )
-        if response != 1:
-            raise Exception('Failed to send email')
 
         return user
 

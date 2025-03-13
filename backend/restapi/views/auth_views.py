@@ -7,6 +7,8 @@ from restapi.models import CustomUser
 from restapi.forms import ClubCreationForm, StudentCreationForm
 from django.contrib.auth import login, authenticate
 from django.views.decorators.csrf import csrf_protect
+from django.core.mail import send_mail
+from django.conf import settings
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
@@ -93,6 +95,18 @@ def register_view(request):
     if form.is_valid():
         print("Form is valid")  # Debug print
         user = form.save()
+
+        verification_link = f"http://localhost:5173/verify/{user.verification_token}"
+        response = send_mail(
+                'Verify your email',
+                f'Verify your email, click this \
+                    link to verify: {verification_link}',
+                settings.DEFAULT_FROM_EMAIL,
+                [user.email],
+                fail_silently=False,
+            )
+        if response != 1:
+            raise Exception('Failed to send email')
 
         return Response(
             {'message': 'Please check your email to verify your account'},

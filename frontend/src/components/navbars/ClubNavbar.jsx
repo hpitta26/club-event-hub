@@ -24,7 +24,7 @@ const ClubNavbar = () => {
   const handleEventsClick = () => {
     setEventsClicked(true);
     setTimeout(() => setEventsClicked(false), 300);
-	navigate("/create-event");
+	  navigate("/create-event");
   };
 
   const handleLogout = () => {

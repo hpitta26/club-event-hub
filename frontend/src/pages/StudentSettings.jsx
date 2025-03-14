@@ -8,7 +8,7 @@ import {useNavigate} from "react-router-dom";
 function StudentSettings(){
 
     const{userContext} = useContext(UserContext);
-    //globalEmail is used so that the eamil at the top of the screen doesnt change while the user types like the normal email formData will
+    //globalEmail is used so that the email at the top of the screen doesnt change while the user types like the normal email formData will
     const [globalEmail, setGlobalEmail] = useState("");
     const[errors,setErrors] = useState({})
     const [isLoading, setIsLoading] = useState(true);
@@ -113,6 +113,7 @@ function StudentSettings(){
                 const response = await backend.patch(`/students/${userContext?.id}/`, requestData);
                 console.log("Settings updated " + response.data);
                 alert("Profile updated successfully!");
+                window.location.reload();
             } catch (error) {
                 console.error("Error updating user data: ", error);
                 alert("Failed to update profile. Please try again.");

@@ -4,7 +4,7 @@ import backend from "../../components/backend";
 import FormContainer from "../../components/FormContainer";
 import { FaArrowRight } from "react-icons/fa";
 
-function ClubRegister() {
+function ClubSignup() {
   const [formData, setFormData] = useState({
     club_name: "",
     description: "",
@@ -19,8 +19,8 @@ function ClubRegister() {
 
   const accountFields = [
     { name: "email", type: "email", label: "Email" },
-    { name: "password1", type: "password", label: "Passowrd" },
-    { name: "password2", type: "password", label: "Confirm Passowrd" },
+    { name: "password1", type: "password", label: "Password" },
+    { name: "password2", type: "password", label: "Confirm Password" },
   ];
 
   const clubDetailsFields = [
@@ -126,10 +126,7 @@ function ClubRegister() {
             handleChange={handleChange}
             onSubmit={(e) => {
               e.preventDefault();
-              if (!formData.email || !formData.email.endsWith("@fiu.edu")) {
-                alert("Email must end in @fiu.edu");
-                return;
-              } else if (formData.password !== formData.confirmPassword) {
+              if (formData.password !== formData.confirmPassword) {
                 alert("Passwords Don't Match");
                 return;
               }
@@ -172,4 +169,4 @@ function ClubRegister() {
   );
 }
 
-export default ClubRegister;
+export default ClubSignup;

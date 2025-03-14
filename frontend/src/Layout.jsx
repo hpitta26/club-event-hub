@@ -42,7 +42,7 @@ function App() {
             <Route element={<ProtectedRoute />}> {/* Protected --> can only be accessed by logged-in users */}
               <Route path="/create-event" element={<CreateEvent />} />
               <Route path="/logout" element={<Logout />} />
-              <Route path="/settings" element={<StudentSettings />}/>
+              <Route path="/student-settings" element={<StudentSettings />}/>
             </Route>
             <Route path="/*" element={<NotFound />} />
           </Routes>

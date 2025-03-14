@@ -1,162 +1,175 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import backend from '../../components/backend';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import backend from "../../components/backend";
+import FormContainer from "../../components/FormContainer";
+import { FaArrowRight } from "react-icons/fa";
 
-function Register() {
-    const [formData, setFormData] = useState({
-        club_name: '',
-        description: '',
-        email: '',
-        password1: '',
-        password2: '',
-        role: 'CLUB'
-    });
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
-    const navigate = useNavigate();
+function ClubRegister() {
+  const [formData, setFormData] = useState({
+    club_name: "",
+    description: "",
+    email: "",
+    password1: "",
+    password2: "",
+    year: "",
+    type: "",
+    role: "CLUB",
+  });
+  const [phase, setPhase] = useState(0);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError('');
-        setSuccess('');
+  const accountFields = [
+    { name: "email", type: "email", label: "Email" },
+    { name: "password1", type: "password", label: "Passowrd" },
+    { name: "password2", type: "password", label: "Confirm Passowrd" },
+  ];
 
-        // Debug log
-        console.log('Submitting form data:', formData);
+  const clubDetailsFields = [
+    { name: "club_name", type: "text", label: "Club Name" },
+    { name: "year", type: "number", label: "Year Founded" },
+    {
+      name: "type",
+      type: "radio",
+      label: "Club Type",
+      options: [
+        { value: "arts", label: "Arts" },
+        { value: "engineering", label: "Engineering" },
+        { value: "health", label: "Health" },
+        { value: "sports", label: "Sports" },
+        { value: "law", label: "Law" },
+      ],
+    },
+  ];
 
-        try {
-            // Debug log 
-            console.log('Making request to:', '/restapi/register/');
-            const response = await backend.post('/register/', formData);
+  const descriptionField = [
+    {
+      name: "description",
+      type: "textarea",
+      label: "Write a short description of your club",
+    },
+  ];
 
-            // Debug log
-            console.log('Response:', response);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
 
-            if (response.status === 200) {
-                setSuccess('Registration successful! Please check your email for verification.');
-                setFormData({
-                    club_name: '',
-                    email: '',
-                    password1: '',
-                    password2: ''
-                });
-                navigate('/login');
-            } else {
-                setError(data.message || 'Registration failed. Please try again.');
-            }
-        } catch (err) {
-            // Debug log
-            console.error('Error details:', err);
-            console.error('Error response:', err.response);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
 
-            if (err.response?.data?.errors) {
-                const errors = err.response.data.errors;
-                const errorMessage = Object.entries(errors)
-                    .map(([key, value]) => `${key}: ${value.join(', ')}`)
-                    .join('\n');
-                setError(errorMessage);
-            } else {
-                setError(err.response?.data?.message || 'Registration failed. Please try again.');
-            }
-        }
-    };
+    // Debug log
+    console.log("Submitting form data:", formData);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({...prev, [name]: value}));
-        // Debug log
-        console.log('Field updated:', name, value);
-    };
+    try {
+      // Debug log
+      console.log("Making request to:", "/restapi/register/");
+      const response = await backend.post("/register/", formData);
 
-    
-    // Debug log for render
-    console.log('Current form state:', formData);
-    
+      // Debug log
+      console.log("Response:", response);
 
-    return (
-        <section className='min-h-screen bg-stone-900 flex justify-center items-center pt-10'>
-            <form onSubmit={handleSubmit} className='w-96 max-w-full px-4'>
-                <div className='space-y-4'>
-                    <div>
-                        <h1 className='text-white text-4xl mb-4'>Club Register</h1>
-                    </div>
-                    
-                    {error && (
-                        <div className='bg-red-500 text-white p-3 rounded-md text-sm whitespace-pre-line'>
-                            {error}
-                        </div>
-                    )}
-                    
-                    {success && (
-                        <div className='bg-green-500 text-white p-3 rounded-md text-sm'>
-                            {success}
-                        </div>
-                    )}
+      if (response.status === 200) {
+        setSuccess(
+          "Registration successful! Please check your email for verification."
+        );
+        setFormData({
+          club_name: "",
+          email: "",
+          password1: "",
+          password2: "",
+        });
+        setPhase(0);
+        navigate("/login");
+      } else {
+        setError(data.message || "Registration failed. Please try again.");
+        setPhase(0);
+      }
+    } catch (err) {
+      // Debug log
+      console.error("Error details:", err);
+      console.error("Error response:", err.response);
 
-                    <div>
-                        <input 
-                            onChange={handleChange} 
-                            value={formData.club_name}
-                            name='club_name' 
-                            placeholder='Club Name'
-                            required
-                            className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
-                        />
-                    </div>
-                    <div>
-                        <textarea 
-                            onChange={handleChange} 
-                            value={formData.description}
-                            name='description' 
-                            placeholder='Description / Mission Statement'
-                            required
-                            className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
-                        />
-                    </div>
-                    <div>
-                        <input 
-                            onChange={handleChange} 
-                            value={formData.email}
-                            name='email' 
-                            type='email'
-                            placeholder='Club Email' 
-                            required
-                            pattern='.+@*\.*'
-                            className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
-                        />
-                    </div>
-                    <div>
-                        <input 
-                            onChange={handleChange} 
-                            value={formData.password1}
-                            name='password1' 
-                            type='password'
-                            placeholder='Password' 
-                            className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
-                        />
-                    </div>
-                    <div>
-                        <input 
-                            onChange={handleChange}
-                            value={formData.password2} 
-                            name='password2' 
-                            placeholder='Confirm Password'
-                            type='password' 
-                            required
-                            className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
-                        />
-                    </div>
-                    <div>
-                        <button 
-                            type='submit'
-                            className='bg-blue-600 w-full py-2 text-white hover:bg-blue-500 rounded-md'
-                        >
-                            Submit
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </section>
-    );
+      if (err.response?.data?.errors) {
+        const errors = err.response.data.errors;
+        const errorMessage = Object.entries(errors)
+          .map(([key, value]) => `${key}: ${value.join(", ")}`)
+          .join("\n");
+        setError(errorMessage);
+      } else {
+        setError(
+          err.response?.data?.message ||
+            "Registration failed. Please try again."
+        );
+      }
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    // Debug log
+    console.log("Field updated:", name, value);
+  };
+
+  // Debug log for render
+  console.log("Current form state:", formData);
+
+  return (
+    <div className="min-h-screen bg-stone-900 flex justify-center items-center pt-10">
+      <div className="flex flex-col gap-8">
+        {phase === 0 && (
+          <FormContainer
+            title="Welcome to GatherU"
+            subtitle="University Events at a Glance"
+            fields={accountFields}
+            formData={formData}
+            handleChange={handleChange}
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (!formData.email || !formData.email.endsWith("@fiu.edu")) {
+                alert("Email must end in @fiu.edu");
+                return;
+              } else if (formData.password !== formData.confirmPassword) {
+                alert("Passwords Don't Match");
+                return;
+              }
+              setPhase((prevPhase) => prevPhase + 1);
+            }}
+          >
+            Submit
+          </FormContainer>
+        )}
+        {phase === 1 && (
+          <FormContainer
+            title="Creating a Profile"
+            fields={clubDetailsFields}
+            formData={formData}
+            handleChange={handleChange}
+            onSubmit={() => {
+              setPhase((prevPhase) => prevPhase + 1);
+            }}
+          >
+            <div className="flex flex-row justify-center items-center gap-2">
+              Next <FaArrowRight />
+            </div>
+          </FormContainer>
+        )}
+        {phase === 2 && (
+          <FormContainer
+            title="Finishing Up Profile"
+            fields={descriptionField}
+            formData={formData}
+            handleChange={handleChange}
+            onSubmit={handleSubmit}
+          >
+            <div className="flex flex-row justify-center items-center gap-2">
+              Finish
+            </div>
+          </FormContainer>
+        )}
+      </div>
+    </div>
+  );
 }
 
-export default Register;
+export default ClubRegister;

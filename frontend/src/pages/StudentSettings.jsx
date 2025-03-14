@@ -49,7 +49,7 @@ function StudentSettings(){
                 setIsLoading(false)
             }
         }
-        if (userContext) {
+        if (userContext?.id) { // Only fetch if userContext.id exists
             fetchUserDetails();
         }
         else{

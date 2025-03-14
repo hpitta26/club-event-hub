@@ -46,7 +46,7 @@ class ClubSerializer(serializers.ModelSerializer):
    class Meta:
        model = Club
        fields = [ # expose fields that will be sent in API calls
-           'id', 'slug', 'user', 'club_name', 'description', 'social_media_handles', 'spirit_rating', 'followers_count', 'events_count'
+           'user_id', 'slug', 'user', 'club_name', 'description', 'social_media_handles', 'spirit_rating', 'followers_count', 'events_count'
        ]
 
 
@@ -90,7 +90,7 @@ class StudentSerializer(serializers.ModelSerializer):
    class Meta:
        model = Student
        fields = [
-           'id', 'user', 'major', 'graduation_year', 'spirit_points', 'first_name', 'last_name'
+           'user_id', 'user', 'major', 'graduation_year', 'spirit_points', 'first_name', 'last_name'
        ]
   
    def create(self, validated_data):
@@ -121,18 +121,11 @@ class StudentSerializer(serializers.ModelSerializer):
 
 
 class EventSerializer(serializers.ModelSerializer):
-   club = serializers.PrimaryKeyRelatedField(queryset=Club.objects.all())
+   #club = serializers.PrimaryKeyRelatedField(queryset=Club.objects.all())
+   club = ClubSerializer(read_only=True)
    rsvps = serializers.PrimaryKeyRelatedField(queryset=Student.objects.all(), many=True, required=False)
    class Meta:
        model = Event
        fields = [
            'id', 'club', 'title', 'description', 'start_time', 'end_time', 'location', 'capacity','rsvps'
        ]
-
-
-
-
-
-
-
-

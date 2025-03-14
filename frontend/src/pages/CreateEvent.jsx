@@ -3,13 +3,14 @@ import { useState } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
+import { useNavigate } from 'react-router-dom';
 
 // Will need to handle CSRF TOKENS in this component
 function CreateEvent() {
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-        //for now the club that is posted to is hard-coded, UserContext will be used when finished implementing
-        club: 1,
+        // Club is set in the backend using --> request.session['id']
         title: '',
         description: '',
         start_time: null,
@@ -25,7 +26,7 @@ function CreateEvent() {
         const formErrors = validateForm(formData);
         setErrors(formErrors)
         if(Object.keys(formErrors).length === 0) {
-            //Formatting so that Django serializer can easily read this since it's in DateTime format already
+            // Formatting so that Django serializer can easily read this since it's in DateTime format already
             const formattedData={
                 ...formData,
                 start_time:format(formData.start_time,"yyyy-MM-dd'T'HH:mm:ssXXX"),
@@ -34,6 +35,15 @@ function CreateEvent() {
             try {
                 const response = await backend.post("/events/", formattedData);
                 console.log(response);
+                setFormData({
+                    title: '',
+                    description: '',
+                    start_time: null,
+                    end_time: null,
+                    location: '',
+                    capacity: '',
+                })
+                navigate('/events')
             }
             catch (err){
                 console.error("Error creating event ", err)

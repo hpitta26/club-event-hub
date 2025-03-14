@@ -9,7 +9,7 @@ const NavbarSelector = () => {
 
   if (userContext == null) {
     console.log(`navbar rendering --> ${JSON.stringify(userContext)}`);
-    return <LoggedOutNavbar />;
+    return <LoggedOutNavbar />;  
   } else if (userContext['role'] === 'STUDENT') {
     console.log(`navbar rendering --> ${JSON.stringify(userContext)}`);
     return <StudentNavbar />;

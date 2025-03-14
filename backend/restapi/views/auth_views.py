@@ -50,8 +50,7 @@ def verify_session(request):
             if not user:
                 return Response(status=204)
             return Response(
-                {"user": {"role": request.session['role'],
-                          "id": user.id}},
+                {"user": {"role": request.session['role']}},
                 status=200
             )  # pass to front-end
 

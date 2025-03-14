@@ -27,7 +27,7 @@ function StudentSettings(){
     useEffect(()=>{
         async function fetchUserDetails(){
             try{
-                const response = await backend.get(`/students/${userContext?.id}`);
+                const response = await backend.get(`/students/`);
                 if(response.data){
                     setGlobalEmail(response.data.user.email);
                     setFormData({
@@ -43,20 +43,13 @@ function StudentSettings(){
             }
             catch(error){
                 console.error("Error fetching user data: ",error);
-                navigate("/*");
             }
             finally {
                 setIsLoading(false)
             }
         }
-        if (userContext?.id) { // Only fetch if userContext.id exists
-            fetchUserDetails();
-        }
-        else{
-            setIsLoading(false)
-        }
-
-    },[userContext])
+        fetchUserDetails();
+    },[])
 
     const handleChange = (e) =>{
         e.preventDefault();

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import drf_views, auth_views, club_follow_views
+from .views import drf_views, auth_views, club_follow_views, discover_view
 from django.views.decorators.http import require_http_methods
 
 urlpatterns = [
@@ -20,4 +20,6 @@ urlpatterns = [
 
     path('following-clubs/', club_follow_views.get_following_clubs, name='following-clubs'),
     path('unfollow-club/<int:pk>/', club_follow_views.unfollow_club, name='unfollow-club'),
+    
+    path('get-week-events/', discover_view.get_events_this_week, name='get-week-events')
 ]

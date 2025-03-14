@@ -103,8 +103,8 @@ function StudentSettings(){
 
         if(Object.keys(formErrors).length === 0) {
             try {
-                const response = await backend.patch(`/students/${userContext?.id}/`, requestData);
-                console.log("Settings updated " + response.data);
+                const response = await backend.patch(`/students/`, requestData);
+                console.log("Settings updated " + response.data.first_name);
                 alert("Profile updated successfully!");
                 window.location.reload();
             } catch (error) {

@@ -1,16 +1,15 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import backend from '../../components/backend';
 
 function Register() {
     const [formData, setFormData] = useState({
-        first_name: '',
-        last_name: '',
+        club_name: '',
+        description: '',
         email: '',
         password1: '',
         password2: '',
-        major: '',
-        graduation_year: ''
+        role: 'CLUB'
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -21,19 +20,13 @@ function Register() {
         setError('');
         setSuccess('');
 
-        // Form validation
-        if (!formData.email || !formData.email.endsWith('@fiu.edu')) {
-            setError('Please enter a valid FIU email address');
-            return;
-        }
-
         // Debug log
         console.log('Submitting form data:', formData);
 
         try {
-            // Debug log
+            // Debug log 
             console.log('Making request to:', '/restapi/register/');
-            const response = await backend.post('/student-register/', formData);
+            const response = await backend.post('/register/', formData);
 
             // Debug log
             console.log('Response:', response);
@@ -41,15 +34,12 @@ function Register() {
             if (response.status === 200) {
                 setSuccess('Registration successful! Please check your email for verification.');
                 setFormData({
-                    first_name: '',
-                    last_name: '',
+                    club_name: '',
                     email: '',
                     password1: '',
-                    password2: '',
-                    major: '',
-                    graduation_year: ''
+                    password2: ''
                 });
-                navigate('/student-login');
+                navigate('/login');
             } else {
                 setError(data.message || 'Registration failed. Please try again.');
             }
@@ -77,17 +67,17 @@ function Register() {
         console.log('Field updated:', name, value);
     };
 
-
+    
     // Debug log for render
     console.log('Current form state:', formData);
     
 
     return (
-        <section className='min-h-screen bg-stone-900 flex justify-center items-center'>
+        <section className='min-h-screen bg-stone-900 flex justify-center items-center pt-10'>
             <form onSubmit={handleSubmit} className='w-96 max-w-full px-4'>
                 <div className='space-y-4'>
                     <div>
-                        <h1 className='text-white text-4xl mb-4'>Student Register</h1>
+                        <h1 className='text-white text-4xl mb-4'>Club Register</h1>
                     </div>
                     
                     {error && (
@@ -105,77 +95,53 @@ function Register() {
                     <div>
                         <input 
                             onChange={handleChange} 
-                            value={formData.first_name}
-                            name='first_name' 
-                            placeholder='First Name' 
+                            value={formData.club_name}
+                            name='club_name' 
+                            placeholder='Club Name'
                             required
+                            className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
+                        />
+                    </div>
+                    <div>
+                        <textarea 
+                            onChange={handleChange} 
+                            value={formData.description}
+                            name='description' 
+                            placeholder='Description / Mission Statement'
+                            required
+                            className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
+                        />
+                    </div>
+                    <div>
+                        <input 
+                            onChange={handleChange} 
+                            value={formData.email}
+                            name='email' 
+                            type='email'
+                            placeholder='Club Email' 
+                            required
+                            pattern='.+@*\.*'
+                            className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
+                        />
+                    </div>
+                    <div>
+                        <input 
+                            onChange={handleChange} 
+                            value={formData.password1}
+                            name='password1' 
+                            type='password'
+                            placeholder='Password' 
                             className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
                         />
                     </div>
                     <div>
                         <input 
                             onChange={handleChange}
-                            value={formData.last_name} 
-                            name='last_name' 
-                            placeholder='Last Name' 
-                            required
-                            className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
-                        />
-                    </div>
-                    <div>
-                        <input 
-                            onChange={handleChange} 
-                            value={formData.school_email}
-                            name='email' 
-                            type='email'
-                            placeholder='FIU Email (@fiu.edu)' 
-                            required
-                            pattern='.+@fiu\.edu'
-                            className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
-                        />
-                    </div>
-                    <div>
-                        <input 
-                            onChange={handleChange} 
-                            value={formData.major}
-                            name='major' 
-                            placeholder='Major' 
-                            className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
-                        />
-                    </div>
-                    <div>
-                        <input 
-                            onChange={handleChange} 
-                            value={formData.graduation_year}
-                            name='graduation_year' 
-                            type='number'
-                            min="2024"
-                            max="2030"
-                            placeholder='Graduation Year' 
-                            className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
-                        />
-                    </div>
-                    <div>
-                        <input 
-                            type='password' 
-                            onChange={handleChange} 
-                            value={formData.password1}
-                            name='password1' 
-                            placeholder='Password' 
-                            required
-                            minLength={8}
-                            className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
-                        />
-                    </div>
-                    <div>
-                        <input 
-                            type='password' 
-                            onChange={handleChange} 
-                            value={formData.password2}
+                            value={formData.password2} 
                             name='password2' 
-                            placeholder='Confirm Password' 
+                            placeholder='Confirm Password'
+                            type='password' 
                             required
-                            minLength={8}
                             className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full' 
                         />
                     </div>

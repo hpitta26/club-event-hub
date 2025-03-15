@@ -1,10 +1,13 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Landing from './pages/Landing.jsx';
-import Discover from "./pages/Discover.jsx";
-import NotFound from './pages/NotFound.jsx';
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import NavbarSelector from "./components/navbars/NavbarSelector.jsx";
 import { UserProvider } from "./context/UserContext.jsx";
+import CreateEvent from "./pages/CreateEvent.jsx";
+import Discover from "./pages/Discover.jsx";
+import Landing from './pages/Landing.jsx';
+import NotFound from './pages/NotFound.jsx';
 
+import ClubRegister from './pages/authentication/ClubRegister.jsx';
+import Login from "./pages/authentication/Login.jsx";
 import Logout from './pages/authentication/Logout.jsx';
 import ClubRegister from './pages/authentication/ClubRegister.jsx';
 import Login from "./pages/authentication/Login.jsx";
@@ -13,7 +16,15 @@ import VerifyEmail from "./pages/authentication/VerifyEmail.jsx";
 
 import { EnsureLoggedIn } from "./pages/authorization/EnsureLoggedIn.jsx";
 
-/* Temporary Only */
+import Logout from './pages/authentication/Logout.jsx';
+import TempPage from "./pages/TempPage.jsx";
+import Login from "./pages/authentication/Login.jsx";
+import './index.css';
+import Analytics from "./pages/Analytics.jsx";
+import ClubEvents from "./pages/ClubEvents.jsx";
+import ClubProfile from "./pages/ClubProfile.jsx";
+import FollowingClubs from "./pages/FollowingClubs.jsx";
+import StudentSettings from "./pages/StudentSettings.jsx";
 import TempPage from "./pages/TempPage.jsx";
 
 import './index.css';

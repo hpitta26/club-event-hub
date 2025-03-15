@@ -3,7 +3,7 @@ import { Outlet, Navigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import PropTypes from 'prop-types';
 
-export const EnsureLoggedIn = ({ expRole = "CheckLoggedIn" }) => {
+<<<<<<< HEAD
 export const EnsureLoggedIn = ({ expRole = "CheckLoggedIn" }) => {
     const { userContext } = useContext(UserContext);
 
@@ -48,5 +48,6 @@ export const EnsureLoggedIn = ({ expRole = "CheckLoggedIn" }) => {
 };
 
 EnsureLoggedIn.propTypes = {
+<<<<<<< HEAD
     role: PropTypes.oneOf(["CLUB", "STUDENT", "CheckLoggedIn", "NotLoggedIn"]),
 };}

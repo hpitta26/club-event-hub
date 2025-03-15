@@ -26,9 +26,7 @@ export const EnsureLoggedIn = ({ expRole = "CheckLoggedIn" }) => {
         }
     };
 
-    return <Outlet />;
-};
-
 EnsureLoggedIn.propTypes = {
     role: PropTypes.oneOf(["CLUB", "STUDENT", "CheckLoggedIn", "NotLoggedIn"]),
 };
+}

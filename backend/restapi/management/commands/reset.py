@@ -52,6 +52,3 @@ class Command(BaseCommand):
         management.call_command("create_groups")
         management.call_command("create_super_user", email, password)
         management.call_command("populate")
-        management.call_command("populate_random_data")
-        
-        self.stdout.write(self.style.SUCCESS('Successfully ran RESET command'))

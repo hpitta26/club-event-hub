@@ -22,7 +22,6 @@ An event discovery platform designed to help **FIU students** find and RSVP to c
 | **Frontend** | React (Vite) + TailwindCSS |
 | **Backend** | Django |
 | **Database** | PostgreSQL (or SQLite at the start) |
-| **Authentication** | Auth0 |
 | **Deployment** | Docker + Vercel (Frontend) + AWS (Backend) |
 
 ---

@@ -11,10 +11,15 @@ from ..models import Club, Event, Student
 from ..serializers import ClubSerializer, EventSerializer, StudentSerializer
 
 
+from rest_framework import generics
+from ..models import Event, Student, Club
+from ..serializers import EventSerializer, StudentSerializer, ClubSerializer
+from restapi.permissions import ClubPermission
 # List all events or create a new event
 class EventListCreateView(generics.ListCreateAPIView):
     #queryset = Event.objects.all()
     serializer_class = EventSerializer
+    permission_classes = [ClubPermission]
 
     def get_queryset(self):
         """List events only for the requesting club."""
@@ -40,9 +45,6 @@ class EventListCreateView(generics.ListCreateAPIView):
 class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-
-
-
 
 # List all clubs or create a new club
 class ClubListCreateView(generics.ListCreateAPIView):

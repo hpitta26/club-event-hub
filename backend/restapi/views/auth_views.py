@@ -47,10 +47,9 @@ def csrf_provider(request):
 @csrf_protect
 def verify_session(request):
     try:
-        if request.session.has_key('id'):
-            user = CustomUser.objects.get(id=request.session['id'])
-            if not user:
-                return Response(status=204)
+        user = request.user
+
+        if user.is_authenticated:
             return Response(
                 {"user": {"role": request.session['role']}},
                 status=200
@@ -131,6 +130,25 @@ def login_view(request):
     user = authenticate(email=email, password=password)
 
     if user is not None:
+        user_role = user.groups.all()
+        group_names = [group.name for group in user_role]
+        print(group_names)
+        if user.has_perm('restapi.CLUB'):
+            user_role = "CLUB"
+
+        if user.has_perm('restapi.STUDENT'):
+            user_role = "STUDENT"
+
+        if user.has_perm('restapi.ADMIN'):
+            user_role = "ADMIN"
+
+        if not user_role:
+            return Response(
+                {'error': 'Can not find users role...' },
+                status=401
+            )
+            
+        
         if not user.is_email_verified:
             error_message = 'Please verify your email before logging in'
             print(error_message)
@@ -139,7 +157,7 @@ def login_view(request):
                 status=401
             )
         
-        if user.role == 'CLUB' and not user.club_profile.is_account_verified:
+        if user_role == "CLUB" and not user.club_profile.is_account_verified:
             print('User is a club and account is not verified')
             return Response(
                 {'error': 'Please wait... your account has not been manually verified yet' },
@@ -155,9 +173,9 @@ def login_view(request):
         #     name
 
         request.session['id'] = str(user.pk)  # populate session
-        request.session['role'] = user.role   # populate session
+        request.session['role'] = user_role   # populate session
 
-        return Response({"user": {"role": user.role}}, status=200)
+        return Response({"user": {"role": user_role}}, status=200)
     
     error_message = 'Invalid account credentials'
     print(error_message)

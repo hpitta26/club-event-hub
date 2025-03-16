@@ -52,7 +52,6 @@ class StudentCreationForm(CustomUserCreationForm):
         user = super().save(commit=False)
 
         user.email = self.cleaned_data["email"]
-        user.role = CustomUser.STUDENT
 
         if commit:
             user.save()
@@ -78,8 +77,6 @@ class ClubCreationForm(CustomUserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-
-        user.role = CustomUser.CLUB
 
         if commit:
             user.save()

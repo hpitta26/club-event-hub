@@ -36,7 +36,6 @@ class Command(BaseCommand):
             email = f"{uuid.uuid4().hex[:8]}@example.com"  # Generate unique email
             user = CustomUser.objects.create(
                 email=email,
-                role=CustomUser.CLUB,  # Set role to CLUB
                 is_email_verified=True
             )
 

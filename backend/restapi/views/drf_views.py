@@ -14,30 +14,14 @@ from ..serializers import ClubSerializer, EventSerializer, StudentSerializer
 from rest_framework import generics
 from ..models import Event, Student, Club
 from ..serializers import EventSerializer, StudentSerializer, ClubSerializer
-from restapi.permissions import ClubPermission, Admin, StudentPermission
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import user_passes_test
-
-from restapi.permissions import ClubPermission, Admin, StudentPermission
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import user_passes_test
-
+from restapi.permissions import ClubPermission
 # List all events or create a new event
 class EventListCreateView(generics.ListCreateAPIView):
     #queryset = Event.objects.all()
     #queryset = Event.objects.all()
     serializer_class = EventSerializer
-    permission_classes = [ClubPermission] # EXAMPLE OF HOW TO LIMIT PERMISSIONS
+    permission_classes = [ClubPermission]
 
-    @method_decorator(user_passes_test(lambda u: ClubPermission(u) or Admin(u)), name='dispatch') # ANOTHER EXAMPLE OF HOW TO LIMIT PERMISSIONS
-    def get_queryset(self):
-        """List events only for the requesting club."""
-        club_id = self.request.session.get('id')  # Fetch club ID from session
-        if club_id is None:
-            return Event.objects.none()  # Return empty if no club is found in session
-        return Event.objects.filter(club__user_id=club_id)  # Use `user_id` instead of `id`
-
-    @method_decorator(user_passes_test(lambda u: ClubPermission() or Admin(u)), name='dispatch') # ANOTHER EXAMPLE OF HOW TO LIMIT PERMISSIONS
     def create(self, request, *args, **kwargs):
         """Override create to associate events with the club creating them."""
         club_id = request.session.get('id')

@@ -9,7 +9,6 @@ class Command(BaseCommand):
     def club_helper(self, club_obj):
         user = CustomUser.objects.create(
             email=club_obj["email"],
-            role=CustomUser.CLUB,
             is_email_verified=True
         )
         user.set_password(club_obj["password"])
@@ -27,7 +26,6 @@ class Command(BaseCommand):
     def student_helper(self, student_obj):
         user = CustomUser.objects.create(
             email=student_obj["email"],
-            role=CustomUser.STUDENT,
             is_email_verified=True
         )
         user.set_password(student_obj["password"])
@@ -62,21 +60,21 @@ class Command(BaseCommand):
             {
                 "email": "club1@example.com",
                 "club_name": "Chess Club",
-                "password": "securepassword1",
+                "password": "password",
                 "description": "We love playing and studying chess.",
                 "social_media_handles": {"twitter": "@chessclub1", "instagram": "@chessclub1"}
             },
             {
                 "email": "club2@example.com",
                 "club_name": "Art Club",
-                "password": "securepassword2",
+                "password": "password",
                 "description": "A place for budding artists to share ideas.",
                 "social_media_handles": {"twitter": "@artclub2", "instagram": "@artclub2"}
             },
             {
                 "email": "club3@example.com",
                 "club_name": "Hiking Club",
-                "password": "securepassword3",
+                "password": "password",
                 "description": "Weekend hiking adventures around the state.",
                 "social_media_handles": {"twitter": "@hikingclub3", "instagram": "@hikingclub3"}
             }
@@ -87,7 +85,7 @@ class Command(BaseCommand):
                 "email": "student1@fiu.edu",
                 "first_name": "John",
                 "last_name": "Doe",
-                "password": "studentsecure1",
+                "password": "password",
                 "major": "Computer Science",
                 "graduation_year": 2027,
                 "following_clubs": ["club2@example.com"]
@@ -96,7 +94,7 @@ class Command(BaseCommand):
                 "email": "student2@fiu.edu",
                 "first_name": "Jane",
                 "last_name": "Smith",
-                "password": "studentsecure2",
+                "password": "password",
                 "major": "Biology",
                 "graduation_year": 2028,
                 "following_clubs": ["club3@example.com"]
@@ -105,7 +103,7 @@ class Command(BaseCommand):
                 "email": "student3@fiu.edu",
                 "first_name": "Mark",
                 "last_name": "Johnson",
-                "password": "studentsecure3",
+                "password": "password",
                 "major": "Mathematics",
                 "graduation_year": 2029,
                 "following_clubs": ["club1@example.com", "club3@example.com"]

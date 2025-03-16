@@ -67,4 +67,4 @@ class Command(BaseCommand):
             admin_group.permissions.add(delete_event)
 
             self.stdout.write(self.style.SUCCESS('Successfully created ADMIN group!'))
-        
+    

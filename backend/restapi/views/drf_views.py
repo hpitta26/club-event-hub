@@ -23,7 +23,7 @@ class EventListCreateView(generics.ListCreateAPIView):
     #queryset = Event.objects.all()
     #queryset = Event.objects.all()
     serializer_class = EventSerializer
-    permission_classes = [ClubPermission] # EXAMPLE OF HOW TO LIMIT PERMISSIONS
+    permission_classes = [ClubPermission]
 
     def get_queryset(self):
         """List events only for the requesting club."""

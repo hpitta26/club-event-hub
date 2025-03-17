@@ -10,10 +10,10 @@ const NavbarSelector = () => {
   if (userContext == null) {
     console.log(`navbar rendering --> ${JSON.stringify(userContext)}`);
     return <LoggedOutNavbar />;  
-  } else if (userContext['role'] === 'STUDENT') {
+  } else if (userContext['role'].includes('STUDENT')) {
     console.log(`navbar rendering --> ${JSON.stringify(userContext)}`);
     return <StudentNavbar />;
-  } else if (userContext['role'] === 'CLUB') {
+  } else if (userContext['role'].includes('CLUB')) {
     console.log(`navbar rendering --> ${JSON.stringify(userContext)}`);
     return <ClubNavbar />;
   }

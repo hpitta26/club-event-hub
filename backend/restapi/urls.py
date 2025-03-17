@@ -2,6 +2,10 @@ from django.urls import path
 from .views import drf_views, student_auth_views, auth_views, club_auth_views
 from django.views.decorators.http import require_http_methods
 
+from django.conf import settings
+from django.conf.urls.static import static
+from django.urls import path
+
 urlpatterns = [
     path('events/', drf_views.EventListCreateView.as_view(), name='event-list-create'),
     path('events/<int:pk>/', drf_views.EventDetailView.as_view(), name='event-detail'),
@@ -22,4 +26,6 @@ urlpatterns = [
     path('logout/', require_http_methods(['GET'])(auth_views.logout_view), name='logout'),
     path('verify-session/', require_http_methods(['GET'])(auth_views.verify_session), name='verify-session'),
     path('verify-email/<str:token>/', auth_views.verify_email, name='verify-email'),
-]
+]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# That last little bit was added so that the media folder would be public and allow for files to be sent there

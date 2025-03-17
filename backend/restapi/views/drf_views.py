@@ -5,6 +5,8 @@ _summary_
 from rest_framework import generics
 from restapi.models import Event, Student, Club
 from restapi.serializers import EventSerializer, StudentSerializer, ClubSerializer
+from rest_framework.parsers import MultiPartParser, FormParser
+
 
 # List all events or create a new event
 class EventListCreateView(generics.ListCreateAPIView):
@@ -35,6 +37,8 @@ class ClubDetailBySlugView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Club.objects.all()
     serializer_class = ClubSerializer
     lookup_field = 'slug'
+    #Added these fields for parsing
+    parser_classes = [MultiPartParser, FormParser]
 
 
 

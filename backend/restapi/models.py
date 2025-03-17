@@ -60,9 +60,13 @@ class Club(models.Model):
         CustomUser, on_delete=models.CASCADE, related_name='club_profile'
     )
 
-    # profile_picture = models.ImageField(
-    #     upload_to='club_profiles/', blank=True, null=True
-    # )
+    # NEED THIS FOR THE BANNER AND PFP, will neeed to add a media fodler for it
+    club_picture = models.ImageField(
+         upload_to='club_profile/', blank =True
+    )
+    club_banner = models.ImageField(
+        upload_to='club_banner/', blank =True
+    )
     club_name = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True, null=True)  # possibly change to required --> depending on form in the frontend
     slug = models.SlugField(unique=True, blank=True)
@@ -131,9 +135,12 @@ class Event(models.Model):
     end_time = models.DateTimeField()
     location = models.CharField(max_length=255)
     capacity = models.PositiveIntegerField()
-    # picture = models.ImageField(
-    #     upload_to='event_thumbnails/', blank=True, null=True
-    # )
+    profilepicture = models.ImageField(
+        upload_to='club_profilepic/', blank=True, null=True
+    )
+    profilebanner = models.ImageField(
+        upload_to='club_banner/', blank=True, null=True
+    )
 
     # private/public boolean
     # tags --> type of event

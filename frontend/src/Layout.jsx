@@ -7,7 +7,7 @@ import CreateEvent from "./pages/CreateEvent.jsx";
 import { UserProvider } from "./context/UserContext.jsx";
 
 import Logout from './pages/authentication/Logout.jsx';
-import ClubRegister from './pages/authentication/ClubRegister.jsx';
+import ClubSignup from './pages/authentication/ClubSignup.jsx';
 import Login from "./pages/authentication/Login.jsx";
 import StudentSignup from "./pages/authentication/StudentSignup.jsx";
 import VerifyEmail from "./pages/authentication/VerifyEmail.jsx";
@@ -37,7 +37,7 @@ function App() {
           {/* Protected --> makes sure users that are logged in can't visit register page */}
           <Route element={<EnsureLoggedIn expRole="NotLoggedIn" />}>
             <Route path="/student-register" element={<StudentSignup />}/> {/* Student Signup */}
-            <Route path="/club-register" element={<ClubRegister />} />
+            <Route path="/club-register" element={<ClubSignup />} />
             <Route path="/login" element={<Login/>}/>
             <Route path="/verify/:token" element={<VerifyEmail />} />
           </Route>

@@ -3,7 +3,6 @@ import { MdOutlineFileUpload } from "react-icons/md";
 import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../context/UserContext.jsx";
 import backend from "../components/backend.jsx";
-import {useNavigate} from "react-router-dom";
 
 function StudentSettings(){
 
@@ -22,12 +21,10 @@ function StudentSettings(){
         graduation_year: ""
     })
 
-    const navigate = useNavigate();
-
     useEffect(()=>{
-        async function fetchUserDetails(){
+        async function fetchUserDetails() {
             try{
-                const response = await backend.get(`/students/`);
+                const response = await backend.get('students/');
                 if(response.data){
                     setGlobalEmail(response.data.user.email);
                     setFormData({
@@ -105,11 +102,9 @@ function StudentSettings(){
             try {
                 const response = await backend.patch(`/students/`, requestData);
                 console.log("Settings updated " + response.data.first_name);
-                alert("Profile updated successfully!");
                 window.location.reload();
             } catch (error) {
                 console.error("Error updating user data: ", error);
-                alert("Failed to update profile. Please try again.");
             }
         }
     }
@@ -138,19 +133,19 @@ function StudentSettings(){
                     </div>
                 </div>
                 <div className="space-y-5">
-                    <div className="flex items-end justify-between ">
+                    <div className="flex items-end justify-between">
                     <div className=" w-1/2 ">
                             <p className="text-gray-500"> First Name</p>
                             <input name="first_name" onChange={handleChange} className="text-black w-11/12 bg-gray-400 h-8 p-2 placeholder-gray-600" placeholder={formData.first_name}/>
                             {errors.first_name_blank &&  <p className="text-red-500 text-xs italic"> {errors.first_name_blank} </p>}
                         </div>
-                        <div className=" w-1/2 ">
+                        <div className="w-1/2">
                             <p className="text-gray-500"> Last Name</p>
                             <input name="last_name" onChange={handleChange} className="text-black w-full bg-gray-400 h-8 p-2 placeholder-gray-600" placeholder={formData.last_name}/>
                             {errors.last_name_blank &&  <p className="text-red-500 text-xs italic"> {errors.last_name_blank} </p>}
                         </div>
                     </div>
-                    <div className=" w-full ">
+                    <div className="w-full">
                         <p className="text-gray-500"> Email</p>
                         <input name="email" onChange={handleChange} className="text-black bg-gray-400 w-full h-8 p-2 placeholder-gray-600" placeholder={formData.email} />
                         {errors.email_blank &&  <p className="text-red-500 text-xs italic"> {errors.email_blank} </p>}

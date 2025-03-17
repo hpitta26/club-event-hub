@@ -6,7 +6,8 @@ import Discover from "./pages/Discover.jsx";
 import Landing from './pages/Landing.jsx';
 import NotFound from './pages/NotFound.jsx';
 
-import ClubRegister from './pages/authentication/ClubRegister.jsx';
+import Logout from './pages/authentication/Logout.jsx';
+import ClubSignup from './pages/authentication/ClubSignup.jsx';
 import Login from "./pages/authentication/Login.jsx";
 import Logout from './pages/authentication/Logout.jsx';
 import ClubRegister from './pages/authentication/ClubRegister.jsx';
@@ -47,7 +48,7 @@ function App() {
           {/* Protected --> makes sure users that are logged in can't visit register page */}
           <Route element={<EnsureLoggedIn expRole="NotLoggedIn" />}>
             <Route path="/student-register" element={<StudentSignup />}/> {/* Student Signup */}
-            <Route path="/club-register" element={<ClubRegister />} />
+            <Route path="/club-register" element={<ClubSignup />} />
             <Route path="/login" element={<Login/>}/>
             <Route path="/verify/:token" element={<VerifyEmail />} />
           </Route>

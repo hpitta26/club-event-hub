@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../components/discover/sidebar";
+import Sidebar from "../components/discover/Sidebar";
 import FilterBar from "../components/discover/FilterBar";
 import EventGrid from "../components/discover/EventGrid";
 import backend from "../components/backend";
@@ -31,22 +31,26 @@ const Discover = () => {
       : allEvents.filter((event) => event.category === selectedFilter);
 
   return (
-    <div className="min-h-screen bg-gray-200 flex pt-10">
-      <div className="w-1/5 flex justify-center items-center">
-        <Sidebar />
+    <div className="max-w-[1400px] mx-auto pt-10">
+      <div className="flex">
+        {/* Sidebar */}
+        <div className="w-1/4 mt-[84px] hidden lg:block">
+          <Sidebar />
+        </div>
+
+        {/* Main Content */}
+        <div className="flex-1">
+          {/* Title and Filters */}
+          <div className="pt-6 px-6">
+            <h1 className="text-2xl font-bold mb-4">Events This Week</h1>
+            <FilterBar categories={categories} onFilterSelect={setSelectedFilter} />
+          </div>
+          {/* Event Grid */}
+          <div className="overflow-y-auto h-[calc(100vh-150px)] p-6">
+            <EventGrid events={filteredEvents} />
+          </div>
+        </div>
       </div>
-
-      {/* Main Content */}
-      <main className="flex-1 p-6 transition-all duration-300">
-        {/* Header */}
-        <h1 className="text-2xl font-bold mb-4">Events This Week</h1>
-
-        {/* Filters */}
-        <FilterBar categories={categories} onFilterSelect={setSelectedFilter} />
-
-        {/* Event Grid */}
-        <EventGrid events={filteredEvents} />
-      </main>
     </div>
   );
 };

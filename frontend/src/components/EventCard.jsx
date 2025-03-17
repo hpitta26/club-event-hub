@@ -45,7 +45,7 @@ function EventCard({
   return (
     <div
       className="relative w-[237.5px] h-[268.75px] bg-[#F0EFEB] border-2 border-black rounded-xl shadow-sm 
-                    hover:shadow-md transition-transform transform hover:scale-105 p-2.5 flex flex-col"
+                    hover:shadow-md transition-transform transform hover:scale-[1.02] p-2.5 flex flex-col cursor-pointer"
     >
       {/* Event Banner */}
       <div className="relative w-[212.5px] h-[123.75px] mb-2.5 border-2 border-black rounded-lg overflow-hidden">

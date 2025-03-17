@@ -1,12 +1,8 @@
-import React, { useState } from "react";
-import ClubCard from "./ClubCard";
+import React from "react";
 import dummyEventCardCover from "../../assets/dummyEventCardCover.jpg";
-import { IoMdArrowForward, IoMdArrowBack } from "react-icons/io";
+import SidebarCard from "./SidebarCard";
 
 const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  // Static event data (replace with API data later)
   const newEvents = [
     {
       id: 1,
@@ -49,51 +45,30 @@ const Sidebar = () => {
   ];
 
   return (
-    <div>
-      {/* Sidebar Toggle Button */}
-      <button
-        className={`fixed z-50 lg:hidden bg-gray-800 text-white p-3 rounded-lg shadow-lg transition-all duration-300 hover:bg-gray-700
-        ${isOpen ? "top-8 left-56" : "top-10 left-0"}`}
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        {isOpen ? <IoMdArrowBack size={8} /> : <IoMdArrowForward size={8} />}
-      </button>
-
-      {/* Sidebar */}
-      <aside
-        className={`fixed top-6 left-4 w-64 bg-gray text-black p-6 transition-transform duration-300 z-40 mt-5
-    ${
-      isOpen ? "translate-x-0" : "-translate-x-full"
-    } lg:translate-x-0 lg:fixed min-h-screen overflow-y-auto`}
-      >
-        {/* New Events Section */}
-        <h2 className="font-semibold text-lg text-black-300 mb-3 tracking-wide">
+    <div className="p-4 flex flex-col items-center">
+      {/* New Events Section */}
+      <div>
+        <h2 className="font-semibold text-lg text-black-300 mb-3 tracking-wide self-start">
           New
         </h2>
         <div className="space-y-3">
           {newEvents.map((event) => (
-            <ClubCard />
+            <SidebarCard />
           ))}
         </div>
+      </div>
 
-        {/* Featured Events Section */}
-        <h2 className="font-semibold text-lg text-black mt-8 mb-3 tracking-wide">
+      {/* Featured Events Section */}
+      <div className="mt-8">
+        <h2 className="font-semibold text-lg text-black mb-3 tracking-wide">
           Featured
         </h2>
         <div className="space-y-3">
           {featuredEvents.map((event) => (
-            <ClubCard />
+            <SidebarCard />
           ))}
         </div>
-      </aside>
-
-      {/* Overlay (for mobile when sidebar is open) */}
-      {isOpen && (
-        <div
-          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-30 lg:hidden"
-          onClick={() => setIsOpen(false)}
-        ></div>
-      )}
+      </div>
     </div>
   );
 };

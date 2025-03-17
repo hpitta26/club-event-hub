@@ -14,17 +14,21 @@ function EventModalCard({
   }
 
   return (
-    <div className="container flex gap-3 w-full px-4 py-3 bg-gray-800 rounded-md hover:bg-gray-700 transition">
-      <img src={image} alt="Event" className="w-16 h-16 rounded-lg object-cover" />
-      <div className="flex flex-col gap-1 justify-between">
+    <div className="container flex gap-3 w-full px-4 py-4 bg-[#F0EFEB] rounded-lg hover:bg-[#E0DFDB] transition border-2 border-black">
+      <img src={image} alt="Event" className="w-[104px] h-[104px] rounded-lg object-cover border-2 border-black" />
+      <div className="ml-1 flex flex-col gap-3 justify-center">
         {/* Event Date */}
-        <p className="text-white text-xs">{date}</p>
+        <p className="text-black font-semibold text-xs">
+          {date}
+        </p>
         {/* Event Title */}
-        <p className="text-white text-sm font-bold leading-none">
-          {handleTitleLength(title)}
+        <p className="text-black text-sm font-bold leading-none">
+          {handleTitleLength(title)} 
         </p>
         {/* Event Host */}
-        <p className="text-gray-300 text-xs">Hosted by: {host}</p>
+        <p className="text-black font-semibold text-xs">
+          Hosted by: {host}
+        </p>
       </div>
     </div>
   );

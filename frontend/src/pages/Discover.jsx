@@ -34,7 +34,7 @@ const Discover = () => {
     <div className="max-w-[1400px] mx-auto pt-10">
       <div className="flex">
         {/* Sidebar */}
-        <div className="w-1/4 mt-[84px] hidden lg:block">
+        <div className="w-1/4 mt-[86px] hidden lg:block">
           <Sidebar />
         </div>
 

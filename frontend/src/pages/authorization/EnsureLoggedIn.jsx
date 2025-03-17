@@ -3,7 +3,7 @@ import { Outlet, Navigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import PropTypes from 'prop-types';
 
-export const EnsureLoggedIn = ({ expRole = "CheckLoggedIn" }) => {
+export const EnsureLoggedIn = ({ role = "CheckLoggedIn" }) => {
     const { userContext } = useContext(UserContext);
 
     if (userContext) {

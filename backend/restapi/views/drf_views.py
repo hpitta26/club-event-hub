@@ -5,6 +5,8 @@ _summary_
 from rest_framework import generics
 from ..models import Event, Student, Club
 from ..serializers import EventSerializer, StudentSerializer, ClubSerializer
+from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
 
 # List all events or create a new event
 class EventListCreateView(generics.ListCreateAPIView):
@@ -40,15 +42,15 @@ class ClubDetailBySlugView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ClubSerializer
     lookup_field = 'slug'
 
-
-
-
-# List all clubs or create a new student
-class StudentListCreateView(generics.ListCreateAPIView):
-    queryset = Student.objects.all()
-    serializer_class = StudentSerializer
-
 # Retrieve, update, or delete a single student
 class StudentDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        student_id = self.request.session.get('id')
+        if not student_id:
+            raise Exception("No student ID found in session")
+
+        return get_object_or_404(Student, user_id=student_id)

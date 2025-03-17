@@ -36,7 +36,7 @@ function App() {
           {/* Protected --> makes sure users that are logged in can't visit register page */}
           <Route element={<EnsureLoggedIn expRole="NotLoggedIn" />}>
             <Route path="/student-register" element={<StudentSignup />}/> {/* Student Signup */}
-            <Route path="/club-register" element={<ClubRegister />} />
+            <Route path="/club-register" element={<ClubSignup />} />
             <Route path="/login" element={<Login/>}/>
             <Route path="/verify/:token" element={<VerifyEmail />} />
           </Route>

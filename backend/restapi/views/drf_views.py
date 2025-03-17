@@ -25,6 +25,13 @@ class EventListCreateView(generics.ListCreateAPIView):
     permission_classes = [ClubPermission] # EXAMPLE OF HOW TO LIMIT PERMISSIONS
 
     @method_decorator(user_passes_test(lambda u: ClubPermission(u) or Admin(u)), name='dispatch') # ANOTHER EXAMPLE OF HOW TO LIMIT PERMISSIONS
+    def get_queryset(self):
+        """List events only for the requesting club."""
+        club_id = self.request.session.get('id')  # Fetch club ID from session
+        if club_id is None:
+            return Event.objects.none()  # Return empty if no club is found in session
+        return Event.objects.filter(club__user_id=club_id)  # Use `user_id` instead of `id`
+
     def create(self, request, *args, **kwargs):
         """Override create to associate events with the club creating them."""
         club_id = request.session.get('id')

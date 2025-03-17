@@ -18,13 +18,18 @@ from restapi.permissions import ClubPermission, Admin, StudentPermission
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
 
+from restapi.permissions import ClubPermission, Admin, StudentPermission
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import user_passes_test
+
 # List all events or create a new event
 class EventListCreateView(generics.ListCreateAPIView):
     #queryset = Event.objects.all()
     #queryset = Event.objects.all()
     serializer_class = EventSerializer
-    permission_classes = [ClubPermission]
+    permission_classes = [ClubPermission] # EXAMPLE OF HOW TO LIMIT PERMISSIONS
 
+    @method_decorator(user_passes_test(lambda u: ClubPermission(u) or Admin(u)), name='dispatch') # ANOTHER EXAMPLE OF HOW TO LIMIT PERMISSIONS
     def get_queryset(self):
         """List events only for the requesting club."""
         club_id = self.request.session.get('id')  # Fetch club ID from session

@@ -3,7 +3,7 @@ import Sidebar from "../components/following/sidebar.jsx";
 import EventGrid from "../components/discover/EventGrid";
 import backend from "../components/backend";
 
-const Following = () => {
+const FollowingClubs = () => {
   const [allEvents, setAllEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -28,36 +28,34 @@ const Following = () => {
 
   if (loading) {
     return (
-      <div className="max-w-[1400px] mx-auto min-h-screen bg-gray-200 flex pt-10">
-        <div className="w-1/5 flex justify-center items-center">
-          <Sidebar />
+      <></>
+    );
+  } else {
+    return (
+      <div className="max-w-[1400px] mx-auto pt-10">
+        <div className="flex">
+          {/* Sidebar */}
+          <div className="w-1/4 mt-[86px] hidden lg:block">
+            <Sidebar />
+          </div>
+  
+          {/* Main Content */}
+          <div className="flex-1">
+            {/* Title and Filters */}
+            <div className="pt-6 px-6">
+              <h1 className="text-2xl font-bold mb-4">Your Club Feed</h1>
+            </div>
+            {/* Event Grid */}
+            <div className="overflow-y-auto h-[calc(100vh-150px)] p-6">
+              <EventGrid events={filteredEvents} />
+            </div>
+          </div>
         </div>
-        <main className="flex-1 p-6 transition-all duration-300">
-          <h1 className="text-2xl font-bold mb-4">Your Club Feed</h1>
-          <p>Loading events...</p>
-        </main>
       </div>
     );
   }
 
-  return (
-    <div className="max-w-[1400px] mx-auto min-h-screen bg-gray-200 flex pt-10">
-      <div className="w-1/5 flex justify-center items-center">
-        <Sidebar />
-      </div>
-
-      {/* Main Content */}
-      <main className="flex-1 p-6 transition-all duration-300">
-        {/* Header */}
-        <h1 className="text-2xl font-bold mb-4">Your Club Feed</h1>
-
-        {/* Event Grid */}
-        <div className="overflow-y-auto h-[calc(100vh-150px)] p-6">
-          <EventGrid events={filteredEvents} />
-        </div>
-      </main>
-    </div>
-  );
+  
 };
 
-export default Following;
+export default FollowingClubs;

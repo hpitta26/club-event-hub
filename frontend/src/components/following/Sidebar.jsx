@@ -48,7 +48,7 @@ const Sidebar = () => {
               <SidebarCard 
                 key={club.id} 
                 name={club.name} 
-                imageUrl={club.imageUrl}
+                image={club.imageUrl}
               />
             ))}
           </div>

@@ -21,23 +21,11 @@ from django.contrib.auth.decorators import user_passes_test
 # List all events or create a new event
 class EventListCreateView(generics.ListCreateAPIView):
     #queryset = Event.objects.all()
-    #queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = [ClubPermission] # EXAMPLE OF HOW TO LIMIT PERMISSIONS
 
     @method_decorator(user_passes_test(lambda u: ClubPermission(u) or Admin(u)), name='dispatch') # ANOTHER EXAMPLE OF HOW TO LIMIT PERMISSIONS
     def create(self, request, *args, **kwargs):
-        """Override create to associate events with the club creating them."""
-        club_id = request.session.get('id')
-
-        # Fetch the club instance (assuming your Event model has a ForeignKey to Club)
-        club_instance = get_object_or_404(Club, user_id=club_id)
-
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(club=club_instance)  # Explicitly assign the club
-
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
         """Override create to associate events with the club creating them."""
         club_id = request.session.get('id')
 

@@ -4,44 +4,14 @@ import SidebarCard from "./SidebarCard";
 
 const Sidebar = () => {
   const newEvents = [
-    {
-      id: 1,
-      title: "Code Camp",
-      date: "Aug 20 - 5:00 PM",
-      host: "CodeHub",
-      image: dummyEventCardCover,
-    },
-    {
-      id: 2,
-      title: "Yoga Session",
-      date: "Aug 21 - 6:00 PM",
-      host: "Wellness Club",
-      image: dummyEventCardCover,
-    },
-    {
-      id: 3,
-      title: "Basketball League",
-      date: "Aug 22 - 7:00 PM",
-      host: "Sports Society",
-      image: dummyEventCardCover,
-    },
+    { id: 1, title: "Code Camp", date: "Aug 20 - 5:00 PM", host: "CodeHub", image: dummyEventCardCover,},
+    { id: 2, title: "Yoga Session", date: "Aug 21 - 6:00 PM", host: "Wellness Club", image: dummyEventCardCover,},
+    { id: 3, title: "Basketball League", date: "Aug 22 - 7:00 PM", host: "Sports Society", image: dummyEventCardCover,},
   ];
 
   const featuredEvents = [
-    {
-      id: 4,
-      title: "AI Workshop",
-      date: "Aug 23 - 4:00 PM",
-      host: "Tech Innovators",
-      image: dummyEventCardCover,
-    },
-    {
-      id: 5,
-      title: "Nutrition Talk",
-      date: "Aug 24 - 5:30 PM",
-      host: "Healthy Living",
-      image: dummyEventCardCover,
-    },
+    { id: 4, title: "AI Workshop", date: "Aug 23 - 4:00 PM", host: "Tech Innovators", image: dummyEventCardCover,}, 
+    { id: 5, title: "Nutrition Talk", date: "Aug 24 - 5:30 PM", host: "Healthy Living", image: dummyEventCardCover,},
   ];
 
   return (
@@ -52,7 +22,7 @@ const Sidebar = () => {
           New
         </h2>
         <div className="space-y-3">
-          {newEvents.map((event) => (
+          {newEvents.map((club) => (
             <SidebarCard />
           ))}
         </div>
@@ -64,7 +34,7 @@ const Sidebar = () => {
           Featured
         </h2>
         <div className="space-y-3">
-          {featuredEvents.map((event) => (
+          {featuredEvents.map((club) => (
             <SidebarCard />
           ))}
         </div>

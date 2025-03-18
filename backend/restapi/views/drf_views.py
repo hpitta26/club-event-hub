@@ -2,21 +2,39 @@
 _summary_
 """
 
-from rest_framework import generics
-from ..models import Event, Student, Club
-from ..serializers import EventSerializer, StudentSerializer, ClubSerializer
 from django.shortcuts import get_object_or_404
+from rest_framework import generics, status
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+
+from ..models import Club, Event, Student
+from ..serializers import ClubSerializer, EventSerializer, StudentSerializer
+
 
 # List all events or create a new event
 class EventListCreateView(generics.ListCreateAPIView):
-    queryset = Event.objects.all()
+    #queryset = Event.objects.all()
     serializer_class = EventSerializer
 
+    def get_queryset(self):
+        """List events only for the requesting club."""
+        club_id = self.request.session.get('id')  # Fetch club ID from session
+        if club_id is None:
+            return Event.objects.none()  # Return empty if no club is found in session
+        return Event.objects.filter(club__user_id=club_id)  # Use `user_id` instead of `id`
+
     def create(self, request, *args, **kwargs):
-        request.data['club'] = request.session['id']
-        print(request.data)
-        return super().create(request, *args, **kwargs)
+        """Override create to associate events with the club creating them."""
+        club_id = request.session.get('id')
+
+        # Fetch the club instance (assuming your Event model has a ForeignKey to Club)
+        club_instance = get_object_or_404(Club, user_id=club_id)
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(club=club_instance)  # Explicitly assign the club
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 # Retrieve, update, or delete a single event
 class EventDetailView(generics.RetrieveUpdateDestroyAPIView):

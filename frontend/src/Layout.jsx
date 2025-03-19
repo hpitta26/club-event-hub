@@ -31,16 +31,20 @@ function App() {
         <NavbarSelector /> 
           <Routes>
             <Route path="/" element={<Landing />} />
-            <Route path="/student-register" element={<StudentSignup />}/> {/* Student Signup */}
-            <Route path="/club-register" element={<ClubSignup />} />
-            <Route path="/login" element={<Login/>}/>
-            <Route path="/verify/:token" element={<VerifyEmail />} />
+            <Route element={<EnsureLoggedIn role={"NotLoggedIn"} />}> {/* Protected --> makes sure users that are logged in can't visit register page */}
+              <Route path="/student-register" element={<StudentSignup />}/> {/* Student Signup */}
+              <Route path="/club-register" element={<ClubSignup />} />
+              <Route path="/login" element={<Login/>}/>
+              <Route path="/verify/:token" element={<VerifyEmail />} />
+            </Route>
             <Route path="/club/:clubSlug" element={<ClubProfile />} />
             <Route path="/event-card" element={<TempPage/>} /> {/* DummyPage to visualize the EventCard component */}
             <Route element={<EnsureLoggedIn />}> {/* Protected --> omit role = check logged in only */}
               <Route path="/discover" element={<Discover />} />
             </Route>
-            <Route path="/following" element={<FollowingClubs/>} />
+            <Route element={<EnsureLoggedIn role={"STUDENT"} />}> {/* Protected --> can only be accessed by people with role STUDENT */}
+              <Route path="/following" element={<FollowingClubs/>} />
+            </Route>
             <Route path="/analytics" element={<Analytics/>} />
             <Route path="/events" element={<ClubEvents/>} />
             <Route path="/temp" element={<TempPage />} />

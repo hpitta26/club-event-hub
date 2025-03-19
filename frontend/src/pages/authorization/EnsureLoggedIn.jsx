@@ -10,7 +10,7 @@ export const EnsureLoggedIn = ({ role = "CheckLoggedIn" }) => {
         return <Navigate to="/login" />;
     };
 
-    if (userContext.role !== role) return <Navigate to="/" />;
+    if (!userContext.role.contains(role)) return <Navigate to="/" />;
 
 >>>>>>> 40b5349 (added protected routes for clubs and students, and made populate command)
     return <Outlet />;

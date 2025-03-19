@@ -23,7 +23,7 @@ const Sidebar = () => {
         </h2>
         <div className="space-y-3">
           {newEvents.map((club) => (
-            <SidebarCard />
+            <SidebarCard key={club.id} />
           ))}
         </div>
       </div>
@@ -35,7 +35,7 @@ const Sidebar = () => {
         </h2>
         <div className="space-y-3">
           {featuredEvents.map((club) => (
-            <SidebarCard />
+            <SidebarCard key={club.id} />
           ))}
         </div>
       </div>

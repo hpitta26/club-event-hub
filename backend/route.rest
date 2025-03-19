@@ -311,5 +311,9 @@ GET http://localhost:8000/restapi/students/
 ###
 
 GET http://localhost:8000/restapi/events/
+###
+GET http://localhost:8000/restapi/clubs/slug/cool-club/
+###
+GET http://localhost:8000/restapi/clubs/
 
 

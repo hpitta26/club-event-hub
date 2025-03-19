@@ -22,6 +22,7 @@ import ClubProfile from "./pages/ClubProfile.jsx";
 import FollowingClubs from "./pages/FollowingClubs.jsx";
 import Analytics from "./pages/Analytics.jsx";
 import ClubEvents from "./pages/ClubEvents.jsx";
+import StudentSettings from "./pages/StudentSettings.jsx";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
           {/* Protected --> can only be accessed by people with role STUDENT */}
           <Route element={<EnsureLoggedIn expRole="STUDENT" />}> 
             <Route path="/following" element={<FollowingClubs/>} />
+            <Route path="/student-settings" element={<StudentSettings />}/>
           </Route>
           {/* Protected --> can only be accessed by people with role CLUB */}
           <Route element={<EnsureLoggedIn expRole="CLUB" />}> 

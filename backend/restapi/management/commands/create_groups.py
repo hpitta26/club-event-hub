@@ -9,9 +9,15 @@ class Command(BaseCommand):
         if (created_club):
             change_club = Permission.objects.get(codename='change_club')
             view_club = Permission.objects.get(codename='view_club')
+            view_event = Permission.objects.get(codename='view_event')
+            change_event = Permission.objects.get(codename='change_event')
+            delete_event = Permission.objects.get(codename='delete_event')
 
-            club_group.permissions.add(view_club)
             club_group.permissions.add(change_club)
+            club_group.permissions.add(view_club)
+            club_group.permissions.add(view_event)
+            club_group.permissions.add(change_event)
+            club_group.permissions.add(delete_event)
             self.stdout.write(self.style.SUCCESS('Successfully created CLUB group!'))
 
         student_group, created_student = Group.objects.get_or_create(name='STUDENT')
@@ -19,10 +25,12 @@ class Command(BaseCommand):
             view_student = Permission.objects.get(codename='view_student')
             change_student = Permission.objects.get(codename='change_student')
             view_club = Permission.objects.get(codename='view_club')
+            view_event = Permission.objects.get(codename='view_event')
 
             student_group.permissions.add(view_student)
             student_group.permissions.add(view_club)
             student_group.permissions.add(change_student)
+            student_group.permissions.add(view_event)
 
             self.stdout.write(self.style.SUCCESS('Successfully created STUDENT group!'))
 

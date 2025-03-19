@@ -23,18 +23,20 @@ function Login() {
 
     try {
       const response = await backend.post("/login/", formData);
-      console.log(response);
-      console.log(response.data.user);
+      // console.log(response);
+      // console.log(response.data.user);
       if (response.status === 200) {
         console.log("logging user in...");
-        Login(response.data.user);
-		  if(response.data.user['role'] == "STUDENT") {
-			  navigate("/discover");
-		  }
-		  else {
-			  navigate("/analytics");
-		  }
-	  } else {
+        await new Promise((resolve) => {
+          Login(response.data.user);
+          resolve(); // Ensure the context is updated before proceeding
+        });
+        if (response.data.user['role'].includes("STUDENT")) {
+          navigate('/discover');
+        } else {
+          navigate("/analytics");
+        }
+	    } else {
         setError(response.message);
       }
     } catch (err) {

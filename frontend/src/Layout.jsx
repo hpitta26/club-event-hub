@@ -39,11 +39,9 @@ function App() {
             <Route path="/club-register" element={<ClubSignup />} />
             <Route path="/login" element={<Login/>}/>
             <Route path="/verify/:token" element={<VerifyEmail />} />
-            <Route path="/club/:clubSlug" element={<ClubProfile />} />
-            <Route path="/event-card" element={<TempPage/>} /> {/* DummyPage to visualize the EventCard component */}
-            <Route element={<EnsureLoggedIn />}> {/* Protected --> omit role = check logged in only */}
-              <Route path="/discover" element={<Discover />} />
-            </Route>
+          </Route>
+          {/* Protected --> can only be accessed by people with role STUDENT */}
+          <Route element={<EnsureLoggedIn expRole="STUDENT" />}> 
             <Route path="/following" element={<FollowingClubs/>} />
           </Route>
           {/* Protected --> can only be accessed by people with role CLUB */}

@@ -5,14 +5,18 @@ _summary_
 from rest_framework import generics
 from ..models import Event, Student, Club
 from ..serializers import EventSerializer, StudentSerializer, ClubSerializer
-from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from restapi.permissions import ClubPermission, Admin, StudentPermission
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import user_passes_test
+
 
 # List all events or create a new event
 class EventListCreateView(generics.ListCreateAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+    permission_classes = [ClubPermission] # EXAMPLE OF HOW TO LIMIT PERMISSIONS
 
+    @method_decorator(user_passes_test(lambda u: ClubPermission(u) or Admin(u)), name='dispatch') # ANOTHER EXAMPLE OF HOW TO LIMIT PERMISSIONS
     def create(self, request, *args, **kwargs):
         request.data['club'] = request.session['id']
         print(request.data)
@@ -22,9 +26,6 @@ class EventListCreateView(generics.ListCreateAPIView):
 class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-
-
-
 
 # List all clubs or create a new club
 class ClubListCreateView(generics.ListCreateAPIView):

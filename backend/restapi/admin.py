@@ -33,8 +33,8 @@ class NewUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
-    list_display = ("id", "email", "is_staff", "is_active", "role", "is_email_verified", "created_at", "updated_at")
-    list_filter = ("email", "is_staff", "is_active", "role", "is_email_verified", "created_at", "updated_at")
+    list_display = ("id", "email", "is_staff", "is_active", "is_email_verified", "created_at", "updated_at")
+    list_filter = ("email", "is_staff", "is_active", "is_email_verified", "created_at", "updated_at")
     fieldsets = (
         (None, {"fields": ("email", "password")}),
         ("Permissions", {"fields": ("is_staff", "is_active", "is_email_verified", "groups", "user_permissions")}),

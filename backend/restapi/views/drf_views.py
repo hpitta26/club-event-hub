@@ -47,11 +47,3 @@ class ClubDetailBySlugView(generics.RetrieveUpdateDestroyAPIView):
 class StudentDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_object(self):
-        student_id = self.request.session.get('id')
-        if not student_id:
-            raise Exception("No student ID found in session")
-
-        return get_object_or_404(Student, user_id=student_id)

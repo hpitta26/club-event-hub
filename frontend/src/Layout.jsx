@@ -36,12 +36,14 @@ function App() {
             <Route path="/verify/:token" element={<VerifyEmail />} />
             <Route path="/club/:clubSlug" element={<ClubProfile />} />
             <Route path="/event-card" element={<TempPage/>} /> {/* DummyPage to visualize the EventCard component */}
-            <Route path="/discover" element={<Discover />} />
+            <Route element={<EnsureLoggedIn />}> {/* Protected --> omit role = check logged in only */}
+              <Route path="/discover" element={<Discover />} />
+            </Route>
             <Route path="/following" element={<FollowingClubs/>} />
             <Route path="/analytics" element={<Analytics/>} />
             <Route path="/events" element={<ClubEvents/>} />
             <Route path="/temp" element={<TempPage />} />
-            <Route element={<EnsureLoggedIn />}> {/* Protected --> can only be accessed by logged-in users */}
+            <Route element={<EnsureLoggedIn role={"CLUB"} />}> {/* Protected --> can only be accessed by people with role CLUB */}
               <Route path="/create-event" element={<CreateEvent />} />
             </Route>
             <Route path="/logout" element={<Logout />} /> {/* we don't want to limit who can logout */}

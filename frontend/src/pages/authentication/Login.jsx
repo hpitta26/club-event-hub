@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useContext, useState } from "react";
 import backend from "../../components/backend.jsx";
 import { UserContext } from "../../context/UserContext.jsx";
@@ -24,7 +23,6 @@ function Login() {
 
     try {
       const response = await backend.post("/login/", formData);
-
       // console.log(response);
       // console.log(response.data.user);
       if (response.status === 200) {
@@ -39,34 +37,6 @@ function Login() {
           navigate("/analytics");
         }
 	    } else {
-      console.log(response);
-      console.log(response.data.user);
-      if (response.status === 200) {
-        console.log("logging user in...");
-        Login(response.data.user);
-		  if(response.data.user['role'] == "STUDENT") {
-			  navigate("/discover");
-		  }
-		  else {
-			  navigate("/analytics");
-		  }
-	  } else {
-
-      // console.log(response);
-      // console.log(response.data.user);
-      if (response.status === 200) {
-        console.log("logging user in...");
-        await new Promise((resolve) => {
-          Login(response.data.user);
-          resolve(); // Ensure the context is updated before proceeding
-        });
-        if (response.data.user['role'].includes("STUDENT")) {
-          navigate('/discover');
-        } else {
-          navigate("/analytics");
-        }
-	    } else {
-
         setError(response.message);
       }
     } catch (err) {

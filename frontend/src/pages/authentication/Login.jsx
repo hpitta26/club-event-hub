@@ -51,6 +51,21 @@ function Login() {
 		  }
 	  } else {
 
+      // console.log(response);
+      // console.log(response.data.user);
+      if (response.status === 200) {
+        console.log("logging user in...");
+        await new Promise((resolve) => {
+          Login(response.data.user);
+          resolve(); // Ensure the context is updated before proceeding
+        });
+        if (response.data.user['role'].includes("STUDENT")) {
+          navigate('/discover');
+        } else {
+          navigate("/analytics");
+        }
+	    } else {
+
         setError(response.message);
       }
     } catch (err) {

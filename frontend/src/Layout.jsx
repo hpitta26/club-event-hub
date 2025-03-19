@@ -39,27 +39,20 @@ function App() {
             <Route path="/club-register" element={<ClubSignup />} />
             <Route path="/login" element={<Login/>}/>
             <Route path="/verify/:token" element={<VerifyEmail />} />
-            <Route path="/club/:clubSlug" element={<ClubProfile />} />
-            <Route path="/event-card" element={<TempPage/>} /> {/* DummyPage to visualize the EventCard component */}
-            <Route element={<EnsureLoggedIn />}> {/* Protected --> omit role = check logged in only */}
-              <Route path="/discover" element={<Discover />} />
-            </Route>
+          </Route>
+          {/* Protected --> can only be accessed by people with role STUDENT */}
+          <Route element={<EnsureLoggedIn expRole="STUDENT" />}> 
             <Route path="/following" element={<FollowingClubs/>} />
-            <Route path="/student-settings" element={<StudentSettings />}/>
           </Route>
           {/* Protected --> can only be accessed by people with role CLUB */}
           <Route element={<EnsureLoggedIn expRole="CLUB" />}> 
             <Route path="/create-event" element={<CreateEvent />} />
             <Route path="/analytics" element={<Analytics/>} />
             <Route path="/events" element={<ClubEvents/>} />
-            <Route path="/temp" element={<TempPage />} />
-            <Route element={<EnsureLoggedIn role={"CLUB"} />}> {/* Protected --> can only be accessed by people with role CLUB */}
-              <Route path="/create-event" element={<CreateEvent />} />
-            </Route>
-            <Route path="/logout" element={<Logout />} /> {/* we don't want to limit who can logout */}
-            <Route path="/logout" element={<Logout />} /> {/* we don't want to limit who can logout */}
-            <Route path="/*" element={<NotFound />} />
-          </Routes>
+          </Route>
+          <Route path="/logout" element={<Logout />} /> {/* we don't want to limit who can logout */}
+          <Route path="/*" element={<NotFound />} />
+        </Routes>
       </Router>
     </UserProvider>
   );

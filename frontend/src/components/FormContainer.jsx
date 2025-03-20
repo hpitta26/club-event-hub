@@ -6,10 +6,12 @@ const FormContainer = ({
   fields,
   onSubmit,
   formData,
+  errors,
   handleChange,
   children,
 }) => {
   const renderField = (field) => {
+    const error = errors?.[field.name];
     if (field.type === "radio") {
       return (
         <div className="flex flex-col gap-2" key={field.name}>
@@ -77,6 +79,7 @@ const FormContainer = ({
             className="px-3 rounded-md focus:outline-none bg-stone-200 py-2 text-sm sm:text-base w-full"
             required
           />
+            {error && <p className="text-red-500 text-xs mt-1">{error}</p>} {/* Display error message */}
         </div>
       );
     }

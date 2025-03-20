@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import backend from "../../components/backend.jsx";
 
 function StudentSignup() {
+  const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     email: "",
     password1: "",
@@ -38,13 +39,12 @@ function StudentSignup() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setErrors("");
     setSuccess("");
 
     // Debug log
@@ -74,7 +74,7 @@ function StudentSignup() {
         setPhase(0); // reset the phase
         navigate("/login");
       } else {
-        setError(data.message || "Registration failed. Please try again.");
+        setErrors(data.message || "Registration failed. Please try again.");
         setPhase(0);
       }
     } catch (err) {
@@ -83,13 +83,20 @@ function StudentSignup() {
       console.error("Error response:", err.response);
 
       if (err.response?.data?.errors) {
-        const errors = err.response.data.errors;
-        const errorMessage = Object.entries(errors)
-          .map(([key, value]) => `${key}: ${value.join(", ")}`)
-          .join("\n");
-        setError(errorMessage);
+        const errorMessages = err.response.data.errors;
+        setErrors(errorMessages);
+        // redirects user back to first phase so that they can see the "common password"
+        // error that django's auth raises
+        if(errorMessages.password1 || errorMessages.password2){
+          setPhase(0);
+        }
+        // redirects user back to first phase so that they can see the "user w this email exists"
+        // error that django's auth raises
+        if(errorMessages.email){
+          setPhase(0)
+        }
       } else {
-        setError(
+        setErrors(
           err.response?.data?.message ||
             "Registration failed. Please try again."
         );
@@ -106,16 +113,27 @@ function StudentSignup() {
             subtitle="University Events at a Glance"
             fields={accountFields}
             formData={formData}
+            errors={errors}
             handleChange={handleChange}
             onSubmit={(e) => {
+              let nonSubmittedErrors = {}
               e.preventDefault();
               if (!formData.email || !formData.email.endsWith("@fiu.edu")) {
-                alert("Email must end in @fiu.edu");
-                return;
-              } else if (formData.password !== formData.confirmPassword) {
-                alert("Passwords Don't Match");
-                return;
+                nonSubmittedErrors.email ="Email must end in @fiu.edu";
               }
+              if (formData.password1 !== formData.password2) {
+                nonSubmittedErrors.password1 ="Passwords must match ";
+                nonSubmittedErrors.password2 ="Passwords must match ";
+              }
+              else if(formData.password1.length < 8){
+                nonSubmittedErrors.password1 ="Passwords must be at least 8 characters long";
+                nonSubmittedErrors.password2 ="Passwords must be at least 8 characters long";
+              }
+                if (Object.keys(nonSubmittedErrors).length > 0) {
+                  setErrors(nonSubmittedErrors);
+                  return;
+                }
+
               setPhase((prevPhase) => prevPhase + 1);
             }}
           >
@@ -128,6 +146,7 @@ function StudentSignup() {
             subtitle=""
             fields={personalFields}
             formData={formData}
+            errors={errors}
             handleChange={handleChange}
             onSubmit={(e) => {
               e.preventDefault();
@@ -145,6 +164,7 @@ function StudentSignup() {
             subtitle=""
             fields={academicFields}
             formData={formData}
+            errors={errors}
             handleChange={handleChange}
             onSubmit={handleSubmit}
             // Should most likely handle valid graduation_year here

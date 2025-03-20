@@ -48,13 +48,13 @@ function ClubSignup() {
     },
   ];
 
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setErrors("");
     setSuccess("");
 
     // Debug log
@@ -81,7 +81,7 @@ function ClubSignup() {
         setPhase(0);
         navigate("/login");
       } else {
-        setError(data.message || "Registration failed. Please try again.");
+        setErrors(data.message || "Registration failed. Please try again.");
         setPhase(0);
       }
     } catch (err) {
@@ -90,13 +90,25 @@ function ClubSignup() {
       console.error("Error response:", err.response);
 
       if (err.response?.data?.errors) {
-        const errors = err.response.data.errors;
-        const errorMessage = Object.entries(errors)
-          .map(([key, value]) => `${key}: ${value.join(", ")}`)
-          .join("\n");
-        setError(errorMessage);
+        const errorMessages = err.response.data.errors;
+        setErrors(errorMessages)
+        // redirects user back to first phase so that they can see the "common password"
+        // error that django's auth raises
+        if(errorMessages.password1 || errorMessages.password2){
+          setPhase(0);
+        }
+        // redirects user back to first phase so that they can see the "user w this email exists"
+        // error that django's auth raises
+        if(errorMessages.email){
+          setPhase(0)
+        }
+        // redirects user back to first phase so that they can see the "club w this name exists"
+        // error that django's auth raises
+        if(errorMessages.club_name){
+          setPhase(1)
+        }
       } else {
-        setError(
+        setErrors(
           err.response?.data?.message ||
             "Registration failed. Please try again."
         );
@@ -123,11 +135,15 @@ function ClubSignup() {
             subtitle="University Events at a Glance"
             fields={accountFields}
             formData={formData}
+            errors={errors}
             handleChange={handleChange}
             onSubmit={(e) => {
               e.preventDefault();
-              if (formData.password !== formData.confirmPassword) {
-                alert("Passwords Don't Match");
+              const formErrors = {};
+              if (formData.password1 !== formData.password2) {
+                formErrors.password1 = "Passwords must match";
+                formErrors.password2 = "Passwords must match";
+                setErrors(formErrors);
                 return;
               }
               setPhase((prevPhase) => prevPhase + 1);
@@ -141,6 +157,7 @@ function ClubSignup() {
             title="Creating a Profile"
             fields={clubDetailsFields}
             formData={formData}
+            errors={errors}
             handleChange={handleChange}
             onSubmit={() => {
               setPhase((prevPhase) => prevPhase + 1);
@@ -156,6 +173,7 @@ function ClubSignup() {
             title="Finishing Up Profile"
             fields={descriptionField}
             formData={formData}
+            errors={errors}
             handleChange={handleChange}
             onSubmit={handleSubmit}
           >

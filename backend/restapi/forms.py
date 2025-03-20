@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.utils import timezone
+from django.utils.text import slugify
 from restapi.models import Student, CustomUser, Club
 
 class CustomUserCreationForm(UserCreationForm):
@@ -74,6 +75,15 @@ class ClubCreationForm(CustomUserCreationForm):
     class Meta:
         model = CustomUser
         fields = ("email",)
+
+    def clean_club_name(self):
+        club_name = self.cleaned_data.get("club_name")
+        slug = slugify(club_name)
+
+        if Club.objects.filter(slug=slug).exists():
+            raise forms.ValidationError(f'Club with the name {club_name} already exists.')
+
+        return club_name
 
     def save(self, commit=True):
         user = super().save(commit=False)

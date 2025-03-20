@@ -100,12 +100,12 @@ function ClubSignup() {
         // redirects user back to first phase so that they can see the "user w this email exists"
         // error that django's auth raises
         if(errorMessages.email){
-          setPhase(0)
+          setPhase(0);
         }
         // redirects user back to first phase so that they can see the "club w this name exists"
         // error that django's auth raises
         if(errorMessages.club_name){
-          setPhase(1)
+          setPhase(1);
         }
       } else {
         setErrors(

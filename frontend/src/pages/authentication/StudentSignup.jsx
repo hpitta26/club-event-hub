@@ -93,7 +93,7 @@ function StudentSignup() {
         // redirects user back to first phase so that they can see the "user w this email exists"
         // error that django's auth raises
         if(errorMessages.email){
-          setPhase(0)
+          setPhase(0);
         }
       } else {
         setErrors(

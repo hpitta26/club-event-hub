@@ -14,35 +14,18 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.text import slugify
 from .manager import CustomUserManager
 import uuid
-
-
-
+from django.contrib.auth.models import Permission, Group
 
 class CustomUser(AbstractUser):
     username = None
     first_name = None
     last_name = None
     email = models.EmailField("email address", unique=True)
-    ADMIN = 'ADMIN'
-    STUDENT = 'STUDENT'
-    CLUB = 'CLUB'
 
     is_email_verified = models.BooleanField(default=False)
     verification_token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    ROLE_CHOICES = (
-        (ADMIN, 'Admin'),
-        (STUDENT, 'Student'),
-        (CLUB, 'Club'),
-    )
-
-    role = models.CharField(
-        max_length=10,
-        choices=ROLE_CHOICES,
-        default=STUDENT
-    )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
@@ -55,9 +38,10 @@ class CustomUser(AbstractUser):
 
 
 
+
 class Club(models.Model):
     user = models.OneToOneField(
-        CustomUser, on_delete=models.CASCADE, related_name='club_profile'
+        CustomUser, on_delete=models.CASCADE, related_name='club_profile', primary_key=True # Link the pks
     )
 
     # NEED THIS FOR THE BANNER AND PFP, will neeed to add a media fodler for it
@@ -74,8 +58,11 @@ class Club(models.Model):
     spirit_rating = models.PositiveIntegerField(
         default=1, validators=[MinValueValidator(0), MaxValueValidator(100)]
     )
+    is_account_verified = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
+        club_group = Group.objects.get(name='CLUB')
+        self.user.groups.add(club_group)
         if not self.slug:
             self.slug = slugify(self.club_name)
         super().save(*args,**kwargs)
@@ -91,17 +78,20 @@ class Club(models.Model):
     def __str__(self):
         return str(self.club_name)
 
-
+    def delete(self, *args, **kwargs):
+        self.user.delete()
+        super().delete(*args, **kwargs)
 
 
 class Student(models.Model):
     user = models.OneToOneField(
-        CustomUser, on_delete=models.CASCADE, related_name='student_profile'
+        CustomUser, on_delete=models.CASCADE, related_name='student_profile', primary_key=True # Link the pks
     )
 
     # profile_picture = models.ImageField(
     #     upload_to='student_profiles/', blank=True, null=True
     # )
+
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     major = models.CharField(max_length=255, blank=True, null=True)
@@ -117,9 +107,20 @@ class Student(models.Model):
     following_clubs = models.ManyToManyField(
         Club, related_name='followers', blank=True
     )  # accessible through Club as followers
+    
+    def save(self, *args, **kwargs):
+        student_group = Group.objects.get(name='STUDENT')
+        self.user.groups.add(student_group)
+        super().save(*args,**kwargs)
+
 
     def __str__(self):
         return str(self.user.email)
+
+    def delete(self, *args, **kwargs):
+        self.user.delete()
+        super().delete(*args, **kwargs)
+
 
 
 

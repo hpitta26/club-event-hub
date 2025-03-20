@@ -4,7 +4,7 @@ from .models import Club, Student, Event, CustomUser
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 class ClubAdmin(admin.ModelAdmin):
-    list_display = ('get_email', 'club_name', 'description', 'spirit_rating')
+    list_display = ('get_email', 'club_name', 'is_account_verified', 'description', 'spirit_rating')
     search_fields = ('user__email',)
 
     def get_email(self, obj):
@@ -12,12 +12,18 @@ class ClubAdmin(admin.ModelAdmin):
     get_email.short_description = 'Email'
 
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ('get_email', 'first_name', 'last_name', 'major', 'graduation_year')
+    list_display = ('get_email', 'major', 'graduation_year', 'get_following_clubs')
     search_fields = ('user__email',)
+    filter_horizontal = ('following_clubs',)
+    fields = ('user', 'major', 'graduation_year', 'following_clubs')
 
     def get_email(self, obj):
         return obj.user.email
     get_email.short_description = 'Email'
+
+    def get_following_clubs(self, obj):
+        return ", ".join([club.club_name for club in obj.following_clubs.all()]) if obj.following_clubs.exists() else "None"
+    get_following_clubs.short_description = 'Following Clubs'
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ('title', 'club', 'start_time', 'end_time', 'location')
@@ -27,8 +33,8 @@ class NewUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
-    list_display = ("email", "is_staff", "is_active", "role", "is_email_verified", "created_at", "updated_at")
-    list_filter = ("email", "is_staff", "is_active", "role", "is_email_verified", "created_at", "updated_at")
+    list_display = ("id", "email", "is_staff", "is_active", "is_email_verified", "created_at", "updated_at")
+    list_filter = ("email", "is_staff", "is_active", "is_email_verified", "created_at", "updated_at")
     fieldsets = (
         (None, {"fields": ("email", "password")}),
         ("Permissions", {"fields": ("is_staff", "is_active", "is_email_verified", "groups", "user_permissions")}),

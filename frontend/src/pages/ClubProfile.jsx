@@ -6,7 +6,6 @@ import EventCard from "../components/EventCard.jsx";
 import { FaInstagram } from "react-icons/fa";
 import { RiTwitterXFill } from "react-icons/ri";
 import { FaLinkedin } from "react-icons/fa";
-import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 import DummyEventCard from "../components/DummyEventCard.jsx";
 
 function ClubProfile() {

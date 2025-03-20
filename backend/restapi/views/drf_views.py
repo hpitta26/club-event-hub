@@ -3,24 +3,29 @@ _summary_
 """
 
 from rest_framework import generics
-from restapi.models import Event, Student, Club
-from restapi.serializers import EventSerializer, StudentSerializer, ClubSerializer
-from rest_framework.parsers import MultiPartParser, FormParser
+from ..models import Event, Student, Club
+from ..serializers import EventSerializer, StudentSerializer, ClubSerializer
+from restapi.permissions import ClubPermission, Admin, StudentPermission
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import user_passes_test
 
 
 # List all events or create a new event
 class EventListCreateView(generics.ListCreateAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+    permission_classes = [ClubPermission] # EXAMPLE OF HOW TO LIMIT PERMISSIONS
+
+    @method_decorator(user_passes_test(lambda u: ClubPermission(u) or Admin(u)), name='dispatch') # ANOTHER EXAMPLE OF HOW TO LIMIT PERMISSIONS
+    def create(self, request, *args, **kwargs):
+        request.data['club'] = request.session['id']
+        print(request.data)
+        return super().create(request, *args, **kwargs)
 
 # Retrieve, update, or delete a single event
 class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-
-
-
-
 
 # List all clubs or create a new club
 class ClubListCreateView(generics.ListCreateAPIView):
@@ -39,15 +44,6 @@ class ClubDetailBySlugView(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'slug'
     #Added these fields for parsing
     parser_classes = [MultiPartParser, FormParser]
-
-
-
-
-
-# List all clubs or create a new student
-class StudentListCreateView(generics.ListCreateAPIView):
-    queryset = Student.objects.all()
-    serializer_class = StudentSerializer
 
 # Retrieve, update, or delete a single student
 class StudentDetailView(generics.RetrieveUpdateDestroyAPIView):

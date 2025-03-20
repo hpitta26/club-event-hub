@@ -1,9 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import Student, CustomUser, Club
 from django.utils import timezone
-
-
+from restapi.models import Student, CustomUser, Club
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
@@ -54,7 +52,6 @@ class StudentCreationForm(CustomUserCreationForm):
         user = super().save(commit=False)
 
         user.email = self.cleaned_data["email"]
-        user.role = CustomUser.STUDENT
 
         if commit:
             user.save()
@@ -66,6 +63,7 @@ class StudentCreationForm(CustomUserCreationForm):
                 major=self.cleaned_data.get('major'),
                 graduation_year=self.cleaned_data.get('graduation_year')
             )
+
         return user
 
 
@@ -79,8 +77,6 @@ class ClubCreationForm(CustomUserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-
-        user.role = CustomUser.CLUB
 
         if commit:
             user.save()

@@ -14,12 +14,12 @@ function Login() {
     { name: "password", type: "password", label: "Password" },
   ];
   const { Login } = useContext(UserContext);
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setErrors("");
 
     try {
       const response = await backend.post("/login/", formData);
@@ -37,12 +37,16 @@ function Login() {
           navigate("/analytics");
         }
 	    } else {
-        setError(response.message);
+        setErrors(response.data);
       }
     } catch (err) {
       console.error("Login error:", err.response ? err.response.data.error : err.message);
-      setError("Login failed. Please try again.");
+      let loginErrors = {}
+        loginErrors.email="Email or password is incorrect";
+        loginErrors.password="Email or password is incorrect";
+        setErrors(loginErrors);
     }
+
   };
 
   const handleChange = (e) => {
@@ -56,6 +60,7 @@ function Login() {
         subtitle="University Events at a Glance"
         fields={fields}
         formData={formData}
+        errors={errors}
         handleChange={handleChange}
         onSubmit={handleSubmit}
       >

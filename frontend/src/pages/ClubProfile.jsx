@@ -1,12 +1,13 @@
 import dummyInitLogo from "../assets/dummyInitLogo.png";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import backend from "../components/backend.jsx";
 import EventCard from "../components/EventCard.jsx";
 import { FaInstagram } from "react-icons/fa";
 import { RiTwitterXFill } from "react-icons/ri";
 import { FaLinkedin } from "react-icons/fa";
 import DummyEventCard from "../components/DummyEventCard.jsx";
+import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 
 
 function ClubProfile () {
@@ -16,18 +17,33 @@ function ClubProfile () {
     const slug = useParams();
     const navigate = useNavigate();
 
+    const [events, setEvents] = useState({});
+    const [weekEvents,setWeekEvents] = useState({})
+
     useEffect(()=> {
         backend
             //useParams() extracts the URL parameter as an object so slug.clubSlug gets the clubSlug field of the object
             .get(`/clubs/slug/${slug.clubSlug}/`)
             .then((response) => {
                 setClub(response.data);
+                getEvents(response.data);
                 setLoading(false);
-        })
+            })
             .catch(() => {
             navigate('/*');
         })
     },[slug])
+
+    function getEvents (data) {
+        backend.get(`/clubs/${data.user_id}/events/`)
+            .then((response)=>{
+                setEvents(response.data)
+            })
+        backend.get(`/clubs/${data.user_id}/weeklyevents/`)
+            .then((response)=>{
+                setWeekEvents(response.data)
+            })
+    }
 
     if(loading) {
         return (
@@ -76,12 +92,18 @@ function ClubProfile () {
                 </div>
                 <div className="flex gap-4 overflow-x-auto whitespace-nowrap no-scrollbar">
                     <div className="inline-flex gap-4 m-2">
-                        <DummyEventCard/>
-                        <DummyEventCard/>
-                        <DummyEventCard/>
-                        <DummyEventCard/>
-                        <DummyEventCard/>
-                        <DummyEventCard/>
+                        {weekEvents.map((weekevent)=>(
+                        <EventCard
+                            title={weekevent.title}
+                            date= {weekevent.start_time}
+                            host={weekevent.club.club_name}
+                            location={weekevent.location}
+                            attendees={weekevent.rsvps.length}
+                            capacity={weekevent.capacity}
+                            coverImage={dummyEventCardCover}
+                            hostLogo={dummyInitLogo}
+                        />
+                        ))}
                     </div>
                 </div>
                 <div className="flex items-end justify-between">
@@ -94,12 +116,18 @@ function ClubProfile () {
                 </div>
                 <div className="flex gap-4 overflow-x-auto whitespace-nowrap no-scrollbar">
                     <div className="inline-flex gap-4 m-2">
-                        <DummyEventCard/>
-                        <DummyEventCard/>
-                        <DummyEventCard/>
-                        <DummyEventCard/>
-                        <DummyEventCard/>
-                        <DummyEventCard/>
+                        {events.map((event)=>(
+                        <EventCard
+                            title={event.title}
+                            date= {event.start_time}
+                            host={event.club.club_name}
+                            location={event.location}
+                            attendees={event.rsvps.length}
+                            capacity={event.capacity}
+                            coverImage={dummyEventCardCover}
+                            hostLogo={dummyInitLogo}
+                        />
+                        ))}
                     </div>
                 </div>
             </div>

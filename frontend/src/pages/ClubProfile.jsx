@@ -6,7 +6,6 @@ import EventCard from "../components/EventCard.jsx";
 import { FaInstagram } from "react-icons/fa";
 import { RiTwitterXFill } from "react-icons/ri";
 import { FaLinkedin } from "react-icons/fa";
-import DummyEventCard from "../components/DummyEventCard.jsx";
 import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 
 
@@ -45,6 +44,9 @@ function ClubProfile () {
             })
     }
 
+    function handleFollow (clubId) {
+        backend.patch(`/follow-club/${clubId}/`)
+    }
     if(loading) {
         return (
             <section className='min-h-screen bg-stone-900 flex justify-center items-center pt-10'>
@@ -61,7 +63,7 @@ function ClubProfile () {
                     <img src={dummyInitLogo} alt="dummy picture" className="rounded-full h-32 -mt-32"/>
                     <button 
                         className="bg-blue-600 text-white hover:bg-blue-500 rounded-md max-w-md h-10 w-2/12"
-                        onClick={() => console.log("clicked")}
+                        onClick={() =>handleFollow(club.user_id)}
                     >
                         Follow
                     </button>

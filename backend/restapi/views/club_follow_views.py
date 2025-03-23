@@ -36,3 +36,21 @@ def unfollow_club(request, pk):
         return Response({'status': 'error', 'message': 'User is not a student'}, status=404)
     except Club.DoesNotExist:
         return Response({'status': 'error', 'message': 'Club not found'}, status=404)
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+@csrf_protect
+def follow_club(request,pk):
+    try:
+        student = Student.objects.get(user=request.user)
+        club = Club.objects.get(user_id=pk)
+
+        if club not in student.following_clubs.all():
+            student.following_clubs.add(club)
+            return Response({'status': 'success', 'message': f'Followed {club.club_name}'})
+        else:
+            return Response({'status': 'error', 'message': 'Already following this club'}, status=400)
+    except Club.DoesNotExist:
+        return Response({'status': 'error', 'message': 'Club not found'}, status=404)
+    except Student.DoesNotExist:
+        return Response({'status': 'error', 'message': 'User is not a student'}, status=404)

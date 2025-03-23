@@ -19,7 +19,8 @@ urlpatterns = [
 
     path('following-clubs/', club_follow_views.get_following_clubs, name='following-clubs'),
     path('unfollow-club/<int:pk>/', club_follow_views.unfollow_club, name='unfollow-club'),
-    
+    path('follow-club/<int:pk>/',club_follow_views.follow_club, name='follow-club'),
+
     path('get-week-events/', discover_view.get_events_this_week, name='get-week-events'),
 
     path('clubs/<int:pk>/events/', club_profile_views.get_club_events, name='club-events'),

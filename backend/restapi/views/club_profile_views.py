@@ -12,7 +12,8 @@ def get_club_events(request,pk):
 
     try:
         club = Club.objects.get(pk=pk)
-        events = Event.objects.filter(club=club)
+        now = timezone.now()
+        events = Event.objects.filter(club=club,start_time__gte=now)
         club_events = EventSerializer(events, many=True)
         return Response(club_events.data)
     except Club.DoesNotExist:

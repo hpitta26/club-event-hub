@@ -18,6 +18,7 @@ function ClubProfile () {
 
     const [events, setEvents] = useState([]);
     const [weekEvents,setWeekEvents] = useState([])
+    const[userFollowing,setUserFollowing] = useState(false)
 
     useEffect(()=> {
         backend
@@ -42,11 +43,24 @@ function ClubProfile () {
             .then((response)=>{
                 setWeekEvents(response.data)
             })
+        backend.get(`/check-user-following/${data.user_id}/`)
+            .then((response)=>{
+                setUserFollowing(response.data);
+                console.log(response.data)
+            })
+
     }
 
     function handleFollow (clubId) {
         backend.patch(`/follow-club/${clubId}/`)
+        setUserFollowing(true);
     }
+
+    function handleUnfollow (clubId) {
+        backend.delete(`/unfollow-club/${clubId}/`)
+        setUserFollowing(false)
+    }
+
     if(loading) {
         return (
             <section className='min-h-screen bg-stone-900 flex justify-center items-center pt-10'>
@@ -61,18 +75,22 @@ function ClubProfile () {
             <div className="w-full space-y-5 p-6 max-w-[860px]">
                 <div className="flex items-end justify-between">
                     <img src={dummyInitLogo} alt="dummy picture" className="rounded-full h-32 -mt-32"/>
-                    <button 
-                        className="bg-blue-600 text-white hover:bg-blue-500 rounded-md max-w-md h-10 w-2/12"
-                        onClick={() =>handleFollow(club.user_id)}
-                    >
-                        Follow
-                    </button>
-                </div>
-                <div className="flex flex-col w-3/4">
-                    <h1 className="font-inter text-white font-bold text-[42px]">{club.club_name}</h1>
-                    <p className="font-inter text-gray-400 font-semibold mt-1">{club.description}</p>
-                </div>
-                <div>
+                    {userFollowing
+                        ?
+                        <button className="bg-red-600 text-white hover:bg-red-500 rounded-md max-w-md h-10 w-2/12"
+                            onClick={() => handleUnfollow(club.user_id)}
+                        >Unfollow</button>
+                        :
+                        <button className="bg-blue-600 text-white hover:bg-blue-500 rounded-md max-w-md h-10 w-2/12"
+                            onClick={() => handleFollow(club.user_id)}
+                        >Follow</button>
+                    }
+                        </div>
+                        <div className="flex flex-col w-3/4">
+                        <h1 className="font-inter text-white font-bold text-[42px]">{club.club_name}</h1>
+                <p className="font-inter text-gray-400 font-semibold mt-1">{club.description}</p>
+            </div>
+            <div>
                     <button onClick={() => console.log("Instagram")}>
                         <FaInstagram className="text-gray-400 size-6 hover:text-gray-200 mr-2"/>
                     </button>

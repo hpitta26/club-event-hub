@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_protect
 def get_following_clubs(request):
     try:
         student = Student.objects.get(user=request.user)
-        following_clubs = student.following_clubs.all() 
+        following_clubs = student.following_clubs.all()
         serialized_clubs = ClubSerializer(following_clubs, many=True).data
 
         return Response({'status': 'success', 'data': serialized_clubs})
@@ -24,14 +24,14 @@ def get_following_clubs(request):
 def unfollow_club(request, pk):
     try:
         student = Student.objects.get(user=request.user)
-        club = Club.objects.get(id=pk)
+        club = Club.objects.get(user_id=pk)
 
         if club in student.following_clubs.all():
             student.following_clubs.remove(club)
             return Response({'status': 'success', 'message': f'Unfollowed {club.club_name}'})
         else:
             return Response({'status': 'error', 'message': 'Not following this club'}, status=400)
-    
+
     except Student.DoesNotExist:
         return Response({'status': 'error', 'message': 'User is not a student'}, status=404)
     except Club.DoesNotExist:
@@ -54,3 +54,19 @@ def follow_club(request,pk):
         return Response({'status': 'error', 'message': 'Club not found'}, status=404)
     except Student.DoesNotExist:
         return Response({'status': 'error', 'message': 'User is not a student'}, status=404)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def check_if_user_is_following(request,pk):
+    try:
+        student = Student.objects.get(user=request.user)
+        club = Club.objects.get(user_id=pk)
+        if club in student.following_clubs.all():
+            return Response(True)
+        else:
+            return Response(False)
+
+    except Student.DoesNotExist:
+        return
+    except Club.DoesNotExist:
+        return False

@@ -17,8 +17,8 @@ function ClubProfile () {
     const slug = useParams();
     const navigate = useNavigate();
 
-    const [events, setEvents] = useState({});
-    const [weekEvents,setWeekEvents] = useState({})
+    const [events, setEvents] = useState([]);
+    const [weekEvents,setWeekEvents] = useState([])
 
     useEffect(()=> {
         backend

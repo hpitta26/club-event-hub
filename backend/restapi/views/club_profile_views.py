@@ -1,25 +1,31 @@
 from datetime import timedelta
 from django.utils import timezone
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
-from rest_framework import generics
-from rest_framework.decorators import api_view, permission_classes
 
 from ..serializers import EventSerializer
-from ..models import Event
+from ..models import Club,Event
 
-class ClubEventsView(generics.ListAPIView):
-    serializer_class = EventSerializer
+@api_view(["GET"])
+def get_club_events(request,pk):
 
-    def get_queryset(self):
-        club_id = self.kwargs['pk']
-        return Event.objects.filter(club__user_id=club_id)
+    try:
+        club = Club.objects.get(pk=pk)
+        events = Event.objects.filter(club=club)
+        club_events = EventSerializer(events, many=True)
+        return Response(club_events.data)
+    except Club.DoesNotExist:
+        return Response({"status":"error", "message":"Club does not exist"},status=404)
 
-class ClubWeekEventsView(generics.ListAPIView):
-    serializer_class = EventSerializer
-
-    def get_queryset(self):
-        club_id = self.kwargs['pk']
+@api_view(["GET"])
+def get_weekly_club_events (request,pk):
+    try:
+        club = Club.objects.get(pk=pk)
         now = timezone.now()
-        time_diff = now + timedelta(days=7)
-
-        return Event.objects.filter(club__user_id=club_id,start_time__gte=now,start_time__lte=time_diff)
+        time_diff = now + timedelta(weeks=1)
+        events = Event.objects.filter(club=club, start_time__gte=now, start_time__lte=time_diff)
+        week_club_events = EventSerializer(events, many=True)
+        return Response(week_club_events.data)
+    except Club.DoesNotExist:
+        return Response({"status":"error", "message":"Club does not exist"},status=404)

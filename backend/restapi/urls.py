@@ -22,7 +22,7 @@ urlpatterns = [
     
     path('get-week-events/', discover_view.get_events_this_week, name='get-week-events'),
 
-    path('clubs/<int:pk>/events/', club_profile_views.ClubEventsView.as_view(), name='club-events'),
-    path('clubs/<int:pk>/weeklyevents/', club_profile_views.ClubWeekEventsView.as_view(), name='club-events'),
+    path('clubs/<int:pk>/events/', club_profile_views.get_club_events, name='club-events'),
+    path('clubs/<int:pk>/weeklyevents/', club_profile_views.get_weekly_club_events, name='weekly-club-events'),
 
 ]

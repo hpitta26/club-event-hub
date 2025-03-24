@@ -2,11 +2,11 @@ import dummyInitLogo from "../assets/dummyInitLogo.png";
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import backend from "../components/backend.jsx";
-import EventCard from "../components/EventCard.jsx";
 import { FaInstagram } from "react-icons/fa";
 import { RiTwitterXFill } from "react-icons/ri";
 import { FaLinkedin } from "react-icons/fa";
 import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
+import ClubCard from "../components/discover/ClubCard.jsx";
 
 
 function ClubProfile () {
@@ -113,7 +113,7 @@ function ClubProfile () {
                 <div className="flex gap-4 overflow-x-auto whitespace-nowrap no-scrollbar">
                     <div className="inline-flex gap-4 m-2">
                         {weekEvents.map((weekevent)=>(
-                        <EventCard
+                        <ClubCard
                             title={weekevent.title}
                             date= {weekevent.start_time}
                             host={weekevent.club.club_name}
@@ -137,7 +137,7 @@ function ClubProfile () {
                 <div className="flex gap-4 overflow-x-auto whitespace-nowrap no-scrollbar">
                     <div className="inline-flex gap-4 m-2">
                         {events.map((event)=>(
-                        <EventCard
+                        <ClubCard
                             title={event.title}
                             date= {event.start_time}
                             host={event.club.club_name}

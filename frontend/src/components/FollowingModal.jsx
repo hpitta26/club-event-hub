@@ -14,8 +14,8 @@ function FollowingModal({ isOpen, onClose }) {
       .catch((error) => console.log(error));
   };
 
-  const visitClubPage = (clubPK) => {
-    window.location.href = `/club/${clubPK}`;
+  const visitClubPage = (clubSlug) => {
+    window.location.href = `/club/${clubSlug}/`;
     onClose();
   };
 
@@ -93,9 +93,9 @@ function FollowingModal({ isOpen, onClose }) {
               )
               .map((club) => (
                 <div
-                  key={club.id}
+                  key={club.user_id}
                   className="flex items-center justify-between px-4 py-3 border-b border-stone-700 hover:bg-stone-800 transition-all duration-300 ease-out transform"
-                  onClick={() => visitClubPage(club.id)}
+                  onClick={() => visitClubPage(club.slug)}
                 >
                   <div className="flex items-center space-x-3">
                     <span className="font-medium">{club.club_name}</span>
@@ -104,7 +104,7 @@ function FollowingModal({ isOpen, onClose }) {
                     className="bg-red-600 hover:bg-red-500 transition-all duration-300 ease-out transform"
                     onClick={(e) => {
                       e.stopPropagation();
-                      unfollowClub(club.id);
+                      unfollowClub(club.user_id);
                     }}
                   >
                     Unfollow

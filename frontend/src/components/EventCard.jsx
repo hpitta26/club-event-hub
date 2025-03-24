@@ -1,4 +1,3 @@
-import React from "react";
 import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
 import { FaLocationDot } from "react-icons/fa6";

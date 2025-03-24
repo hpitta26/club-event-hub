@@ -26,14 +26,9 @@ export const EnsureLoggedIn = ({ expRole = "CheckLoggedIn" }) => {
         }
     };
 
->>>>>>> 40b5349 (added protected routes for clubs and students, and made populate command)
     return <Outlet />;
 };
 
 EnsureLoggedIn.propTypes = {
-<<<<<<< HEAD
     role: PropTypes.oneOf(["CLUB", "STUDENT", "CheckLoggedIn", "NotLoggedIn"]),
-=======
-    role: PropTypes.oneOf(["CLUB", "STUDENT", "CheckLoggedIn"]),
->>>>>>> 40b5349 (added protected routes for clubs and students, and made populate command)
 };

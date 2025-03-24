@@ -1,17 +1,9 @@
 from django.core.management.base import BaseCommand
-from django.core.management.base import BaseCommand
-from django.core.management.base import BaseCommand
 from restapi.models import Student, Club, Event, CustomUser
-import datetime
-from django.utils import timezone
-import datetime
-from django.utils import timezone
 import datetime
 from django.utils import timezone
 
 class Command(BaseCommand):
-    help = 'Populates DB with data'
-    help = 'Populates DB with data'
     help = 'Populates DB with data'
     
     def club_helper(self, club_obj):

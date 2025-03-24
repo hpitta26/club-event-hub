@@ -50,9 +50,6 @@ def verify_session(request):
         user = request.user
 
         if user.is_authenticated:
-        user = request.user
-
-        if user.is_authenticated:
             return Response(
                 {"user": {"role": request.session['role']}},
                 status=200

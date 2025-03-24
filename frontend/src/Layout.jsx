@@ -1,19 +1,19 @@
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Landing from './pages/Landing.jsx';
+import Discover from "./pages/Discover.jsx";
+import NotFound from './pages/NotFound.jsx';
+
 import NavbarSelector from "./components/navbars/NavbarSelector.jsx";
 import { UserProvider } from "./context/UserContext.jsx";
-import CreateEvent from "./pages/CreateEvent.jsx";
-import Discover from "./pages/Discover.jsx";
-import Landing from './pages/Landing.jsx';
-import NotFound from './pages/NotFound.jsx';
 
 import Logout from './pages/authentication/Logout.jsx';
 import ClubSignup from './pages/authentication/ClubSignup.jsx';
 import Login from "./pages/authentication/Login.jsx";
-import Logout from './pages/authentication/Logout.jsx';
-import ClubRegister from './pages/authentication/ClubRegister.jsx';
-import Login from "./pages/authentication/Login.jsx";
+
 import StudentSignup from "./pages/authentication/StudentSignup.jsx";
 import VerifyEmail from "./pages/authentication/VerifyEmail.jsx";
+
+import { EnsureLoggedIn } from "./pages/authorization/EnsureLoggedIn.jsx";
 
 import { EnsureLoggedIn } from "./pages/authorization/EnsureLoggedIn.jsx";
 

@@ -26,5 +26,4 @@ urlpatterns = [
 
     path('clubs/<int:pk>/events/', club_profile_views.get_club_events, name='club-events'),
     path('clubs/<int:pk>/weeklyevents/', club_profile_views.get_weekly_club_events, name='weekly-club-events'),
-
 ]

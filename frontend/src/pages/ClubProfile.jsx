@@ -75,8 +75,7 @@ function ClubProfile () {
             <div className="w-full space-y-5 p-6 max-w-[860px]">
                 <div className="flex items-end justify-between">
                     <img src={dummyInitLogo} alt="dummy picture" className="rounded-full h-32 -mt-32"/>
-                    {userFollowing
-                        ?
+                    {userFollowing ?
                         <button className="bg-red-600 text-white hover:bg-red-500 rounded-md max-w-md h-10 w-2/12"
                             onClick={() => handleUnfollow(club.user_id)}
                         >Unfollow</button>

@@ -80,7 +80,7 @@ function ClubEvents() {
             ))}
           </div>
 
-          <div className="flex-grow">
+          <div className="flex-grow items-center">
             {Object.entries(groupedEvents).map(([date, { dayName, events }], index) => (
               <div key={index} className="mb-6">
                 <div className="mb-4">

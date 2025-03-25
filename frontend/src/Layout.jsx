@@ -24,6 +24,9 @@ import Analytics from "./pages/Analytics.jsx";
 import ClubEvents from "./pages/ClubEvents.jsx";
 import StudentSettings from "./pages/StudentSettings.jsx";
 
+import NewDiscover from "./pages/NewDiscover.jsx";
+import NewFollowing from "./pages/NewFollowing.jsx";
+
 function App() {
   return (
     <UserProvider>
@@ -32,7 +35,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/temp" element={<TempPage />} />
-          <Route path="/discover" element={<Discover />} />
+          {/* <Route path="/discover" element={<Discover />} /> */}
+          <Route path="/discover" element={<NewDiscover />} />
           <Route path="/club/:clubSlug" element={<ClubProfile />} />
           {/* Protected --> makes sure users that are logged in can't visit register page */}
           <Route element={<EnsureLoggedIn expRole="NotLoggedIn" />}>
@@ -43,7 +47,8 @@ function App() {
           </Route>
           {/* Protected --> can only be accessed by people with role STUDENT */}
           <Route element={<EnsureLoggedIn expRole="STUDENT" />}> 
-            <Route path="/following" element={<FollowingClubs/>} />
+            {/* <Route path="/following" element={<FollowingClubs/>} /> */}
+            <Route path="/following" element={<NewFollowing />} />
             <Route path="/student-settings" element={<StudentSettings />}/>
           </Route>
           {/* Protected --> can only be accessed by people with role CLUB */}

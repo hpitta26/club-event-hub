@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import LoggedOutNavbar from './LoggedOutNavbar';
 import StudentNavbar from './StudentNavbar.jsx';
+import NewStudentNavbar from './NewStudentNavbar';
 import ClubNavbar from './ClubNavbar';
 import { UserContext } from '../../context/UserContext.jsx';
 
@@ -12,7 +13,8 @@ const NavbarSelector = () => {
     return <LoggedOutNavbar />;  
   } else if (userContext['role'].includes('STUDENT')) {
     console.log(`navbar rendering --> ${JSON.stringify(userContext)}`);
-    return <StudentNavbar />;
+    return <NewStudentNavbar />;
+    // return <StudentNavbar />;
   } else if (userContext['role'].includes('CLUB')) {
     console.log(`navbar rendering --> ${JSON.stringify(userContext)}`);
     return <ClubNavbar />;

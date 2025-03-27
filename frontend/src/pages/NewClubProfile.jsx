@@ -151,36 +151,40 @@ function NewClubProfile() {
           <h5 className="text-black">This Week</h5>
         </div>
         <div className="flex gap-4 overflow-x-auto whitespace-nowrap no-scrollbar">
-          <div className="inline-flex gap-4 m-2">
-            {weeklyEvents.map((weeklyEvent)=>(
-              <ClubProfileCard
-                  title={weeklyEvent.title}
-                  date={weeklyEvent.start_time}
-                  host={weeklyEvent.club.club_name}
-                  location={weeklyEvent.location}
-                  attendees={weeklyEvent.rsvps.length}
-                  capacity={weeklyEvent.capacity}
-              />
-            ))}
+          <div className="inline-flex gap-4 m-2 w-full">
+              {weeklyEvents.length > 1 ?
+                  weeklyEvents.map((weeklyEvent) => (
+                      <ClubProfileCard
+                          title={weeklyEvent.title}
+                          date={weeklyEvent.start_time}
+                          host={weeklyEvent.club.club_name}
+                          location={weeklyEvent.location}
+                          attendees={weeklyEvent.rsvps.length}
+                          capacity={weeklyEvent.capacity}
+                      />
+                  ))
+                  : <p className="flex justify-center items-center text-gray-500 col-span-full w-full">No events available.</p>
+              }
           </div>
         </div>
-        <div className="flex items-end justify-between">
-          <div className="mx-2 mt-4">
+          <div className="flex items-end justify-between">
+              <div className="mx-2 mt-4">
             <h5 className="text-black">Upcoming</h5>
           </div>
         </div>
         <div className="flex gap-4 overflow-x-auto whitespace-nowrap no-scrollbar">
           <div className="inline-flex gap-4 m-2">
-            {events.map((event)=>(
-              <ClubProfileCard
-                  title={event.title}
-                  date={event.start_time}
-                  host={event.club.club_name}
-                  location={event.location}
-                  attendees={event.rsvps.length}
-                  capacity={event.capacity}
-              />
-            ))}
+              {events.length > 1 ?
+                  events.map((event) => (
+                      <ClubProfileCard
+                          title={event.title}
+                          date={event.start_time}
+                          host={event.club.club_name}
+                          location={event.location}
+                          attendees={event.rsvps.length}
+                          capacity={event.capacity}
+                      />))
+                  : <p className="flex justify-center items-center text-gray-500 col-span-full w-full">No events available.</p>}
           </div>
         </div>
       </div>

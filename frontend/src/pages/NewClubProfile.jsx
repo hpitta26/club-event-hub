@@ -10,6 +10,8 @@ import NewEventCard from "../components/NewEventCard.jsx";
 function NewClubProfile() {
   const [club, setClub] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isFollowing, setIsFollowing] = useState(false);
+
   const slug = useParams();
   const navigate = useNavigate();
 
@@ -18,6 +20,7 @@ function NewClubProfile() {
       .get(`/clubs/slug/${slug.clubSlug}/`)
       .then((response) => {
         setClub(response.data);
+        setPageData(response.data)
         setLoading(false);
       })
       .catch(() => {
@@ -25,6 +28,23 @@ function NewClubProfile() {
       });
   }, [slug]);
 
+  function setPageData(data){
+        backend.get(`/check-user-following/${data.user_id}/`)
+            .then((followingData)=>{
+                setIsFollowing(followingData.data);
+                console.log(isFollowing);
+            })
+    }
+
+    function handleFollow(clubID){
+        backend.patch(`/follow-club/${clubID}/`);
+        setIsFollowing(true);
+    }
+
+    function handleUnfollow(clubID){
+        backend.delete(`/unfollow-club/${clubID}/`);
+        setIsFollowing(false);
+    }
   if (loading) {
     return (
       <section className="min-h-screen flex justify-center items-center pt-10">
@@ -55,15 +75,27 @@ function NewClubProfile() {
           />
         </div>
 
-        {/* Follow Button */}
+        {!isFollowing ?
+        /* Follow Button */
         <div className="absolute top-[205px] right-5">
           <button
             className="flex items-center justify-center w-[78px] h-[32px] bg-[#FD4DB7] text-black text-[16px] font-['Pramukh Rounded'] border-[1.5px] border-black rounded-[4px] hover:bg-pink-400"
-            onClick={() => console.log("Follow clicked")}
+            onClick={() => handleFollow(club.user_id)}
           >
             Follow
           </button>
         </div>
+            : 
+        /* Unfollow Button */
+        <div className="absolute top-[205px] right-5">
+          <button
+            className="flex items-center justify-center w-[78px] h-[32px] bg-blue-500 text-black text-[16px] font-['Pramukh Rounded'] border-[1.5px] border-black rounded-[4px] hover:bg-blue-400"
+            onClick={() => handleUnfollow(club.user_id)}
+          >
+            Unfollow
+          </button>
+        </div>
+        }
       </div>
 
       {/* Club Info */}

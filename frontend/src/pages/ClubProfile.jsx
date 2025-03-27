@@ -2,7 +2,6 @@ import dummyInitLogo from "../assets/dummyInitLogo.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import backend from "../components/backend.jsx";
-import EventCard from "../components/EventCard.jsx";
 import { FaInstagram } from "react-icons/fa";
 import { RiTwitterXFill } from "react-icons/ri";
 import { FaLinkedin } from "react-icons/fa";
@@ -16,12 +15,15 @@ function ClubProfile () {
     const slug = useParams();
     const navigate = useNavigate();
 
+    const [isFollowing, setIsFollowing] = useState(false);
+
     useEffect(()=> {
         backend
             //useParams() extracts the URL parameter as an object so slug.clubSlug gets the clubSlug field of the object
             .get(`/clubs/slug/${slug.clubSlug}/`)
             .then((response) => {
                 setClub(response.data);
+                setPageData(response.data)
                 setLoading(false);
         })
             .catch(() => {
@@ -29,6 +31,18 @@ function ClubProfile () {
         })
     },[slug])
 
+    function setPageData(data){
+        backend.get(`/check-user-following/${data.user_id}/`)
+            .then((followingData)=>{
+                setIsFollowing(followingData.data)
+                console.log(isFollowing);
+            })
+    }
+
+    function handleFollow(clubID){
+        backend.patch(`/follow-club/${clubID}/`)
+        setIsFollowing(true);
+    }
     if(loading) {
         return (
             <section className='min-h-screen bg-stone-900 flex justify-center items-center pt-10'>
@@ -45,7 +59,7 @@ function ClubProfile () {
                     <img src={dummyInitLogo} alt="dummy picture" className="rounded-full h-32 -mt-32"/>
                     <button 
                         className="bg-blue-600 text-white hover:bg-blue-500 rounded-md max-w-md h-10 w-2/12"
-                        onClick={() => console.log("clicked")}
+                        onClick={() => handleFollow()}
                     >
                         Follow
                     </button>

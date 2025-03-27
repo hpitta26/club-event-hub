@@ -38,7 +38,7 @@ function App() {
           <Route path="/temp" element={<TempPage />} />
           {/* <Route path="/discover" element={<Discover />} /> */}
           <Route path="/discover" element={<NewDiscover />} />
-          <Route path="/clubold/:clubSlug" element={<ClubProfile />} />
+          {/* <Route path="/club/:clubSlug" element={<ClubProfile />} /> */}
           <Route path="/club/:clubSlug" element={<NewClubProfile />} />
           {/* Protected --> makes sure users that are logged in can't visit register page */}
           <Route element={<EnsureLoggedIn expRole="NotLoggedIn" />}>

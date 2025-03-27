@@ -26,6 +26,7 @@ import StudentSettings from "./pages/StudentSettings.jsx";
 
 import NewDiscover from "./pages/NewDiscover.jsx";
 import NewFollowing from "./pages/NewFollowing.jsx";
+import NewClubProfile from "./pages/NewClubProfile.jsx";
 
 function App() {
   return (
@@ -37,7 +38,8 @@ function App() {
           <Route path="/temp" element={<TempPage />} />
           {/* <Route path="/discover" element={<Discover />} /> */}
           <Route path="/discover" element={<NewDiscover />} />
-          <Route path="/club/:clubSlug" element={<ClubProfile />} />
+          <Route path="/clubold/:clubSlug" element={<ClubProfile />} />
+          <Route path="/club/:clubSlug" element={<NewClubProfile />} />
           {/* Protected --> makes sure users that are logged in can't visit register page */}
           <Route element={<EnsureLoggedIn expRole="NotLoggedIn" />}>
             <Route path="/student-register" element={<StudentSignup />}/> {/* Student Signup */}

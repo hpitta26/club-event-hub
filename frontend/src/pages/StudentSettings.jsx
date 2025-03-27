@@ -113,7 +113,7 @@ function StudentSettings(){
         return <div>Loading... </div>
     }
     return(
-        <section className="min-h-screen bg-gray-200 flex flex-col justify-center items-center">
+        <section className="min-h-screen flex flex-col justify-center items-center">
             <div className="w-full space-y-5 p-6 max-w-[500px] ">
                 <div className="flex items-end">
                     <div>

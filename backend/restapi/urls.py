@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import drf_views, auth_views, club_follow_views, discover_view
+from .views import drf_views, auth_views, club_follow_views, discover_view,club_profile_views
 from django.views.decorators.http import require_http_methods
 
 urlpatterns = [
@@ -22,5 +22,8 @@ urlpatterns = [
     path('follow-club/<int:pk>/', club_follow_views.follow_club, name='follow-club'),
     path('check-user-following/<int:pk>/',club_follow_views.check_user_following, name='check-user-following'),
 
-    path('get-week-events/', discover_view.get_events_this_week, name='get-week-events')
+    path('get-week-events/', discover_view.get_events_this_week, name='get-week-events'),
+
+    path('get-club-events/<int:pk>/', club_profile_views.get_club_events, name='get-club-events'),
+    path('get-weekly-club-events/<int:pk>/', club_profile_views.get_weekly_club_events, name='get-weekly-club-events'),
 ]

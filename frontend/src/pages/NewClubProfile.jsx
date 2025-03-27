@@ -9,6 +9,9 @@ import NewEventCard from "../components/NewEventCard.jsx";
 
 function NewClubProfile() {
   const [club, setClub] = useState(null);
+  const [events, setEvents] = useState([])
+  const [weeklyEvents, setWeeklyEvents] = useState([])
+
   const [loading, setLoading] = useState(true);
   const [isFollowing, setIsFollowing] = useState(false);
 
@@ -29,11 +32,18 @@ function NewClubProfile() {
   }, [slug]);
 
   function setPageData(data){
-        backend.get(`/check-user-following/${data.user_id}/`)
-            .then((followingData)=>{
-                setIsFollowing(followingData.data);
-                console.log(isFollowing);
-            })
+    backend.get(`/get-club-events/${data.user_id}/`)
+        .then((eventData)=>{
+          setEvents(eventData.data);
+        })
+    backend.get(`/get-weekly-club-events/${data.user_id}/`)
+        .then((weeklyEventData)=>{
+          setWeeklyEvents(weeklyEventData.data);
+        })
+    backend.get(`/check-user-following/${data.user_id}/`)
+        .then((followingData)=>{
+          setIsFollowing(followingData.data);
+        })
     }
 
     function handleFollow(clubID){
@@ -85,7 +95,7 @@ function NewClubProfile() {
             Follow
           </button>
         </div>
-            : 
+            :
         /* Unfollow Button */
         <div className="absolute top-[205px] right-5">
           <button
@@ -142,11 +152,16 @@ function NewClubProfile() {
         </div>
         <div className="flex gap-4 overflow-x-auto whitespace-nowrap no-scrollbar">
           <div className="inline-flex gap-4 m-2">
-            <NewEventCard />
-            <NewEventCard />
-            <NewEventCard />
-            <NewEventCard />
-            <NewEventCard />
+            {weeklyEvents.map((weeklyEvent)=>(
+              <NewEventCard
+                  title={weeklyEvent.title}
+                  date={weeklyEvent.start_time}
+                  host={weeklyEvent.club.club_name}
+                  location={weeklyEvent.location}
+                  attendees={weeklyEvent.rsvps.length}
+                  capacity={weeklyEvent.capacity}
+              />
+            ))}
           </div>
         </div>
         <div className="flex items-end justify-between">
@@ -156,11 +171,16 @@ function NewClubProfile() {
         </div>
         <div className="flex gap-4 overflow-x-auto whitespace-nowrap no-scrollbar">
           <div className="inline-flex gap-4 m-2">
-            <NewEventCard />
-            <NewEventCard />
-            <NewEventCard />
-            <NewEventCard />
-            <NewEventCard />
+            {events.map((event)=>(
+              <NewEventCard
+                  title={event.title}
+                  date={event.start_time}
+                  host={event.club.club_name}
+                  location={event.location}
+                  attendees={event.rsvps.length}
+                  capacity={event.capacity}
+              />
+            ))}
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ import { HiOutlineGlobeAlt } from "react-icons/hi";
 import { RiTwitterXFill } from "react-icons/ri";
 import backend from "../components/backend.jsx";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
-import NewEventCard from "../components/NewEventCard.jsx";
+import ClubProfileCard from "../components/ClubProfileCard.jsx";
 
 function NewClubProfile() {
   const [club, setClub] = useState(null);
@@ -153,7 +153,7 @@ function NewClubProfile() {
         <div className="flex gap-4 overflow-x-auto whitespace-nowrap no-scrollbar">
           <div className="inline-flex gap-4 m-2">
             {weeklyEvents.map((weeklyEvent)=>(
-              <NewEventCard
+              <ClubProfileCard
                   title={weeklyEvent.title}
                   date={weeklyEvent.start_time}
                   host={weeklyEvent.club.club_name}
@@ -172,7 +172,7 @@ function NewClubProfile() {
         <div className="flex gap-4 overflow-x-auto whitespace-nowrap no-scrollbar">
           <div className="inline-flex gap-4 m-2">
             {events.map((event)=>(
-              <NewEventCard
+              <ClubProfileCard
                   title={event.title}
                   date={event.start_time}
                   host={event.club.club_name}

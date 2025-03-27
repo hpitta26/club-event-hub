@@ -17,11 +17,14 @@ const EventGrid = ({ events }) => {
               capacity={event.capacity}
               coverImage={event.coverImage}
               hostLogo={event.hostLogo}
+              id={event.id}
             />
           </div>
         ))
       ) : (
-        <p className="text-gray-500 col-span-full text-center">No events available.</p>
+        <p className="text-gray-500 col-span-full text-center">
+          No events available.
+        </p>
       )}
     </div>
   );

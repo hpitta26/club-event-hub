@@ -8,7 +8,7 @@ POST http://localhost:8000/restapi/events/
 Content-Type: application/json
 
 {
-  "club": 4,
+  "club": 2,
   "title": "Spring Festival",
   "description": "A festival to celebrate the arrival of spring.",
   "start_time": "2025-04-20T10:00:00Z",

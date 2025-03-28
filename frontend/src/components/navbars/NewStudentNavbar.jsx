@@ -153,11 +153,11 @@ const NewStudentNavbar = () => {
                   {/* Notifications */}
                   <button className="hidden md:block bg-[#4D9FFD] text-black p-2 rounded-md border-[1.5px] border-black hover:bg-blue-400">
                     <GoBell className="w-5 h-5" />
-                  </button>
+                   </button>
 
                   {/* Profile Icon */}
                   <div className="w-[50px] h-[50px] bg-white border-[1.5px] border-black rounded-full overflow-hidden cursor-pointer" onClick={toggleProfileDropdown}>
-                    <img src="some-profile-image.jpg" alt="Profile" className="w-full h-full object-cover"/>
+                    <img src="something" alt="Profile" className="w-full h-full object-cover"/>
                     {isProfileDropdownOpen && (
                       <div ref={profileDropdownRef} className="absolute right-5 mt-1 py-2 w-48 bg-white border-[1.5px] border-black rounded-md shadow-lg">
                         <a href="#" className="block px-4 py-2 text-sm text-black hover:bg-gray-100">

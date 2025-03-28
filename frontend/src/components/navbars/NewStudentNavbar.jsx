@@ -156,7 +156,7 @@ const NewStudentNavbar = () => {
                     {/* Profile Icon */}
                     <div className="w-[50px] h-[50px] bg-white border-[1.5px] border-black rounded-full overflow-hidden cursor-pointer">
                     <img
-                        src="https://via.placeholder.com/40" // Replace with actual profile image URL
+                        src="something" // Replace with actual profile image URL
                         alt="Profile"
                         className="w-full h-full object-cover"
                     />

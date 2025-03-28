@@ -5,7 +5,7 @@ import { HiOutlineGlobeAlt } from "react-icons/hi";
 import { RiTwitterXFill } from "react-icons/ri";
 import backend from "../components/backend.jsx";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
-import ClubProfileCard from "../components/ClubProfileCard.jsx";
+import NewEventCard from "../components/newEventCard.jsx";
 
 function NewClubProfile() {
   const [club, setClub] = useState(null);
@@ -31,13 +31,15 @@ function NewClubProfile() {
       });
   }, [slug]);
 
-  function setPageData(data){
+  function setPageData(data) {
     backend.get(`/get-club-events/${data.user_id}/`)
         .then((eventData)=>{
+          console.log(eventData.data)
           setEvents(eventData.data);
         })
     backend.get(`/get-weekly-club-events/${data.user_id}/`)
         .then((weeklyEventData)=>{
+          console.log(weeklyEventData.data)
           setWeeklyEvents(weeklyEventData.data);
         })
     backend.get(`/check-user-following/${data.user_id}/`)
@@ -107,7 +109,6 @@ function NewClubProfile() {
         </div>
         }
       </div>
-
       {/* Club Info */}
       <div className="w-full max-w-[860px] px-6 mt-6 space-y-4">
         {/* Club Name */}
@@ -115,13 +116,12 @@ function NewClubProfile() {
             <h1 className="font-inter text-black font-bold text-[42px] tracking-[0.04em]">{club.club_name}</h1>
             <p className="text-[16px] font-semibold text-[#535862] leading-[19px]">{club.description}</p>
         </div>
-
         {/* Followers and Following */}
         <div className="flex items-center space-x-[100px]">
           <p className="text-[16px] font-normal font-['Pramukh Rounded'] text-black leading-[19px]">
             {club.followers || 0} Followers
           </p>
-
+          {/* Social Media Links */}
           <div className="flex items-center space-x-3">
           <button onClick={() => window.open(club.instagram, "_blank")}>
             <FaInstagram className="text-[#535862] w-6 h-6 hover:text-gray-400" />
@@ -137,9 +137,6 @@ function NewClubProfile() {
           </button>
         </div>
         </div>
-
-        {/* Social Media Links */}
-        
       </div>
 
       {/* Bottom Section (Events) */}
@@ -151,20 +148,21 @@ function NewClubProfile() {
           <h5 className="text-black">This Week</h5>
         </div>
         <div className="flex gap-4 overflow-x-auto whitespace-nowrap no-scrollbar">
-          <div className="inline-flex gap-4 m-2 w-full">
-              {weeklyEvents.length > 1 ?
-                  weeklyEvents.map((weeklyEvent) => (
-                      <ClubProfileCard
-                          title={weeklyEvent.title}
-                          date={weeklyEvent.start_time}
-                          host={weeklyEvent.club.club_name}
-                          location={weeklyEvent.location}
-                          attendees={weeklyEvent.rsvps.length}
-                          capacity={weeklyEvent.capacity}
-                      />
-                  ))
-                  : <p className="flex justify-center items-center text-gray-500 col-span-full w-full">No events available.</p>
-              }
+          <div className="inline-flex gap-4 m-2">
+            {weeklyEvents.length > 0 ?
+              weeklyEvents.map((weeklyEvent) => (
+                <NewEventCard
+                  key={weeklyEvent.id}
+                  title={weeklyEvent.title}
+                  date={weeklyEvent.start_time}
+                  host={weeklyEvent.club.club_name}
+                  location={weeklyEvent.location}
+                  attendees={weeklyEvent.rsvps.length}
+                  capacity={weeklyEvent.capacity}
+                />
+              ))
+              : <p className="flex justify-center items-center text-gray-500 col-span-full w-full">No events available.</p>
+            }
           </div>
         </div>
           <div className="flex items-end justify-between">
@@ -174,17 +172,18 @@ function NewClubProfile() {
         </div>
         <div className="flex gap-4 overflow-x-auto whitespace-nowrap no-scrollbar">
           <div className="inline-flex gap-4 m-2">
-              {events.length > 1 ?
-                  events.map((event) => (
-                      <ClubProfileCard
-                          title={event.title}
-                          date={event.start_time}
-                          host={event.club.club_name}
-                          location={event.location}
-                          attendees={event.rsvps.length}
-                          capacity={event.capacity}
-                      />))
-                  : <p className="flex justify-center items-center text-gray-500 col-span-full w-full">No events available.</p>}
+            {events.length > 0 ?
+              events.map((event) => (
+                  <NewEventCard
+                    key={event.id}
+                    title={event.title}
+                    date={event.start_time}
+                    host={event.club.club_name}
+                    location={event.location}
+                    attendees={event.rsvps.length}
+                    capacity={event.capacity}
+                  />))
+            : <p className="flex justify-center items-center text-gray-500 col-span-full w-full">No events available.</p>}
           </div>
         </div>
       </div>

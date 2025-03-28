@@ -1,6 +1,6 @@
 import React from "react";
 import EventCard from "../EventCard";
-import NewEventCard from "../NewEventCard";
+import NewEventCard from "../newEventCard";
 
 const EventGrid = ({ events }) => {
   return (

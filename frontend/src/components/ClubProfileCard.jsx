@@ -1,11 +1,9 @@
 import React from "react";
 import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
-import { FaLocationDot } from "react-icons/fa6";
 import { GrLocation } from "react-icons/gr"
-import { IoMdPerson } from "react-icons/io";
 
-function NewEventCard({
+function ClubProfileCard({
   title = "Untitled Event",
   date = "TBD",
   host = "Unknown Host",
@@ -125,4 +123,4 @@ function NewEventCard({
   );
 }
 
-export default NewEventCard;
+export default ClubProfileCard;

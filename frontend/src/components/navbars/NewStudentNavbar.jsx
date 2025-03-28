@@ -153,7 +153,7 @@ const NewStudentNavbar = () => {
                   {/* Notifications */}
                   <button className="hidden md:block bg-[#4D9FFD] text-black p-2 rounded-md border-[1.5px] border-black hover:bg-blue-400">
                     <GoBell className="w-5 h-5" />
-                   </button>
+                  </button>
 
                   {/* Profile Icon */}
                   <div className="w-[50px] h-[50px] bg-white border-[1.5px] border-black rounded-full overflow-hidden cursor-pointer" onClick={toggleProfileDropdown}>

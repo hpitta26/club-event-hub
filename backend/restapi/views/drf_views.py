@@ -8,6 +8,8 @@ from ..serializers import EventSerializer, StudentSerializer, ClubSerializer
 from restapi.permissions import ClubPermission, Admin, StudentPermission
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
+from rest_framework.parsers import MultiPartParser, FormParser
+
 
 
 # List all events or create a new event
@@ -36,6 +38,8 @@ class ClubListCreateView(generics.ListCreateAPIView):
 class ClubDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Club.objects.all()
     serializer_class = ClubSerializer
+    parser_classes = [MultiPartParser, FormParser]
+
 
 #Retrieve, update, or delete a single club through Slug instead of PK
 class ClubDetailBySlugView(generics.RetrieveUpdateDestroyAPIView):

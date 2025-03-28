@@ -47,7 +47,7 @@ class ClubSerializer(serializers.ModelSerializer):
        model = Club
        # added profile picture and banner fields
        fields = [ # expose fields that will be sent in API calls
-           'id', 'slug', 'user', 'club_name', 'description', 'social_media_handles', 'spirit_rating', 'followers_count', 'events_count', 
+           'user_id', 'slug', 'user', 'club_name', 'description', 'social_media_handles', 'spirit_rating', 'followers_count', 'events_count', 
            'club_picture',
            'club_banner'
        ]
@@ -87,6 +87,10 @@ class ClubSerializer(serializers.ModelSerializer):
        # added these instances for pfp and profile banner
        instance.profile_picture = validated_data.get('club_picture', None)
        instance.profile_banner = validated_data.get('club_banner', None)
+
+       print(self.context['request'].FILES) 
+       print("Received data:", validated_data)
+
 
        instance.save() # saves updated instance to the DB
        return instance

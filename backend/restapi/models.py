@@ -46,11 +46,12 @@ class Club(models.Model):
 
     # NEED THIS FOR THE BANNER AND PFP, will neeed to add a media fodler for it
     club_picture = models.ImageField(
-         upload_to='club_profile/', blank =True
+         upload_to='club_pictures/', blank =True
     )
     club_banner = models.ImageField(
-        upload_to='club_banner/', blank =True
+        upload_to='club_banners/', blank =True
     )
+    
     club_name = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True, null=True)  # possibly change to required --> depending on form in the frontend
     slug = models.SlugField(unique=True, blank=True)

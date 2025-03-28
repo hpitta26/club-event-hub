@@ -6,9 +6,12 @@ import EventCard from "../components/EventCard.jsx";
 import { FaInstagram } from "react-icons/fa";
 import { RiTwitterXFill } from "react-icons/ri";
 import { FaLinkedin } from "react-icons/fa";
+import { UserContext } from "../context/UserContext.jsx";
 import DummyEventCard from "../components/DummyEventCard.jsx";
 
 function ClubProfile() {
+  // const userContext = useContext(UserContext);
+
   const [club, setClub] = useState(null);
   const [loading, setLoading] = useState(true);
   const slug = useParams();
@@ -35,7 +38,7 @@ function ClubProfile() {
     console.log("Model is opened");
   }
 
-  function closeModal(){
+  function closeModal() {
     setIsModalOpen(false);
     console.log("Model is opened");
   }
@@ -66,7 +69,7 @@ function ClubProfile() {
   const updateClubInfo = async (e) => {
     // e.preventDefault();
     try {
-      console.log(formData);
+      console.log("What the form looks like", formData);
       var updatedFormInfo = new FormData();
       updatedFormInfo.append("description", formData.description);
       updatedFormInfo.append(
@@ -75,25 +78,25 @@ function ClubProfile() {
       );
       if (formData.club_picture) {
         updatedFormInfo.append("club_picture", formData.club_picture);
-      }
-      if (formData.club_banner) {
-        updatedFormInfo.append("club_banner", formData.club_banner);
+      } else {
+        console.warn("club_picture is not a file:", formData.club_picture);
       }
 
-      // const requestBody = {
-      //   ...formData,
-      //   social_media_handles: JSON.stringify(formData.social_media_handles),
-      // };
+      if (formData.club_banner) {
+        updatedFormInfo.append("club_banner", formData.club_banner);
+      } else {
+        console.warn("club_picture is not a file:", formData.club_picture);
+      }
       const response = await backend.patch(
-        `clubs/slug/${slug.clubSlug}`,
+        `clubs/slug/${slug.clubSlug}/`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-      console.log("club was successfully update with ", updatedFormInfo);
-      console.log(JSON.stringify(response));
-      window.location.reload();
+      console.log("club was successfully update with ", formData);
+      // console.log(JSON.stringify(response));
+      // window.location.reload();
     } catch (error) {
       console.log(JSON.stringify(formData));
 

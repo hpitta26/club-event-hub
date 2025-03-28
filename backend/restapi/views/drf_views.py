@@ -2,6 +2,8 @@
 _summary_
 """
 
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import get_object_or_404
 from rest_framework import generics
 from ..models import Event, Student, Club
 from ..serializers import EventSerializer, StudentSerializer, ClubSerializer
@@ -47,3 +49,11 @@ class ClubDetailBySlugView(generics.RetrieveUpdateDestroyAPIView):
 class StudentDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        student_id = self.request.session.get('id')
+        if not student_id:
+            raise Exception("No student ID found in session.")
+        
+        return get_object_or_404(Student, user_id=student_id)

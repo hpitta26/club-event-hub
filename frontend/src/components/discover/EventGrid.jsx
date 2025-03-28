@@ -1,5 +1,6 @@
 import React from "react";
 import EventCard from "../EventCard";
+import NewEventCard from "../NewEventCard";
 
 const EventGrid = ({ events }) => {
   return (
@@ -7,7 +8,7 @@ const EventGrid = ({ events }) => {
       {events.length > 0 ? (
         events.map((event) => (
           <div key={event.id} className="flex">
-            <EventCard
+            <NewEventCard
               title={event.title}
               date={event.start_time}
               host={event.club.club_name}

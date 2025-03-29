@@ -97,6 +97,7 @@ class Student(models.Model):
     password_change_token = models.CharField(max_length=100, blank=True)
     password_change_pending = models.BooleanField(default=False)
     new_password_hash = models.CharField(max_length=128, blank=True)
+    profile_picture = models.ImageField(upload_to='student_profiles/', blank=True, null=True)
 
     # admin --> is an admin of a specfic club
 

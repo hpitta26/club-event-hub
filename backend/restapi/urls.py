@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import drf_views, auth_views, club_follow_views, discover_view,club_profile_views
+from .views import drf_views, auth_views, club_follow_views, discover_view,club_profile_views, image_views
 from django.views.decorators.http import require_http_methods
 
 urlpatterns = [
@@ -26,4 +26,6 @@ urlpatterns = [
 
     path('get-club-events/<int:pk>/', club_profile_views.get_club_events, name='get-club-events'),
     path('get-weekly-club-events/<int:pk>/', club_profile_views.get_weekly_club_events, name='get-weekly-club-events'),
+
+    path('student-profile-image/', image_views.StudentProfileImageView.as_view(), name='student-profile-image'),
 ]

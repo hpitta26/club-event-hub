@@ -1,4 +1,3 @@
-import dummyInitLogo from "../assets/dummyInitLogo.png";
 import { MdOutlineFileUpload } from "react-icons/md";
 import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../context/UserContext.jsx";
@@ -11,6 +10,7 @@ function StudentSettings(){
     const [globalEmail, setGlobalEmail] = useState("");
     const[errors,setErrors] = useState({})
     const [isLoading, setIsLoading] = useState(true);
+    const [profileImage, setProfileImage] = useState(null);
 
     const [formData, setFormData] = useState({
         username: "",
@@ -45,7 +45,19 @@ function StudentSettings(){
                 setIsLoading(false)
             }
         }
+        async function fetchProfileImage() {
+            try {
+                const response = await backend.get('student-profile-image/');
+                setProfileImage(response.data.image_url);
+                console.log("Profile image URL:", response.data.image_url);
+            } catch (error) {
+                console.error("Error fetching profile image:", error);
+                setProfileImage(null);
+            }
+        }
+
         fetchUserDetails();
+        fetchProfileImage();
     },[])
 
     const handleChange = (e) =>{
@@ -117,7 +129,7 @@ function StudentSettings(){
             <div className="w-full space-y-5 p-6 max-w-[500px] ">
                 <div className="flex items-end space-x-5">
                     <div className="relative h-32 rounded-full" onClick={() => console.log("X")}>
-                        <img src={dummyInitLogo} alt="Profile" className="w-full h-full object-cover border border-black rounded-full"/>
+                        <img src={profileImage} alt="Profile" className="w-full h-full object-cover border border-black rounded-full"/>
                         {/* Overlay */}
                         <div className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex justify-center items-center cursor-pointer">
                             <MdOutlineFileUpload className="text-white w-6 h-6" />

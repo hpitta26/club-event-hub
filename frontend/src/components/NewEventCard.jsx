@@ -1,11 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
-import { FaLocationDot } from "react-icons/fa6";
 import { GrLocation } from "react-icons/gr";
-import { IoMdPerson } from "react-icons/io";
 import EventDetailsCard from "./EventDetailsCard";
-import backend from "../components/backend";
 
 function NewEventCard({
   title = "Untitled Event",
@@ -17,9 +14,10 @@ function NewEventCard({
   coverImage = dummyEventCardCover,
   hostLogo = dummyInitLogo,
   id = null,
+  description= "No detailed description available.",
+  universityName = "Florida International University",
 }) {
   const [showDetails, setShowDetails] = useState(false);
-  const [eventData, setEventData] = useState(null);
   const cardRef = useRef(null);
 
   // Click outside  to close the details card
@@ -44,40 +42,9 @@ function NewEventCard({
     };
   }, [showDetails]);
 
-  function handleOnClick() {
-    if (id) {
-      if (showDetails && eventData && eventData.id === id) {
-        return;
-      }
-
-      const fetchData = async () => {
-        try {
-          const response = await backend.get(`/events/${id}/`);
-          setEventData(response.data);
-          setShowDetails(true);
-          console.log("Event data fetched:", response.data);
-        } catch (error) {
-          console.error("Error fetching event data:", error);
-        }
-      };
-
-      fetchData();
-    } else {
-      console.log("No event ID available, using props data");
-      setEventData({
-        title,
-        date,
-        host,
-        location,
-        attendees,
-        capacity,
-        description: "No detailed description available.",
-        universityName: "Florida International University",
-      });
-      setShowDetails(true);
-    }
-  }
-
+  const handleOnClick = () => {
+    setShowDetails(true);
+  };
   const handleCloseDetails = () => {
     setShowDetails(false);
   };
@@ -165,10 +132,7 @@ function NewEventCard({
       >
         {/* Event Banner */}
         <div className="relative w-[212.5px] h-[123.75px] mb-2.5 border-[2.5px] border-black rounded-lg overflow-hidden">
-          <p
-            className="absolute top-1.5 left-1.5 bg-blue-500 text-white px-1.5 py-0.625 rounded-md text-[10px] font-medium 
-                    border shadow-[2px_2px_0px_#000000] border-black"
-          >
+          <p className="absolute top-1.5 left-1.5 bg-blue-500 text-white px-1.5 py-0.625 rounded-md text-[10px] font-medium border shadow-[2px_2px_0px_#000000] border-black">
             {formatDate(date)}
           </p>
           <img
@@ -231,24 +195,20 @@ function NewEventCard({
       </div>
 
       {/* Event Details Card */}
-      {showDetails && eventData && (
+      {showDetails && (
         <EventDetailsCard
           isOpen={showDetails}
           onClose={handleCloseDetails}
-          title={eventData.title || title}
-          club={eventData.host || host}
-          day={formatDay(eventData.date || date)}
-          time={formatTimeRange(eventData.date || date)}
-          description={
-            eventData.description || "No detailed description available."
-          }
-          universityName={
-            eventData.universityName || "Florida International University"
-          }
-          roomLocation={eventData.location || location}
-          attendees={eventData.attendees || attendees}
-          capacity={eventData.capacity || capacity}
-          image={eventData.coverImage || coverImage}
+          title={title}
+          club={host}
+          day={formatDay(date)}
+          time={formatTimeRange(date)}
+          description={description}
+          universityName={universityName}
+          roomLocation={location}
+          attendees={attendees}
+          capacity={capacity}
+          image={coverImage}
         />
       )}
     </>

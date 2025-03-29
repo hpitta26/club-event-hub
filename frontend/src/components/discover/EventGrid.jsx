@@ -18,6 +18,7 @@ const EventGrid = ({ events }) => {
               coverImage={event.coverImage}
               hostLogo={event.hostLogo}
               id={event.id}
+              description={event.description}
             />
           </div>
         ))

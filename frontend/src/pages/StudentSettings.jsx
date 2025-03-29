@@ -110,60 +110,57 @@ function StudentSettings(){
     }
 
     if(isLoading){
-        return <div>Loading... </div>
+        return <div>Loading...</div>
     }
     return(
         <section className="min-h-screen flex flex-col justify-center items-center">
             <div className="w-full space-y-5 p-6 max-w-[500px] ">
-                <div className="flex items-end">
-                    <div>
-                        <div>
-                            <img src={dummyInitLogo} alt="dummy picture" className="rounded-full h-32"/>
-                            <button onClick={() => console.log("X")}>
-                                <div className="flex m-2 text-black hover:text-gray-400">
-                                    <MdOutlineFileUpload className="size-6  mr-2"/>
-                                    <p> Upload Picture</p>
-                                </div>
-                            </button>
+                <div className="flex items-end space-x-5">
+                    <div className="relative h-32 rounded-full" onClick={() => console.log("X")}>
+                        <img src={dummyInitLogo} alt="Profile" className="w-full h-full object-cover border border-black rounded-full"/>
+                        {/* Overlay */}
+                        <div className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex justify-center items-center cursor-pointer">
+                            <MdOutlineFileUpload className="text-white w-6 h-6" />
                         </div>
                     </div>
-                    <div className="space-y-2">
-                        <p className="text-5xl text-black -mt-36"> {formData.username}</p>
-                        <p className="text-sm text-gray-500"> {globalEmail}</p>
+                    <div className="space-y-2 bg-green-600">
+                        <p className="text-5xl -mt-[100px] text-black">{formData.username}</p>
+                        <p className="text-sm text-gray-600">{globalEmail}</p>
                     </div>
                 </div>
                 <div className="space-y-5">
                     <div className="flex items-end justify-between">
-                    <div className=" w-1/2 ">
-                            <p className="text-gray-500"> First Name</p>
-                            <input name="first_name" onChange={handleChange} className="text-black w-11/12 bg-gray-400 h-8 p-2 placeholder-gray-600" placeholder={formData.first_name}/>
+                        <div className="w-1/2">
+                            <p className="text-black">First Name</p>
+                            <input name="first_name" onChange={handleChange} className="text-black w-11/12 bg-[#D9D2D6] h-[36px] p-2 placeholder-gray-600 rounded-md border-[1.5px] border-black" placeholder={formData.first_name}/>
                             {errors.first_name_blank &&  <p className="text-red-500 text-xs italic"> {errors.first_name_blank} </p>}
                         </div>
                         <div className="w-1/2">
-                            <p className="text-gray-500"> Last Name</p>
-                            <input name="last_name" onChange={handleChange} className="text-black w-full bg-gray-400 h-8 p-2 placeholder-gray-600" placeholder={formData.last_name}/>
+                            <p className="text-black">Last Name</p>
+                            <input name="last_name" onChange={handleChange} className="text-black w-full bg-[#D9D2D6] h-[36px] p-2 placeholder-gray-600 rounded-md border-[1.5px] border-black" placeholder={formData.last_name}/>
                             {errors.last_name_blank &&  <p className="text-red-500 text-xs italic"> {errors.last_name_blank} </p>}
                         </div>
                     </div>
-                    <div className="w-full">
-                        <p className="text-gray-500"> Email</p>
-                        <input name="email" onChange={handleChange} className="text-black bg-gray-400 w-full h-8 p-2 placeholder-gray-600" placeholder={formData.email} />
-                        {errors.email_blank &&  <p className="text-red-500 text-xs italic"> {errors.email_blank} </p>}
-                        {errors.invalid_email &&  <p className="text-red-500 text-xs italic"> {errors.invalid_email} </p>}
-
+                    <div className="flex items-end justify-between">
+                        <div className="w-1/2">
+                            <p className="text-black">Email</p>
+                            <input name="email" onChange={handleChange} className="text-black bg-[#D9D2D6] w-11/12 h-[36px] p-2 placeholder-gray-600 rounded-md border-[1.5px] border-black" placeholder={formData.email} />
+                            {errors.email_blank &&  <p className="text-red-500 text-xs italic"> {errors.email_blank} </p>}
+                            {errors.invalid_email &&  <p className="text-red-500 text-xs italic"> {errors.invalid_email} </p>}
+                        </div>
+                        <div className="w-1/2">
+                            <p className="text-black">Graduation Year</p>
+                            <input name="graduation_year" onChange={handleChange} type="number" className=" text-black bg-[#D9D2D6] w-full v p-2 h-[36px] placeholder-gray-600 rounded-md border-[1.5px] border-black" placeholder={formData.graduation_year}/>
+                            {errors.invalid_graduation_year &&  <p className="text-red-500 text-xs italic"> {errors.invalid_graduation_year} </p>}
+                        </div>
                     </div>
                     <div className="w-full">
-                        <p className="text-gray-500"> Major </p>
-                        <input name="major" onChange={handleChange} className="text-black bg-gray-400 w-full h-8 p-2 placeholder-gray-600"  placeholder={formData.major}/>
+                        <p className="text-black">Major </p>
+                        <input name="major" onChange={handleChange} className="text-black bg-[#D9D2D6] w-full h-[36px] p-2 placeholder-gray-600 rounded-md border-[1.5px] border-black"  placeholder={formData.major}/>
                         {errors.major_blank &&  <p className="text-red-500 text-xs italic"> {errors.major_blank} </p>}
                     </div>
                     <div className="w-full">
-                        <p className="text-gray-500"> Graduation Year</p>
-                        <input name="graduation_year" onChange={handleChange} type="number" className=" text-black bg-gray-400 w-full h-8 p-2 placeholder-gray-600" placeholder={formData.graduation_year}/>
-                        {errors.invalid_graduation_year &&  <p className="text-red-500 text-xs italic"> {errors.invalid_graduation_year} </p>}
-                    </div>
-                    <div className="w-full">
-                        <button type="submit" className="bg-gray-300 p-2" onClick={handleSubmit}>
+                        <button type="submit" className="bg-[#FD4EB7] rounded-md border-black border-[1.5px] p-2 mt-2" onClick={handleSubmit}>
                             Save Changes
                         </button>
                     </div>

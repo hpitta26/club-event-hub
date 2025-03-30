@@ -57,3 +57,7 @@ class StudentDetailView(generics.RetrieveUpdateDestroyAPIView):
             raise Exception("No student ID found in session.")
         
         return get_object_or_404(Student, user_id=student_id)
+    
+class StudentListView(generics.ListAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer

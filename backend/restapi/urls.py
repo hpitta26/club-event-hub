@@ -9,6 +9,7 @@ urlpatterns = [
     path('clubs/<int:pk>/', drf_views.ClubDetailView.as_view(), name='club-detail'),
     path('clubs/slug/<slug:slug>/', drf_views.ClubDetailBySlugView.as_view(), name='club-detail-by-slug'),
     path('students/', drf_views.StudentDetailView.as_view(), name='student-detail'),
+    path('all-students/', drf_views.StudentListView.as_view(), name='student-list'),
 
     path('register/', require_http_methods(['POST'])(auth_views.register_view), name='register'),
     path('login/', require_http_methods(['POST'])(auth_views.login_view), name='login'),

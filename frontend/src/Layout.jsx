@@ -5,6 +5,7 @@ import NotFound from './pages/NotFound.jsx';
 import NavbarSelector from "./components/navbars/NavbarSelector.jsx";
 import CreateEvent from "./pages/CreateEvent.jsx";
 import { UserProvider } from "./context/UserContext.jsx";
+import ClubSetting from "./pages/ClubSetting.jsx";
 
 import Logout from './pages/authentication/Logout.jsx';
 import ClubSignup from './pages/authentication/ClubSignup.jsx';
@@ -40,6 +41,8 @@ function App() {
           <Route path="/discover" element={<NewDiscover />} />
           {/* <Route path="/club/:clubSlug" element={<ClubProfile />} /> */}
           <Route path="/club/:clubSlug" element={<NewClubProfile />} />
+          {/* <Route path="/clubsetting" element={<ClubSetting />}/>  */}
+
           {/* Protected --> makes sure users that are logged in can't visit register page */}
           <Route element={<EnsureLoggedIn expRole="NotLoggedIn" />}>
             <Route path="/student-register" element={<StudentSignup />}/> {/* Student Signup */}
@@ -58,9 +61,11 @@ function App() {
             <Route path="/create-event" element={<CreateEvent />} />
             <Route path="/analytics" element={<Analytics/>} />
             <Route path="/events" element={<ClubEvents/>} />
+            <Route path="/settings" element={<ClubSetting />} />
           </Route>
           <Route path="/logout" element={<Logout />} /> {/* we don't want to limit who can logout */}
           <Route path="/*" element={<NotFound />} />
+
         </Routes>
       </Router>
     </UserProvider>

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import drf_views, auth_views, club_follow_views, discover_view,club_profile_views
+from .views import drf_views, auth_views, club_follow_views, discover_view,club_profile_views, image_views
 from django.views.decorators.http import require_http_methods
 
 urlpatterns = [
@@ -9,6 +9,7 @@ urlpatterns = [
     path('clubs/<int:pk>/', drf_views.ClubDetailView.as_view(), name='club-detail'),
     path('clubs/slug/<slug:slug>/', drf_views.ClubDetailBySlugView.as_view(), name='club-detail-by-slug'),
     path('students/', drf_views.StudentDetailView.as_view(), name='student-detail'),
+    path('all-students/', drf_views.StudentListView.as_view(), name='student-list'),
 
     path('register/', require_http_methods(['POST'])(auth_views.register_view), name='register'),
     path('login/', require_http_methods(['POST'])(auth_views.login_view), name='login'),
@@ -26,4 +27,6 @@ urlpatterns = [
 
     path('get-club-events/<int:pk>/', club_profile_views.get_club_events, name='get-club-events'),
     path('get-weekly-club-events/<int:pk>/', club_profile_views.get_weekly_club_events, name='get-weekly-club-events'),
+
+    path('student-profile-image/', image_views.StudentProfileImageView.as_view(), name='student-profile-image'),
 ]

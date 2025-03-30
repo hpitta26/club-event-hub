@@ -155,3 +155,6 @@ build/
 docker-compose.override.yml
 .vercel
 .netlify
+
+minio
+local_storage/

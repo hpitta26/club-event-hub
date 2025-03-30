@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gatherULogo from '../../assets/icons/GatherUIcon.svg';
-import SearchBarTrigger from './navbarAssets/SearchBarIcon';
-import FollowingModal from '../FollowingModal';
 import { GoBell } from "react-icons/go";
 import { HiMiniBars3 } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import EventModal from '../EventModal';
 import { useSidebar } from '../../context/SidebarContext';
+import backend from '../backend';
 
 const NewStudentNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -14,6 +13,8 @@ const NewStudentNavbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [eventsClicked, setEventsClicked] = useState(false);
   const [isFollowingModalOpen, setFollowingModalOpen] = useState(false);
+  const [profileImage, setProfileImage] = useState(null);
+
   const { toggleSidebar } = useSidebar(); 
 
   const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false);
@@ -55,6 +56,19 @@ const NewStudentNavbar = () => {
   const handleLogout = () => {
     navigate("/logout");
   };
+
+  // Fetch the profile image URL when the component mounts
+  useEffect(() => {
+    const fetchProfileImage = async () => {
+      try {
+        const response = await backend.get('student-profile-image/');
+        setProfileImage(response.data.image_url);
+      } catch (error) {
+        console.error("Error fetching profile image:", error);
+      }
+    };
+    fetchProfileImage();
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -157,7 +171,7 @@ const NewStudentNavbar = () => {
 
                   {/* Profile Icon */}
                   <div className="w-[50px] h-[50px] bg-white border-[1.5px] border-black rounded-full overflow-hidden cursor-pointer" onClick={toggleProfileDropdown}>
-                    <img src="some-profile-image.jpg" alt="Profile" className="w-full h-full object-cover"/>
+                    <img src={profileImage || "something"} alt="Profile" className="w-full h-full object-cover"/>
                     {isProfileDropdownOpen && (
                       <div ref={profileDropdownRef} className="absolute right-5 mt-1 py-2 w-48 bg-white border-[1.5px] border-black rounded-md shadow-lg">
                         <a href="#" className="block px-4 py-2 text-sm text-black hover:bg-gray-100">

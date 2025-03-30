@@ -5,11 +5,16 @@ import { HiOutlineGlobeAlt } from "react-icons/hi";
 import { RiTwitterXFill } from "react-icons/ri";
 import backend from "../components/backend.jsx";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
-import NewEventCard from "../components/NewEventCard.jsx";
+import NewEventCard from "../components/newEventCard.jsx";
 
 function NewClubProfile() {
   const [club, setClub] = useState(null);
+  const [events, setEvents] = useState([])
+  const [weeklyEvents, setWeeklyEvents] = useState([])
+
   const [loading, setLoading] = useState(true);
+  const [isFollowing, setIsFollowing] = useState(false);
+
   const slug = useParams();
   const navigate = useNavigate();
 
@@ -18,6 +23,7 @@ function NewClubProfile() {
       .get(`/clubs/slug/${slug.clubSlug}/`)
       .then((response) => {
         setClub(response.data);
+        setPageData(response.data)
         setLoading(false);
       })
       .catch(() => {
@@ -25,6 +31,32 @@ function NewClubProfile() {
       });
   }, [slug]);
 
+  function setPageData(data) {
+    backend.get(`/get-club-events/${data.user_id}/`)
+        .then((eventData)=>{
+          console.log(eventData.data)
+          setEvents(eventData.data);
+        })
+    backend.get(`/get-weekly-club-events/${data.user_id}/`)
+        .then((weeklyEventData)=>{
+          console.log(weeklyEventData.data)
+          setWeeklyEvents(weeklyEventData.data);
+        })
+    backend.get(`/check-user-following/${data.user_id}/`)
+        .then((followingData)=>{
+          setIsFollowing(followingData.data);
+        })
+    }
+
+    function handleFollow(clubID){
+        backend.patch(`/follow-club/${clubID}/`);
+        setIsFollowing(true);
+    }
+
+    function handleUnfollow(clubID){
+        backend.delete(`/unfollow-club/${clubID}/`);
+        setIsFollowing(false);
+    }
   if (loading) {
     return (
       <section className="min-h-screen flex justify-center items-center pt-10">
@@ -55,17 +87,28 @@ function NewClubProfile() {
           />
         </div>
 
-        {/* Follow Button */}
+        {!isFollowing ?
+        /* Follow Button */
         <div className="absolute top-[205px] right-5">
           <button
             className="flex items-center justify-center w-[78px] h-[32px] bg-[#FD4DB7] text-black text-[16px] font-['Pramukh Rounded'] border-[1.5px] border-black rounded-[4px] hover:bg-pink-400"
-            onClick={() => console.log("Follow clicked")}
+            onClick={() => handleFollow(club.user_id)}
           >
             Follow
           </button>
         </div>
+            :
+        /* Unfollow Button */
+        <div className="absolute top-[205px] right-5">
+          <button
+            className="flex items-center justify-center w-[78px] h-[32px] bg-blue-500 text-black text-[16px] font-['Pramukh Rounded'] border-[1.5px] border-black rounded-[4px] hover:bg-blue-400"
+            onClick={() => handleUnfollow(club.user_id)}
+          >
+            Unfollow
+          </button>
+        </div>
+        }
       </div>
-
       {/* Club Info */}
       <div className="w-full max-w-[860px] px-6 mt-6 space-y-4">
         {/* Club Name */}
@@ -73,13 +116,12 @@ function NewClubProfile() {
             <h1 className="font-inter text-black font-bold text-[42px] tracking-[0.04em]">{club.club_name}</h1>
             <p className="text-[16px] font-semibold text-[#535862] leading-[19px]">{club.description}</p>
         </div>
-
         {/* Followers and Following */}
         <div className="flex items-center space-x-[100px]">
           <p className="text-[16px] font-normal font-['Pramukh Rounded'] text-black leading-[19px]">
             {club.followers || 0} Followers
           </p>
-
+          {/* Social Media Links */}
           <div className="flex items-center space-x-3">
           <button onClick={() => window.open(club.instagram, "_blank")}>
             <FaInstagram className="text-[#535862] w-6 h-6 hover:text-gray-400" />
@@ -95,9 +137,6 @@ function NewClubProfile() {
           </button>
         </div>
         </div>
-
-        {/* Social Media Links */}
-        
       </div>
 
       {/* Bottom Section (Events) */}
@@ -110,25 +149,41 @@ function NewClubProfile() {
         </div>
         <div className="flex gap-4 overflow-x-auto whitespace-nowrap no-scrollbar">
           <div className="inline-flex gap-4 m-2">
-            <NewEventCard />
-            <NewEventCard />
-            <NewEventCard />
-            <NewEventCard />
-            <NewEventCard />
+            {weeklyEvents.length > 0 ?
+              weeklyEvents.map((weeklyEvent) => (
+                <NewEventCard
+                  key={weeklyEvent.id}
+                  title={weeklyEvent.title}
+                  date={weeklyEvent.start_time}
+                  host={weeklyEvent.club.club_name}
+                  location={weeklyEvent.location}
+                  attendees={weeklyEvent.rsvps.length}
+                  capacity={weeklyEvent.capacity}
+                />
+              ))
+              : <p className="flex justify-center items-center text-gray-500 col-span-full w-full">No events available.</p>
+            }
           </div>
         </div>
-        <div className="flex items-end justify-between">
-          <div className="mx-2 mt-4">
+          <div className="flex items-end justify-between">
+              <div className="mx-2 mt-4">
             <h5 className="text-black">Upcoming</h5>
           </div>
         </div>
         <div className="flex gap-4 overflow-x-auto whitespace-nowrap no-scrollbar">
           <div className="inline-flex gap-4 m-2">
-            <NewEventCard />
-            <NewEventCard />
-            <NewEventCard />
-            <NewEventCard />
-            <NewEventCard />
+            {events.length > 0 ?
+              events.map((event) => (
+                  <NewEventCard
+                    key={event.id}
+                    title={event.title}
+                    date={event.start_time}
+                    host={event.club.club_name}
+                    location={event.location}
+                    attendees={event.rsvps.length}
+                    capacity={event.capacity}
+                  />))
+            : <p className="flex justify-center items-center text-gray-500 col-span-full w-full">No events available.</p>}
           </div>
         </div>
       </div>

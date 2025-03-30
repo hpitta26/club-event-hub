@@ -1,6 +1,6 @@
 import React from "react";
 import EventCard from "../EventCard";
-import NewEventCard from "../NewEventCard";
+import NewEventCard from "../newEventCard";
 
 const EventGrid = ({ events }) => {
   return (
@@ -17,11 +17,15 @@ const EventGrid = ({ events }) => {
               capacity={event.capacity}
               coverImage={event.coverImage}
               hostLogo={event.hostLogo}
+              id={event.id}
+              description={event.description}
             />
           </div>
         ))
       ) : (
-        <p className="text-gray-500 col-span-full text-center">No events available.</p>
+        <p className="text-gray-500 col-span-full text-center">
+          No events available.
+        </p>
       )}
     </div>
   );

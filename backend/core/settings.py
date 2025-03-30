@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'restapi',
+    'storages',  # For S3 storage
 ]
 
 MIDDLEWARE = [
@@ -161,6 +162,14 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = BASE_DIR / 'media'
 STATIC_ROOT = BASE_DIR / 'static'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_ACCESS_KEY_ID = 'minioadmin'  # MinIO access key
+AWS_SECRET_ACCESS_KEY = 'minioadmin'  # MinIO secret key
+AWS_STORAGE_BUCKET_NAME = 'dev-bucket'  # Replace with your bucket name
+AWS_S3_ENDPOINT_URL = 'http://localhost:9000'  # MinIO endpoint
+AWS_QUERYSTRING_AUTH = False  # Disable query string authentication for public URLs
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

@@ -3,6 +3,7 @@ _summary_
 """
 
 from rest_framework import generics
+from rest_framework.generics import get_object_or_404
 from ..models import Event, Student, Club
 from ..serializers import EventSerializer, StudentSerializer, ClubSerializer
 from restapi.permissions import ClubPermission, Admin, StudentPermission
@@ -40,7 +41,12 @@ class ClubDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ClubSerializer
     parser_classes = [MultiPartParser, FormParser]
 
-
+    def get_object(self):
+        club_id=self.request.session.get('id')
+        if not club_id:
+            raise Exception("No Club ID found in session")
+        return get_object_or_404(Club,user_id=club_id)
+        
 #Retrieve, update, or delete a single club through Slug instead of PK
 class ClubDetailBySlugView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Club.objects.all()

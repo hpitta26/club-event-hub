@@ -116,7 +116,7 @@ def register_view(request):
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
-@csrf_protect
+# @csrf_protect
 def login_view(request):
     email = request.data.get('email')
     password = request.data.get('password')

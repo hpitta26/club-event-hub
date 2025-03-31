@@ -2,32 +2,95 @@
 _summary_
 """
 
+import io
+import json
+from restapi.management.commands import import_event_data
+from django.http import JsonResponse
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import get_object_or_404
-from rest_framework import generics
+from rest_framework import generics, status
 from ..models import Event, Student, Club
 from ..serializers import EventSerializer, StudentSerializer, ClubSerializer
 from restapi.permissions import ClubPermission, Admin, StudentPermission
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
+from rest_framework.response import Response
 
 
 # List all events or create a new event
 class EventListCreateView(generics.ListCreateAPIView):
-    queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = [ClubPermission] # EXAMPLE OF HOW TO LIMIT PERMISSIONS
 
-    @method_decorator(user_passes_test(lambda u: ClubPermission(u) or Admin(u)), name='dispatch') # ANOTHER EXAMPLE OF HOW TO LIMIT PERMISSIONS
+    def get_queryset(self):
+        """List events only for the requesting club."""
+        club_id = self.request.session.get('id')  # Fetch club ID from session
+        if club_id is None:
+            return Event.objects.none()  # Return empty if no club is found in session
+        return Event.objects.filter(club__user_id=club_id)  # Use `user_id` instead of `id`
+
+    @method_decorator(user_passes_test(lambda u: ClubPermission() or Admin(u)), name='dispatch') # ANOTHER EXAMPLE OF HOW TO LIMIT PERMISSIONS
     def create(self, request, *args, **kwargs):
-        request.data['club'] = request.session['id']
-        print(request.data)
-        return super().create(request, *args, **kwargs)
+        """Override create to associate events with the club creating them."""
+        club_id = request.session.get('id')
+
+        # Fetch the club instance (assuming your Event model has a ForeignKey to Club)
+        club_instance = get_object_or_404(Club, user_id=club_id)
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(club=club_instance)  # Explicitly assign the club
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 # Retrieve, update, or delete a single event
 class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+
+# List events from luma script
+class ImportEvents(generics.ListAPIView):
+    def normalize_name(name):
+        return name.replace(" ", "").lower()
+
+    @method_decorator(user_passes_test(lambda u: ClubPermission() or Admin(u)), name='dispatch') # ANOTHER EXAMPLE OF HOW TO LIMIT PERMISSIONS
+    def import_luma_events(self, request):
+        club_name = request.session.get("club_name")
+        normalized_club_name = normalized_club_name(club_name)
+
+        out = io.StringID()
+        import_event_data("scrape_luma", normalized_club_name, stdout=out)
+
+        events_json = out.getValue()
+
+        try:
+            events = json.load(events_json)
+        except json.JSONDecodeError:
+            events = []
+
+        return JsonResponse({"events": events})
+
+# List events from luma script
+class ImportEvents(generics.ListAPIView):
+    def normalize_name(name):
+        return name.replace(" ", "").lower()
+
+    @method_decorator(user_passes_test(lambda u: ClubPermission() or Admin(u)), name='dispatch') # ANOTHER EXAMPLE OF HOW TO LIMIT PERMISSIONS
+    def import_luma_events(self, request):
+        club_name = request.session.get("club_name")
+        normalized_club_name = normalized_club_name(club_name)
+
+        out = io.StringID()
+        import_event_data("scrape_luma", normalized_club_name, stdout=out)
+
+        events_json = out.getValue()
+
+        try:
+            events = json.load(events_json)
+        except json.JSONDecodeError:
+            events = []
+
+        return JsonResponse({"events": events})
 
 # List all clubs or create a new club
 class ClubListCreateView(generics.ListCreateAPIView):
@@ -47,17 +110,5 @@ class ClubDetailBySlugView(generics.RetrieveUpdateDestroyAPIView):
 
 # Retrieve, update, or delete a single student
 class StudentDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Student.objects.all()
-    serializer_class = StudentSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_object(self):
-        student_id = self.request.session.get('id')
-        if not student_id:
-            raise Exception("No student ID found in session.")
-        
-        return get_object_or_404(Student, user_id=student_id)
-    
-class StudentListView(generics.ListAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer

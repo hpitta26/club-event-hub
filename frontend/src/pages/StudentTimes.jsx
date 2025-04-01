@@ -121,15 +121,12 @@ function StudentTimes() {
                     }
                 });
             });
-            // console.log("Monday", formattedAvailability["Monday"]);
-            // console.log("Tuesday", formattedAvailability["Tuesday"]);
-            // console.log("Wednesday", formattedAvailability["Wednesday"]);
-            // console.log("Thursday", formattedAvailability["Thursday"]);
-            // console.log("Friday", formattedAvailability["Friday"]);
             const response = await backend.post("student-schedule/", { availability: formattedAvailability });
             console.log("Availability saved successfully:", response.data);
+            alert("Availability saved successfully!");
         } catch (error) {
             console.error("Error saving availability:", error);
+            alert("Error saving availability. Please try again.");
         }
     };
 

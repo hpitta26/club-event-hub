@@ -27,6 +27,7 @@ import StudentSettings from "./pages/StudentSettings.jsx";
 import NewDiscover from "./pages/NewDiscover.jsx";
 import NewFollowing from "./pages/NewFollowing.jsx";
 import NewClubProfile from "./pages/NewClubProfile.jsx";
+import StudentTimes from "./pages/StudentTimes.jsx";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
             {/* <Route path="/following" element={<FollowingClubs/>} /> */}
             <Route path="/following" element={<NewFollowing />} />
             <Route path="/student-settings" element={<StudentSettings />}/>
+            <Route path="/student-times" element={<StudentTimes />} />
           </Route>
           {/* Protected --> can only be accessed by people with role CLUB */}
           <Route element={<EnsureLoggedIn expRole="CLUB" />}> 

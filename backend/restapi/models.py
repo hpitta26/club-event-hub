@@ -99,6 +99,8 @@ class Student(models.Model):
     new_password_hash = models.CharField(max_length=128, blank=True)
     profile_picture = models.URLField(max_length=500, blank=True, null=True) # Only supports selecting from preset dummy images
 
+    availability = models.JSONField(blank=True, null=True)
+
     # admin --> is an admin of a specfic club
 
     following_clubs = models.ManyToManyField(

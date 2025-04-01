@@ -2,19 +2,7 @@ import React, { useState, useEffect } from "react";
 import backend from "../components/backend.jsx";
 
 function StudentTimes() {
-    const [globalEmail, setGlobalEmail] = useState("");
-    const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(true);
-    const [profileImage, setProfileImage] = useState(null);
-
-    const [formData, setFormData] = useState({
-        username: "",
-        first_name: "",
-        last_name: "",
-        email: "",
-        major: "",
-        graduation_year: "",
-    });
 
     const [availability, setAvailability] = useState({
         Mon: [],
@@ -25,18 +13,22 @@ function StudentTimes() {
     });
 
     const [isDragging, setIsDragging] = useState(false); // Track if the user is dragging
-    const [dragMode, setDragMode] = useState(null); // Track whether we're selecting or deselecting
     const [dragDay, setDragDay] = useState(null); // Track the day being dragged
 
-    // Generate time slots for 30-minute intervals
-    const timeSlots = Array.from({ length: 26 }, (_, i) => {
-        const hour = Math.floor(i / 2) + 10; // Start at 10am
-        const minutes = i % 2 === 0 ? "00" : "30";
-        return `${hour.toString().padStart(2, "0")}:${minutes}-${hour.toString().padStart(2, "0")}:${minutes === "00" ? "30" : "00"}`;
+    // Generate time slots for 30-minute intervals, ending at 10:00 PM
+    const timeSlots = Array.from({ length: 24 }, (_, i) => {
+        const startHour = Math.floor(i / 2) + 10; // Start at 10am
+        const startMinutes = i % 2 === 0 ? "00" : "30";
+
+        // Calculate the end time
+        const endHour = i % 2 === 0 ? startHour : startHour + 1; // Increment hour for the next slot
+        const endMinutes = i % 2 === 0 ? "30" : "00";
+
+        return `${startHour.toString().padStart(2, "0")}:${startMinutes}-${endHour.toString().padStart(2, "0")}:${endMinutes}`;
     });
 
-    // Generate labels for the hour marks only
-    const timeLabels = Array.from({ length: 13 }, (_, i) => {
+    // Generate labels for the hour marks, ending at 9 PM
+    const timeLabels = Array.from({ length: 12 }, (_, i) => {
         const hour = i + 10; // Start at 10am
         return `${hour > 12 ? hour - 12 : hour}${hour >= 12 ? "pm" : "am"}`;
     });
@@ -60,28 +52,28 @@ function StudentTimes() {
             } catch (error) {
                 console.error("Error fetching availability:", error);
             }
+            setIsLoading(false);
         }
 
         fetchAvailability();
     }, []);
 
-    const toggleTimeSlot = (day, timeSlot, forceAdd = null) => {
+    const toggleTimeSlot = (day, timeSlot) => {
         setAvailability((prev) => {
             const dayAvailability = prev[day];
             const isSelected = dayAvailability.includes(timeSlot);
 
-            // Determine whether to add or remove based on drag mode or forceAdd
-            const shouldAdd = forceAdd !== null ? forceAdd : !isSelected;
-
-            if (shouldAdd) {
-                return {
-                    ...prev,
-                    [day]: [...dayAvailability, timeSlot],
-                };
-            } else {
+            if (isSelected) {
+                // Remove the time slot if it's already selected
                 return {
                     ...prev,
                     [day]: dayAvailability.filter((slot) => slot !== timeSlot),
+                };
+            } else {
+                // Add the time slot if it's not selected
+                return {
+                    ...prev,
+                    [day]: [...dayAvailability, timeSlot],
                 };
             }
         });
@@ -90,140 +82,57 @@ function StudentTimes() {
     const handleMouseDown = (day, timeSlot) => {
         setIsDragging(true);
         setDragDay(day); // Set the day being dragged
-        const isSelected = availability[day].includes(timeSlot);
-        setDragMode(!isSelected); // Set drag mode to select or deselect
-        toggleTimeSlot(day, timeSlot, !isSelected); // Toggle the initial cell
+        toggleTimeSlot(day, timeSlot); // Toggle the initial cell
     };
 
     const handleMouseEnter = (day, timeSlot) => {
         if (isDragging && day === dragDay) {
             // Only allow dragging within the same day column
-            toggleTimeSlot(day, timeSlot, dragMode);
+            toggleTimeSlot(day, timeSlot);
         }
     };
 
     const handleMouseUp = () => {
         setIsDragging(false);
-        setDragMode(null); // Reset drag mode
         setDragDay(null); // Reset the drag day
     };
 
     const handleSave = async () => {
         try {
-            const response = await backend.post("student-schedule/", availability);
+            const formattedDay = {
+                Mon: "Monday",
+                Tues: "Tuesday",
+                Wed: "Wednesday",
+                Thurs: "Thursday",
+                Fri: "Friday",
+            };
+
+            // Construct the JSON object to send to the backend
+            const formattedAvailability = {};
+            Object.keys(availability).forEach((day) => {
+                const backendDay = formattedDay[day]; 
+                if (!formattedAvailability[backendDay]) {
+                    formattedAvailability[backendDay] = []; // Initialize the array for the day
+                }
+
+                timeSlots.forEach((timeSlot) => {
+                    if (availability[day].includes(timeSlot)) {
+                        formattedAvailability[backendDay].push(timeSlot); // Add the time slot to the day
+                    }
+                });
+            });
+            // console.log("Monday", formattedAvailability["Monday"]);
+            // console.log("Tuesday", formattedAvailability["Tuesday"]);
+            // console.log("Wednesday", formattedAvailability["Wednesday"]);
+            // console.log("Thursday", formattedAvailability["Thursday"]);
+            // console.log("Friday", formattedAvailability["Friday"]);
+            const response = await backend.post("student-schedule/", { availability: formattedAvailability });
             console.log("Availability saved successfully:", response.data);
-            alert("Availability saved successfully!");
         } catch (error) {
             console.error("Error saving availability:", error);
-            alert("Failed to save availability. Please try again.");
         }
     };
 
-    useEffect(() => {
-        async function fetchUserDetails() {
-            try {
-                const response = await backend.get("students/");
-                if (response.data) {
-                    setGlobalEmail(response.data.user.email);
-                    setFormData({
-                        username: response.data.user.email.split("@")[0],
-                        first_name: response.data.first_name,
-                        last_name: response.data.last_name,
-                        email: response.data.user.email,
-                        major: response.data.major,
-                        graduation_year: response.data.graduation_year,
-                    });
-                }
-            } catch (error) {
-                console.error("Error fetching user data: ", error);
-            } finally {
-                setIsLoading(false);
-            }
-        }
-        async function fetchProfileImage() {
-            try {
-                const response = await backend.get("student-profile-image/");
-                setProfileImage(response.data.image_url);
-                console.log("Profile image URL:", response.data.image_url);
-            } catch (error) {
-                console.error("Error fetching profile image:", error);
-                setProfileImage(null);
-            }
-        }
-
-        fetchUserDetails();
-        fetchProfileImage();
-    }, []);
-
-    const handleChange = (e) => {
-        e.preventDefault();
-        setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    };
-
-    const validateErrors = (data) => {
-        const errors = {};
-        if (!data.first_name.trim()) {
-            errors.first_name_blank = "Cannot Leave First Name Blank";
-        }
-        if (!data.last_name.trim()) {
-            errors.last_name_blank = "Cannot Leave Last Name Blank";
-        }
-        if (!data.email.trim()) {
-            errors.email_blank = "Cannot Leave Email Blank";
-        }
-        if (!data.email.endsWith("edu")) {
-            errors.invalid_email = "Must be a .edu email";
-        }
-        if (!data.major.trim()) {
-            errors.major_blank = "Cannot Leave Major Blank";
-        }
-        if (data.graduation_year < 2025) {
-            errors.invalid_graduation_year = "Cannot Set Graduation Year before the current year";
-        }
-
-        return errors;
-    };
-
-    const emailHasChanged = formData.email !== globalEmail;
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const formErrors = validateErrors(formData);
-        setErrors(formErrors);
-
-        const requestData = {
-            user: {
-                ...(emailHasChanged && { email: formData.email }),
-            },
-            first_name: formData.first_name,
-            last_name: formData.last_name,
-            major: formData.major,
-            graduation_year: formData.graduation_year,
-        };
-
-        console.log("Request Data:", requestData);
-
-        if (Object.keys(formErrors).length === 0) {
-            try {
-                const response = await backend.patch('students/', requestData);
-                console.log("Settings updated " + response.data.first_name);
-            } catch (error) {
-                console.error("Error updating user data: ", error);
-            }
-        }
-        console.log("Profile Image:", profileImage);
-        if (profileImage !== null) {
-            try {
-                const response = await backend.post("student-profile-image/", {
-                    profile_image_url: profileImage, // Send the profile image URL as JSON
-                });
-                console.log("Profile image updated successfully:", response.data);
-                window.location.reload();
-            } catch (error) {
-                console.error("Error uploading profile image:", error);
-            }
-        }
-    };
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -231,7 +140,7 @@ function StudentTimes() {
 
     return (
         <section
-            className="min-h-screen flex flex-col justify-center items-center pt-20" // Add pt-20 to push content below the navbar
+            className="min-h-screen flex flex-col justify-center items-center pt-20"
             onMouseUp={handleMouseUp} // Stop dragging when the mouse is released
         >
             <div className="w-full space-y-5 p-6 max-w-[1200px] -ml-8">
@@ -250,12 +159,12 @@ function StudentTimes() {
                         {timeSlots.map((timeSlot, index) => (
                             <React.Fragment key={timeSlot}>
                                 {/* Time Label */}
-                                {index % 2 === 0 ? ( // Only display labels for hour marks
+                                {index % 2 === 0 ? (
                                     <div className="text-right text-xs pr-2 font-medium" style={{ userSelect: "none" }}>
                                         {timeLabels[Math.floor(index / 2)]}
                                     </div>
                                 ) : (
-                                    <div style={{ userSelect: "none" }}></div> // Empty cell for 30-minute intervals
+                                    <div style={{ userSelect: "none" }}></div>
                                 )}
 
                                 {/* Day Columns */}
@@ -278,7 +187,10 @@ function StudentTimes() {
                     </div>
                 </div>
                 <div className="flex justify-center mt-6">
-                    <button className="bg-[#FD4EB7] text-black px-4 py-2 rounded-md border-black border-[1.5px]" onClick={handleSave}>
+                    <button
+                        className="bg-[#FD4EB7] text-black px-4 py-2 rounded-md border-black border-[1.5px]"
+                        onClick={handleSave}
+                    >
                         Save Times
                     </button>
                 </div>

@@ -43,3 +43,38 @@ class StudentAvailabilityView(APIView):
             return Response({"availability": availability}, status=200)
         except Student.DoesNotExist:
             return Response({"error": "Student profile not found"}, status=404)
+
+    def post(self, request, *args, **kwargs):
+        try:
+            student = Student.objects.get(user=request.user)
+
+            availability = request.data.get("availability", {})
+
+            valid_days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"}
+            if not isinstance(availability, dict) or not valid_days.issubset(availability.keys()):
+                return Response(
+                    {"error": "Invalid availability structure. Ensure all weekdays are included."},
+                    status=400,
+                )
+
+            def clean_time_slots(day_slots):
+                unique_slots = list(set(day_slots)) 
+                return sorted(unique_slots, key=lambda slot: slot.split("-")[0])  # Sort by start time
+
+            cleaned_availability = {}
+            for day, times in availability.items():
+                if not isinstance(times, list):
+                    return Response(
+                        {"error": f"Invalid availability format for {day}. Must be a list of time slots."},
+                        status=400,
+                    )
+                cleaned_availability[day] = clean_time_slots(times)
+
+            student.availability = cleaned_availability
+            student.save()
+
+            return Response({"message": "Availability updated successfully."}, status=200)
+        except Student.DoesNotExist:
+            return Response({"error": "Student profile not found"}, status=404)
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)

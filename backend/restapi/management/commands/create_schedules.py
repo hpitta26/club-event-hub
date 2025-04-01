@@ -3,48 +3,61 @@ from django.core.management.base import BaseCommand
 from restapi.models import Student
 
 class Command(BaseCommand):
-    help = "Populate availability field for existing students"
+    help = "Generate non-overlapping time slots for all 5 days of the week"
 
     def handle(self, *args, **kwargs):
-        # Define the time slots (30-minute intervals from 10:00 AM to 10:00 PM)
+        # Define the range of integers representing time slots (0 to 24)
+        num_slots = list(range(24))  # 0 to 24, representing 30-minute intervals from 10:00 AM to 10:00 PM
+
         time_slots = [
-            f"{hour:02d}:{minute:02d}-{hour:02d}:{'30' if minute == 0 else '00'}"
+            f"{hour:02d}:{minute:02d}-{end_hour:02d}:{end_minute:02d}"
             for hour in range(10, 22)  # 10:00 AM to 10:00 PM
-            for minute in (0, 30)
+            for minute, end_hour, end_minute in (
+                (0, hour, 30),  # 10:00-10:30, 10:30-11:00, etc.
+                (30, hour + 1, 0),  # Handle the transition to the next hour
+            )
         ]
+
+        # Function to generate non-overlapping chunks for a single day
+        def generate_chunks():
+            num_chunks = random.randint(1, 3)  # Number of chunks (1 to 3)
+            selected_indices = set()  # To track selected time slot indices
+            chunks = []
+
+            for _ in range(num_chunks):
+                # Generate a random non-overlapping chunk
+                start_index = random.randint(0, len(num_slots) - 1)
+                chunk_length = random.randint(2, 6)  # Chunk length (1 to 3 hours)
+
+                # Ensure the chunk does not overlap with already selected indices
+                while any(i in selected_indices for i in range(start_index, start_index + chunk_length)):
+                    start_index = random.randint(0, len(num_slots) - 1)
+
+                # Add the chunk to the selected indices
+                chunk = list(range(start_index, min(start_index + chunk_length, len(num_slots))))
+                selected_indices.update(chunk)
+                chunks.append(chunk)
+
+            return chunks
 
         # Iterate over all students
         students = Student.objects.all()
         for student in students:
-            availability = {}
+            weekly_chunks = {}
 
-            # Generate availability for each weekday
+            # Generate non-overlapping chunks for all 5 days of the week
             for day in ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]:
-                # Determine the number of chunks (1 to 3)
-                num_chunks = random.randint(1, 3)
-                day_availability = []
+                # Generate chunks and flatten them into a single sorted list
+                chunks = generate_chunks()
+                flattened_and_sorted = sorted([slot for chunk in chunks for slot in chunk])
+                # Map the flattened indices to their corresponding time slots
+                time_slot_strings = [time_slots[i] for i in flattened_and_sorted]
+                weekly_chunks[day] = time_slot_strings
 
-                for _ in range(num_chunks):
-                    # Determine the start time of the chunk (skewed toward after 3 PM)
-                    start_index = random.randint(14, len(time_slots) - 1)  # Skewed start time
-                    chunk_length = random.randint(2, 8)  # 1 to 4 hours (2 to 8 slots)
-
-                    # Ensure the chunk doesn't exceed the day's time slots
-                    end_index = min(start_index + chunk_length, len(time_slots))
-                    chunk = time_slots[start_index:end_index]
-
-                    # Add the chunk to the day's availability
-                    day_availability.extend(chunk)
-
-                # Ensure no duplicate time slots and sort them
-                availability[day] = sorted(set(day_availability))
-
-            # Assign the generated availability to the student
-            student.availability = availability
+            # Save the generated availability to the student object
+            student.availability = weekly_chunks
             student.save()
 
-            self.stdout.write(
-                self.style.SUCCESS(f"Updated availability for {student.user.email}")
-            )
+            self.stdout.write(self.style.SUCCESS(f"Updated availability for {student.user.email}"))
 
-        self.stdout.write(self.style.SUCCESS("Finished populating student schedules!"))
+        self.stdout.write(self.style.SUCCESS("Finished generating non-overlapping time slots and saving to students!"))

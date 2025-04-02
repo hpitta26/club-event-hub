@@ -114,10 +114,10 @@
     console.log("Current form state:", formData);
 
     return (
-      <div className="min-h-screen bg-stone-900 flex justify-center items-center">
+      <div className="min-h-screen bg-gray-300 flex justify-center items-center">
         <div className="flex flex-col gap-8 w-full" style={{ maxWidth: "400px" }}>
           {phase === 0 && (
-            <div className="bg-white rounded-lg shadow-lg p-6" style={{ height: "470px" }}>
+            <div className="bg-white rounded-[20px] p-6 border-black border-2 shadow-[2px_2px_0px_#000000]" style={{ height: "470px" }}>
               <div className="text-center mb-6 mt-3">
                 <div className="flex justify-center items-center mb-2">
                   <span className="text-2xl font-bold mr-2">Welcome to</span>
@@ -144,7 +144,7 @@
                       name={field.name}
                       value={formData[field.name]}
                       onChange={handleChange}
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 text-sm leading-tight bg-[#D9D2D6] focus:outline-none focus:shadow-outline"
+                      className="appearance-none rounded w-full py-2 px-3 text-gray-700 text-sm leading-tight bg-[#D9D2D6] border-black border-[1.5px]"
                       required
                     />
                   </div>
@@ -154,7 +154,7 @@
                 
                 <div className="flex items-center justify-center mt-6">
                   <button
-                    className="bg-[#FD4EB7] hover:bg-[#E93DA6] text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                    className="bg-[#FD4EB7] hover:bg-[#E93DA6] text-black font-bold py-2 px-4 rounded border-black border-[1.5px] w-full"
                     type="submit"
                   >
                     Submit
@@ -165,7 +165,7 @@
           )}
 
           {phase === 1 && (
-            <div className="bg-white rounded-lg shadow-lg p-8">
+            <div className="bg-white rounded-[20px] p-8 border-black border-2 shadow-[2px_2px_0px_#000000]">
               <div className="text-center mb-6">
                 <h1 className="text-3xl font-bold mb-2">Creating a Profile</h1>
               </div>
@@ -213,7 +213,7 @@
                           name={field.name}
                           value={formData[field.name]}
                           onChange={handleChange}
-                          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight bg-[#D9D2D6] focus:outline-none focus:shadow-outline"
+                          className="appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight bg-[#D9D2D6] border-black border-[1.5px]"
                           required
                         />
                       </div>
@@ -223,7 +223,7 @@
                 
                 <div className="flex items-center justify-center">
                   <button
-                    className="bg-[#FD4EB7] hover:bg-[#E93DA6] text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full flex items-center justify-center"
+                    className="bg-[#FD4EB7] hover:bg-[#E93DA6] text-black font-bold py-2 px-4 rounded w-full flex items-center justify-center border-black border-[1.5px]"
                     type="submit"
                   >
                     <span>Next</span>
@@ -235,7 +235,7 @@
           )}
 
           {phase === 2 && (
-            <div className="bg-white rounded-lg shadow-lg p-8">
+            <div className="bg-white rounded-[20px] p-8 border-black border-2 shadow-[2px_2px_0px_#000000]">
               <div className="text-center mb-6">
                 <h1 className="text-3xl font-bold mb-2">Finishing Up Profile</h1>
               </div>
@@ -250,7 +250,7 @@
                       name={field.name}
                       value={formData[field.name]}
                       onChange={handleChange}
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight bg-[#D9D2D6] focus:outline-none focus:shadow-outline"
+                      className="appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight bg-[#D9D2D6] border-black border-[1.5px]"
                       rows="4"
                       required
                     />
@@ -261,7 +261,7 @@
                 
                 <div className="flex items-center justify-center">
                   <button
-                    className="bg-[#FD4EB7] hover:bg-[#E93DA6] text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                    className="bg-[#FD4EB7] hover:bg-[#E93DA6] text-black font-bold py-2 px-4 rounded border-black border-[1.5px] w-full"
                     type="submit"
                   >
                     Finish

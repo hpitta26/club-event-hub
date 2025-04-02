@@ -51,7 +51,7 @@ function Login() {
   // Custom form rendering with reduced height
   const renderCustomForm = () => {
     return (
-      <div className="bg-white rounded-lg shadow-lg p-6" style={{ height: "400px" }}>
+      <div className="bg-white rounded-[20px] p-6 border-black border-2 shadow-[2px_2px_0px_#000000]" style={{ height: "400px" }}>
         <div className="h-full flex flex-col justify-between">
           <div>
             <div className="text-center mb-8 mt-4">
@@ -71,7 +71,7 @@ function Login() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 text-sm leading-tight bg-[#D9D2D6] focus:outline-none focus:shadow-outline"
+                className="appearance-none border-black border-[1.5px] rounded w-full py-2 px-3 text-gray-700 text-sm leading-tight bg-[#D9D2D6]"
                 required
               />
             </div>
@@ -85,7 +85,7 @@ function Login() {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 text-sm leading-tight bg-[#D9D2D6] focus:outline-none focus:shadow-outline"
+                className="appearance-none border-black border-[1.5px] rounded w-full py-2 px-3 text-gray-700 text-sm leading-tight bg-[#D9D2D6]"
                 required
               />
             </div>
@@ -95,7 +95,7 @@ function Login() {
           
           <div className="mb-4">
             <button
-              className="bg-[#FD4EB7] hover:bg-[#E93DA6] text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+              className="bg-[#FD4EB7] hover:bg-[#E93DA6] border-black border-[1.5px] text-black font-bold py-2 px-4 rounded w-full"
               type="submit"
               onClick={handleSubmit}
             >
@@ -108,7 +108,7 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-900 flex justify-center items-center">
+    <div className="min-h-screen bg-gray-300 flex justify-center items-center">
       <div className="flex flex-col gap-8 w-full" style={{ maxWidth: "400px" }}>
         {renderCustomForm()}
       </div>

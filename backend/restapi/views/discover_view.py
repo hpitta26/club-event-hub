@@ -20,3 +20,14 @@ def get_events_this_week(request):
     except Exception as e:
         print(e)
         return Response({'status': 'error', 'message': 'server error'}, status=404)
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def rsvp(request):
+    try:
+        print(request)
+        return Response({'status': 'success'}, status=200)
+    except Exception as e:
+        print(e)
+        return Response({'status': 'error', 'message': 'server error'}, status=404)
+

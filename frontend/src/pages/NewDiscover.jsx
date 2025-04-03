@@ -22,9 +22,9 @@ const NewDiscover = () => {
 
   useEffect(() => {
     backend
-      .get("get-week-events/")
-      .then((response) => setAllEvents(response.data.data))
-      .catch((error) => console.log(error));
+    .get("get-week-events/")
+    .then((response) => setAllEvents(response.data.data))
+    .catch((error) => console.log(error));
   }, []);
 
   const filteredEvents =

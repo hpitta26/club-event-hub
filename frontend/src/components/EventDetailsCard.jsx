@@ -3,8 +3,10 @@ import { FiChevronsRight } from "react-icons/fi";
 import { FiCalendar, FiMapPin, FiUsers } from "react-icons/fi";
 import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
+import backend from "./backend";
 
 function EventDetailsCard({
+  event_id = 0,
   isOpen = false,
   title = "Intro To LLMs",
   club = "INIT FIU",
@@ -23,6 +25,10 @@ function EventDetailsCard({
 
   const handleCardClick = (e) => {
     e.stopPropagation();
+  };
+
+  const handleRSVP = (e) => {
+    backend.post('/rsvp/', {event_id: event_id})
   };
 
   return (
@@ -54,7 +60,7 @@ function EventDetailsCard({
         {/* Event Title and RSVP Button */}
         <div className="flex flex-row justify-between items-center w-full">
           <h1 className="text-3xl font-semibold">{title}</h1>
-          <button className="bg-[#FD4DB7] text-black py-1 px-4 rounded-md text-sm font-semibold border-black border-[1.5px]">
+          <button onClick={handleRSVP} className="bg-[#FD4DB7] text-black py-1 px-4 rounded-md text-sm font-semibold border-black border-[1.5px]">
             RSVP
           </button>
         </div>

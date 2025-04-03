@@ -5,6 +5,7 @@ import { GrLocation } from "react-icons/gr";
 import EventDetailsCard from "./EventDetailsCard";
 
 function NewEventCard({
+  id = 0,
   title = "Untitled Event",
   date = "TBD",
   host = "Unknown Host",
@@ -13,7 +14,6 @@ function NewEventCard({
   capacity = "N/A",
   coverImage = dummyEventCardCover,
   hostLogo = dummyInitLogo,
-  id = null,
   description= "No detailed description available.",
   universityName = "Florida International University",
 }) {
@@ -197,6 +197,7 @@ function NewEventCard({
       {/* Event Details Card */}
       {showDetails && (
         <EventDetailsCard
+          event_id={id}
           isOpen={showDetails}
           onClose={handleCloseDetails}
           title={title}

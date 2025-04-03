@@ -1,28 +1,42 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../components/discover/Sidebar";
-import FilterBar from "../components/discover/FilterBar";
-import EventGrid from "../components/discover/EventGrid";
 import backend from "../components/backend";
+import NewSidebar from "../components/discover/NewSidebar";
+import EventGrid from "../components/discover/EventGrid";
+import NewFilterBar from "../components/discover/NewFilerBar";
+import { useSidebar } from "../context/SidebarContext";
 
 const Discover = () => {
   const categories = ["All", "Programming", "Health", "Sports"];
   const [selectedFilter, setSelectedFilter] = useState("All");
+  const { isSidebarOpen } = useSidebar();
 
-  const [allEvents, setAllEvents] = useState([
-    {
-      id: 1,
-      name: "Code Camp",
-      category: "Programming",
-      rsvps: [],
-      club: { club_name: "" },
-    },
-  ]); //dummy data on load
+  const [allEvents, setAllEvents] = useState([{
+        id: 0,
+        title: "",
+        description: "",
+        start_time: "",
+        host: "",
+        location: "",
+        attending: 0,
+        capacity: 0,
+        coverImage: "",
+        hostLogo: "",
+        is_rsvped: false,
+        category: ""
+    }]);
 
   useEffect(() => {
-    backend
-      .get("get-week-events/")
-      .then((response) => setAllEvents(response.data.data))
-      .catch((error) => console.log(error));
+    async function fetch_events() {
+        try {
+            const response = await backend.get("get-week-events/");
+            console.log(response);
+            setAllEvents(response.data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    fetch_events();
   }, []);
 
   const filteredEvents =
@@ -31,23 +45,33 @@ const Discover = () => {
       : allEvents.filter((event) => event.category === selectedFilter);
 
   return (
-    <div className="max-w-[1400px] mx-auto pt-10">
-      <div className="flex">
+    <div className="max-w-[1400px] mx-auto h-[calc(100vh)]">
+      <div className="flex h-full">
         {/* Sidebar */}
-        <div className="w-1/4 mt-[86px] hidden lg:block">
-          <Sidebar />
-        </div>
-
-        {/* Main Content */}
-        <div className="flex-1">
-          {/* Title and Filters */}
-          <div className="pt-6 px-6">
-            <h1 className="text-2xl font-bold mb-4">Events This Week</h1>
-            <FilterBar categories={categories} onFilterSelect={setSelectedFilter} />
+        {isSidebarOpen && (
+          <div className="w-1/4 hidden lg:block">
+            <NewSidebar />
           </div>
-          {/* Event Grid */}
-          <div className="overflow-y-auto h-[calc(100vh-150px)] p-6">
-            <EventGrid events={filteredEvents} />
+        )}
+
+        {/* Main Content Wrapper */}
+        <div
+          className={`${
+            isSidebarOpen
+              ? "flex-1 ml-0" // Sidebar is open, main content takes remaining space
+              : "w-[75%] mx-auto" // Sidebar is closed, main content is centered
+          }`}
+        >
+          <div className="pt-[80px] h-full flex flex-col">
+            {/* Title and Filters */}
+            <div className="pt-6 px-6">
+              <h1 className="text-2xl font-bold mb-4">Events This Week</h1>
+              <NewFilterBar categories={categories} onFilterSelect={setSelectedFilter} />
+            </div>
+            {/* Event Grid */}
+            <div className="overflow-y-auto flex-1 p-6">
+              <EventGrid events={filteredEvents} />
+            </div>
           </div>
         </div>
       </div>

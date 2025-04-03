@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FiChevronsRight } from "react-icons/fi";
 import { FiCalendar, FiMapPin, FiUsers } from "react-icons/fi";
 import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
@@ -16,19 +16,29 @@ function EventDetailsCard({
   universityName = "Florida International University",
   roomLocation = "PG 6 - 106",
   attendees = 191,
+  setAttendees = () => {},
   capacity = "200-300",
+  setCapacity = () => {},
   onClose = () => {},
   profilePicture = dummyInitLogo,
   image = dummyEventCardCover,
+  is_rsvped = false
 }) {
   if (!isOpen) return null;
+  const [isRSVP, setIsRSVP] = useState(is_rsvped);
 
   const handleCardClick = (e) => {
     e.stopPropagation();
   };
 
-  const handleRSVP = (e) => {
-    backend.post('/rsvp/', {event_id: event_id})
+  const handleRSVP = async (e) => {
+    const response = await backend.post('/rsvp/', {event_id: event_id});
+
+    if (response.status === 200) {
+        setIsRSVP(true);
+        setAttendees(prev => prev+1);
+        setCapacity(prev => prev-1);
+    };
   };
 
   return (
@@ -60,9 +70,15 @@ function EventDetailsCard({
         {/* Event Title and RSVP Button */}
         <div className="flex flex-row justify-between items-center w-full">
           <h1 className="text-3xl font-semibold">{title}</h1>
-          <button onClick={handleRSVP} className="bg-[#FD4DB7] text-black py-1 px-4 rounded-md text-sm font-semibold border-black border-[1.5px]">
-            RSVP
-          </button>
+          {isRSVP ? 
+            <button className="bg-[#35A25D] text-white py-1 px-4 rounded-md text-sm font-semibold border-black border-[1.5px]">
+              Attending!
+            </button>
+            :
+            <button onClick={handleRSVP} className="bg-[#FD4DB7] text-black py-1 px-4 rounded-md text-sm font-semibold border-black border-[1.5px]">
+              RSVP
+            </button>
+          }
         </div>
 
         <div className="flex flex-col gap-1">

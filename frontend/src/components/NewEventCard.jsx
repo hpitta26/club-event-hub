@@ -16,10 +16,12 @@ function NewEventCard({
   hostLogo = dummyInitLogo,
   description= "No detailed description available.",
   universityName = "Florida International University",
+  is_rsvped = false
 }) {
   const [showDetails, setShowDetails] = useState(false);
   const cardRef = useRef(null);
-
+  const [numAttendees, setNumAttendees] = useState(attendees);
+  const [numCapacity, setNumCapacity] = useState(capacity);
   // Click outside  to close the details card
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -113,7 +115,7 @@ function NewEventCard({
     return `${startFormatted} - ${endFormatted} EST`;
   }
 
-  const spotsLeft = capacity === "N/A" ? "N/A" : capacity;
+  const spotsLeft = numCapacity === "N/A" ? "N/A" : numCapacity;
   let spotsLeftColor = "#35A25D"; // Default color for 30+ spots
 
   if (spotsLeft === 0) {
@@ -183,7 +185,7 @@ function NewEventCard({
           </div>
 
           {/* Number of People Going */}
-          <p className="text-[10px] text-black">{attendees} GOING</p>
+          <p className="text-[10px] text-black">{numAttendees} GOING</p>
         </div>
 
         {/* Spots Left */}
@@ -207,9 +209,12 @@ function NewEventCard({
           description={description}
           universityName={universityName}
           roomLocation={location}
-          attendees={attendees}
-          capacity={capacity}
+          attendees={numAttendees}
+          setAttendees={setNumAttendees}
+          capacity={numCapacity}
+          setCapacity={setNumCapacity}
           image={coverImage}
+          is_rsvped={is_rsvped}
         />
       )}
     </>

@@ -1,6 +1,6 @@
 import React from "react";
-import EventCard from "../EventCard";
 import NewEventCard from "../newEventCard";
+import PropTypes from 'prop-types';
 
 const EventGrid = ({ events }) => {
   return (
@@ -9,16 +9,17 @@ const EventGrid = ({ events }) => {
         events.map((event) => (
           <div key={event.id} className="flex">
             <NewEventCard
+              id={event.id}
               title={event.title}
+              description={event.description}
               date={event.start_time}
-              host={event.club.club_name}
+              host={event.host}
               location={event.location}
-              attendees={event.rsvps.length}
-              capacity={event.capacity}
+              attendees={event.attending}
+              capacity={event.capacity - event.attending}
               coverImage={event.coverImage}
               hostLogo={event.hostLogo}
-              id={event.id}
-              description={event.description}
+              is_rsvped={event.is_rsvped}
             />
           </div>
         ))
@@ -32,3 +33,21 @@ const EventGrid = ({ events }) => {
 };
 
 export default EventGrid;
+
+EventGrid.propTypes = {
+    events: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            title: PropTypes.string.isRequired,
+            description: PropTypes.string.isRequired,
+            start_time: PropTypes.string.isRequired,
+            host: PropTypes.string.isRequired,
+            location: PropTypes.string.isRequired,
+            attending: PropTypes.number.isRequired,
+            capacity: PropTypes.number.isRequired,
+            coverImage: PropTypes.string.isRequired,
+            hostLogo: PropTypes.string.isRequired,
+            is_rsvped: PropTypes.bool.isRequired
+        })
+    ).isRequired,
+};

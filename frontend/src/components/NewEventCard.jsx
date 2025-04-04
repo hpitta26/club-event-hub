@@ -22,6 +22,8 @@ function NewEventCard({
   const cardRef = useRef(null);
   const [numAttendees, setNumAttendees] = useState(attendees);
   const [numCapacity, setNumCapacity] = useState(capacity);
+  const [isRSVP, setIsRSVP] = useState(is_rsvped);
+
   // Click outside  to close the details card
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -214,7 +216,8 @@ function NewEventCard({
           capacity={numCapacity}
           setCapacity={setNumCapacity}
           image={coverImage}
-          is_rsvped={is_rsvped}
+          isRSVP={isRSVP}
+          setIsRSVP={setIsRSVP}
         />
       )}
     </>

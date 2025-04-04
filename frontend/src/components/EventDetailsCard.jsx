@@ -22,10 +22,10 @@ function EventDetailsCard({
   onClose = () => {},
   profilePicture = dummyInitLogo,
   image = dummyEventCardCover,
-  is_rsvped = false
+  isRSVP = false,
+  setIsRSVP = () => {}
 }) {
   if (!isOpen) return null;
-  const [isRSVP, setIsRSVP] = useState(is_rsvped);
 
   const handleCardClick = (e) => {
     e.stopPropagation();

@@ -1,8 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-from ..models import Student, Club
-from ..serializers import ClubSerializer
+from ..models import Student, Club, Event
+from ..serializers import ClubSerializer,EventSerializer
 from django.views.decorators.csrf import csrf_protect
 
 @api_view(['GET'])
@@ -69,3 +69,17 @@ def check_user_following(request,pk):
         return Response({'status': 'error', 'message': 'Club not found'}, status=404)
     except Student.DoesNotExist:
         return Response({'status': 'error', 'message': 'Student not found'}, status=404)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_following_club_events(request):
+    try:
+        student = Student.objects.get(user=request.user)
+        following_clubs = student.following_clubs.all()
+        events = Event.objects.filter(club__in=following_clubs)
+        events.order_by('-start_time')
+
+        serialized_events = EventSerializer(events, many=True).data
+        return Response({'status': 'success', 'data': serialized_events})
+    except Student.DoesNotExist:
+        return Response({'status': 'error', 'message': 'User is not a student'}, status=404)

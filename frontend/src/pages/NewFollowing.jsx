@@ -12,7 +12,7 @@ const NewFollowing = () => {
 
   useEffect(() => {
     // Fetch events for this week
-    backend.get('get-week-events/')
+    backend.get('get-following-clubs-events/')
       .then(response => {
         if (response.data.status === 'success') {
           setAllEvents(response.data.data);

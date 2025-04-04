@@ -64,6 +64,9 @@ class Command(BaseCommand):
             title = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
             start_time = timezone.now() + timedelta(days=random.randint(1, 30))
             end_time = start_time + timedelta(hours=random.randint(1, 5))
+            tags=random.sample([
+                "Technology", "Medical", "Career", "Fitness", "Social", "Wellness", "Culture", "Politics", "Volunteering"
+            ],k=random.randint(1,2))
 
             Event.objects.create(
                 club=club,
@@ -72,7 +75,8 @@ class Command(BaseCommand):
                 start_time=start_time,
                 end_time=end_time,
                 location=fake.city(),
-                capacity=random.randint(10, 200)
+                capacity=random.randint(10, 200),
+                tags=tags
             )
 
         self.stdout.write(self.style.SUCCESS(f'Successfully created {num_events} events!'))

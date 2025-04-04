@@ -12,7 +12,9 @@ from ..models import Club,Event
 def get_club_events(request,pk):
     try:
         club = Club.objects.get(user_id=pk)
-        events = Event.objects.filter(club=club)
+        now = timezone.now()
+        time_diff = now + timedelta(weeks=1)
+        events = Event.objects.filter(club=club,start_time__gte=time_diff)
         serializer = EventSerializer(events, many=True)
         return Response(serializer.data)
     except Club.DoesNotExist:

@@ -4,7 +4,6 @@ import { FiCalendar, FiMapPin, FiUsers } from "react-icons/fi";
 import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
 import backend from "./backend";
-import { use } from "react";
 
 function EventDetailsCard({
   event_id = 0,

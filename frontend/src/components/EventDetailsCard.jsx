@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FiChevronsRight } from "react-icons/fi";
 import { FiCalendar, FiMapPin, FiUsers } from "react-icons/fi";
 import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
+import backend from "./backend";
 
 function EventDetailsCard({
+  event_id = 0,
   isOpen = false,
   title = "Intro To LLMs",
   club = "INIT FIU",
@@ -14,15 +16,56 @@ function EventDetailsCard({
   universityName = "Florida International University",
   roomLocation = "PG 6 - 106",
   attendees = 191,
+  setAttendees = () => {},
   capacity = "200-300",
+  setCapacity = () => {},
   onClose = () => {},
   profilePicture = dummyInitLogo,
   image = dummyEventCardCover,
+  isRSVP = false,
+  setIsRSVP = () => {}
 }) {
   if (!isOpen) return null;
 
   const handleCardClick = (e) => {
     e.stopPropagation();
+  };
+
+  useEffect(() => {
+    const fetchIsRSVP = async () => {
+      try {
+        const response = await backend.get(`is-rsvp/?event_id=${event_id}`)
+        console.log(response.data);
+        if (response.status === 200) {
+          setIsRSVP(response.data.RSVP);
+        }
+      } catch (error) {
+        console.error("Error fetching RSVP status:", error);
+      }
+    }
+    fetchIsRSVP();
+  }, [event_id, setIsRSVP]);
+
+  const handleRSVP = async (e) => {
+    try {
+      const response = await backend.post('/rsvp/', { event_id: event_id });
+
+      console.log(response.data);
+
+      if (response.status === 200) {
+        if (isRSVP) {
+          setIsRSVP(false);
+          setAttendees((prev) => prev - 1);
+          setCapacity((prev) => prev + 1);
+        } else {
+          setIsRSVP(true);
+          setAttendees((prev) => prev + 1);
+          setCapacity((prev) => prev - 1);
+        }
+      }
+    } catch (error) {
+      console.error("Error handling RSVP:", error);
+    }
   };
 
   return (
@@ -54,9 +97,15 @@ function EventDetailsCard({
         {/* Event Title and RSVP Button */}
         <div className="flex flex-row justify-between items-center w-full">
           <h1 className="text-3xl font-semibold">{title}</h1>
-          <button className="bg-[#FD4DB7] text-black py-1 px-4 rounded-md text-sm font-semibold border-black border-[1.5px]">
-            RSVP
-          </button>
+          {isRSVP ? 
+            <button onClick={handleRSVP} className="bg-[#35A25D] text-white py-1 px-4 rounded-md text-sm font-semibold border-black border-[1.5px]">
+              Attending!
+            </button>
+            :
+            <button onClick={handleRSVP} className="bg-[#FD4DB7] text-black py-1 px-4 rounded-md text-sm font-semibold border-black border-[1.5px]">
+              RSVP
+            </button>
+          }
         </div>
 
         <div className="flex flex-col gap-1">

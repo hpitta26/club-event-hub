@@ -24,6 +24,8 @@ urlpatterns = [
     path('check-user-following/<int:pk>/',club_follow_views.check_user_following, name='check-user-following'),
 
     path('get-week-events/', discover_view.get_events_this_week, name='get-week-events'),
+    path('rsvp/', discover_view.rsvp, name='rsvp'),
+    path('is-rsvp/', discover_view.is_rsvp, name='is-rsvp'),
 
     path('get-club-events/<int:pk>/', club_profile_views.get_club_events, name='get-club-events'),
     path('get-weekly-club-events/<int:pk>/', club_profile_views.get_weekly_club_events, name='get-weekly-club-events'),
@@ -31,5 +33,5 @@ urlpatterns = [
     path('student-profile-image/', image_views.StudentProfileImageView.as_view(), name='student-profile-image'),
 
     path('all-student-schedules/', schedule_views.get_all_student_availabilities, name='all-student-schedules'),
-    path('student-schedule/', schedule_views.StudentAvailabilityView.as_view(), name='student-schedule'),
+    path('student-schedule/', schedule_views.StudentAvailabilityView.as_view(), name='student-schedule')
 ]

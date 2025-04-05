@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { FiChevronsRight } from "react-icons/fi";
 import { FiCalendar, FiMapPin, FiUsers } from "react-icons/fi";
 import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
 import backend from "./backend";
+import { use } from "react";
 
 function EventDetailsCard({
   event_id = 0,
@@ -31,14 +32,41 @@ function EventDetailsCard({
     e.stopPropagation();
   };
 
-  const handleRSVP = async (e) => {
-    const response = await backend.post('/rsvp/', {event_id: event_id});
+  useEffect(() => {
+    const fetchIsRSVP = async () => {
+      try {
+        const response = await backend.get(`is-rsvp/?event_id=${event_id}`)
+        console.log(response.data);
+        if (response.status === 200) {
+          setIsRSVP(response.data.RSVP);
+        }
+      } catch (error) {
+        console.error("Error fetching RSVP status:", error);
+      }
+    }
+    fetchIsRSVP();
+  }, [event_id, setIsRSVP]);
 
-    if (response.status === 200) {
-        setIsRSVP(true);
-        setAttendees(prev => prev+1);
-        setCapacity(prev => prev-1);
-    };
+  const handleRSVP = async (e) => {
+    try {
+      const response = await backend.post('/rsvp/', { event_id: event_id });
+
+      console.log(response.data);
+
+      if (response.status === 200) {
+        if (isRSVP) {
+          setIsRSVP(false);
+          setAttendees((prev) => prev - 1);
+          setCapacity((prev) => prev + 1);
+        } else {
+          setIsRSVP(true);
+          setAttendees((prev) => prev + 1);
+          setCapacity((prev) => prev - 1);
+        }
+      }
+    } catch (error) {
+      console.error("Error handling RSVP:", error);
+    }
   };
 
   return (
@@ -71,7 +99,7 @@ function EventDetailsCard({
         <div className="flex flex-row justify-between items-center w-full">
           <h1 className="text-3xl font-semibold">{title}</h1>
           {isRSVP ? 
-            <button className="bg-[#35A25D] text-white py-1 px-4 rounded-md text-sm font-semibold border-black border-[1.5px]">
+            <button onClick={handleRSVP} className="bg-[#35A25D] text-white py-1 px-4 rounded-md text-sm font-semibold border-black border-[1.5px]">
               Attending!
             </button>
             :

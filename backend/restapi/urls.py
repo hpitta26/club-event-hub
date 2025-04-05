@@ -25,6 +25,7 @@ urlpatterns = [
 
     path('get-week-events/', discover_view.get_events_this_week, name='get-week-events'),
     path('rsvp/', discover_view.rsvp, name='rsvp'),
+    path('is-rsvp/', discover_view.is_rsvp, name='is-rsvp'),
 
     path('get-club-events/<int:pk>/', club_profile_views.get_club_events, name='get-club-events'),
     path('get-weekly-club-events/<int:pk>/', club_profile_views.get_weekly_club_events, name='get-weekly-club-events'),

@@ -17,8 +17,8 @@ const EventGrid = ({ events }) => {
               location={event.location}
               attendees={event.attending}
               capacity={event.capacity - event.attending}
-              coverImage={event.coverImage}
-              hostLogo={event.hostLogo}
+              // coverImage={event.coverImage}
+              // hostLogo={event.hostLogo}
               is_rsvped={event.is_rsvped}
             />
           </div>

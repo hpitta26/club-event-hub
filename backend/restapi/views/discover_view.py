@@ -52,3 +52,12 @@ def is_rsvp(request):
     except Exception as e:
         print(e)
         return Response({'status': 'error', 'message': 'server error'}, status=500)
+
+@api_view(["GET"])
+def filter_events(request,filter):
+    try:
+        events = Event.objects.filter(tags__icontains=filter)
+        return Response({'status': 'success', 'data': EventSerializer(events, many=True).data})
+    except Exception as e:
+        print(e)
+        return Response({'status': 'error', 'message': 'server error'}, status=404)

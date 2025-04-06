@@ -16,7 +16,7 @@ function NewEventCard({
   hostLogo = dummyInitLogo,
   description= "No detailed description available.",
   universityName = "Florida International University",
-  is_rsvped = false
+  is_rsvped = false,
 }) {
   const [showDetails, setShowDetails] = useState(false);
   const cardRef = useRef(null);

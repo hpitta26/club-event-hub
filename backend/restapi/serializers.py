@@ -122,12 +122,16 @@ class StudentSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
     club = ClubSerializer(read_only=True)
     rsvps = serializers.PrimaryKeyRelatedField(queryset=Student.objects.all(), many=True, required=False)
+    attending = serializers.SerializerMethodField()
 
     class Meta:
         model = Event
         fields = [
-            'id', 'club', 'title', 'description', 'start_time', 'end_time', 'location', 'capacity','rsvps'
+            'id', 'club', 'title', 'description', 'start_time', 'end_time', 'location', 'capacity', 'rsvps', 'tags', 'attending'
         ]
+
+    def get_attending(self, event): # get the number of attendees per event
+        return event.rsvps.count()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -140,8 +144,8 @@ class EventSerializer(serializers.ModelSerializer):
             self.fields['coverImage'] = serializers.SerializerMethodField()
             self.fields['hostLogo'] = serializers.SerializerMethodField()
 
-        if self.context.get('attending', False):
-            self.fields['attending'] = serializers.SerializerMethodField()
+        # if self.context.get('attending', False):
+        #     self.fields['attending'] = serializers.SerializerMethodField()
 
     def get_hostLogo(self, event):
         return ""
@@ -153,10 +157,6 @@ class EventSerializer(serializers.ModelSerializer):
 
     def get_host(self, event): # make a field for the host name of the event
         return event.club.club_name
-
-
-    def get_attending(self, event): # get the number of attendees per event
-        return event.rsvps.count()
 
     def get_is_rsvped(self, event):
         request = self.context.get('request')

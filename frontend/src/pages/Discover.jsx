@@ -6,10 +6,10 @@ import NewFilterBar from "../components/discover/NewFilerBar";
 import { useSidebar } from "../context/SidebarContext";
 
 const Discover = () => {
-  const categories = ["All", "Programming", "Health", "Sports"];
+  const categories = ["All", "Career", "Culture","Fitness", "Medical", "Politics", "Social", "Technology","Volunteer", "Wellness"];
   const [selectedFilter, setSelectedFilter] = useState("All");
   const { isSidebarOpen } = useSidebar();
-
+  const [filteredEvents, setFilteredEvents] = useState([])
   const [allEvents, setAllEvents] = useState([{
         id: 0,
         title: "",
@@ -39,10 +39,17 @@ const Discover = () => {
     fetch_events();
   }, []);
 
-  const filteredEvents =
-    selectedFilter === "All"
-      ? allEvents
-      : allEvents.filter((event) => event.category === selectedFilter);
+  useEffect(() => {
+    if(selectedFilter!=="All"){
+      backend
+          .get(`filter-events/${selectedFilter}/`)
+          .then((response)=>
+          setFilteredEvents(response.data.data))
+    }
+    else{
+      setFilteredEvents(allEvents)
+    }
+  }, [allEvents,selectedFilter]);
 
   return (
     <div className="max-w-[1400px] mx-auto h-[calc(100vh)]">
@@ -65,7 +72,10 @@ const Discover = () => {
           <div className="pt-[80px] h-full flex flex-col">
             {/* Title and Filters */}
             <div className="pt-6 px-6">
-              <h1 className="text-2xl font-bold mb-4">Events This Week</h1>
+              {selectedFilter === "All"
+                  ? <h1 className="text-2xl font-bold mb-4">Events This Week</h1>
+                  : <h1 className="text-2xl font-bold mb-4">{selectedFilter} Events</h1>
+              }
               <NewFilterBar categories={categories} onFilterSelect={setSelectedFilter} />
             </div>
             {/* Event Grid */}

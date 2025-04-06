@@ -51,7 +51,8 @@ class Command(BaseCommand):
             start_time=event_obj["start_time"],
             end_time=event_obj["end_time"],
             location=event_obj["location"],
-            capacity=event_obj["capacity"]
+            capacity=event_obj["capacity"],
+            tags=event_obj["tags"],
         )
         event.rsvps.set(rsvp_students)
 
@@ -209,7 +210,8 @@ class Command(BaseCommand):
                 "end_time": timezone.now() + datetime.timedelta(days=3, hours=2),
                 "location": "Main Hall A",
                 "capacity": 20,
-                "rsvps": ["student1@fiu.edu"]
+                "rsvps": ["student1@fiu.edu"],
+                "tags": ["Technology"]
             },
             {
                 "club": "club2@example.com",
@@ -219,7 +221,8 @@ class Command(BaseCommand):
                 "end_time": timezone.now() + datetime.timedelta(days=5, hours=3),
                 "location": "Art Building 2",
                 "capacity": 50,
-                "rsvps": ["student2@fiu.edu", "student3@fiu.edu"]
+                "rsvps": ["student2@fiu.edu", "student3@fiu.edu"],
+                "tags": ["Career", "Medical"]
             }
         ]
 

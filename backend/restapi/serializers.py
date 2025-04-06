@@ -126,7 +126,7 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = [
-            'id', 'club', 'title', 'description', 'start_time', 'end_time', 'location', 'capacity','rsvps'
+            'id', 'club', 'title', 'description', 'start_time', 'end_time', 'location', 'capacity','rsvps','tags'
         ]
 
     def __init__(self, *args, **kwargs):

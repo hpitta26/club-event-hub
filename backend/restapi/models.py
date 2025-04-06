@@ -8,6 +8,7 @@ Returns:
 """
 
 from django.db import models
+from django.db.models import JSONField
 from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import AbstractUser
@@ -123,6 +124,13 @@ class Student(models.Model):
 
 
 
+ALLOWED_TAGS = ["Technology","Medical","Career","Fitness","Social","Wellness","Culture","Politics","Volunteering"]
+def validate_tags(tag_list):
+    if not isinstance(tag_list, list):
+        raise TypeError("Tags must be a list")
+    for tag in tag_list:
+        if tag not in ALLOWED_TAGS:
+            raise ValueError(f"{tag} is not a valid tag. Tag must be one of {ALLOWED_TAGS}")
 
 class Event(models.Model):
     club = models.ForeignKey(
@@ -141,6 +149,10 @@ class Event(models.Model):
 
     # private/public boolean
     # tags --> type of event
+
+    tags=JSONField(
+        blank=True, validators=[validate_tags],default=list
+    )
 
     rsvps = models.ManyToManyField(
         Student, related_name='rsvp_events', blank=True

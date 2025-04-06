@@ -9,7 +9,7 @@ const NewFilterBar = ({ categories, onFilterSelect }) => {
     };
 
     return (
-        <div className="mb-1 flex flex-wrap gap-[20px]">
+        <div className="mb-1 flex flex-wrap gap-[10px]">
             {categories.map((category) => (
                 <button
                     key={category}

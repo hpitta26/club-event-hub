@@ -5,9 +5,9 @@ import EventGrid from "../components/discover/EventGrid";
 import backend from "../components/backend";
 
 const Discover = () => {
-  const categories = ["All", "Programming", "Health", "Sports"];
+  const categories = ["All", "Career", "Culture","Fitness", "Medical", "Politics", "Social", "Technology","Volunteer", "Wellness"];
   const [selectedFilter, setSelectedFilter] = useState("All");
-
+  const [filteredEvents, setFilteredEvents] = useState([])
   const [allEvents, setAllEvents] = useState([
     {
       id: 1,
@@ -25,10 +25,17 @@ const Discover = () => {
       .catch((error) => console.log(error));
   }, []);
 
-  const filteredEvents =
-    selectedFilter === "All"
-      ? allEvents
-      : allEvents.filter((event) => event.category === selectedFilter);
+  useEffect(() => {
+    if(selectedFilter!=="All"){
+      backend
+          .get(`filter-events/${selectedFilter}/`)
+          .then((response)=>
+          setFilteredEvents(response.data.data))
+    }
+    else{
+      setFilteredEvents(allEvents)
+    }
+  }, [allEvents,selectedFilter]);
 
   return (
     <div className="max-w-[1400px] mx-auto pt-10">
@@ -42,7 +49,10 @@ const Discover = () => {
         <div className="flex-1">
           {/* Title and Filters */}
           <div className="pt-6 px-6">
-            <h1 className="text-2xl font-bold mb-4">Events This Week</h1>
+              {selectedFilter === "All"
+                  ? <h1 className="text-2xl font-bold mb-4">Events This Week</h1>
+                  : <h1 className="text-2xl font-bold mb-4">{selectedFilter} Events</h1>
+              }
             <FilterBar categories={categories} onFilterSelect={setSelectedFilter} />
           </div>
           {/* Event Grid */}

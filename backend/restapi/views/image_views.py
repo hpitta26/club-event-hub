@@ -125,5 +125,3 @@ class ClubProfileBannerView(APIView):
 
         # except Club.DoesNotExist:
         #     return Response({"error": "Club doesn't exist..."}, status=404) 
-
- 

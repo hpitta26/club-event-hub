@@ -38,7 +38,7 @@ urlpatterns = [
     path('student-profile-image/', image_views.StudentProfileImageView.as_view(), name='student-profile-image'),
 
     path('all-student-schedules/', schedule_views.get_all_student_availabilities, name='all-student-schedules'),
-    path('student-schedule/', schedule_views.StudentAvailabilityView.as_view(), name='student-schedule')
+    path('student-schedule/', schedule_views.StudentAvailabilityView.as_view(), name='student-schedule'),
     path('club-profile-image/', image_views.ClubProfileImageView.as_view(), name='club-profile-image'),
     path('club-banner-image/', image_views.ClubProfileBannerView.as_view(), name='club-banner-image'),
 

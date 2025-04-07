@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Landing from './pages/Landing.jsx';
-import Discover from "./pages/Discover.jsx";
 import NotFound from './pages/NotFound.jsx';
 import NavbarSelector from "./components/navbars/NavbarSelector.jsx";
 import CreateEvent from "./pages/CreateEvent.jsx";
@@ -19,15 +18,14 @@ import { EnsureLoggedIn } from "./pages/authorization/EnsureLoggedIn.jsx";
 import TempPage from "./pages/TempPage.jsx";
 
 import './index.css';
-import ClubProfile from "./pages/ClubProfile.jsx";
-import FollowingClubs from "./pages/FollowingClubs.jsx";
 import Analytics from "./pages/Analytics.jsx";
 import ClubEvents from "./pages/ClubEvents.jsx";
 import StudentSettings from "./pages/StudentSettings.jsx";
 
-import NewDiscover from "./pages/NewDiscover.jsx";
+import Discover from "./pages/Discover.jsx";
 import NewFollowing from "./pages/NewFollowing.jsx";
 import NewClubProfile from "./pages/NewClubProfile.jsx";
+import StudentTimes from "./pages/StudentTimes.jsx";
 
 function App() {
   return (
@@ -37,8 +35,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/temp" element={<TempPage />} />
-          {/* <Route path="/discover" element={<Discover />} /> */}
-          <Route path="/discover" element={<NewDiscover />} />
+          <Route path="/discover" element={<Discover />} />
           {/* <Route path="/club/:clubSlug" element={<ClubProfile />} /> */}
           <Route path="/club/:clubSlug" element={<NewClubProfile />} />
           {/* <Route path="/clubsetting" element={<ClubSetting />}/>  */}
@@ -55,6 +52,7 @@ function App() {
             {/* <Route path="/following" element={<FollowingClubs/>} /> */}
             <Route path="/following" element={<NewFollowing />} />
             <Route path="/student-settings" element={<StudentSettings />}/>
+            <Route path="/student-times" element={<StudentTimes />} />
           </Route>
           {/* Protected --> can only be accessed by people with role CLUB */}
           <Route element={<EnsureLoggedIn expRole="CLUB" />}> 

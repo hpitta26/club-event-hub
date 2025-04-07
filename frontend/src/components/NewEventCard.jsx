@@ -5,6 +5,7 @@ import { GrLocation } from "react-icons/gr";
 import EventDetailsCard from "./EventDetailsCard";
 
 function NewEventCard({
+  id = 0,
   title = "Untitled Event",
   date = "TBD",
   host = "Unknown Host",
@@ -13,12 +14,15 @@ function NewEventCard({
   capacity = "N/A",
   coverImage = dummyEventCardCover,
   hostLogo = dummyInitLogo,
-  id = null,
   description= "No detailed description available.",
   universityName = "Florida International University",
+  is_rsvped = false,
 }) {
   const [showDetails, setShowDetails] = useState(false);
   const cardRef = useRef(null);
+  const [numAttendees, setNumAttendees] = useState(attendees);
+  const [numCapacity, setNumCapacity] = useState(capacity);
+  const [isRSVP, setIsRSVP] = useState(is_rsvped);
 
   // Click outside  to close the details card
   useEffect(() => {
@@ -113,7 +117,7 @@ function NewEventCard({
     return `${startFormatted} - ${endFormatted} EST`;
   }
 
-  const spotsLeft = capacity === "N/A" ? "N/A" : capacity;
+  const spotsLeft = numCapacity === "N/A" ? "N/A" : numCapacity;
   let spotsLeftColor = "#35A25D"; // Default color for 30+ spots
 
   if (spotsLeft === 0) {
@@ -183,7 +187,7 @@ function NewEventCard({
           </div>
 
           {/* Number of People Going */}
-          <p className="text-[10px] text-black">{attendees} GOING</p>
+          <p className="text-[10px] text-black">{numAttendees} GOING</p>
         </div>
 
         {/* Spots Left */}
@@ -197,6 +201,7 @@ function NewEventCard({
       {/* Event Details Card */}
       {showDetails && (
         <EventDetailsCard
+          event_id={id}
           isOpen={showDetails}
           onClose={handleCloseDetails}
           title={title}
@@ -206,9 +211,13 @@ function NewEventCard({
           description={description}
           universityName={universityName}
           roomLocation={location}
-          attendees={attendees}
-          capacity={capacity}
+          attendees={numAttendees}
+          setAttendees={setNumAttendees}
+          capacity={numCapacity}
+          setCapacity={setNumCapacity}
           image={coverImage}
+          isRSVP={isRSVP}
+          setIsRSVP={setIsRSVP}
         />
       )}
     </>

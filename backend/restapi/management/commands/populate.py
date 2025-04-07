@@ -51,7 +51,8 @@ class Command(BaseCommand):
             start_time=event_obj["start_time"],
             end_time=event_obj["end_time"],
             location=event_obj["location"],
-            capacity=event_obj["capacity"]
+            capacity=event_obj["capacity"],
+            tags=event_obj["tags"],
         )
         event.rsvps.set(rsvp_students)
 
@@ -88,7 +89,7 @@ class Command(BaseCommand):
                 "password": "password",
                 "major": "Computer Science",
                 "graduation_year": 2027,
-                "following_clubs": ["club2@example.com"]
+                "following_clubs": ["club2@example.com", "club3@example.com"]
             },
             {
                 "email": "student2@fiu.edu",
@@ -107,6 +108,96 @@ class Command(BaseCommand):
                 "major": "Mathematics",
                 "graduation_year": 2029,
                 "following_clubs": ["club1@example.com", "club3@example.com"]
+            },
+                        {
+                "email": "student4@fiu.edu",
+                "first_name": "Alice",
+                "last_name": "Brown",
+                "password": "password",
+                "major": "Physics",
+                "graduation_year": 2026,
+                "following_clubs": ["club1@example.com", "club3@example.com"]
+            },
+            {
+                "email": "student5@fiu.edu",
+                "first_name": "Bob",
+                "last_name": "Williams",
+                "password": "password",
+                "major": "Chemistry",
+                "graduation_year": 2027,
+                "following_clubs": ["club2@example.com", "club3@example.com"]
+            },
+            {
+                "email": "student6@fiu.edu",
+                "first_name": "Charlie",
+                "last_name": "Davis",
+                "password": "password",
+                "major": "Engineering",
+                "graduation_year": 2028,
+                "following_clubs": ["club1@example.com", "club2@example.com", "club3@example.com"]
+            },
+            {
+                "email": "student7@fiu.edu",
+                "first_name": "Diana",
+                "last_name": "Miller",
+                "password": "password",
+                "major": "Psychology",
+                "graduation_year": 2029,
+                "following_clubs": ["club3@example.com"]
+            },
+            {
+                "email": "student8@fiu.edu",
+                "first_name": "Ethan",
+                "last_name": "Garcia",
+                "password": "password",
+                "major": "History",
+                "graduation_year": 2026,
+                "following_clubs": ["club1@example.com", "club2@example.com", "club3@example.com"]
+            },
+            {
+                "email": "student9@fiu.edu",
+                "first_name": "Fiona",
+                "last_name": "Martinez",
+                "password": "password",
+                "major": "Philosophy",
+                "graduation_year": 2027,
+                "following_clubs": ["club2@example.com", "club3@example.com"]
+            },
+            {
+                "email": "student10@fiu.edu",
+                "first_name": "George",
+                "last_name": "Hernandez",
+                "password": "password",
+                "major": "Economics",
+                "graduation_year": 2028,
+                "following_clubs": ["club3@example.com"]
+            },
+            {
+                "email": "student11@fiu.edu",
+                "first_name": "Hannah",
+                "last_name": "Lopez",
+                "password": "password",
+                "major": "Political Science",
+                "graduation_year": 2029,
+                "following_clubs": ["club1@example.com", "club3@example.com"]
+            },
+            {
+                "email": "student12@fiu.edu",
+                "first_name": "Ian",
+                "last_name": "Clark",
+                "password": "password",
+                "major": "Sociology",
+                "graduation_year": 2026,
+                "following_clubs": ["club2@example.com", "club3@example.com"]
+            },
+            {
+                "email": "student13@fiu.edu",
+                "first_name": "Julia",
+                "last_name": "Rodriguez",
+                "password": "password",
+                "major": "Art",
+                "graduation_year": 2027,
+                "following_clubs": ["club1@example.com", "club3@example.com"]
             }
         ]
 
@@ -119,7 +210,8 @@ class Command(BaseCommand):
                 "end_time": timezone.now() + datetime.timedelta(days=3, hours=2),
                 "location": "Main Hall A",
                 "capacity": 20,
-                "rsvps": ["student1@fiu.edu"]
+                "rsvps": ["student1@fiu.edu"],
+                "tags": ["Technology"]
             },
             {
                 "club": "club2@example.com",
@@ -129,7 +221,8 @@ class Command(BaseCommand):
                 "end_time": timezone.now() + datetime.timedelta(days=5, hours=3),
                 "location": "Art Building 2",
                 "capacity": 50,
-                "rsvps": ["student2@fiu.edu", "student3@fiu.edu"]
+                "rsvps": ["student2@fiu.edu", "student3@fiu.edu"],
+                "tags": ["Career", "Medical"]
             }
         ]
 

@@ -32,7 +32,9 @@ urlpatterns = [
     path('get-weekly-club-events/<int:pk>/', club_profile_views.get_weekly_club_events, name='get-weekly-club-events'),
 
     path('student-profile-image/', image_views.StudentProfileImageView.as_view(), name='student-profile-image'),
-]
+    path('club-profile-image/', image_views.ClubProfileImageView.as_view(), name='club-profile-image'),
+    path('club-banner-image/', image_views.ClubProfileBannerView.as_view(), name='club-banner-image'),
+
     path('get-week-events/', discover_view.get_events_this_week, name='get-week-events')
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

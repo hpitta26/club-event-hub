@@ -34,9 +34,11 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
+    
 
-
-
+def club_directory_path(instance, filename):
+    club_name_slug = slugify(instance.club_name)
+    return f'{club_name_slug}/{filename}'
 
 
 class Club(models.Model):
@@ -44,15 +46,20 @@ class Club(models.Model):
         CustomUser, on_delete=models.CASCADE, related_name='club_profile', primary_key=True # Link the pks
     )
 
-    # NEED THIS FOR THE BANNER AND PFP, will neeed to add a media fodler for it
-    club_picture = models.ImageField(
-         upload_to='club_pictures/', blank =True
+    club_name = models.CharField(max_length=255, unique=True)    
+
+    club_picture = models.FileField(
+        upload_to=club_directory_path,
+        # default='images/default-banner.png' ,
+        blank=True, 
+        null=True
     )
-    club_banner = models.ImageField(
-        upload_to='club_banners/', blank =True
+    club_banner = models.FileField(
+        upload_to=club_directory_path,
+        # default='images/default-banner.png',  
+        blank=True, 
+        null=True
     )
-    
-    club_name = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True, null=True)  # possibly change to required --> depending on form in the frontend
     slug = models.SlugField(unique=True, blank=True)
     social_media_handles = models.JSONField(blank=True, null=True)

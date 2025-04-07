@@ -25,6 +25,7 @@ import Discover from "./pages/Discover.jsx";
 import NewFollowing from "./pages/NewFollowing.jsx";
 import NewClubProfile from "./pages/NewClubProfile.jsx";
 import StudentTimes from "./pages/StudentTimes.jsx";
+import NewCreateEvent from "./pages/NewCreateEvent.jsx";
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
           {/* Protected --> can only be accessed by people with role CLUB */}
           <Route element={<EnsureLoggedIn expRole="CLUB" />}> 
             <Route path="/create-event" element={<CreateEvent />} />
+            <Route path="/new-create-event" element={<NewCreateEvent />} />
             <Route path="/analytics" element={<Analytics/>} />
             <Route path="/events" element={<ClubEvents/>} />
           </Route>

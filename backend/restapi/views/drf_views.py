@@ -2,11 +2,6 @@
 _summary_
 """
 
-import io
-import json
-from restapi.management.commands import import_event_data
-from django.http import JsonResponse
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import get_object_or_404
 from rest_framework import generics, status
 from ..models import Event, Student, Club
@@ -15,7 +10,6 @@ from restapi.permissions import ClubPermission, Admin, StudentPermission
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
 from rest_framework.response import Response
-
 
 # List all events or create a new event
 class EventListCreateView(generics.ListCreateAPIView):
@@ -47,50 +41,6 @@ class EventListCreateView(generics.ListCreateAPIView):
 class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-
-# List events from luma script
-class ImportEvents(generics.ListAPIView):
-    def normalize_name(name):
-        return name.replace(" ", "").lower()
-
-    @method_decorator(user_passes_test(lambda u: ClubPermission() or Admin(u)), name='dispatch') # ANOTHER EXAMPLE OF HOW TO LIMIT PERMISSIONS
-    def import_luma_events(self, request):
-        club_name = request.session.get("club_name")
-        normalized_club_name = normalized_club_name(club_name)
-
-        out = io.StringID()
-        import_event_data("scrape_luma", normalized_club_name, stdout=out)
-
-        events_json = out.getValue()
-
-        try:
-            events = json.load(events_json)
-        except json.JSONDecodeError:
-            events = []
-
-        return JsonResponse({"events": events})
-
-# List events from luma script
-class ImportEvents(generics.ListAPIView):
-    def normalize_name(name):
-        return name.replace(" ", "").lower()
-
-    @method_decorator(user_passes_test(lambda u: ClubPermission() or Admin(u)), name='dispatch') # ANOTHER EXAMPLE OF HOW TO LIMIT PERMISSIONS
-    def import_luma_events(self, request):
-        club_name = request.session.get("club_name")
-        normalized_club_name = normalized_club_name(club_name)
-
-        out = io.StringID()
-        import_event_data("scrape_luma", normalized_club_name, stdout=out)
-
-        events_json = out.getValue()
-
-        try:
-            events = json.load(events_json)
-        except json.JSONDecodeError:
-            events = []
-
-        return JsonResponse({"events": events})
 
 # List all clubs or create a new club
 class ClubListCreateView(generics.ListCreateAPIView):

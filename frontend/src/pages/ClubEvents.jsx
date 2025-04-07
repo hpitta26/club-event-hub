@@ -6,15 +6,22 @@ function ClubEvents() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("upcoming");
+  const [importEvents, setImportEvents] = useState([]);
+  const [importing, setImporting] = useState(false);
+  const [clubName, setClubName] = useState(""); // State to track club name input
+  const [importError, setImportError] = useState(""); // State to track errors during import
 
   useEffect(() => {
     async function fetchEvents() {
       try {
-        const response = await backend.get("/events/");
-        setEvents(response.data);
-        console.log("Fetched Events:", response.data);
+        const user_res = await backend.get('');
+        setClubName(user_res.data);
+
+        const event_res = await backend.get("/events/");
+        setEvents(event_res.data);
+        console.log("Fetched Events:", event_res.data);
       } catch (err) {
-        console.error("Error fetching events:", err);
+        console.log("Error fetching events:", err);
       } finally {
         setLoading(false);
       }
@@ -22,6 +29,25 @@ function ClubEvents() {
 
     fetchEvents();
   }, []);
+
+  const handleImportEvents = async () => {
+    if (!clubName) {
+      setImportError("Please enter a valid club name.");
+      return;
+    }
+    setImporting(true);
+    setImportError(""); // Clear any previous error messages
+    try {
+      const response = await backend.post("/import-events/", { club_name: clubName });
+      setImportEvents(response.data);
+      console.log("Fetched imported events:", response.data);
+    } catch (err) {
+      console.error("Error importing events:", err);
+      setImportError("Error importing events. Please make sure the club name is correct.");
+    } finally {
+      setImporting(false);
+    }
+  };
 
   const currentDate = new Date();
   const filteredEvents = events.filter((event) => {
@@ -64,8 +90,27 @@ function ClubEvents() {
             Past
           </button>
         </div>
+
+        {/* Import Events Input */}
+        <div className="mt-6">
+          <p className="text-lg text-center">
+            Want to import your Luma Events?
+          </p>
+          <div className="flex justify-center mt-4">
+            <button
+              className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition"
+              onClick={handleImportEvents}
+              disabled={importing}
+              
+            >
+              {importing ? "Importing..." : "Import Events"}
+            </button>
+          </div>
+          {importError && <p className="text-red-500 mt-2 text-center">{importError}</p>}
+        </div>
       </div>
 
+      {/* Events Section */}
       {loading ? (
         <p className="text-center">Loading events...</p>
       ) : filteredEvents.length > 0 ? (
@@ -91,15 +136,15 @@ function ClubEvents() {
                 <div className="space-y-6">
                   {events.map((event) => (
                     <EventCard
-                     key={event.id}
-                     title={event.title}
-                     date={event.start_time}
-                     host={event.club?.club_name || "Unknown"}
-                     location={event.location}
-                     attendees={event.attendees_count}
-                     capacity={event.capacity}
-                     coverImage={event.cover_image}
-                     hostLogo={event.host_logo}
+                      key={event.id}
+                      title={event.title}
+                      date={event.start_time}
+                      host={event.club?.club_name || "Unknown"}
+                      location={event.location}
+                      attendees={event.attendees_count}
+                      capacity={event.capacity}
+                      coverImage={event.cover_image}
+                      hostLogo={event.host_logo}
                     />
                   ))}
                 </div>
@@ -110,8 +155,33 @@ function ClubEvents() {
       ) : (
         <p className="text-center">No events available.</p>
       )}
+
+      {/* Imported Events Section */}
+      {importing ? (
+        <p className="text-center mt-6">Importing events...</p>
+      ) : importEvents.length > 0 ? (
+        <div className="w-full max-w-5xl mt-8">
+          <h2 className="text-2xl font-semibold mb-4">Imported Events</h2>
+          <div className="space-y-6">
+            {importEvents.map((event) => (
+              <EventCard
+                key={event.id}
+                title={event.title}
+                date={event.start_time}
+                host={event.club?.club_name || "Unknown"}
+                location={event.location}
+                attendees={event.attendees_count}
+                capacity={event.capacity}
+                coverImage={event.cover_image}
+                hostLogo={event.host_logo}
+              />
+            ))}
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
 
 export default ClubEvents;
+

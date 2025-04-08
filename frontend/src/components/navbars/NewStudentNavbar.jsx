@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import gatherULogo from '../../assets/icons/GatherUIcon.svg';
+import React, { useState, useEffect, useRef } from "react";
+import gatherULogo from "../../assets/icons/GatherUIcon.png";
 import { GoBell } from "react-icons/go";
 import { HiMiniBars3 } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";

@@ -3,7 +3,7 @@ import FormContainer from "../../components/FormContainer.jsx";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import backend from "../../components/backend.jsx";
-import gatherULogo from '../../assets/icons/GatherUIcon.svg';
+import gatherULogo from "../../assets/icons/GatherUIcon.png";
 
 function StudentSignup() {
   const [formData, setFormData] = useState({

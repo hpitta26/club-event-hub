@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
-import gatherULogo from '../../assets/icons/GatherUIcon.svg';
-import SearchBar from './navbarAssets/searchBar';
-import SearchBarTrigger from './navbarAssets/SearchBarIcon';
-import ProfileIcon from './navbarAssets/ProfileIcon';
-import FollowingModal from '../FollowingModal';
-import { FaBell } from 'react-icons/fa';
+import React, { useState, useEffect, useRef } from "react";
+import gatherULogo from "../../assets/icons/GatherUIcon.png";
+import SearchBar from "./navbarAssets/searchBar";
+import SearchBarTrigger from "./navbarAssets/SearchBarIcon";
+import ProfileIcon from "./navbarAssets/ProfileIcon";
+import FollowingModal from "../FollowingModal";
+import { FaBell } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import EventModal from '../EventModal';
 

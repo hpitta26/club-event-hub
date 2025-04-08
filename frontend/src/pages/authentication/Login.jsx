@@ -3,7 +3,7 @@ import backend from "../../components/backend.jsx";
 import { UserContext } from "../../context/UserContext.jsx";
 import { useNavigate } from "react-router-dom";
 import FormContainer from "../../components/FormContainer.jsx";
-import gatherULogo from '../../assets/icons/GatherUIcon.svg';
+import gatherULogo from "../../assets/icons/GatherUIcon.png";
 
 function Login() {
   const [formData, setFormData] = useState({

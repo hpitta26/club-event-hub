@@ -1,7 +1,16 @@
+<<<<<<< HEAD
 import React, { useState, useEffect, useRef } from 'react';
 import gatherULogo from '../../assets/icons/GatherUIcon.png';
 import { useNavigate } from 'react-router-dom';
 import StudentOrClubModal from '../StudentOrClubModal';
+=======
+import React, { useState, useEffect } from "react";
+import gatherULogo from "../../assets/icons/GatherUIcon.png";
+import SearchBar from "./navbarAssets/searchBar";
+import SearchBarTrigger from "./navbarAssets/SearchBarIcon";
+import { useNavigate } from "react-router-dom";
+import StudentOrClubModal from "../StudentOrClubModal";
+>>>>>>> 63f935c (Update GatherU logo to PNG format and fix quote style)
 
 const LoggedOutNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);

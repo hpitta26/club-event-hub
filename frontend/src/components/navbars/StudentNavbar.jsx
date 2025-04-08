@@ -1,7 +1,17 @@
+<<<<<<< HEAD
 import React, { useState, useEffect, useRef } from 'react';
 import gatherULogo from '../../assets/icons/GatherUIcon.png';
 import { GoBell } from "react-icons/go";
 import { HiMiniBars3 } from "react-icons/hi2";
+=======
+import React, { useState, useEffect, useRef } from "react";
+import gatherULogo from "../../assets/icons/GatherUIcon.png";
+import SearchBar from "./navbarAssets/searchBar";
+import SearchBarTrigger from "./navbarAssets/SearchBarIcon";
+import ProfileIcon from "./navbarAssets/ProfileIcon";
+import FollowingModal from "../FollowingModal";
+import { FaBell } from "react-icons/fa";
+>>>>>>> 63f935c (Update GatherU logo to PNG format and fix quote style)
 import { useNavigate } from "react-router-dom";
 import EventModal from '../EventModal';
 import { useSidebar } from '../../context/SidebarContext';

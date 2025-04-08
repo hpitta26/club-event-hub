@@ -2,7 +2,11 @@ import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import backend from "../../components/backend.jsx";
+<<<<<<< HEAD
 import gatherULogo from '../../assets/icons/GatherUIcon.png';
+=======
+import gatherULogo from "../../assets/icons/GatherUIcon.png";
+>>>>>>> 63f935c (Update GatherU logo to PNG format and fix quote style)
 
 function StudentSignup() {
   const [formData, setFormData] = useState({

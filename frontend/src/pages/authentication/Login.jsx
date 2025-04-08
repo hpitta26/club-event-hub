@@ -8,7 +8,7 @@ import gatherULogo from "../../assets/icons/GatherUIcon.png";
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
   const fields = [
     { name: "email", type: "email", label: "Email" },
@@ -30,8 +30,8 @@ function Login() {
           Login(response.data.user);
           resolve(); // Ensure the context is updated before proceeding
         });
-        if (response.data.user['role'].includes("STUDENT")) {
-          navigate('/discover');
+        if (response.data.user["role"].includes("STUDENT")) {
+          navigate("/discover");
         } else {
           navigate("/analytics");
         }
@@ -39,7 +39,10 @@ function Login() {
         setError(response.message);
       }
     } catch (err) {
-      console.error("Login error:", err.response ? err.response.data.error : err.message);
+      console.error(
+        "Login error:",
+        err.response ? err.response.data.error : err.message,
+      );
       setError("Login failed. Please try again.");
     }
   };
@@ -51,7 +54,10 @@ function Login() {
   // Custom form rendering with reduced height
   const renderCustomForm = () => {
     return (
-      <div className="bg-white rounded-[20px] p-6 border-black border-2 shadow-[2px_2px_0px_#000000]" style={{ height: "400px" }}>
+      <div
+        className="bg-white rounded-[20px] p-6 border-black border-2 shadow-[2px_2px_0px_#000000]"
+        style={{ height: "400px" }}
+      >
         <div className="h-full flex flex-col justify-between">
           <div>
             <div className="text-center mb-8 mt-4">
@@ -61,7 +67,7 @@ function Login() {
               </div>
               <p className="text-gray-600">University Events at a Glance</p>
             </div>
-            
+
             <div className="mb-6">
               <label className="block text-gray-700 text-sm font-bold mb-2">
                 Email
@@ -75,7 +81,7 @@ function Login() {
                 required
               />
             </div>
-            
+
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">
                 Password
@@ -89,10 +95,12 @@ function Login() {
                 required
               />
             </div>
-            
-            {error && <p className="text-red-500 text-xs italic mb-2">{error}</p>}
+
+            {error && (
+              <p className="text-red-500 text-xs italic mb-2">{error}</p>
+            )}
           </div>
-          
+
           <div className="mb-4">
             <button
               className="bg-[#FD4EB7] hover:bg-[#E93DA6] border-black border-[1.5px] text-black font-bold py-2 px-4 rounded w-full"

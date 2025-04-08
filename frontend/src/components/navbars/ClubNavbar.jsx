@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import gatherULogo from '../../assets/icons/GatherUIcon.svg';
-import SearchBar from './navbarAssets/searchBar';
-import SearchBarTrigger from './navbarAssets/SearchBarIcon';
-import ProfileIcon from './navbarAssets/ProfileIcon';
-import { FaBell } from 'react-icons/fa';
+import React, { useState, useEffect } from "react";
+import gatherULogo from "../../assets/icons/GatherUIcon.png";
+import SearchBar from "./navbarAssets/searchBar";
+import SearchBarTrigger from "./navbarAssets/SearchBarIcon";
+import ProfileIcon from "./navbarAssets/ProfileIcon";
+import { FaBell } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const ClubNavbar = () => {
@@ -24,7 +24,7 @@ const ClubNavbar = () => {
   const handleEventsClick = () => {
     setEventsClicked(true);
     setTimeout(() => setEventsClicked(false), 300);
-	  navigate("/create-event");
+    navigate("/create-event");
   };
 
   const handleLogout = () => {
@@ -33,13 +33,13 @@ const ClubNavbar = () => {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+      if ((event.ctrlKey || event.metaKey) && event.key === "k") {
         event.preventDefault();
         handleSearchOpen();
       }
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   const userProfileSrc = null;
@@ -58,19 +58,23 @@ const ClubNavbar = () => {
           <a
             href="/analytics"
             className={`text-sm transition-all duration-300 ease-out transform px-2 py-1 rounded-md
-              ${clickedLink === 'Analytics'
-                ? 'text-pink-500 bg-pink-500/20 scale-110 shadow-lg'
-                : 'text-[#F0EFEB] bg-transparent scale-100 hover:text-pink-500'}`}
-            onClick={() => handleLinkClick('Analytics')}
+              ${
+                clickedLink === "Analytics"
+                  ? "text-pink-500 bg-pink-500/20 scale-110 shadow-lg"
+                  : "text-[#F0EFEB] bg-transparent scale-100 hover:text-pink-500"
+              }`}
+            onClick={() => handleLinkClick("Analytics")}
           >
             Analytics
           </a>
           <a
             href="/events"
             className={`text-sm transition-all duration-300 ease-out transform px-2 py-1 rounded-md
-              ${clickedLink === 'Events'
-                ? 'text-blue-500 bg-blue-500/20 scale-110 shadow-lg'
-                : 'text-[#F0EFEB] bg-transparent scale-100 hover:text-blue-500'}`}
+              ${
+                clickedLink === "Events"
+                  ? "text-blue-500 bg-blue-500/20 scale-110 shadow-lg"
+                  : "text-[#F0EFEB] bg-transparent scale-100 hover:text-blue-500"
+              }`}
             onClick={() => handleLinkClick("Events")}
           >
             Events
@@ -80,12 +84,18 @@ const ClubNavbar = () => {
         {/* Right: Events Button + Notification + Profile + Mobile Toggle */}
         <div className="pr-4 flex items-center space-x-2 sm:space-x-3 md:space-x-4">
           <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4">
-            <SearchBarTrigger onClick={handleSearchOpen} className="hidden md:block" /> {/* Hide on mobile */}
+            <SearchBarTrigger
+              onClick={handleSearchOpen}
+              className="hidden md:block"
+            />{" "}
+            {/* Hide on mobile */}
             <button
               className={`whitespace-nowrap transition-all duration-300 ease-out transform border border-white/50 rounded-md
-                ${eventsClicked
-                  ? 'text-yellow-500 bg-yellow-500/20 scale-110 shadow-lg'
-                  : 'text-[#F0EFEB] bg-transparent scale-100'}
+                ${
+                  eventsClicked
+                    ? "text-yellow-500 bg-yellow-500/20 scale-110 shadow-lg"
+                    : "text-[#F0EFEB] bg-transparent scale-100"
+                }
                 text-xs px-1.5 py-0.5 sm:text-sm sm:px-2 sm:py-1`}
               onClick={handleEventsClick}
             >
@@ -97,9 +107,24 @@ const ClubNavbar = () => {
             </button>
             <ProfileIcon src={userProfileSrc}>
               <div className="py-2">
-                <a href="#" className="block px-4 py-1 text-sm hover:bg-white/10">Profile</a>
-                <a href="#" className="block px-4 py-1 text-sm hover:bg-white/10">Settings</a>
-                <a onClick={handleLogout} className="block px-4 py-1 text-sm hover:bg-white/10">Logout</a>
+                <a
+                  href="#"
+                  className="block px-4 py-1 text-sm hover:bg-white/10"
+                >
+                  Profile
+                </a>
+                <a
+                  href="#"
+                  className="block px-4 py-1 text-sm hover:bg-white/10"
+                >
+                  Settings
+                </a>
+                <a
+                  onClick={handleLogout}
+                  className="block px-4 py-1 text-sm hover:bg-white/10"
+                >
+                  Logout
+                </a>
               </div>
             </ProfileIcon>
             <SearchBar open={searchOpen} onClose={handleSearchClose} />
@@ -116,9 +141,17 @@ const ClubNavbar = () => {
               viewBox="0 0 24 24"
             >
               {mobileOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               )}
             </svg>
           </button>
@@ -132,16 +165,16 @@ const ClubNavbar = () => {
             <a
               href="/analytics"
               className={`text-sm text-[#F0EFEB] transition-all duration-300 ease-out px-2 py-1 rounded-md
-                ${clickedLink === 'Analytics' ? 'bg-pink-500/20 text-pink-500' : 'hover:text-pink-500 bg-transparent'}`}
-              onClick={() => handleLinkClick('Analytics')}
+                ${clickedLink === "Analytics" ? "bg-pink-500/20 text-pink-500" : "hover:text-pink-500 bg-transparent"}`}
+              onClick={() => handleLinkClick("Analytics")}
             >
               Analytics
             </a>
             <a
               href="/events"
               className={`text-sm text-[#F0EFEB] transition-all duration-300 ease-out px-2 py-1 rounded-md
-                ${clickedLink === 'Events' ? 'bg-blue-500/20 text-blue-500' : 'hover:text-blue-500 bg-transparent'}`}
-              onClick={() => handleLinkClick('Events')}
+                ${clickedLink === "Events" ? "bg-blue-500/20 text-blue-500" : "hover:text-blue-500 bg-transparent"}`}
+              onClick={() => handleLinkClick("Events")}
             >
               Events
             </a>

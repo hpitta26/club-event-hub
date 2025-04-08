@@ -25,24 +25,24 @@ const LoggedOutNavbar = () => {
   const handleSignupClick = () => {
     setSignupClicked(true);
     setTimeout(() => setSignupClicked(false), 300);
-    setIsOpen(true)
+    setIsOpen(true);
   };
 
   const handleLoginClick = () => {
     setLoginClicked(true);
     setTimeout(() => setLoginClicked(false), 300);
-    navigate('/login');
+    navigate("/login");
   };
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+      if ((event.ctrlKey || event.metaKey) && event.key === "k") {
         event.preventDefault();
         handleSearchOpen();
       }
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   return (
@@ -59,10 +59,12 @@ const LoggedOutNavbar = () => {
           <a
             href="/discover"
             className={`text-sm transition-all duration-300 ease-out transform px-2 py-1 rounded-md
-              ${clickedLink === 'discover'
-                ? 'text-blue-500 bg-blue-500/20 scale-110 shadow-lg'
-                : 'text-[#F0EFEB] bg-transparent scale-100 hover:text-blue-500'}`}
-            onClick={() => handleLinkClick('discover')}
+              ${
+                clickedLink === "discover"
+                  ? "text-blue-500 bg-blue-500/20 scale-110 shadow-lg"
+                  : "text-[#F0EFEB] bg-transparent scale-100 hover:text-blue-500"
+              }`}
+            onClick={() => handleLinkClick("discover")}
           >
             DISCOVER
           </a>
@@ -71,21 +73,29 @@ const LoggedOutNavbar = () => {
         {/* Right: Signup + Login + Mobile Toggle */}
         <div className="pr-4 flex items-center space-x-2 sm:space-x-3 md:space-x-4">
           <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4">
-            <SearchBarTrigger onClick={handleSearchOpen} className="hidden md:block" /> {/* Hide on mobile */}
+            <SearchBarTrigger
+              onClick={handleSearchOpen}
+              className="hidden md:block"
+            />{" "}
+            {/* Hide on mobile */}
             <button
               className={`whitespace-nowrap text-xs sm:text-sm transition-all duration-300 ease-out transform px-1.5 py-0.5 sm:px-2 sm:py-1 border border-white/50 rounded-md
-                ${signupClicked
-                  ? 'text-yellow-500 bg-yellow-500/20 scale-110 shadow-lg'
-                  : 'text-[#F0EFEB] bg-transparent scale-100'}`}
+                ${
+                  signupClicked
+                    ? "text-yellow-500 bg-yellow-500/20 scale-110 shadow-lg"
+                    : "text-[#F0EFEB] bg-transparent scale-100"
+                }`}
               onClick={handleSignupClick}
             >
               Sign up
             </button>
             <button
               className={`whitespace-nowrap text-xs sm:text-sm transition-all duration-300 ease-out transform px-1.5 py-0.5 sm:px-2 sm:py-1 border border-white/50 rounded-md
-                ${loginClicked
-                  ? 'text-blue-500 bg-blue-500/20 scale-110 shadow-lg'
-                  : 'text-[#F0EFEB] bg-transparent scale-100'}`}
+                ${
+                  loginClicked
+                    ? "text-blue-500 bg-blue-500/20 scale-110 shadow-lg"
+                    : "text-[#F0EFEB] bg-transparent scale-100"
+                }`}
               onClick={handleLoginClick}
             >
               Log in
@@ -104,9 +114,17 @@ const LoggedOutNavbar = () => {
               viewBox="0 0 24 24"
             >
               {mobileOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               )}
             </svg>
           </button>
@@ -120,8 +138,8 @@ const LoggedOutNavbar = () => {
             <a
               href="/discover"
               className={`text-sm text-[#F0EFEB] transition-all duration-300 ease-out px-2 py-1 rounded-md
-                ${clickedLink === 'discover' ? 'bg-blue-500/20 text-blue-500' : 'hover:text-blue-500 bg-transparent'}`}
-              onClick={() => handleLinkClick('discover')}
+                ${clickedLink === "discover" ? "bg-blue-500/20 text-blue-500" : "hover:text-blue-500 bg-transparent"}`}
+              onClick={() => handleLinkClick("discover")}
             >
               Discover
             </a>

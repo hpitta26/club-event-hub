@@ -55,12 +55,9 @@ class ClubProfileImageView(APIView):
     def get(self, request, *args, **kwargs):
         try:
             club = Club.objects.get(user=request.user)
-            if club.club_picture:
-                image_url = club.club_picture
-            else:
-                image_url = f"{settings.AWS_S3_ENDPOINT_URL}/{settings.AWS_STORAGE_BUCKET_NAME}/{Club.club_name}/profile.png"
-                print(f"{image_url} is the default profile image URL")                
-            return Response({"image_url": image_url.url})
+            image_url = f"{settings.AWS_S3_ENDPOINT_URL}/{settings.AWS_STORAGE_BUCKET_NAME}/{club.club_name}/profile.png"
+            print(f"{image_url} is the default profile image URL")                
+            return Response({"image_url": image_url})
         except Club.DoesNotExist:
             return Response({"error": "Club doesn't exist..."}, status=404)
     
@@ -91,13 +88,9 @@ class ClubProfileBannerView(APIView):
     def get(self, request, *args, **kwargs):
         try:
             club = Club.objects.get(user=request.user)
-
-            if club.club_banner:
-                image_url = club.club_banner
-            else:
-                image_url = f"{settings.AWS_S3_ENDPOINT_URL}/{settings.AWS_STORAGE_BUCKET_NAME}/{Club.club_name}/banner.png"
-                print(f"{image_url} is the default profile banner URL")                
-            return Response({"image_url": image_url.url})
+            image_url = f"{settings.AWS_S3_ENDPOINT_URL}/{settings.AWS_STORAGE_BUCKET_NAME}/{club.club_name}/banner.png"
+            print(f"{image_url} is the default profile banner URL")                
+            return Response({"image_url": image_url})
         except Club.DoesNotExist:
             return Response({"error": "Club doesn't exist..."}, status=404) 
 

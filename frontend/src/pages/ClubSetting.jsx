@@ -114,11 +114,8 @@ function ClubSetting() {
   };
 
 
+  const handleText = async(e) =>{
 
-  const handleSubmit = async() => {
-
-    handleProfileSubmit()
-    handleBannerSubmit()
     var updatedFormInfo = new FormData()
     updatedFormInfo.append("description", formData.description)
     updatedFormInfo.append("social_media_handles", JSON.stringify(formData.social_media_handles))
@@ -135,7 +132,33 @@ function ClubSetting() {
     }
     catch(error){
       console.error("Error with profile upload: ", error)
-    }
+    }   
+  }
+
+
+  function handleSubmit() {
+
+ 
+    // var updatedFormInfo = new FormData()
+    // updatedFormInfo.append("description", formData.description)
+    // updatedFormInfo.append("social_media_handles", JSON.stringify(formData.social_media_handles))
+    // console.log("updatedFormInfo", updatedFormInfo)
+    // console.log("Form data", formData)
+    // try{
+    // const response = await backend.patch(
+    //   `clubs/`, updatedFormInfo,
+    //     {
+    //       headers: { 'Content-Type': "multipart/form-data" },
+    //     })  
+    //     console.log("Bruh", JSON.stringify(response))
+    
+    // }
+    // catch(error){
+    //   console.error("Error with profile upload: ", error)
+    // }   
+    handleText();
+    handleProfileSubmit();
+    handleBannerSubmit();
     // window.location.reload();
   }
 

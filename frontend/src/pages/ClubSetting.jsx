@@ -1,12 +1,7 @@
-import dummyInitLogo from "../assets/dummyInitLogo.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import backend from "../components/backend.jsx";
-import EventCard from "../components/EventCard.jsx";
-import { FaInstagram } from "react-icons/fa";
-import { RiTwitterXFill } from "react-icons/ri";
-import { FaLinkedin } from "react-icons/fa";
-import DummyEventCard from "../components/DummyEventCard.jsx";
+import { MdOutlineFileUpload } from "react-icons/md";
 
 function ClubSetting() {
   const [club, setClub] = useState(null);
@@ -197,12 +192,15 @@ function ClubSetting() {
               htmlFor="bannerUpload"
               className="block relative cursor-pointer"
             >
-              <div className="bg-stone-500 h-20 w-full hover:opacity-50 rounded-2xl ">
+              <div className="bg-stone-500 h-[140px] w-full hover:opacity-50 rounded-3xl relative">
                 <img
                   src={profileBanner}
                   alt="dummy banner"
-                  className="w-full h-full "
+                  className="w-full h-full rounded-3xl object-cover"
                 ></img>
+                <div className="absolute inset-0 bg-black bg-opacity-50 rounded-3xl flex justify-center items-center text-white">
+                  <MdOutlineFileUpload className="text-white w-6 h-6" /> Upload Banner
+                </div>
               </div>
             </label>
             <input
@@ -224,8 +222,11 @@ function ClubSetting() {
                     <img
                       src={profileImage}
                       alt="dummy picture"
-                      className="rounded-full h-24 hover:cursor-pointer hover:opacity-50 "
+                      className="rounded-full h-24 w-24 hover:cursor-pointer hover:opacity-50 object-cover"
                     />
+                    <div className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex justify-center items-center text-white">
+                      <MdOutlineFileUpload className="text-white w-6 h-6" />
+                    </div>
                   </label>
                   <input
                     type="file"
@@ -296,7 +297,7 @@ function ClubSetting() {
 
         <div>
           <button
-            className="bg-[#f12fad] text-black mt-6 p-2 hover:opacity-60 font-['Pramukh Rounded'] font-semibold"
+            className="bg-[#FD4EB7] rounded-md border-black border-[1.5px] p-2 mt-6"
             onClick={handleSubmit}
           >
             Save Changes

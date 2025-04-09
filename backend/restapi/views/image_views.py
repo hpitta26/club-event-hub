@@ -7,6 +7,7 @@ from ..models import Club
 from django.conf import settings
 from storages.backends.s3boto3 import S3Boto3Storage
 from rest_framework.parsers import MultiPartParser, FormParser
+from urllib.parse import quote
 
 
 
@@ -55,7 +56,9 @@ class ClubProfileImageView(APIView):
     def get(self, request, *args, **kwargs):
         try:
             club = Club.objects.get(user=request.user)
-            image_url = f"{settings.AWS_S3_ENDPOINT_URL}/{settings.AWS_STORAGE_BUCKET_NAME}/{club.club_name}/profile.png"
+            bucket_name = settings.AWS_STORAGE_BUCKET_NAME
+            club_name = quote(club.club_name.lower().replace(" ", "-"))
+            image_url = f"{settings.AWS_S3_ENDPOINT_URL}/{bucket_name}/{club_name}%2Fprofile.png"
             print(f"{image_url} is the default profile image URL")                
             return Response({"image_url": image_url})
         except Club.DoesNotExist:
@@ -88,7 +91,9 @@ class ClubProfileBannerView(APIView):
     def get(self, request, *args, **kwargs):
         try:
             club = Club.objects.get(user=request.user)
-            image_url = f"{settings.AWS_S3_ENDPOINT_URL}/{settings.AWS_STORAGE_BUCKET_NAME}/{club.club_name}/banner.png"
+            bucket_name = settings.AWS_STORAGE_BUCKET_NAME
+            club_name = quote(club.club_name.lower().replace(" ", "-"))
+            image_url = f"{settings.AWS_S3_ENDPOINT_URL}/{bucket_name}/{club_name}%2Fbanner.png"
             print(f"{image_url} is the default profile banner URL")                
             return Response({"image_url": image_url})
         except Club.DoesNotExist:

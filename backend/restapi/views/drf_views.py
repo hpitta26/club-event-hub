@@ -47,6 +47,7 @@ class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
 class ClubListCreateView(generics.ListCreateAPIView):
     queryset = Club.objects.all()
     serializer_class = ClubSerializer
+    
 # Retrieve, update, or delete a single club
 class ClubDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Club.objects.all()

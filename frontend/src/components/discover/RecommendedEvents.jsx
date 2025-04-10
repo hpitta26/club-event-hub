@@ -13,7 +13,7 @@ const RecommendedEvents = ({ events }) => {
                       title={event.title}
                       description={event.description}
                       date={event.start_time}
-                      host={event.club.club_name}
+                      host={event.host}
                       location={event.location}
                       attendees={event.attending}
                       capacity={event.capacity - event.attending}

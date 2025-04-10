@@ -33,7 +33,7 @@ const Discover = () => {
     async function fetch_events() {
         try {
             const response = await backend.get("get-week-events/");
-            console.log(response);
+            console.log(response.data);
             setAllEvents(response.data);
         } catch (err) {
             console.log(err);
@@ -46,22 +46,30 @@ const Discover = () => {
     if(selectedFilter!=="All"){
       backend
           .get(`filter-events/${selectedFilter}/`)
-          .then((response)=>
-          setFilteredEvents(response.data.data))
+          .then((response)=>{
+            const normalized_host = response.data.data.map((event) => ({
+            ...event,
+            host: event.club?.club_name || "Unknown Host",
+            }));
+          setFilteredEvents(normalized_host)})
     }
     else{
       setFilteredEvents(allEvents)
     }
   }, [allEvents,selectedFilter]);
 
-  useEffect(() => {
-      if(userContext){
-          backend
-              .get(`collaborative-filter/`)
-              .then((response)=>
-              setRecommendedEvents(response.data))
-      }
-  }, []);
+useEffect(() => {
+  if (userContext) {
+    backend.get("collaborative-filter/")
+      .then((response) => {
+        const normalized_host = response.data.map((event) => ({
+          ...event,
+          host: event.club?.club_name || "Unknown Host",
+        }));
+        setRecommendedEvents(normalized_host);
+      });
+  }
+}, []);
 
   return (
     <div className="max-w-[1400px] mx-auto h-[calc(100vh)]">

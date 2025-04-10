@@ -35,9 +35,11 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
+    
 
-
-
+def club_directory_path(instance, filename):
+    club_name_slug = slugify(instance.club_name)
+    return f'{club_name_slug}/{filename}'
 
 
 class Club(models.Model):
@@ -45,10 +47,20 @@ class Club(models.Model):
         CustomUser, on_delete=models.CASCADE, related_name='club_profile', primary_key=True # Link the pks
     )
 
-    # profile_picture = models.ImageField(
-    #     upload_to='club_profiles/', blank=True, null=True
-    # )
-    club_name = models.CharField(max_length=255, unique=True)
+    club_name = models.CharField(max_length=255, unique=True)    
+
+    club_picture = models.FileField(
+        upload_to=club_directory_path,
+        # default='images/default-banner.png' ,
+        blank=True, 
+        null=True
+    )
+    club_banner = models.FileField(
+        upload_to=club_directory_path,
+        # default='images/default-banner.png',  
+        blank=True, 
+        null=True
+    )
     description = models.TextField(blank=True, null=True)  # possibly change to required --> depending on form in the frontend
     slug = models.SlugField(unique=True, blank=True)
     social_media_handles = models.JSONField(blank=True, null=True)
@@ -143,9 +155,12 @@ class Event(models.Model):
     end_time = models.DateTimeField()
     location = models.CharField(max_length=255)
     capacity = models.PositiveIntegerField()
-    # picture = models.ImageField(
-    #     upload_to='event_thumbnails/', blank=True, null=True
-    # )
+    profilepicture = models.ImageField(
+        upload_to='club_profilepic/', blank=True, null=True
+    )
+    profilebanner = models.ImageField(
+        upload_to='club_banner/', blank=True, null=True
+    )
 
     # private/public boolean
     # tags --> type of event

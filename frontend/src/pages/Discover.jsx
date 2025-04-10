@@ -91,12 +91,12 @@ const Discover = () => {
 
                   {/* Event Grid */}
                   <div className="overflow-y-auto flex-1 p-6">
-                      {userContext && <h1 className="text-lg font-bold mb-4 ">Recommended Events</h1>}
-                      <RecommendedEvents events={recommendedEvents}/>
+                      {recommendedEvents.length>2 && <RecommendedEvents events={recommendedEvents}/>}
                       {selectedFilter === "All"
                           ? <h1 className="text-lg font-bold mb-4">Events This Week</h1>
                           : <h1 className="text-lg font-bold mb-4">{selectedFilter} Events</h1>
-                      }                      <EventGrid events={filteredEvents}/>
+                      }
+                      <EventGrid events={filteredEvents}/>
                   </div>
               </div>
           </div>

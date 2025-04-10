@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const EventGrid = ({ events }) => {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-7">
-      {events.length > 0 ? (
+      {events.length > 2 ? (
         events.map((event) => (
           <div key={event.id} className="flex">
             <NewEventCard

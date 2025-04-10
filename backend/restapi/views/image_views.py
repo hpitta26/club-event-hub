@@ -72,7 +72,7 @@ class ClubProfileImageView(APIView):
             profile_image_url = request.FILES.get("profile_image_url")
             if profile_image_url:
                 club.club_picture = profile_image_url
-                name ="profile.png"
+                name="profile.png"
                 club.club_picture.save(name, profile_image_url)
                 club.save()
                 return Response({"message": "profile image updated successfully", "image_url": club.club_picture.url})
@@ -94,7 +94,7 @@ class ClubProfileBannerView(APIView):
             bucket_name = settings.AWS_STORAGE_BUCKET_NAME
             club_name = quote(club.club_name.lower().replace(" ", "-"))
             image_url = f"{settings.AWS_S3_ENDPOINT_URL}/{bucket_name}/{club_name}%2Fbanner.png"
-            print(f"{image_url} is the default profile banner URL")                
+            print(f"{image_url} is the default profile banner URL")
             return Response({"image_url": image_url})
         except Club.DoesNotExist:
             return Response({"error": "Club doesn't exist..."}, status=404) 

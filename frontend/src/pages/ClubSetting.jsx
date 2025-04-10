@@ -88,9 +88,9 @@ function ClubSetting() {
         const response = await backend.post("club-profile-image/", uploadData, {
           headers: {}
         });
-        console.log("Profile image updated with: ", response.data)
+        console.log("Profile image updated with: ", response.image_url)
       }
-      catch(error){
+      catch(error) {
         console.error("Erorr with profile upload: ", error)
       }
     }
@@ -132,11 +132,10 @@ function ClubSetting() {
 
 
   function handleSubmit() {
- 
     handleText();
     handleProfileSubmit();
     handleBannerSubmit();
-    window.location.reload();
+    // window.location.reload();
   }
 
   const handleLinkChange = (e) =>{

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../components/following/sidebar.jsx";
+import Sidebar from "../components/following/Sidebar.jsx";
 import NewSidebar from "../components/following/NewSidebar.jsx";
 import EventGrid from "../components/discover/EventGrid";
 import backend from "../components/backend";

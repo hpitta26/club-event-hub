@@ -14,7 +14,7 @@ const NewStudentNavbar = () => {
   const [eventsClicked, setEventsClicked] = useState(false);
   const [isFollowingModalOpen, setFollowingModalOpen] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
-
+  const [events, setEvents] = useState([]);
   const { toggleSidebar } = useSidebar(); 
 
   const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false);
@@ -34,6 +34,14 @@ const NewStudentNavbar = () => {
   const handleSearchClose = () => setSearchOpen(false);
 
   const handleEventsClick = () => {
+    async function getEvents() {
+    	const result = await backend.get('get-following-clubs-events/');
+    	if (result.status === 200) {
+		console.log(result);
+		setEvents(result.data)
+    	};
+    };
+    getEvents();
     setEventsClicked(true);
     setTimeout(() => setEventsClicked(false), 300);
     displayEventModal();
@@ -114,7 +122,7 @@ const NewStudentNavbar = () => {
 
             {/* Event Modal */}
             <div ref={sidebarRef} className="z-[110] relative">
-              <EventModal onClose={displayEventModal} />
+              <EventModal events={events} onClose={displayEventModal} />
             </div>
           </>
         )}

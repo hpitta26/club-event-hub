@@ -5,7 +5,7 @@ import { HiOutlineGlobeAlt } from "react-icons/hi";
 import { RiTwitterXFill } from "react-icons/ri";
 import backend from "../components/backend.jsx";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
-import NewEventCard from "../components/newEventCard.jsx";
+import NewEventCard from "../components/NewEventCard.jsx";
 
 function NewClubProfile() {
   const [club, setClub] = useState(null);

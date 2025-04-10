@@ -79,7 +79,7 @@ def get_following_club_events(request):
         events = Event.objects.filter(club__in=following_clubs)
         events.order_by('-start_time')
 
-        serialized_events = EventSerializer(events, many=True).data
-        return Response({'status': 'success', 'data': serialized_events})
+        serialized_events = EventSerializer(events, many=True, context={'request': request, 'student_context_rsvps': True, 'attending': True}).data
+        return Response({'data': serialized_events}, status=200)
     except Student.DoesNotExist:
         return Response({'status': 'error', 'message': 'User is not a student'}, status=404)

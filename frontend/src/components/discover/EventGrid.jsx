@@ -1,5 +1,5 @@
 import React from "react";
-import NewEventCard from "../newEventCard";
+import NewEventCard from "../NewEventCard";
 import PropTypes from 'prop-types';
 
 const EventGrid = ({ events }) => {

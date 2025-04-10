@@ -3,7 +3,7 @@ import NewEventCard from "../newEventCard";
 
 const RecommendedEvents = ({ events }) => {
   return (
-      <div className="flex overflow-x-auto gap-x-5 ">
+      <div className="flex overflow-x-auto gap-x-4 h-72">
           {events.length > 0 &&
               events.map((event) => (
                       <div key={event.id}>

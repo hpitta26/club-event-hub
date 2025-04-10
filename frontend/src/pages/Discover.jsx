@@ -91,7 +91,7 @@ const Discover = () => {
 
                   {/* Event Grid */}
                   <div className="overflow-y-auto flex-1 p-6">
-                      {recommendedEvents.length>2 && <RecommendedEvents events={recommendedEvents}/>}
+                      {recommendedEvents.length>3 && <RecommendedEvents events={recommendedEvents}/>}
                       {selectedFilter === "All"
                           ? <h1 className="text-lg font-bold mb-4">Events This Week</h1>
                           : <h1 className="text-lg font-bold mb-4">{selectedFilter} Events</h1>

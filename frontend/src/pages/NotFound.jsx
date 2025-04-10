@@ -5,7 +5,7 @@ function NotFound () {
                 <h1 className='text-4xl text-red-700'>404 Page not found!</h1>
             </div>
         </section>
-    )
+    );
 };
 
 export default NotFound;

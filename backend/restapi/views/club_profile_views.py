@@ -15,8 +15,8 @@ def get_club_events(request,pk):
         now = timezone.now()
         time_diff = now + timedelta(weeks=1)
         events = Event.objects.filter(club=club,start_time__gte=time_diff)
-        serializer = EventSerializer(events, many=True)
-        return Response(serializer.data)
+        serialized_events = EventSerializer(events, many=True, context={'request': request, 'student_context_rsvps': True, 'attending': True}).data
+        return Response(serialized_events, status=200)
     except Club.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -27,7 +27,7 @@ def get_weekly_club_events(request,pk):
         now = timezone.now()
         time_diff = now + timedelta(weeks=1)
         events = Event.objects.filter(club=club, start_time__gt=now, start_time__lt=time_diff)
-        serializer = EventSerializer(events, many=True)
-        return Response(serializer.data)
+        serialized_events = EventSerializer(events, many=True, context={'request': request, 'student_context_rsvps': True, 'attending': True}).data
+        return Response(serialized_events, status=200)
     except Club.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)

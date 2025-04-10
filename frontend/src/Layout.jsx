@@ -4,6 +4,7 @@ import NotFound from './pages/NotFound.jsx';
 import NavbarSelector from "./components/navbars/NavbarSelector.jsx";
 import CreateEvent from "./pages/CreateEvent.jsx";
 import { UserProvider } from "./context/UserContext.jsx";
+import ClubSetting from "./pages/ClubSetting.jsx";
 
 import Logout from './pages/authentication/Logout.jsx';
 import ClubSignup from './pages/authentication/ClubSignup.jsx';
@@ -22,8 +23,8 @@ import ClubEvents from "./pages/ClubEvents.jsx";
 import StudentSettings from "./pages/StudentSettings.jsx";
 
 import Discover from "./pages/Discover.jsx";
-import NewFollowing from "./pages/NewFollowing.jsx";
-import NewClubProfile from "./pages/NewClubProfile.jsx";
+import Following from "./pages/Following.jsx";
+import ClubProfile from "./pages/ClubProfile.jsx";
 import StudentTimes from "./pages/StudentTimes.jsx";
 
 function App() {
@@ -35,8 +36,8 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/temp" element={<TempPage />} />
           <Route path="/discover" element={<Discover />} />
-          {/* <Route path="/club/:clubSlug" element={<ClubProfile />} /> */}
-          <Route path="/club/:clubSlug" element={<NewClubProfile />} />
+          <Route path="/club/:clubSlug" element={<ClubProfile />} />
+
           {/* Protected --> makes sure users that are logged in can't visit register page */}
           <Route element={<EnsureLoggedIn expRole="NotLoggedIn" />}>
             <Route path="/student-register" element={<StudentSignup />}/> {/* Student Signup */}
@@ -46,8 +47,7 @@ function App() {
           </Route>
           {/* Protected --> can only be accessed by people with role STUDENT */}
           <Route element={<EnsureLoggedIn expRole="STUDENT" />}> 
-            {/* <Route path="/following" element={<FollowingClubs/>} /> */}
-            <Route path="/following" element={<NewFollowing />} />
+            <Route path="/following" element={<Following />} />
             <Route path="/student-settings" element={<StudentSettings />}/>
             <Route path="/student-times" element={<StudentTimes />} />
           </Route>
@@ -56,9 +56,11 @@ function App() {
             <Route path="/create-event" element={<CreateEvent />} />
             <Route path="/analytics" element={<Analytics/>} />
             <Route path="/events" element={<ClubEvents/>} />
+            <Route path="/settings" element={<ClubSetting />} />
           </Route>
           <Route path="/logout" element={<Logout />} /> {/* we don't want to limit who can logout */}
           <Route path="/*" element={<NotFound />} />
+
         </Routes>
       </Router>
     </UserProvider>

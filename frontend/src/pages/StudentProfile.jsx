@@ -65,8 +65,8 @@ function StudentProfile() {
   }
 
   return (
-    <div className="flex flex-col max-w-5xl mx-auto pt-40  p-3 ">
-      <div className="w-24 h-24 rounded-full overflow-hidden mb-2 sm:mb-6 border-2 border-black sm:w-32 sm:h-32">
+    <div className="flex flex-col max-w-5xl mx-auto pt-40 p-3 ">
+      <div className="w-24 h-24 rounded-full overflow-hidden mb-2 sm:mb-6 border-2 border-black">
         <img
           src={loading && profileImage}
           alt="Profile Picture"
@@ -75,7 +75,7 @@ function StudentProfile() {
       </div>
 
       {/* full name */}
-      <h1 className="text-3xl font-bold mb-2 sm:text-5xl">{name}</h1>
+      <h1 className="text-4xl font-bold mb-2">{name}</h1>
 
       {/* description */}
       <p className="text-gray-800 mb-4 sm:mb-7 text-xs sm:text-lg">
@@ -84,12 +84,12 @@ function StudentProfile() {
       </p>
 
       {/* grid */}
-      <div className="border-black sm:border-2 md:border-[1.8px] md:p-6 sm:p-4 border-[1.5px] rounded-lg p-2 shadow-sm ">
-        <div className="flex flex-col w-full gap-1 sm:gap-[5px] md:gap-[8px] ">
+      <div className="border-black border-[1.5px] md:p-6 sm:p-4 rounded-lg p-2 shadow-sm">
+        <div className="flex flex-col w-full gap-1">
           {contributionData.map((row, rowIndex) => (
             <div
               key={`row-${rowIndex}`}
-              className="sm:gap-[4px] md:gap-[0px] flex w-full items-center justify-between gap-[2px] "
+              className="flex w-full items-center justify-between gap-[2px]"
             >
   
               {row.map((intensity, colIndex) => {
@@ -117,7 +117,7 @@ function StudentProfile() {
                 return (
                   <div
                     key={`cell-${rowIndex}-${colIndex}`}
-                    className={`w-4 h-4 sm:w-6 sm:h-6 sm:border-[1.8px] md:w-6 md:h-6 lg:w-7 lg:h-7 md:border-[1.8px] sm:rounded-md rounded-sm  ${bgColor} border-[1.5px] border-black cursor-pointer`}
+                    className={`w-4 h-4 sm:w-6 sm:h-6 md:w-6 md:h-6 lg:w-7 lg:h-7 rounded-md ${bgColor} border-[1.5px] border-black cursor-pointer`}
                   />
                 );
               })}

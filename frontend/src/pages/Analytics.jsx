@@ -16,15 +16,6 @@ const navigate = useNavigate();
                         Welcome to Analytics!
                     </h1>
                 </div>
-
-
-                <button
-        className="flex items-center justify-center w-[120px] h-[32px] bg-[#4D79FD] text-white text-[16px] font-semibold border-[1.5px] border-black rounded-[4px] hover:bg-blue-500"
-        onClick={() => navigate("/settings")}
-      >
-        Settings
-      </button>
-                
             </div>
         </section>
     );

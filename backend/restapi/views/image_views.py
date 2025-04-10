@@ -9,8 +9,6 @@ from storages.backends.s3boto3 import S3Boto3Storage
 from rest_framework.parsers import MultiPartParser, FormParser
 from urllib.parse import quote
 
-
-
 from django.core.files.base import ContentFile
 import base64
 
@@ -118,8 +116,3 @@ class ClubProfileBannerView(APIView):
         except Club.DoesNotExist:
             return Response({"error": "Club profile not found"}, status=404)
 
-
-
-
-        # except Club.DoesNotExist:
-        #     return Response({"error": "Club doesn't exist..."}, status=404) 

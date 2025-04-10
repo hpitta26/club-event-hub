@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import drf_views, auth_views, club_follow_views, discover_view, club_profile_views, image_views, schedule_views
+from .views import drf_views, auth_views, club_follow_views, discover_view,club_profile_views, image_views, import_luma_events
 from django.views.decorators.http import require_http_methods
 
 from django.conf import settings
@@ -10,9 +11,10 @@ urlpatterns = [
     path('events/', drf_views.EventListCreateView.as_view(), name='event-list-create'),
     path('events/<int:pk>/', drf_views.EventDetailView.as_view(), name='event-detail'),
     path('clubs/', drf_views.ClubDetailView.as_view(), name='club-detail'),
+    path('import-events/', import_luma_events.import_luma_events, name="import-luma-events"),
     path('clubs/slug/<slug:slug>/', drf_views.ClubDetailBySlugView.as_view(), name='club-detail-by-slug'),
     path('students/', drf_views.StudentDetailView.as_view(), name='student-detail'),
-    path('all-students/', drf_views.StudentListView.as_view(), name='student-list'),
+    #path('all-students/', drf_views.StudentListView.as_view(), name='student-list'),
 
     path('register/', require_http_methods(['POST'])(auth_views.register_view), name='register'),
     path('login/', require_http_methods(['POST'])(auth_views.login_view), name='login'),
@@ -46,5 +48,3 @@ urlpatterns = [
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # That last little bit was added so that the media folder would be public and allow for files to be sent there
-
-

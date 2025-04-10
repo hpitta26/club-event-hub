@@ -1,4 +1,5 @@
 from django.urls import path
+from .views import drf_views, auth_views, club_follow_views, discover_view, club_profile_views, image_views, schedule_views
 from .views import drf_views, auth_views, club_follow_views, discover_view,club_profile_views, image_views, import_luma_events
 from django.views.decorators.http import require_http_methods
 
@@ -23,11 +24,18 @@ urlpatterns = [
     path('unfollow-club/<int:pk>/', club_follow_views.unfollow_club, name='unfollow-club'),
     path('follow-club/<int:pk>/', club_follow_views.follow_club, name='follow-club'),
     path('check-user-following/<int:pk>/',club_follow_views.check_user_following, name='check-user-following'),
+    path('get-following-clubs-events/', club_follow_views.get_following_club_events, name='following-clubs-events'),
 
     path('get-week-events/', discover_view.get_events_this_week, name='get-week-events'),
+    path('rsvp/', discover_view.rsvp, name='rsvp'),
+    path('is-rsvp/', discover_view.is_rsvp, name='is-rsvp'),
+    path('filter-events/<str:filter>/', discover_view.filter_events, name='filter-events'),
 
     path('get-club-events/<int:pk>/', club_profile_views.get_club_events, name='get-club-events'),
     path('get-weekly-club-events/<int:pk>/', club_profile_views.get_weekly_club_events, name='get-weekly-club-events'),
 
     path('student-profile-image/', image_views.StudentProfileImageView.as_view(), name='student-profile-image'),
+
+    path('all-student-schedules/', schedule_views.get_all_student_availabilities, name='all-student-schedules'),
+    path('student-schedule/', schedule_views.StudentAvailabilityView.as_view(), name='student-schedule')
 ]

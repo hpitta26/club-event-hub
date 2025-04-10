@@ -177,6 +177,9 @@ const NewStudentNavbar = () => {
                         <a href="#" className="block px-4 py-2 text-sm text-black hover:bg-gray-100">
                           Profile
                         </a>
+                        <a href="/student-times" className="block px-4 py-2 text-sm text-black hover:bg-gray-100">
+                          Availability
+                        </a>
                         <a href="/student-settings" className="block px-4 py-2 text-sm text-black hover:bg-gray-100">
                           Settings
                         </a>

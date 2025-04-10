@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import EventModal from "../EventModal";
 import { useSidebar } from "../../context/SidebarContext";
 import backend from "../backend";
+import { Link } from "react-router-dom";
 
 const NewStudentNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -140,18 +141,24 @@ const NewStudentNavbar = () => {
               />
             </a>
             <div className="flex space-x-6">
-              <a
-                href="/discover"
+              <Link
+                to="/discover"
                 className={`font-normal text-black text-lg tracking-wide hover:text-pink-500`}
               >
                 Discover
-              </a>
-              <a
-                href="/following"
+              </Link>
+              <Link
+                to="/following"
                 className={`font-normal text-black text-lg tracking-wide hover:text-blue-500`}
               >
                 Following
-              </a>
+              </Link>
+              <Link
+                to="/Leaderboard"
+                className={`font-normal text-black text-lg tracking-wide hover:text-blue-500`}
+              >
+                Leaderboard
+              </Link>
             </div>
           </div>
           {/* Center: Search Bar */}
@@ -206,30 +213,30 @@ const NewStudentNavbar = () => {
                   ref={profileDropdownRef}
                   className="absolute right-5 mt-1 py-2 w-48 bg-white border-[1.5px] border-black rounded-md shadow-lg"
                 >
-                  <a
-                    href="#"
+                  <Link
+                    to="#"
                     className="block px-4 py-2 text-sm text-black hover:bg-gray-100"
                   >
                     Profile
-                  </a>
-                  <a
-                    href="/student-times"
+                  </Link>
+                  <Link
+                    to="/student-times"
                     className="block px-4 py-2 text-sm text-black hover:bg-gray-100"
                   >
                     Availability
-                  </a>
-                  <a
-                    href="/student-settings"
+                  </Link>
+                  <Link
+                    to="/student-settings"
                     className="block px-4 py-2 text-sm text-black hover:bg-gray-100"
                   >
                     Settings
-                  </a>
-                  <a
-                    onClick={handleLogout}
-                    className="block px-4 py-2 text-sm text-black hover:bg-gray-100 cursor-pointer"
+                  </Link>
+                  <Link
+                    to="/student-logout"
+                    className="block px-4 py-2 text-sm text-black hover:bg-gray-100"
                   >
                     Logout
-                  </a>
+                  </Link>
                 </div>
               )}
             </div>

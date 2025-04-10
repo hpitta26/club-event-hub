@@ -26,6 +26,8 @@ import NewFollowing from "./pages/NewFollowing.jsx";
 import NewClubProfile from "./pages/NewClubProfile.jsx";
 import StudentTimes from "./pages/StudentTimes.jsx";
 
+import StudentProfile from "./pages/StudentProfile.jsx"
+
 function App() {
   return (
     <UserProvider>
@@ -35,6 +37,7 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/temp" element={<TempPage />} />
           <Route path="/discover" element={<Discover />} />
+          <Route path="/student-profile"element={<StudentProfile/>}/>
           {/* <Route path="/club/:clubSlug" element={<ClubProfile />} /> */}
           <Route path="/club/:clubSlug" element={<NewClubProfile />} />
           {/* Protected --> makes sure users that are logged in can't visit register page */}

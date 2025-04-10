@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import EventModal from '../EventModal';
 import { useSidebar } from '../../context/SidebarContext';
 import backend from '../backend';
+import NotificationDropDown from '../notification/NotificationDropDown'; // Updated import path
 
 const NewStudentNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -14,11 +15,13 @@ const NewStudentNavbar = () => {
   const [eventsClicked, setEventsClicked] = useState(false);
   const [isFollowingModalOpen, setFollowingModalOpen] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false); // New state for notifications
 
   const { toggleSidebar } = useSidebar(); 
 
   const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const profileDropdownRef = useRef(null);
+  const notificationsRef = useRef(null); // Ref for notifications dropdown
 
   const [showEventModal, setShowEventModal] = useState(false); 
   const sidebarRef = useRef(null); 
@@ -41,16 +44,26 @@ const NewStudentNavbar = () => {
 
   const displayEventModal = () => {
     setShowEventModal(!showEventModal);
-    // setDropdown(null); 
-    // setShowSearch(false);
   }
 
   const toggleProfileDropdown = () => {
     setProfileDropdownOpen((prev) => !prev);
+    // Close other dropdowns
+    setIsNotificationsOpen(false);
+  };
+
+  const toggleNotifications = () => {
+    setIsNotificationsOpen((prev) => !prev);
+    // Close other dropdowns
+    setProfileDropdownOpen(false);
   };
 
   const closeProfileDropdown = () => {
     setProfileDropdownOpen(false);
+  };
+
+  const closeNotificationsDropdown = () => {
+    setIsNotificationsOpen(false);
   };
 
   const handleLogout = () => {
@@ -83,14 +96,11 @@ const NewStudentNavbar = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      // if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      //   setDropdown(null);
-      // }
-      // if (searchRef.current && !searchRef.current.contains(event.target)) {
-      //   setShowSearch(false);
-      // }
       if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
         closeProfileDropdown();
+      }
+      if (notificationsRef.current && !notificationsRef.current.contains(event.target)) {
+        closeNotificationsDropdown();
       }
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)){
         setShowEventModal(false); 
@@ -102,8 +112,6 @@ const NewStudentNavbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  const userProfileSrc = null;
 
   return (
     <>
@@ -164,16 +172,28 @@ const NewStudentNavbar = () => {
                   <button className="hidden md:block bg-[#FD4EB7] text-black font-normal text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:bg-pink-400" onClick={handleEventsClick}>
                     Your Events
                   </button>
+                  
                   {/* Notifications */}
-                  <button className="hidden md:block bg-[#4D9FFD] text-black p-2 rounded-md border-[1.5px] border-black hover:bg-blue-400">
-                    <GoBell className="w-5 h-5" />
-                  </button>
+                  <div className="relative" ref={notificationsRef}>
+                    <button 
+                      className="hidden md:block bg-[#4D9FFD] text-black p-2 rounded-md border-[1.5px] border-black hover:bg-blue-400"
+                      onClick={toggleNotifications}
+                    >
+                      <GoBell className="w-5 h-5" />
+                    </button>
+                    <NotificationDropDown 
+                      isOpen={isNotificationsOpen} 
+                      onClose={closeNotificationsDropdown} 
+                    />
+                  </div>
 
                   {/* Profile Icon */}
-                  <div className="w-[50px] h-[50px] bg-white border-[1.5px] border-black rounded-full overflow-hidden cursor-pointer" onClick={toggleProfileDropdown}>
-                    <img src={profileImage || "something"} alt="Profile" className="w-full h-full object-cover"/>
+                  <div className="relative " ref={profileDropdownRef} >
+                    <div className="w-[50px] h-[50px] bg-white border-[1.5px] border-black rounded-full overflow-hidden cursor-pointer" onClick={toggleProfileDropdown}>
+                      <img src={profileImage || "something"} alt="Profile" className="w-full h-full object-cover"/>
+                    </div>
                     {isProfileDropdownOpen && (
-                      <div ref={profileDropdownRef} className="absolute right-5 mt-1 py-2 w-48 bg-white border-[1.5px] border-black rounded-md shadow-lg">
+                      <div className=" absolute right-0 mt-1 py-2 w-48 bg-white rounded-md border-[1.5px] border-black shadow-[2px_2px_0px_#000000]">
                         <a href="#" className="block px-4 py-2 text-sm text-black hover:bg-gray-100">
                           Profile
                         </a>

@@ -178,9 +178,9 @@ const NewStudentNavbar = () => {
                 className={`font-normal text-black text-lg tracking-wide hover:text-pink-500`}
               >
                 Discover
-              </a>
-              <a
-                href="/following"
+              </Link>
+              <Link
+                to="/following"
                 className={`font-normal text-black text-lg tracking-wide hover:text-blue-500`}
               >
                 Following
@@ -251,6 +251,7 @@ const NewStudentNavbar = () => {
                   className="absolute right-5 mt-1 py-2 w-48 bg-white border-[1.5px] border-black rounded-md shadow-lg"
                 >
 <<<<<<< HEAD
+<<<<<<< HEAD
                   <Link
                     to="#"
                     className="block px-4 py-2 text-sm text-black hover:bg-gray-100"
@@ -285,9 +286,9 @@ const NewStudentNavbar = () => {
                     className="block px-4 py-2 text-sm text-black hover:bg-gray-100"
                   >
                     Profile
-                  </a>
-                  <a
-                    href="/student-times"
+                  </Link>
+                  <Link
+                    to="/student-times"
                     className="block px-4 py-2 text-sm text-black hover:bg-gray-100"
                   >
                     Availability
@@ -297,12 +298,13 @@ const NewStudentNavbar = () => {
                     className="block px-4 py-2 text-sm text-black hover:bg-gray-100"
                   >
                     Settings
-                  </a>
-                  <a
-                    onClick={handleLogout}
-                    className="block px-4 py-2 text-sm text-black hover:bg-gray-100 cursor-pointer"
+                  </Link>
+                  <Link
+                    to="/student-logout"
+                    className="block px-4 py-2 text-sm text-black hover:bg-gray-100"
                   >
                     Logout
+<<<<<<< HEAD
                   </a>
 >>>>>>> a187e79 (updated the logo to a png)
 =======

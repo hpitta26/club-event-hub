@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -61,3 +63,25 @@ def filter_events(request,filter):
     except Exception as e:
         print(e)
         return Response({'status': 'error', 'message': 'server error'}, status=404)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def collaborative_filter(request):
+    try:
+        session_student = Student.objects.get(user=request.user)
+        past_events = Event.objects.filter(rsvps=session_student).order_by("-start_time")[:10]
+
+        student_count = defaultdict(int)
+
+        for past_event in past_events:
+            for iterated_student in past_event.rsvps.exclude(user_id=session_student.user_id):
+                student_count[iterated_student.user_id] += 1
+
+        sorted_students = sorted(student_count.items(), key=lambda x: x[1], reverse=True)
+        top_students = [student[0] for student in sorted_students]
+        recommended_events = Event.objects.filter(rsvps__in=top_students).exclude(rsvps=session_student).distinct()
+        # List is reversed so that events belonging to most similar students are returned first
+        return Response(EventSerializer(list(recommended_events)[::-1][:10], many=True).data)
+
+    except Student.DoesNotExist:
+        return Response({'status': 'error', 'message': 'Student not found'}, status=404)

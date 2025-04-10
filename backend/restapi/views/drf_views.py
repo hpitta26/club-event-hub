@@ -10,6 +10,7 @@ from restapi.permissions import ClubPermission, Admin, StudentPermission
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser, FormParser
 
 # List all events or create a new event
 class EventListCreateView(generics.ListCreateAPIView):
@@ -46,11 +47,17 @@ class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
 class ClubListCreateView(generics.ListCreateAPIView):
     queryset = Club.objects.all()
     serializer_class = ClubSerializer
-
 # Retrieve, update, or delete a single club
 class ClubDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Club.objects.all()
     serializer_class = ClubSerializer
+    parser_classes = [MultiPartParser, FormParser]
+
+    def get_object(self):
+        club_id=self.request.session.get('id')
+        if not club_id:
+            raise Exception("No Club ID found in session")
+        return get_object_or_404(Club,user_id=club_id)
 
 #Retrieve, update, or delete a single club through Slug instead of PK
 class ClubDetailBySlugView(generics.RetrieveUpdateDestroyAPIView):

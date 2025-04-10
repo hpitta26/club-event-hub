@@ -1,7 +1,9 @@
 from django.contrib.auth.views import csrf_protect
 from django.http import JsonResponse
+from restapi.serializers import EventSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from restapi.models import Club, Event
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -12,19 +14,49 @@ from bs4 import BeautifulSoup
 from typing import List, Dict
 from time import sleep
 import re
+from dateutil.parser import parse as parse_date
+from rest_framework.generics import get_object_or_404
+from datetime import timedelta, datetime
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 @csrf_protect
 def import_luma_events(request):
-    club_name = request.data.get('club_name')  # Or retrieve it from session or elsewhere
-    if not club_name:
+    # Get the club from session (linked to logged-in user)
+    club_id = request.session.get('id')
+    if not club_id:
+        return JsonResponse({"error": "You must be logged in as a club."}, status=401)
+
+    club_instance = get_object_or_404(Club, user_id=club_id)
+    print(type(club_instance))
+
+    if not club_instance:
         return JsonResponse({"error": "Organization name is required"}, status=400)
 
-    # Call the function
-    events = get_luma_events(club_name)
-    
-    return JsonResponse({"events": events}, safe=False)
+    # Normalize and scrape Luma events
+    normalized_name = normalize_club_name(club_instance.club_name)
+    scraped_events = get_luma_events(normalized_name)
+
+    created_events = []
+    for e in scraped_events:
+        start_time = parse_date_with_relative_terms(e['date'])
+
+        # Check for duplicates
+        if not Event.objects.filter(title=e['title'], start_time=start_time, club=club_instance).exists():
+            event = Event.objects.create(
+                title=e['title'],
+                start_time=start_time,
+                end_time=start_time,
+                location=e['location'],
+                capacity=100,
+                description=f"Imported from Luma: {e.get('link', '')}",
+                club=club_instance
+            )
+            created_events.append(event)
+
+    serialized = EventSerializer(created_events, many=True)
+    return JsonResponse({"events": serialized.data})
+
 
 
 def get_luma_events(org_name: str) -> List[Dict[str, str]]:
@@ -155,6 +187,7 @@ def scrape_events_from_modal(driver) -> List[Dict[str, str]]:
         full_link = f"https://lu.ma{href}" if href.startswith("/") else href if href else "No Link"
 
         meta_row = event.find("div", class_="jsx-2360576654 meta-row min-width-0 flex-center")
+        host_meta_row = event.find("div", class_="jsx-3575689807 text-ellipses")
         if meta_row:
             date_tag = meta_row.find("span", class_="jsx-749509546")
             date = date_tag.text.strip() if date_tag else "Date not found"
@@ -164,6 +197,12 @@ def scrape_events_from_modal(driver) -> List[Dict[str, str]]:
         else:
             date = "Date not found"
             location = "Location not found"
+
+        if host_meta_row:
+            host_tag = host_meta_row.find("div", class_="text-ellipses nowrap")
+            host = host_tag.text.strip() if host_tag else "Host not found"
+        else:
+            host = "Host not found"
 
         events.append({
             "title": title,
@@ -185,3 +224,21 @@ def normalize_club_name(club_name: str) -> str:
     club_name = re.sub(r"[^\w\s]", "", club_name)  # Remove special characters
     club_name = re.sub(r"\s+", "", club_name)  # Remove all spaces
     return club_name
+
+def parse_date_with_relative_terms(date_string: str) -> datetime:
+    """Parse date strings with relative terms like 'Yesterday', 'Today', and default date formats."""
+    
+    # Handle "Yesterday" by converting to the actual date
+    if "Yesterday" in date_string:
+        date_string = re.sub(r"Yesterday", (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d"), date_string)
+    
+    # Handle "Today" by converting to the actual date
+    elif "Today" in date_string:
+        date_string = re.sub(r"Today", datetime.now().strftime("%Y-%m-%d"), date_string)
+
+    try:
+        # Now parse the date, this will handle actual date formats as well
+        return parse_date(date_string)
+    except ValueError:
+        # If parsing fails, raise a more specific error
+        raise ValueError(f"Unrecognized date format: {date_string}")

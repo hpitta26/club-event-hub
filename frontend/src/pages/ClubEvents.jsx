@@ -83,7 +83,7 @@ function ClubEvents() {
 
   return (
     <div className="min-h-screen p-10 flex flex-col items-center bg-gray-100">
-      <div className="w-full max-w-5xl relative mb-6 mt-6">
+      <div className="w-[60%] max-w-5xl relative mb-6 mt-6">
         <h1 className="text-4xl font-bold text-center">Events</h1>
 
         {/* Filter Buttons */}
@@ -126,7 +126,7 @@ function ClubEvents() {
       {loading ? (
         <p className="text-center">Loading events...</p>
       ) : filteredEvents.length > 0 ? (
-        <div className="w-full max-w-5xl flex">
+        <div className="w-[60%] max-w-5xl flex">
           {/* Timeline */}
           <div className="relative w-10 flex flex-col items-center">
             <div className="absolute top-0 bottom-0 w-1 bg-gray-300 rounded-full"></div>

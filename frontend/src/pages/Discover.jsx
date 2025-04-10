@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useContext} from "react";
 import backend from "../components/backend";
 import NewSidebar from "../components/discover/NewSidebar";
 import EventGrid from "../components/discover/EventGrid";
 import NewFilterBar from "../components/discover/NewFilerBar";
 import { useSidebar } from "../context/SidebarContext";
 import RecommendedEvents from "../components/discover/RecommendedEvents.jsx";
+import {UserContext} from "../context/UserContext.jsx";
 
 const Discover = () => {
   const categories = ["All", "Career", "Culture","Fitness", "Medical", "Politics", "Social", "Technology","Volunteer", "Wellness"];
   const [selectedFilter, setSelectedFilter] = useState("All");
   const { isSidebarOpen } = useSidebar();
   const [filteredEvents, setFilteredEvents] = useState([])
+  const [recommendedEvents, setRecommendedEvents] = useState([])
+  const {userContext} = useContext(UserContext)
   const [allEvents, setAllEvents] = useState([{
         id: 0,
         title: "",
@@ -25,7 +28,6 @@ const Discover = () => {
         is_rsvped: false,
         category: ""
     }]);
-    const [recommendedEvents, setRecommendedEvents] = useState([])
 
   useEffect(() => {
     async function fetch_events() {
@@ -53,10 +55,12 @@ const Discover = () => {
   }, [allEvents,selectedFilter]);
 
   useEffect(() => {
-      backend
-          .get(`collaborative-filter/`)
-          .then((response)=>
-          setRecommendedEvents(response.data))
+      if(userContext){
+          backend
+              .get(`collaborative-filter/`)
+              .then((response)=>
+              setRecommendedEvents(response.data))
+      }
   }, []);
 
   return (
@@ -88,16 +92,11 @@ const Discover = () => {
                       <NewFilterBar categories={categories} onFilterSelect={setSelectedFilter}/>
                   </div>
 
-                {/* Recommended Events Section */}
-                <div className="pt-6 px-6">
-                  <h1 className="text-2xl font-bold mb-4">Recommended Events</h1>
-                  <div className="overflow-x-hidden pb-4">
-                    <RecommendedEvents events={recommendedEvents} />
-                  </div>
-                </div>
+                  {userContext && <h1 className="text-2xl font-bold mb-4 pt-6 px-6">Recommended Events</h1>}
 
                   {/* Event Grid */}
                   <div className="overflow-y-auto flex-1 p-6">
+                      <RecommendedEvents events={recommendedEvents} />
                       <EventGrid events={filteredEvents}/>
                   </div>
               </div>

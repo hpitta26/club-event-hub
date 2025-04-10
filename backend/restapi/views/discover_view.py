@@ -10,7 +10,6 @@ from ..serializers import EventSerializer
 from restapi.permissions import StudentPermission
 
 @api_view(["GET"])
-@permission_classes([IsAuthenticated])
 def get_events_this_week(request):
     try:
         now = timezone.now()

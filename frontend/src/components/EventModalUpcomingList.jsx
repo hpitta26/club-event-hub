@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import EventModalCard from "./EventModalCard";
 
 {/* Custom Scroll Bar Styling */}
@@ -9,8 +10,12 @@ const customScrollbarStyle = {
   msOverflowStyle: "none",  
 };
 
-function EventModalUpcomingList() {
-  const currentRSVPS = Array(40).fill({}); // Increased to 40 for demonstration
+function EventModalUpcomingList({ events = [] }) {
+  const [currentRSVPS, setCurrentRSVPS] = useState([]);
+
+  useEffect(() => {
+    setCurrentRSVPS(events);
+  }, [events]);
 
   return (
     <div className="w-full h-full rounded-md" style={customScrollbarStyle}>
@@ -18,7 +23,7 @@ function EventModalUpcomingList() {
         {/* Making a card for every RSVP */}
         {currentRSVPS.map((event, index) => (
           <div key={index}>
-            <EventModalCard />
+            <EventModalCard title={event.title} date={event.start_time} host={event.host} image={event.hostLogo} />
           </div>
         ))}
       </div>

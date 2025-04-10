@@ -1,39 +1,61 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
-import { FaLocationDot } from "react-icons/fa6";
-import { IoMdPerson } from "react-icons/io";
+import { GrLocation } from "react-icons/gr";
+import EventDetailsCard from "./EventDetailsCard";
+import { dateFormat, formatDay, formatTimeRange } from '../utils/dates';
+import { truncate } from "../utils/truncate";
 
 function EventCard({
+  id = 0,
   title = "Untitled Event",
   date = "TBD",
   host = "Unknown Host",
   location = "Location TBD",
-  attendees = 0,
+  attendees = 79,
   capacity = "N/A",
   coverImage = dummyEventCardCover,
   hostLogo = dummyInitLogo,
+  description= "No detailed description available.",
+  universityName = "Florida International University",
+  is_rsvped = false,
 }) {
-  function handleTitleLength(eventTitle) {
-    const maxLength = 30;
-    return eventTitle.length > maxLength
-      ? eventTitle.slice(0, maxLength) + "..."
-      : eventTitle;
-  }
+  const [showDetails, setShowDetails] = useState(false);
+  const cardRef = useRef(null);
+  const [numAttendees, setNumAttendees] = useState(attendees);
+  const [numCapacity, setNumCapacity] = useState(capacity);
+  const [isRSVP, setIsRSVP] = useState(is_rsvped);
 
-  function formatDate(isoString) {
-    if (!isoString || isoString === "TBD") return "TBD"; // Handle empty or "TBD" dates
+  // Click outside  to close the details card
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        showDetails &&
+        cardRef.current &&
+        !cardRef.current.contains(event.target)
+      ) {
+        const detailsCard = document.querySelector(".event-details-card");
+        if (!detailsCard || !detailsCard.contains(event.target)) {
+          setShowDetails(false);
+        }
+      }
+    };
 
-    const dateObj = new Date(isoString);
-    return new Intl.DateTimeFormat("en-US", {
-      month: "short", // Abbreviated month (e.g., "Mar")
-      day: "numeric", // Day number (e.g., "8")
-      hour: "numeric", // Hour (e.g., "7 PM")
-      hour12: true, // Use 12-hour format
-    }).format(dateObj);
-  }
+    document.addEventListener("mousedown", handleClickOutside);
 
-  const spotsLeft = capacity === "N/A" ? "N/A" : capacity;
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showDetails]);
+
+  const handleOnClick = () => {
+    setShowDetails(true);
+  };
+  const handleCloseDetails = () => {
+    setShowDetails(false);
+  };
+
+  const spotsLeft = numCapacity === "N/A" ? "N/A" : numCapacity;
   let spotsLeftColor = "#35A25D"; // Default color for 30+ spots
 
   if (spotsLeft === 0) {
@@ -43,57 +65,100 @@ function EventCard({
   }
 
   return (
-    <div
-      className="relative w-[237.5px] h-[268.75px] bg-[#F0EFEB] border-2 border-black rounded-xl shadow-sm 
-                    hover:shadow-md transition-transform transform hover:scale-[1.02] p-2.5 flex flex-col cursor-pointer"
-    >
-      {/* Event Banner */}
-      <div className="relative w-[212.5px] h-[123.75px] mb-2.5 border-2 border-black rounded-lg overflow-hidden">
-        <p
-          className="absolute top-1.5 left-1.5 bg-blue-500 text-white px-1.5 py-0.625 rounded-md text-[10px] font-medium 
-                  border-2 border-black"
-        >
-          {formatDate(date)}
+    <>
+      <div
+        ref={cardRef}
+        className="relative w-[237.5px] h-[268.75px] bg-white border-[1.5px] border-black shadow-[2px_2px_0px_#000000] rounded-xl 
+                      hover:shadow-[2px_2px_0px_#000000] transition-transform transform hover:scale-[1.02] p-2.5 flex flex-col cursor-pointer"
+        onClick={handleOnClick}
+      >
+        {/* Event Banner */}
+        <div className="relative w-[212.5px] h-[123.75px] mb-2.5 border-[2.5px] border-black rounded-lg overflow-hidden">
+          <p className="absolute top-1.5 left-1.5 bg-blue-500 text-white px-1.5 py-0.625 rounded-md text-[10px] font-medium border shadow-[2px_2px_0px_#000000] border-black">
+            {dateFormat(date)}
+          </p>
+          <img
+            src={coverImage}
+            alt="Event Cover"
+            className="w-full h-full object-cover rounded-sm"
+          />
+        </div>
+
+        {/* Title */}
+        <p className="absolute top-[137.5px] left-[15px] w-[207.5px] h-[23.75px] font-semibold text-[20px] leading-[23.75px]">
+          {truncate(title, 30)}
         </p>
-        <img
-          src={coverImage}
-          alt="Event Cover"
-          className="w-full h-full object-cover rounded-sm"
-        />
-      </div>
 
-      {/* Title */}
-      <p className="absolute top-[137.5px] left-[15px] w-[207.5px] h-[23.75px] font-semibold text-[20px] leading-[23.75px]">
-        {handleTitleLength(title)}
-      </p>
+        {/* Host & Location */}
+        <div className="absolute top-[166.75px] left-[15px] flex items-center gap-1.5 mb-1.25">
+          <img
+            src={hostLogo}
+            alt="Host Logo"
+            className="w-[18px] h-[18px] object-cover rounded-full"
+          />
+          <p className="text-[12.5px] text-[#8F8F8F]">{host}</p>
+        </div>
+        <div className="absolute top-[189.5px] left-[15px] flex items-center gap-1.5">
+          <GrLocation className="text-[#4EA0FD] w-[18px] h-[18px]" />
+          <p className="text-[12.5px] text-[#8F8F8F]">{location}</p>
+        </div>
 
-      {/* Host & Location */}
-      <div className="absolute top-[168.75px] left-[15px] flex items-center gap-1.5 mb-1.25">
-        <img
-          src={hostLogo}
-          alt="Host Logo"
-          className="w-[15px] h-[15px] object-cover rounded-full border border-gray-300"
-        />
-        <p className="text-[12.5px] text-[#8F8F8F]">{host}</p>
-      </div>
-      <div className="absolute top-[187.5px] left-[15px] flex items-center gap-1.5">
-        <FaLocationDot className="text-gray-600 w-[15px] h-[15px]" />
-        <p className="text-[12.5px] text-[#8F8F8F]">{location}</p>
-      </div>
+        {/* Profile Images and Going Count */}
+        <div className="absolute bottom-[12.5px] left-[15px] flex items-center gap-1.5">
+          {/* Avatars */}
+          <div className="flex items-center">
+            <img
+              src={dummyInitLogo}
+              alt="Attendee 1"
+              className="w-[20px] h-[20px] object-cover rounded-full border border-white"
+            />
+            <img
+              src={dummyInitLogo}
+              alt="Attendee 2"
+              className="w-[20px] h-[20px] object-cover rounded-full border border-white -ml-[6px]"
+            />
+            <img
+              src={dummyInitLogo}
+              alt="Attendee 3"
+              className="w-[20px] h-[20px] object-cover rounded-full border border-white -ml-[6px]"
+            />
+          </div>
 
-      <div className="absolute bottom-[12.5px] left-[15px] flex justify-between items-center w-[207.5px]">
-        {/* Going */}
-        <div className="flex items-center gap-1.25">
-          <IoMdPerson className="text-gray-600 w-[15px] h-[15px]" />
-          <p className="text-[12.5px] text-[#000000]">{attendees} GOING</p>
+          {/* Number of People Going */}
+          <p className="text-[10px] text-black">{numAttendees} GOING</p>
         </div>
 
         {/* Spots Left */}
-        <p className="text-[12.5px]" style={{ color: spotsLeftColor }}>
-          {spotsLeft} spots left
-        </p>
+        <div className="absolute bottom-[12.5px] right-[15px]">
+          <p className="text-[12.5px]" style={{ color: spotsLeftColor }}>
+            {spotsLeft} spots left
+          </p>
+        </div>
       </div>
-    </div>
+
+      {/* Event Details Card */}
+      {showDetails && (
+        <EventDetailsCard
+          event_id={id}
+          isOpen={showDetails}
+          onClose={handleCloseDetails}
+          title={title}
+          club={host}
+          day={formatDay(date)}
+          time={formatTimeRange(date)}
+          description={description}
+          universityName={universityName}
+          roomLocation={location}
+          attendees={numAttendees}
+          setAttendees={setNumAttendees}
+          capacity={numCapacity}
+          setCapacity={setNumCapacity}
+          image={coverImage}
+          isRSVP={isRSVP}
+          setIsRSVP={setIsRSVP}
+        />
+      )}
+    </>
   );
 }
 

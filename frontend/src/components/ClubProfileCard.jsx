@@ -2,6 +2,8 @@ import React from "react";
 import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
 import { GrLocation } from "react-icons/gr"
+import { truncate } from "../utils/truncate";
+import { dateFormat } from "../utils/dates";
 
 function ClubProfileCard({
   title = "Untitled Event",
@@ -13,33 +15,6 @@ function ClubProfileCard({
   coverImage = dummyEventCardCover,
   hostLogo = dummyInitLogo,
 }) {
-  function handleTitleLength(eventTitle) {
-    const maxLength = 30;
-    return eventTitle.length > maxLength
-      ? eventTitle.slice(0, maxLength) + "..."
-      : eventTitle;
-  }
-
-  function formatDate(isoString) {
-    if (!isoString || isoString === "TBD") return "TBD"; // Handle empty or "TBD" dates
-
-    const dateObj = new Date(isoString);
-
-    // Format the date as "Aug 25"
-    const formattedDate = new Intl.DateTimeFormat("en-US", {
-      month: "short", // Abbreviated month (e.g., "Aug")
-      day: "numeric", // Day number (e.g., "25")
-    }).format(dateObj);
-
-    // Format the time as "9pm"
-    const hours = dateObj.getHours();
-    const minutes = dateObj.getMinutes();
-    const formattedTime = `${hours % 12 || 12}${minutes === 0 ? "" : `:${minutes}`}${hours >= 12 ? "pm" : "am"}`;
-
-    // Combine the date and time
-    return `${formattedDate}-${formattedTime}`;
-  }
-
   const spotsLeft = capacity === "N/A" ? "N/A" : capacity;
   let spotsLeftColor = "#35A25D"; // Default color for 30+ spots
 
@@ -60,7 +35,7 @@ function ClubProfileCard({
           className="absolute top-1.5 left-1.5 bg-blue-500 text-white px-1.5 py-0.625 rounded-md text-[10px] font-medium
                   border shadow-[2px_2px_0px_#000000] border-black"
         >
-          {formatDate(date)}
+          {dateFormat(date)}
         </p>
         <img
           src={coverImage}
@@ -71,7 +46,7 @@ function ClubProfileCard({
 
       {/* Title */}
       <p className="absolute top-[137.5px] left-[15px] w-[207.5px] h-[23.75px] font-semibold text-[20px] leading-[23.75px]">
-        {handleTitleLength(title)}
+        {truncate(title, 30)}
       </p>
 
       {/* Host & Location */}

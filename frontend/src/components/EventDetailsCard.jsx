@@ -27,6 +27,7 @@ function EventDetailsCard({
   setIsRSVP = () => {}
 }) {
   if (!isOpen) return null;
+  const navigate = useNavigate();
 
   const navigate = useNavigate();
 
@@ -34,27 +35,12 @@ function EventDetailsCard({
     e.stopPropagation();
   };
 
-  useEffect(() => {
-    const fetchIsRSVP = async () => {
-      try {
-        const response = await backend.get(`is-rsvp/?event_id=${event_id}`)
-        console.log(response.data);
-        if (response.status === 200) {
-          setIsRSVP(response.data.RSVP);
-        }
-      } catch (error) {
-        console.error("Error fetching RSVP status:", error);
-      }
-    }
-    fetchIsRSVP();
-  }, [event_id, setIsRSVP]);
-
   const handleRSVP = async (e) => {
     try {
       const response = await backend.post('/rsvp/', { event_id: event_id });
 
-      console.log(response.data);
-
+      console.log(response);
+ 
       if (response.status === 200) {
         if (isRSVP) {
           setIsRSVP(false);
@@ -67,6 +53,9 @@ function EventDetailsCard({
         }
       }
     } catch (error) {
+        if (error.status === 403) {
+            navigate('/student-register');
+        };
       console.error("Error handling RSVP:", error);
     }
   };

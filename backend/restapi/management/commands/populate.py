@@ -214,6 +214,17 @@ class Command(BaseCommand):
                 "tags": ["Technology"]
             },
             {
+                "club": "club1@example.com",
+                "title": "Past Event",
+                "description": "blah blah blah lets party!!",
+                "start_time": timezone.now() + datetime.timedelta(days=-3),
+                "end_time": timezone.now() + datetime.timedelta(days=-3, hours=-2),
+                "location": "Main Hall A",
+                "capacity": 20,
+                "rsvps": ["student1@fiu.edu"],
+                "tags": ["Technology"]
+            },
+            {
                 "club": "club2@example.com",
                 "title": "Art Gallery Night",
                 "description": "Showcase your paintings and sculptures.",

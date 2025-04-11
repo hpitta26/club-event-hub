@@ -4,6 +4,7 @@ import { FiCalendar, FiMapPin, FiUsers } from "react-icons/fi";
 import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
 import backend from "./backend";
+import { useNavigate } from "react-router-dom";
 
 function EventDetailsCard({
   event_id = 0,
@@ -26,6 +27,8 @@ function EventDetailsCard({
   setIsRSVP = () => {}
 }) {
   if (!isOpen) return null;
+
+  const navigate = useNavigate();
 
   const handleCardClick = (e) => {
     e.stopPropagation();
@@ -67,6 +70,11 @@ function EventDetailsCard({
       console.error("Error handling RSVP:", error);
     }
   };
+
+  const handleClubClick = () => {
+    const clubSlug = club.toLowerCase().replace(/\s+/g, '-');
+    navigate(`/club/${clubSlug}`);
+  }
 
   return (
     <div className="fixed top-0 right-0 z-50 h-screen flex items-start justify-end p-4">
@@ -110,7 +118,7 @@ function EventDetailsCard({
 
         <div className="flex flex-col gap-1">
           {/* Club Name */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 cursor-pointer" onClick={handleClubClick}>
             <img
               src={profilePicture}
               className="w-6 h-6 rounded-full bg-gray-400 flex items-center justify-center"

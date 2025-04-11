@@ -68,7 +68,7 @@ function StudentProfile() {
     <div className="flex flex-col max-w-5xl mx-auto pt-40 p-3 ">
       <div className="w-24 h-24 rounded-full overflow-hidden mb-2 sm:mb-6 border-2 border-black">
         <img
-          src={loading && profileImage}
+          src={profileImage || "something"}
           alt="Profile Picture"
           className="w-full h-full object-cover"
         />

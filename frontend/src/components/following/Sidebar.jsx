@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import dummyEventCardCover from "../../assets/dummyEventCardCover.jpg"; // Fallback image
-import backend from "../backend";
+import backend from "../backend.jsx";
 import SidebarCard from "../discover/SidebarCard.jsx";
 
-const Sidebar = () => {
+const SideBar = () => {
   const [followedClubs, setFollowedClubs] = useState([]);
   const [loading, setLoading] = useState(true);
   
@@ -37,13 +37,12 @@ const Sidebar = () => {
     )
   } else {
     return (
-      <div className="p-4 flex flex-col items-center">
-        {/* Following Clubs */}
+      <div className="absolute w-[278px] h-[calc(100vh-80px)] top-[80px] left-0 bg-[rgba(253,78,183,0.8)] border border-black shadow-[4px_4px_0px_#000000] p-4">
+      {/* New Events Section */}
+      <div className="flex flex-col items-center">
         <div>
-          <h2 className="font-semibold text-lg text-black-300 mb-3 tracking-wide self-start">
-            Following
-          </h2>
-          <div className="space-y-3">
+          <h2 className="font-normal text-[26px] leading-[31px] text-black mb-2">Following</h2>
+          <div className="flex flex-col gap-3">
             {followedClubs.map((club) => (
               <SidebarCard 
                 key={club.id} 
@@ -54,8 +53,9 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
+    </div>
     );
   }
 };
 
-export default Sidebar;
+export default SideBar;

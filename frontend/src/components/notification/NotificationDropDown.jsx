@@ -50,7 +50,7 @@ const NotificationDropDown = ({ isOpen, onClose }) => {
               className="flex items-center px-4 py-3 cursor-pointer border-b last:border-b-0 border-gray-300 bg-[#FFFAFD] hover:bg-blue-100 rounded-xl transition-colors duration-200"
             >
               <div className="relative">
-                <img 
+                <img
                   src={notification.sourceLogo} 
                   alt={notification.source} 
                   className="w-12 h-12 rounded-full object-cover mr-4 border-[1.5px] border-black"

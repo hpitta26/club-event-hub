@@ -95,7 +95,7 @@ const NewSidebar = () => {
       <div className="flex flex-col items-center">
         <div className="mt-8">
           <h2 className="font-normal text-[26px] leading-[31px] text-black mb-2">
-            Featured
+            Recommended
           </h2>
           <div className="flex flex-col gap-3">
             {featuredEvents.map((event) => (

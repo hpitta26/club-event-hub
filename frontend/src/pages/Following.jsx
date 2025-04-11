@@ -13,7 +13,7 @@ const Following = () => {
     backend.get('get-following-clubs-events/')
       .then(response => {
         if (response.status === 200) {
-          setAllEvents(response.data);
+          setAllEvents(response.data.upcoming);
         } else {
           console.error("Failed to fetch events");
         }

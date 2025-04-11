@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from ..models import Student, Club, Event
 from ..serializers import ClubSerializer, EventSerializer
 from django.views.decorators.csrf import csrf_protect
+from django.utils import timezone
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -79,7 +80,14 @@ def get_following_club_events(request):
         events = Event.objects.filter(club__in=following_clubs)
         events.order_by('-start_time')
 
-        serialized_events = EventSerializer(events, many=True, context={'request': request, 'student_context_rsvps': True, 'attending': True}).data
-        return Response(serialized_events, status=200)
+        now = timezone.now()
+
+        past_events = events.filter(start_time__lt=now)
+        upcoming_events = events.filter(start_time__gt=now)
+
+        serialized_past = EventSerializer(past_events, many=True, context={'request': request, 'student_context_rsvps': True, 'attending': True}).data
+
+        serialized_upcoming = EventSerializer(upcoming_events, many=True, context={'request': request, 'student_context_rsvps': True, 'attending': True}).data
+        return Response({'upcoming': serialized_upcoming, 'past': serialized_past}, status=200)
     except Student.DoesNotExist:
         return Response({'status': 'error', 'message': 'User is not a student'}, status=404)

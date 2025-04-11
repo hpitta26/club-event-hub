@@ -6,7 +6,7 @@ import { UserContext } from "../context/UserContext.jsx";
 
 function Analytics() {
     const { user } = useContext(UserContext);
-const navigate = useNavigate();
+    const navigate = useNavigate();
 
     return (
         <section className='min-h-screen bg-stone-900 flex justify-center items-center text-center pt-10'>

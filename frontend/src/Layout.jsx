@@ -27,6 +27,7 @@ import Following from "./pages/Following.jsx";
 import ClubProfile from "./pages/ClubProfile.jsx";
 import StudentTimes from "./pages/StudentTimes.jsx";
 import StudentProfile from "./pages/StudentProfile.jsx";
+import NewCreateEvent from "./pages/NewCreateEvent.jsx";
 
 function App() {
   return (
@@ -56,13 +57,13 @@ function App() {
           {/* Protected --> can only be accessed by people with role CLUB */}
           <Route element={<EnsureLoggedIn expRole="CLUB" />}> 
             <Route path="/create-event" element={<CreateEvent />} />
+            <Route path="/new-create-event" element={<NewCreateEvent />} />
             <Route path="/analytics" element={<Analytics/>} />
             <Route path="/events" element={<ClubEvents/>} />
-            <Route path="/settings" element={<ClubSetting />} />
+            <Route path="/club-settings" element={<ClubSetting />} />
           </Route>
           <Route path="/logout" element={<Logout />} /> {/* we don't want to limit who can logout */}
           <Route path="/*" element={<NotFound />} />
-
         </Routes>
       </Router>
     </UserProvider>

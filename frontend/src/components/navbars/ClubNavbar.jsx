@@ -98,7 +98,7 @@ const ClubNavbar = () => {
             <ProfileIcon src={userProfileSrc}>
               <div className="py-2">
                 <a href="#" className="block px-4 py-1 text-sm hover:bg-white/10">Profile</a>
-                <a href="/settings" className="block px-4 py-1 text-sm hover:bg-white/10">Settings</a>
+                <a href="/club-settings" className="block px-4 py-1 text-sm hover:bg-white/10">Settings</a>
                 <a onClick={handleLogout} className="block px-4 py-1 text-sm hover:bg-white/10">Logout</a>
               </div>
             </ProfileIcon>

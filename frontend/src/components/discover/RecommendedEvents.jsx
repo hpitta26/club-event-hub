@@ -1,5 +1,5 @@
 import React from "react";
-import NewEventCard from "../newEventCard";
+import EventCard from "../EventCard.jsx";
 
 const RecommendedEvents = ({ events }) => {
   return (
@@ -8,7 +8,7 @@ const RecommendedEvents = ({ events }) => {
           <div className="flex overflow-x-auto gap-x-4 h-72">
               {events.map((event) => (
               <div key={event.id}>
-                  <NewEventCard
+                  <EventCard
                       id={event.id}
                       title={event.title}
                       description={event.description}

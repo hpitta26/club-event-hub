@@ -1,64 +1,115 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import dummyEventCardCover from "../../assets/dummyEventCardCover.jpg";
 import SidebarCard from "./SidebarCard";
 
-const Sidebar = () => {
+const SideBar = () => {
   const newEvents = [
-    { id: 1, title: "Code Camp", date: "Aug 20 - 5:00 PM", host: "CodeHub", image: dummyEventCardCover,},
-    { id: 2, title: "Yoga Session", date: "Aug 21 - 6:00 PM", host: "Wellness Club", image: dummyEventCardCover,},
-    { id: 3, title: "Basketball League", date: "Aug 22 - 7:00 PM", host: "Sports Society", image: dummyEventCardCover,},
-    { id: 4, title: "Basketball League", date: "Aug 22 - 7:00 PM", host: "Sports Society", image: dummyEventCardCover,},
-    { id: 5, title: "Basketball League", date: "Aug 22 - 7:00 PM", host: "Sports Society", image: dummyEventCardCover,},
-    { id: 6, title: "Basketball League", date: "Aug 22 - 7:00 PM", host: "Sports Society", image: dummyEventCardCover,},
+    {
+      id: 1,
+      title: "Code Camp",
+      date: "Aug 20 - 5:00 PM",
+      host: "CodeHub",
+      image: dummyEventCardCover,
+    },
+    {
+      id: 2,
+      title: "Yoga Session",
+      date: "Aug 21 - 6:00 PM",
+      host: "Wellness Club",
+      image: dummyEventCardCover,
+    },
+    {
+      id: 3,
+      title: "Study Session",
+      date: "Aug 22 - 6:00 PM",
+      host: "Study Club",
+      image: dummyEventCardCover,
+    },
   ];
 
   const featuredEvents = [
-    { id: 4, title: "AI Workshop", date: "Aug 23 - 4:00 PM", host: "Tech Innovators", image: dummyEventCardCover,}, 
-    { id: 5, title: "Nutrition Talk", date: "Aug 24 - 5:30 PM", host: "Healthy Living", image: dummyEventCardCover,},
+    {
+      id: 4,
+      title: "AI Workshop",
+      date: "Aug 23 - 4:00 PM",
+      host: "Tech Innovators",
+      image: dummyEventCardCover,
+    },
+    {
+      id: 5,
+      title: "Nutrition Talk",
+      date: "Aug 24 - 5:30 PM",
+      host: "Healthy Living",
+      image: dummyEventCardCover,
+    },
   ];
 
-  // Handle showing more or less new events 
-  const initialShowNewCardsLimit = 3; 
-  const [showNewCardsLimit, setShowNewCardsLimit] = useState(initialShowNewCardsLimit);
+  const initialShowNewCardsLimit = 2;
+  const [showNewCardsLimit, setShowNewCardsLimit] = useState(
+    initialShowNewCardsLimit
+  );
 
   // If the limit is equal to the initial limit, show all events, otherwise show the initial limit
-  const toggleNewEevents = () => {
-    setShowNewCardsLimit((prevLimit) => (prevLimit === initialShowNewCardsLimit ? newEvents.length : initialShowNewCardsLimit)); 
-  }
+  const toggleNewEvents = () => {
+    setShowNewCardsLimit((prevLimit) =>
+      prevLimit === initialShowNewCardsLimit
+        ? newEvents.length
+        : initialShowNewCardsLimit
+    );
+  };
 
   return (
-    <div className="p-4 flex flex-col items-center">
+    <div className="absolute w-[278px] h-[calc(100vh-80px)] top-[80px] left-0 bg-[rgba(253,78,183,0.8)] border border-black shadow-[4px_4px_0px_#000000] p-4">
       {/* New Events Section */}
-      <div>
-        <h2 className="font-semibold text-lg text-black-300 mb-3 tracking-wide self-start">
-          New
-        </h2>
-        <div className="space-y-3">
-          {newEvents.slice(0, showNewCardsLimit).map((club) => (
-
-            <SidebarCard key={club.id} />
-          ))}
+      <div className="flex flex-col items-center">
+        <div>
+          <h2 className="font-normal text-[26px] leading-[31px] text-black mb-2">
+            New
+          </h2>
+          <div className="flex flex-col gap-3">
+            {newEvents.slice(0, showNewCardsLimit).map((event) => (
+              <SidebarCard
+                key={event.id}
+                name={event.title}
+                image={event.image}
+              />
+            ))}
+          </div>
+          {/* Only show the button if there are more events than the initial limit */}
+          {newEvents.length > initialShowNewCardsLimit && (
+            <button>
+              <p
+                className="mt-3 text-white hover:text-sky-100 text-sm font-medium"
+                onClick={toggleNewEvents}
+              >
+                {showNewCardsLimit === initialShowNewCardsLimit
+                  ? "Show All"
+                  : "Show Less"}
+              </p>
+            </button>
+          )}
         </div>
-        <button>
-          <p className="mt-3 text-blue-600 hover:text-blue-800 text-sm font-medium" onClick={toggleNewEevents}>
-            {showNewCardsLimit === initialShowNewCardsLimit ? "Show All" : "Show Less"}
-          </p>
-        </button>
       </div>
 
       {/* Featured Events Section */}
-      <div className="mt-8">
-        <h2 className="font-semibold text-lg text-black mb-3 tracking-wide">
-          Featured
-        </h2>
-        <div className="space-y-3">
-          {featuredEvents.map((club) => (
-            <SidebarCard key={club.id} />
-          ))}
+      <div className="flex flex-col items-center">
+        <div className="mt-8">
+          <h2 className="font-normal text-[26px] leading-[31px] text-black mb-2">
+            Featured
+          </h2>
+          <div className="flex flex-col gap-3">
+            {featuredEvents.map((event) => (
+              <SidebarCard
+                key={event.id}
+                name={event.title}
+                image={event.image}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default Sidebar;
+export default SideBar;

@@ -1,39 +1,33 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import dummyEventCardCover from "../../assets/dummyEventCardCover.jpg";
 
-function SidebarCard({name = "Unknown Club", image = dummyEventCardCover, categories = [],}) {
+const SidebarCard = ({ name, image }) => {
   const navigate = useNavigate();
-
+  
   const handleCardClick = () => {
     const clubSlug = name.toLowerCase().replace(/\s+/g, '-');
     navigate(`/club/${clubSlug}`);
   }
 
   return (
-    <div
-      className="flex items-center gap-3 bg-[#F0EFEB] px-3 py-2 rounded-lg shadow-sm border-2 border-black w-[220px] h-[64px] 
-                 transition-all duration-300 hover:shadow-md hover:bg-[#F0EFEB] hover:scale-[1.02] cursor-pointer"
+    <div 
+      className="relative w-[190px] h-[58px] bg-white border border-black rounded-[10px] shadow-[2px_2px_0px_#000000] flex items-center gap-2 px-2"
       onClick={handleCardClick}
     >
-      {/* Club Image */}
-      <img src={image} alt={name} className="w-10 h-10 object-cover rounded-full" />
+      {/* Image */}
+      <div className="w-8 h-8 bg-[#47ACDF] rounded-full flex-shrink-0">
+        <img src={image} alt={name} className="w-full h-full object-cover rounded-full" />
+      </div>
 
-      {/* Club Name & Categories */}
+      {/* Text Content */}
       <div className="flex flex-col">
-        <p className="text-lg font-semibold transition-all duration-300 hover:text-black">{name}</p>
-        <div className="flex gap-2 text-gray-400 text-sm">
-          {categories.length > 0
-            ? categories.map((category, index) => (
-                <span key={index} className="font-medium transition-all duration-300 hover:text-gray-700">
-                  {category}
-                </span>
-              ))
-            : <span className="font-medium">No Categories</span>}
-        </div>
+        <span className="text-black font-normal text-[16px] leading-[19px]">{name}</span>
+        {/* <div className="flex gap-2 text-[#8F8F8F] text-[12px] leading-[14px]">
+          <span>{host}</span>
+        </div> */}
       </div>
     </div>
   );
-}
+};
 
 export default SidebarCard;

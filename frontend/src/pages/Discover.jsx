@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import backend from "../components/backend";
-import NewSidebar from "../components/discover/NewSidebar";
+import SideBar from "../components/discover/SideBar";
 import EventGrid from "../components/discover/EventGrid";
-import NewFilterBar from "../components/discover/NewFilerBar";
+import FilterBar from "../components/discover/FilterBar";
 import { useSidebar } from "../context/SidebarContext";
 
 const Discover = () => {
@@ -57,7 +57,7 @@ const Discover = () => {
         {/* Sidebar */}
         {isSidebarOpen && (
           <div className="w-1/4 hidden lg:block">
-            <NewSidebar />
+            <SideBar />
           </div>
         )}
 
@@ -76,7 +76,7 @@ const Discover = () => {
                   ? <h1 className="text-2xl font-bold mb-4">Events This Week</h1>
                   : <h1 className="text-2xl font-bold mb-4">{selectedFilter} Events</h1>
               }
-              <NewFilterBar categories={categories} onFilterSelect={setSelectedFilter} />
+              <FilterBar categories={categories} onFilterSelect={setSelectedFilter} />
             </div>
             {/* Event Grid */}
             <div className="overflow-y-auto flex-1 p-6">

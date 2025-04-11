@@ -1,5 +1,5 @@
 import React from "react";
-import NewEventCard from "../newEventCard";
+import EventCard from "../EventCard";
 import PropTypes from 'prop-types';
 
 const EventGrid = ({ events }) => {
@@ -8,7 +8,7 @@ const EventGrid = ({ events }) => {
       {events.length > 0 ? (
         events.map((event) => (
           <div key={event.id} className="flex">
-            <NewEventCard
+            <EventCard
               id={event.id}
               title={event.title}
               description={event.description}

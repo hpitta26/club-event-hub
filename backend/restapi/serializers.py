@@ -45,10 +45,12 @@ class ClubSerializer(serializers.ModelSerializer):
    events_count = serializers.SerializerMethodField()
    class Meta:
        model = Club
+       # added profile picture and banner fields
        fields = [ # expose fields that will be sent in API calls
-           'user_id', 'slug', 'user', 'club_name', 'description', 'social_media_handles', 'spirit_rating', 'followers_count', 'events_count'
+           'user_id', 'slug', 'user', 'club_name', 'description', 'social_media_handles', 'spirit_rating', 'followers_count', 'events_count', 
+           'club_picture',
+           'club_banner'
        ]
-
 
    def get_followers_count(self, obj): # Return the number of students following this club
        return obj.followers.count()
@@ -61,7 +63,7 @@ class ClubSerializer(serializers.ModelSerializer):
        user_data = validated_data.pop('user') # get nested user data
        user_serializer = UserSerializer(data=user_data) # create the user using the UserSerializer
        user_serializer.is_valid(raise_exception=True)
-       user = user_serializer.save()
+       user = user_serializer.save()       
        club = Club.objects.create(user=user, **validated_data)
        return club
 
@@ -71,13 +73,25 @@ class ClubSerializer(serializers.ModelSerializer):
        user_data = validated_data.pop('user', None)
        if user_data:
            user_serializer = UserSerializer(instance=instance.user, data=user_data, partial=True)
-           user_serializer.is_valid(raise_exception=True)
+           user_serializer.is_valid(raise_exception=True)   
            user_serializer.save()
        # Update club-specific fields
+       
+        #Addded that 
+
        instance.club_name = validated_data.get('club_name', instance.club_name)
        instance.description = validated_data.get('description', instance.description)
        instance.social_media_handles = validated_data.get('social_media_handles', instance.social_media_handles)
        instance.spirit_rating = validated_data.get('spirit_rating', instance.spirit_rating)
+
+       # added these instances for pfp and profile banner
+       instance.profile_picture = validated_data.get('club_picture', None)
+       instance.profile_banner = validated_data.get('club_banner', None)
+
+       print(self.context['request'].FILES) 
+       print("Received data:", validated_data)
+
+
        instance.save() # saves updated instance to the DB
        return instance
 

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../components/following/sidebar.jsx";
 import NewSidebar from "../components/following/NewSidebar.jsx";
-import EventGrid from "../components/discover/EventGrid";
-import backend from "../components/backend";
-import { useSidebar } from "../context/SidebarContext";
+import EventGrid from "../components/discover/EventGrid.jsx";
+import backend from "../components/backend.jsx";
+import { useSidebar } from "../context/SidebarContext.jsx";
 
-const NewFollowing = () => {
+const Following = () => {
   const [allEvents, setAllEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const { isSidebarOpen } = useSidebar();
@@ -14,8 +13,8 @@ const NewFollowing = () => {
     // Fetch events for this week
     backend.get('get-following-clubs-events/')
       .then(response => {
-        if (response.data.status === 'success') {
-          setAllEvents(response.data.data);
+        if (response.status === 200) {
+          setAllEvents(response.data);
         } else {
           console.error("Failed to fetch events");
         }
@@ -71,4 +70,4 @@ const NewFollowing = () => {
   
 };
 
-export default NewFollowing;
+export default Following;

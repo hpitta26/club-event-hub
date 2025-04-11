@@ -7,9 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { GrLocation } from "react-icons/gr";
 import { MdOutlineFileUpload } from "react-icons/md";
 import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
-import ClubHeatmap from "../components/ClubHeatmap"; // Import the heatmap component
+import ClubHeatmap from "../components/ClubHeatmap";
 
-// Will need to handle CSRF TOKENS in this component
 function NewCreateEvent() {
     const navigate = useNavigate();
 
@@ -26,7 +25,6 @@ function NewCreateEvent() {
     ];
 
     const [formData, setFormData] = useState({
-        // Club is set in the backend using --> request.session['id']
         title: '',
         description: '',
         start_time: null,
@@ -42,7 +40,6 @@ function NewCreateEvent() {
         const formErrors = validateForm(formData);
         setErrors(formErrors)
         if(Object.keys(formErrors).length === 0) {
-            // Formatting so that Django serializer can easily read this since it's in DateTime format already
             const formattedData={
                 ...formData,
                 start_time:format(formData.start_time,"yyyy-MM-dd'T'HH:mm:ssXXX"),
@@ -68,7 +65,6 @@ function NewCreateEvent() {
         }
     };
 
-    //Currently the only form validation relates to leaving the fields empty, we can expand this when needed
     const validateForm = (data) => {
         const errors = {};
         if (!data.title.trim()){
@@ -107,7 +103,7 @@ function NewCreateEvent() {
     };
 
     return (
-        <section className="min-h-screen bg-[#FFFAFD] flex flex-col items-center pb-20 pt-10">
+        <section className="min-h-screen bg-[#FFFAFD] flex flex-col items-center pb-20 pt-16">
             <div className="w-full max-w-[860px] space-y-8">
                 {/* Page Title */}
                 <h1 className="text-black text-4xl font-semibold text-center">Create Event</h1>
@@ -154,15 +150,14 @@ function NewCreateEvent() {
                             {errors.description && <p className="text-red-500 text-xs italic">{errors.description}</p>}
                         </div>
 
-                        {/* Location Input */}
                         <div className="relative flex items-center">
-                            <GrLocation className="absolute left-3 text-gray-500" /> {/* Icon */}
+                            <GrLocation className="absolute left-3 text-gray-500" />
                             <input
                                 onChange={handleChange}
                                 name="location"
                                 value={formData.location}
                                 placeholder="Location"
-                                className="w-full bg-[#FFFAFD] border-[1px] border-black rounded-[4px] p-2 pl-10 text-black" // Add padding-left for the icon
+                                className="w-full bg-[#FFFAFD] border-[1px] border-black rounded-[4px] p-2 pl-10 text-black"
                             />
                             {errors.location && <p className="text-red-500 text-xs italic">{errors.location}</p>}
                         </div>

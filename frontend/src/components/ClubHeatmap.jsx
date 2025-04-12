@@ -3,7 +3,7 @@ import { FiCalendar, FiClock } from "react-icons/fi";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import backend from "../components/backend.jsx";
 
-function ClubHeatmap() {
+function ClubHeatmap({ onTimeRangeSelect }) {
   const timeSlots = Array.from({ length: 24 }, (_, i) => {
     const startHour = Math.floor(i / 2) + 10; // Start at 10am
     const startMinutes = i % 2 === 0 ? "00" : "30";
@@ -25,21 +25,6 @@ function ClubHeatmap() {
   const [selectionStartDay, setSelectionStartDay] = useState(null);
   const [selectionStartTime, setSelectionStartTime] = useState(null);
   const [selectedCells, setSelectedCells] = useState([]);
-
-  const getWeekDateRange = () => {
-    const today = new Date();
-    const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() + currentWeek * 7);
-
-    const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate() + 4); // 5 days (Mon-Fri)
-
-    const formatDate = (date) => {
-      return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-    };
-
-    return `${formatDate(startOfWeek)} - ${formatDate(endOfWeek)}`;
-  };
 
   const navigateWeek = (direction) => {
     setCurrentWeek((prev) => prev + direction);
@@ -192,6 +177,27 @@ function ClubHeatmap() {
 
   const handleMouseUp = () => {
     setIsDragging(false);
+
+    if (selectedCells.length > 0) {
+      const sortedCells = [...selectedCells].sort((a, b) => a.timeIndex - b.timeIndex);
+      const firstCell = sortedCells[0];
+      const lastCell = sortedCells[sortedCells.length - 1];
+      const date = getWeekDates()[firstCell.dayIndex];
+      const startTime = timeSlots[firstCell.timeIndex];
+      const endTimeSlot = parseInt(timeSlots[lastCell.timeIndex].split(':')[0]);
+      const endMinutes = timeSlots[lastCell.timeIndex].split(':')[1];
+      let endHour = endTimeSlot;
+      let endMinutes2 = endMinutes === "00" ? "30" : "00";
+      if (endMinutes === "30") {
+        endHour += 1;
+      }
+      const endTime = `${endHour.toString().padStart(2, "0")}:${endMinutes2}`;
+
+      onTimeRangeSelect({
+        start_time: new Date(`${date.toISOString().split('T')[0]}T${startTime}`),
+        end_time: new Date(`${date.toISOString().split('T')[0]}T${endTime}`),
+      });
+    }
   };
 
   const isCellSelected = (dayIndex, timeIndex) => {
@@ -200,6 +206,7 @@ function ClubHeatmap() {
 
   const clearSelection = () => {
     setSelectedCells([]);
+    onTimeRangeSelect('');
   };
 
   return (

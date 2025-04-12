@@ -30,6 +30,7 @@ function NewCreateEvent() {
         end_time: null,
         location: '',
         capacity: '',
+        tags: [],
     });
 
     const [errors, setErrors] = useState({})
@@ -46,6 +47,7 @@ function NewCreateEvent() {
                 end_time:format(formData.end_time,"yyyy-MM-dd'T'HH:mm:ssXXX")
             }
             try {
+                console.log("Creating event with data: ", formattedData);
                 const response = await backend.post("/events/", formattedData);
                 console.log(response);
                 setFormData({
@@ -63,6 +65,14 @@ function NewCreateEvent() {
                 }
             console.log(formData)
         }
+    };
+
+    const handleTimeRangeSelect = ({ start_time, end_time }) => {
+        setFormData((prev) => ({
+            ...prev,
+            start_time,
+            end_time,
+        }));
     };
 
     const validateForm = (data) => {
@@ -88,7 +98,10 @@ function NewCreateEvent() {
         if(data.start_time && data.end_time && data.start_time>=data.end_time){
             alert("Start time must be before the end time");
         }
-
+        if (data.tags.length === 0) {
+            errors.tags = 'Please select at least one tag';
+        }
+        // console.log(errors)
         return errors;
     }
 
@@ -97,10 +110,23 @@ function NewCreateEvent() {
         setFormData(prev=>({...prev,[e.target.name]:e.target.value}));
     }
 
-    const filterTime = (time) => {
-        const hours = time.getHours();
-        return hours >= 8 && hours <= 22;
+    const handleTagToggle = (tag) => {
+        setFormData((prev) => {
+            const isSelected = prev.tags.includes(tag);
+            if (isSelected) {
+                return {
+                    ...prev,
+                    tags: prev.tags.filter((t) => t !== tag),
+                };
+            } else {
+                return {
+                    ...prev,
+                    tags: [...prev.tags, tag],
+                };
+            }
+        });
     };
+
 
     return (
         <section className="min-h-screen bg-[#FFFAFD] flex flex-col items-center pb-20 pt-16">
@@ -190,53 +216,64 @@ function NewCreateEvent() {
                                 {errors.description && <p className="text-red-500 text-xs italic">{errors.description}</p>}
                             </div>
 
-                            <div className="relative flex items-center">
-                                <GrLocation className="absolute left-3 text-gray-500" />
-                                <input
-                                    onChange={handleChange}
-                                    name="location"
-                                    value={formData.location}
-                                    placeholder="Location"
-                                    className="w-full bg-[#FFFAFD] border-[1px] border-black rounded-[4px] p-2 pl-10 text-black"
-                                />
+                            <div>
+                                <div className="relative flex items-center">
+                                    <GrLocation className="absolute left-3 text-gray-500" />
+                                    <input
+                                        onChange={handleChange}
+                                        name="location"
+                                        value={formData.location}
+                                        placeholder="Location"
+                                        className="w-full bg-[#FFFAFD] border-[1px] border-black rounded-[4px] p-2 pl-10 text-black"
+                                    />
+                                </div>
                                 {errors.location && <p className="text-red-500 text-xs italic">{errors.location}</p>}
                             </div>
+                            
 
                             <div className="flex flex-col gap-2">
                                 <label className="text-black text-sm font-medium">Tags</label>
                                 <div className="flex flex-wrap gap-2">
-                                    {tags.map(
-                                    (tag) => (
+                                    {tags.map((tag) => (
                                         <span
-                                        key={tag}
-                                        className="px-3 py-1 text-sm border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-100 cursor-pointer"
+                                            key={tag}
+                                            onClick={() => handleTagToggle(tag)}
+                                            className={`px-3 py-1 text-sm border rounded-lg cursor-pointer ${
+                                                formData.tags.includes(tag)
+                                                    ? "bg-[#FD4EB7] text-white border-[#E93DA6]"
+                                                    : "bg-gray-100 text-gray-600 border-gray-300 hover:bg-gray-200"
+                                            }`}
                                         >
-                                        {tag}
+                                            {tag}
                                         </span>
-                                    )
-                                    )}
+                                    ))}
                                 </div>
+                                {errors.tags && <p className="text-red-500 text-xs italic">{errors.tags}</p>}
                             </div>
 
-                            <div className="relative flex items-center">
-                                <BsPerson className="absolute left-3 text-gray-500" />
-                                <input
-                                    onChange={handleChange}
-                                    name="capacity"
-                                    value={formData.capacity}
-                                    placeholder="Event Capacity"
-                                    type="number"
-                                    className="w-full bg-[#FFFAFD] border-[1px] border-black rounded-[4px] p-2 pl-10 text-black"
-                                />
+                            <div>
+                                <div className="relative flex items-center">
+                                    <BsPerson className="absolute left-3 text-gray-500" />
+                                    <input
+                                        onChange={handleChange}
+                                        name="capacity"
+                                        value={formData.capacity}
+                                        placeholder="Event Capacity"
+                                        type="number"
+                                        className="w-full bg-[#FFFAFD] border-[1px] border-black rounded-[4px] p-2 pl-10 text-black"
+                                    />
+                                </div>
                                 {errors.capacity && <p className="text-red-500 text-xs italic">{errors.capacity}</p>}
                             </div>
+
+                            
                         </div>
                     </div>
                 </div>
 
                 {/* Schedule Tab */}
                 <div className={activeTab === 'schedule' ? 'block' : 'hidden'}>
-                    <ClubHeatmap />
+                    <ClubHeatmap onTimeRangeSelect={handleTimeRangeSelect} />
                 </div>
             </div>
         </section>

@@ -6,6 +6,7 @@ import { GrLocation } from "react-icons/gr";
 import { MdOutlineFileUpload } from "react-icons/md";
 import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 import ClubHeatmap from "../components/ClubHeatmap";
+import { BsPerson } from "react-icons/bs";
 
 function NewCreateEvent() {
     const navigate = useNavigate();
@@ -32,6 +33,7 @@ function NewCreateEvent() {
     });
 
     const [errors, setErrors] = useState({})
+    const [activeTab, setActiveTab] = useState('details');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -104,102 +106,137 @@ function NewCreateEvent() {
         <section className="min-h-screen bg-[#FFFAFD] flex flex-col items-center pb-20 pt-16">
             <div className="w-full max-w-[860px] space-y-8">
                 {/* Page Title */}
-                <h1 className="text-black text-4xl font-semibold text-center">Create Event</h1>
-
-                {/* Content Container */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {/* Left Column: Banner */}
-                    <div className="flex flex-col items-center">
-                        <div className="w-full max-w-[416px] h-[242px] border-[2px] border-black shadow-[2px_2px_0px_#000000] rounded-lg relative">
-                        <img
-                            src={dummyEventCardCover}
-                            alt="Profile"
-                            className="w-full h-full object-cover rounded-lg"
-                        />
-                        <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                            <MdOutlineFileUpload className="text-white w-6 h-6" />
-                        </div>
-                        </div>
-                    </div>
-
-                    {/* Right Column: Form */}
-                    <div className="flex flex-col gap-6">
-                        {/* Title Input */}
-                        <div>
-                            <input
-                                onChange={handleChange}
-                                name="title"
-                                value={formData.title}
-                                placeholder="Event Title"
-                                className="w-full bg-[#FFFAFD] border-[1px] border-black rounded-[4px] p-2 text-black"
-                            />
-                            {errors.title && <p className="text-red-500 text-xs italic">{errors.title}</p>}
-                        </div>
-
-                        {/* Description Input */}
-                        <div>
-                            <textarea
-                                onChange={handleChange}
-                                name="description"
-                                value={formData.description}
-                                placeholder="Description"
-                                className="w-full h-[80px] bg-[#FFFAFD] border-[1px] border-black rounded-[4px] p-2 text-black"
-                            ></textarea>
-                            {errors.description && <p className="text-red-500 text-xs italic">{errors.description}</p>}
-                        </div>
-
-                        <div className="relative flex items-center">
-                            <GrLocation className="absolute left-3 text-gray-500" />
-                            <input
-                                onChange={handleChange}
-                                name="location"
-                                value={formData.location}
-                                placeholder="Location"
-                                className="w-full bg-[#FFFAFD] border-[1px] border-black rounded-[4px] p-2 pl-10 text-black"
-                            />
-                            {errors.location && <p className="text-red-500 text-xs italic">{errors.location}</p>}
-                        </div>
-
-                        {/* Tags Section */}
-                        <div className="flex flex-col gap-2">
-                            <label className="text-black text-sm font-medium">Tags</label>
-                            <div className="flex flex-wrap gap-2">
-                                {tags.map(
-                                (tag) => (
-                                    <span
-                                    key={tag}
-                                    className="px-3 py-1 text-sm border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-100 cursor-pointer"
-                                    >
-                                    {tag}
-                                    </span>
-                                )
-                                )}
-                            </div>
-                        </div>
-
-                        {/* Capacity Input */}
-                        <div>
-                            <input
-                                onChange={handleChange}
-                                name="capacity"
-                                value={formData.capacity}
-                                placeholder="Event Capacity"
-                                type="number"
-                                className="w-full bg-[#FFFAFD] border-[1px] border-black rounded-[4px] p-2 text-black"
-                            />
-                            {errors.capacity && <p className="text-red-500 text-xs italic">{errors.capacity}</p>}
-                        </div>
-                    </div>
-                </div>
-                <ClubHeatmap />
-                <div className="mt-10 flex justify-center">
+                <div className="flex justify-between items-center">
+                    <h1 className="text-4xl font-semibold tracking-tight">Create Event</h1>
                     <button
                         type="submit"
                         onClick={handleSubmit}
-                        className="bg-[#FD4EB7] border-[1px] border-black rounded-[4px] py-2 px-4 text-black font-medium hover:bg-[#E93DA6] transition"
+                        className="bg-[#FD4EB7] border-[1px] border-black rounded-[4px] py-2 px-3 text-black font-medium hover:bg-[#E93DA6] transition"
                     >
                         Create Event
                     </button>
+                </div>
+
+                <div className="w-full">
+                    {/* Tabs Navigation */}
+                    <div className="border-b border-gray-200">
+                        <ul className="flex -mb-px">
+                            <li className="w-1/2">
+                                <button 
+                                    onClick={() => setActiveTab('details')} 
+                                    className={`w-full py-3 text-center font-medium ${
+                                        activeTab === 'details' 
+                                            ? 'border-b-2 border-black font-extrabold' 
+                                            : 'text-gray-500 hover:text-gray-700'
+                                    }`}
+                                >
+                                    Event Details
+                                </button>
+                            </li>
+                            <li className="w-1/2">
+                                <button 
+                                    onClick={() => setActiveTab('schedule')} 
+                                    className={`w-full py-3 text-center font-medium ${
+                                        activeTab === 'schedule' 
+                                            ? 'border-b-2 border-black font-extrabold' 
+                                            : 'text-gray-500 hover:text-gray-700'
+                                    }`}
+                                >
+                                    Schedule
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                {/* Event Details Tab */}
+                <div className={activeTab === 'details' ? 'block' : 'hidden'}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-2">
+                        {/* Left Column: Banner */}
+                        <div className="flex flex-col">
+                            <div className="w-full max-w-[416px] h-[242px] border-[2px] border-black shadow-[2px_2px_0px_#000000] rounded-lg relative">
+                                <img
+                                    src={dummyEventCardCover}
+                                    alt="Profile"
+                                    className="w-full h-full object-cover rounded-lg"
+                                />
+                                <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                                    <MdOutlineFileUpload className="text-white w-6 h-6" />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Right Column: Form */}
+                        <div className="flex flex-col gap-6">
+                            <div>
+                                <input
+                                    onChange={handleChange}
+                                    name="title"
+                                    value={formData.title}
+                                    placeholder="Event Title"
+                                    className="w-full bg-[#FFFAFD] border-[1px] border-black rounded-[4px] p-2 text-black"
+                                />
+                                {errors.title && <p className="text-red-500 text-xs italic">{errors.title}</p>}
+                            </div>
+
+                            <div>
+                                <textarea
+                                    onChange={handleChange}
+                                    name="description"
+                                    value={formData.description}
+                                    placeholder="Description"
+                                    className="w-full h-[80px] bg-[#FFFAFD] border-[1px] border-black rounded-[4px] p-2 text-black"
+                                ></textarea>
+                                {errors.description && <p className="text-red-500 text-xs italic">{errors.description}</p>}
+                            </div>
+
+                            <div className="relative flex items-center">
+                                <GrLocation className="absolute left-3 text-gray-500" />
+                                <input
+                                    onChange={handleChange}
+                                    name="location"
+                                    value={formData.location}
+                                    placeholder="Location"
+                                    className="w-full bg-[#FFFAFD] border-[1px] border-black rounded-[4px] p-2 pl-10 text-black"
+                                />
+                                {errors.location && <p className="text-red-500 text-xs italic">{errors.location}</p>}
+                            </div>
+
+                            <div className="flex flex-col gap-2">
+                                <label className="text-black text-sm font-medium">Tags</label>
+                                <div className="flex flex-wrap gap-2">
+                                    {tags.map(
+                                    (tag) => (
+                                        <span
+                                        key={tag}
+                                        className="px-3 py-1 text-sm border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-100 cursor-pointer"
+                                        >
+                                        {tag}
+                                        </span>
+                                    )
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="relative flex items-center">
+                                <BsPerson className="absolute left-3 text-gray-500" />
+                                <input
+                                    onChange={handleChange}
+                                    name="capacity"
+                                    value={formData.capacity}
+                                    placeholder="Event Capacity"
+                                    type="number"
+                                    className="w-full bg-[#FFFAFD] border-[1px] border-black rounded-[4px] p-2 pl-10 text-black"
+                                />
+                                {errors.capacity && <p className="text-red-500 text-xs italic">{errors.capacity}</p>}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Schedule Tab */}
+                <div className={activeTab === 'schedule' ? 'block' : 'hidden'}>
+                    <ClubHeatmap />
                 </div>
             </div>
         </section>

@@ -38,7 +38,6 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/temp" element={<TempPage />} />
           <Route path="/discover" element={<Discover />} />
-          <Route path="/student-profile" element={<StudentProfile/>}/>
           <Route path="/club/:clubSlug" element={<ClubProfile />} />
           
           {/* Protected --> makes sure users that are logged in can't visit register page */}
@@ -51,8 +50,9 @@ function App() {
           {/* Protected --> can only be accessed by people with role STUDENT */}
           <Route element={<EnsureLoggedIn expRole="STUDENT" />}> 
             <Route path="/following" element={<Following />} />
-            <Route path="/student-settings" element={<StudentSettings />}/>
             <Route path="/student-times" element={<StudentTimes />} />
+            <Route path="/student-profile" element={<StudentProfile/>}/>
+            <Route path="/student-settings" element={<StudentSettings />}/>
           </Route>
           {/* Protected --> can only be accessed by people with role CLUB */}
           <Route element={<EnsureLoggedIn expRole="CLUB" />}> 

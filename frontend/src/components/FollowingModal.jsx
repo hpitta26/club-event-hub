@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import backend from "../components/backend";
 import CallToAction from "../components/CallToAction";
 import { CiSearch } from "react-icons/ci";

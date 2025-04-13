@@ -27,17 +27,23 @@ class EventListCreateView(generics.ListCreateAPIView):
     @method_decorator(user_passes_test(lambda u: ClubPermission() or Admin(u)), name='dispatch') # ANOTHER EXAMPLE OF HOW TO LIMIT PERMISSIONS
     def create(self, request, *args, **kwargs):
         """Override create to associate events with the club creating them."""
-        club_id = request.session.get('id')
+        print(f"Session before event creation: {request.session.items()}")
 
-        # Fetch the club instance (assuming your Event model has a ForeignKey to Club)
+        club_id = request.session.get('id')
+        if not club_id:
+            return Response({"error": "No Club ID found in session"}, status=status.HTTP_400_BAD_REQUEST)
+
         club_instance = get_object_or_404(Club, user_id=club_id)
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(club=club_instance)  # Explicitly assign the club
 
+        print(f"Session after event creation: {request.session.items()}")
+
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+from django.utils.decorators import method_decorator
 # Retrieve, update, or delete a single event
 class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Event.objects.all()

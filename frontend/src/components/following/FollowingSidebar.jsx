@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import dummyEventCardCover from "../../assets/dummyEventCardCover.jpg"; // Fallback image
 import backend from "../backend";
 import SidebarCard from "../discover/SidebarCard.jsx";
-import NewSidebarCard from "../discover/NewSidebarCard.jsx";
 
-const NewSidebar = () => {
+const FollowingSidebar = () => {
   const [followedClubs, setFollowedClubs] = useState([]);
   const [loading, setLoading] = useState(true);
   
@@ -45,7 +44,7 @@ const NewSidebar = () => {
           <h2 className="font-normal text-[26px] leading-[31px] text-black mb-2">Following</h2>
           <div className="flex flex-col gap-3">
             {followedClubs.map((club) => (
-              <NewSidebarCard 
+              <SidebarCard 
                 key={club.id} 
                 name={club.name} 
                 image={club.imageUrl}
@@ -59,4 +58,4 @@ const NewSidebar = () => {
   }
 };
 
-export default NewSidebar;
+export default FollowingSidebar;

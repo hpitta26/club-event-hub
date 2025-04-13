@@ -1,11 +1,9 @@
 from django.urls import path
-from .views import drf_views, auth_views, club_follow_views, discover_view, club_profile_views, image_views, schedule_views
-from .views import drf_views, auth_views, club_follow_views, discover_view,club_profile_views, image_views, import_luma_events
+from .views import drf_views, auth_views, club_follow_views, discover_view,club_profile_views, image_views, schedule_views, import_luma_events, student_views
 from django.views.decorators.http import require_http_methods
 
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path
 
 urlpatterns = [
     path('events/', drf_views.EventListCreateView.as_view(), name='event-list-create'),
@@ -31,7 +29,7 @@ urlpatterns = [
 
     path('get-week-events/', discover_view.get_events_this_week, name='get-week-events'),
     path('rsvp/', discover_view.rsvp, name='rsvp'),
-    path('is-rsvp/', discover_view.is_rsvp, name='is-rsvp'),
+    path('get-student-events/', student_views.get_student_events, name='get_student_events'),
     path('filter-events/<str:filter>/', discover_view.filter_events, name='filter-events'),
 
     path('get-club-events/<int:pk>/', club_profile_views.get_club_events, name='get-club-events'),

@@ -1,5 +1,7 @@
 import React from "react";
 import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
+import { truncate } from '../utils/truncate';
+import { dateFormat } from '../utils/dates';
 
 function EventListCard({ 
   title = "Untitled Event", 
@@ -8,23 +10,6 @@ function EventListCard({
   host = "Unknown Host", 
   image = dummyEventCardCover 
 }) {
-  
-  function handleTitleLength(eventTitle) {
-    const maxLength = 29;
-    return eventTitle.length > maxLength ? eventTitle.slice(0, maxLength) + "..." : eventTitle;
-  }
-
-  function formatDate(isoString) {
-    if (!isoString || isoString === "TBD") return "TBD"; // Handle empty or "TBD" dates
-
-    const dateObj = new Date(isoString);
-    return new Intl.DateTimeFormat("en-US", {
-      month: "short", // Abbreviated month (e.g., "Mar")
-      day: "numeric", // Day number (e.g., "8")
-      hour: "numeric", // Hour (e.g., "7 PM")
-      hour12: true, // Use 12-hour format
-    }).format(dateObj);
-  }
 
   const spotsLeft = capacity === "N/A" ? "N/A" : capacity;
   let spotsLeftColor = "#35A25D"; // Default color for 30+ spots
@@ -41,13 +26,13 @@ function EventListCard({
       <div className="ml-1 flex flex-col gap-3 justify-center">
         {/* Event Date */}
         <p className="text-black font-semibold text-xs">
-          {formatDate(date)}
+          {dateFormat(date)}
         </p>
         {/* Event Title */}
         <p className="text-black text-sm font-bold leading-none">
-          {handleTitleLength(title)} 
+          {truncate(title, 50)} 
         </p>
-        {/* Event Host */}
+        {/* Event Host */} 
         <p className="text-black font-semibold text-xs">
           Hosted by: {host}
         </p>

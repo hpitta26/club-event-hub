@@ -34,7 +34,7 @@ const StudentNavbar = () => {
 
   const handleEventsClick = () => {
     async function getEvents() {
-    	const result = await backend.get('get-following-clubs-events/');
+    	const result = await backend.get('get-student-events/');
     	if (result.status === 200) {
             console.log(result);
             setEvents(result.data)

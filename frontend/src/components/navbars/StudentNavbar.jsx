@@ -135,7 +135,7 @@ const StudentNavbar = () => {
             <div className="relative flex items-center justify-between h-full px-4 md:px-8">
                 {/* Left: Hamburger Icon, Logo, and Links */}
                 <div className="flex items-center space-x-8">
-                  <HiMiniBars3 className="text-black w-8 h-8 cursor-pointer" onClick={toggleSidebar} />
+                  <HiMiniBars3 className="text-black hidden lg:block w-8 h-8 cursor-pointer" onClick={toggleSidebar} />
                   <a href="/discover" className="flex items-center">
                     <img src={gatherULogo} alt="GatherU Logo" className="h-10 w-auto" />
                   </a>
@@ -148,30 +148,8 @@ const StudentNavbar = () => {
                     </a>
                   </div>
                 </div>
-                {/* Center: Search Bar */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 hidden lg:flex items-center bg-white border-[1.5px] border-r border-b border-black shadow-[2px_2px_0px_#000000] rounded-md px-3 py-1">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-black"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                  </svg>
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    className="ml-2 text-sm text-gray-600 placeholder-gray-500 focus:outline-none"
-                  />
-                </div>
 
-                {/* Right: Events, Notifications, and Profile */}
+	  	{/* Right: Events, Notifications, and Profile */}
                 <div className="flex items-center space-x-4">
                   {/* Events Button */}
                   <button className="hidden md:block bg-[#FD4EB7] text-black font-normal text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:bg-pink-400" onClick={handleEventsClick}>

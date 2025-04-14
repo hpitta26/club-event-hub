@@ -80,7 +80,6 @@ const ClubNavbar = () => {
         {/* Right: Events Button + Notification + Profile + Mobile Toggle */}
         <div className="pr-4 flex items-center space-x-2 sm:space-x-3 md:space-x-4">
           <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4">
-            <SearchBarTrigger onClick={handleSearchOpen} className="hidden md:block" /> {/* Hide on mobile */}
             <button
               className={`whitespace-nowrap transition-all duration-300 ease-out transform border border-white/50 rounded-md
                 ${eventsClicked
@@ -102,7 +101,6 @@ const ClubNavbar = () => {
                 <a onClick={handleLogout} className="block px-4 py-1 text-sm hover:bg-white/10">Logout</a>
               </div>
             </ProfileIcon>
-            <SearchBar open={searchOpen} onClose={handleSearchClose} />
           </div>
           <button
             className="md:hidden flex-shrink-0"
@@ -145,7 +143,6 @@ const ClubNavbar = () => {
             >
               Events
             </a>
-            <SearchBarTrigger onClick={handleSearchOpen} />
           </div>
         </div>
       )}

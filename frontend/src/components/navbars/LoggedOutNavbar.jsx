@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import gatherULogo from '../../assets/icons/GatherUIcon.svg';
-import SearchBar from './navbarAssets/searchBar';
-import SearchBarTrigger from './navbarAssets/SearchBarIcon';
 import { useNavigate } from 'react-router-dom';
 import StudentOrClubModal from '../StudentOrClubModal';
 
@@ -71,7 +69,6 @@ const LoggedOutNavbar = () => {
         {/* Right: Signup + Login + Mobile Toggle */}
         <div className="pr-4 flex items-center space-x-2 sm:space-x-3 md:space-x-4">
           <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4">
-            <SearchBarTrigger onClick={handleSearchOpen} className="hidden md:block" /> {/* Hide on mobile */}
             <button
               className={`whitespace-nowrap text-xs sm:text-sm transition-all duration-300 ease-out transform px-1.5 py-0.5 sm:px-2 sm:py-1 border border-white/50 rounded-md
                 ${signupClicked
@@ -90,7 +87,6 @@ const LoggedOutNavbar = () => {
             >
               Log in
             </button>
-            <SearchBar open={searchOpen} onClose={handleSearchClose} />
           </div>
           <button
             className="md:hidden flex-shrink-0"
@@ -125,7 +121,6 @@ const LoggedOutNavbar = () => {
             >
               Discover
             </a>
-            <SearchBarTrigger onClick={handleSearchOpen} />
           </div>
         </div>
       )}

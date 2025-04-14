@@ -221,7 +221,40 @@ class Command(BaseCommand):
                 "end_time": timezone.now() + datetime.timedelta(days=5, hours=3),
                 "location": "Art Building 2",
                 "capacity": 50,
-                "rsvps": ["student2@fiu.edu", "student3@fiu.edu"],
+                "rsvps": ["student1@fiu.edu", "student3@fiu.edu"],
+                "tags": ["Career", "Medical"]
+            },
+            {
+                "club": "club2@example.com",
+                "title": "Art Gallery Night 2",
+                "description": "Showcase your paintings and sculptures.",
+                "start_time": timezone.now() - datetime.timedelta(days=5),
+                "end_time": timezone.now() - datetime.timedelta(days=5, hours=3),
+                "location": "Art Building 2",
+                "capacity": 50,
+                "rsvps": ["student1@fiu.edu", "student3@fiu.edu"],
+                "tags": ["Career", "Medical"]
+            }, 
+            {
+                "club": "club2@example.com",
+                "title": "Art Gallery Night 3",
+                "description": "Showcase your paintings and sculptures.",
+                "start_time": timezone.now() - datetime.timedelta(days=5),
+                "end_time": timezone.now() - datetime.timedelta(days=5, hours=3),
+                "location": "Art Building 2",
+                "capacity": 50,
+                "rsvps": ["student1@fiu.edu", "student3@fiu.edu"],
+                "tags": ["Career", "Medical"]
+            },
+            {
+                "club": "club2@example.com",
+                "title": "Art Gallery Night 4",
+                "description": "Showcase your paintings and sculptures.",
+                "start_time": timezone.now() - datetime.timedelta(days=5),
+                "end_time": timezone.now() - datetime.timedelta(days=5, hours=3),
+                "location": "Art Building 2",
+                "capacity": 50,
+                "rsvps": ["student1@fiu.edu", "student3@fiu.edu"],
                 "tags": ["Career", "Medical"]
             }
         ]

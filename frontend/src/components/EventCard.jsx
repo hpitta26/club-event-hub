@@ -69,11 +69,11 @@ function EventCard({
       <div
         ref={cardRef}
         className="relative w-[237.5px] h-[268.75px] bg-white border-[1.5px] border-black shadow-[2px_2px_0px_#000000] rounded-xl 
-                      hover:shadow-[2px_2px_0px_#000000] transition-transform transform hover:scale-[1.02] p-2.5 flex flex-col cursor-pointer"
+                      hover:shadow-[2px_2px_0px_#000000] transition-transform transform hover:scale-[1.02] flex flex-col cursor-pointer"
         onClick={handleOnClick}
       >
         {/* Event Banner */}
-        <div className="relative w-[212.5px] h-[123.75px] mb-2.5 border-[2.5px] border-black rounded-lg overflow-hidden">
+        <div className="relative w-full h-[142.75px] mb-2.5 border-black rounded-t-xl border-b-[1.5px] overflow-hidden">
           <p className="absolute top-1.5 left-1.5 bg-blue-500 text-white px-1.5 py-0.625 rounded-md text-[10px] font-medium border shadow-[2px_2px_0px_#000000] border-black">
             {dateFormat(date)}
           </p>
@@ -85,12 +85,12 @@ function EventCard({
         </div>
 
         {/* Title */}
-        <p className="absolute top-[137.5px] left-[15px] w-[207.5px] h-[23.75px] font-semibold text-[20px] leading-[23.75px]">
+        <p className="absolute top-[147.5px] left-[15px] w-[207.5px] h-[23.75px] font-semibold text-[20px] leading-[23.75px]">
           {truncate(title, 30)}
         </p>
 
         {/* Host & Location */}
-        <div className="absolute top-[166.75px] left-[15px] flex items-center gap-1.5 mb-1.25">
+        <div className="absolute top-[176.75px] left-[15px] flex items-center gap-1.5 mb-1.25">
           <img
             src={hostLogo}
             alt="Host Logo"
@@ -98,13 +98,13 @@ function EventCard({
           />
           <p className="text-[12.5px] text-[#8F8F8F]">{host}</p>
         </div>
-        <div className="absolute top-[189.5px] left-[15px] flex items-center gap-1.5">
+        <div className="absolute top-[199.5px] left-[15px] flex items-center gap-1.5">
           <GrLocation className="text-[#4EA0FD] w-[18px] h-[18px]" />
           <p className="text-[12.5px] text-[#8F8F8F]">{location}</p>
         </div>
 
         {/* Profile Images and Going Count */}
-        <div className="absolute bottom-[12.5px] left-[15px] flex items-center gap-1.5">
+        <div className="absolute bottom-[11.5px] left-[15px] flex items-center gap-1.5">
           {/* Avatars */}
           <div className="flex items-center">
             <img

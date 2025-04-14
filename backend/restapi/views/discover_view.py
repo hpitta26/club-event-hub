@@ -1,11 +1,12 @@
 from collections import defaultdict
+from django.db.models import Count, Q
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.utils import timezone
 from datetime import timedelta
-from ..models import Event, Student
-from ..serializers import EventSerializer
+from ..models import Event, Student, Club
+from ..serializers import EventSerializer, ClubSerializer
 from restapi.permissions import StudentPermission
 
 @api_view(["GET"])
@@ -58,7 +59,7 @@ def collaborative_filter(request):
 
         for past_event in past_events:
             for iterated_student in past_event.rsvps.exclude(user_id=session_student.user_id):
-                student_count[iterated_student.user_id] += 1
+                student_count[iterated_student] += 1
 
         sorted_students = sorted(student_count.items(), key=lambda x: x[1], reverse=True)
         top_students = [student[0] for student in sorted_students]
@@ -68,3 +69,49 @@ def collaborative_filter(request):
 
     except Student.DoesNotExist:
         return Response({'status': 'error', 'message': 'Student not found'}, status=404)
+
+@api_view(["GET"])
+def get_new_clubs(request):
+    try:
+        clubs = Club.objects.all()
+        return Response(ClubSerializer(clubs[::-1][:6], many=True).data)
+    except Exception as e:
+        print(e)
+        return Response({'status': 'error', 'message': 'server error'}, status=404)
+
+@api_view(["GET"])
+def get_recommended_clubs(request):
+    try:
+        session_student = Student.objects.get(user=request.user)
+        following_clubs_ids = session_student.following_clubs.all().values_list('user_id', flat=True)
+        excluded_ids = set(following_clubs_ids)
+
+        student_count = defaultdict(int)
+        past_events = Event.objects.filter(rsvps=session_student)[:10]
+
+        for past_event in past_events:
+            for iterated_student in past_event.rsvps.exclude(user_id=session_student.user_id):
+                student_count[iterated_student] += 1
+
+        sorted_students = sorted(student_count.items(), key=lambda x: x[1], reverse=True)
+        top_students = [student[0] for student in sorted_students]
+
+        similar_clubs = (Club.objects.filter(Q(events__rsvps__in=top_students))
+                         .exclude(user_id__in=excluded_ids)).distinct()
+
+        remaining = 6 - len(similar_clubs)
+        if remaining > 0:
+            popular_clubs = Club.objects.annotate(
+                popularity=Count('followers')
+            ).exclude(user_id__in=excluded_ids.union({club.user_id for club in similar_clubs})
+            ).order_by('-popularity')[:remaining]
+
+            recommended_clubs = list(similar_clubs)+ list(popular_clubs)
+        else:
+            recommended_clubs = list(similar_clubs)[::-1]
+
+        return Response(ClubSerializer(recommended_clubs[:6], many=True).data)
+
+    except Exception as e:
+        print(e)
+        return Response({'status': 'error', 'message': 'server error'}, status=404)

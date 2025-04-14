@@ -1,65 +1,63 @@
-import React, { useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import dummyEventCardCover from "../../assets/dummyEventCardCover.jpg";
 import SidebarCard from "./SidebarCard";
+import backend from "../backend.jsx";
+import {UserContext} from "../../context/UserContext.jsx";
 
 const DiscoverSidebar = () => {
-  const newEvents = [
-    {
-      id: 1,
-      title: "Code Camp",
-      date: "Aug 20 - 5:00 PM",
-      host: "CodeHub",
-      image: dummyEventCardCover,
-    },
-    {
-      id: 2,
-      title: "Yoga Session",
-      date: "Aug 21 - 6:00 PM",
-      host: "Wellness Club",
-      image: dummyEventCardCover,
-    },
-    {
-      id: 3,
-      title: "Study Session",
-      date: "Aug 22 - 6:00 PM",
-      host: "Study Club",
-      image: dummyEventCardCover,
-    },
-  ];
 
-  const featuredEvents = [
-    {
-      id: 4,
-      title: "AI Workshop",
-      date: "Aug 23 - 4:00 PM",
-      host: "Tech Innovators",
-      image: dummyEventCardCover,
-    },
-    {
-      id: 5,
-      title: "Nutrition Talk",
-      date: "Aug 24 - 5:30 PM",
-      host: "Healthy Living",
-      image: dummyEventCardCover,
-    },
-  ];
+  const [newClubs, setNewClubs] = useState([])
+  const [recommendedClubs, setRecommendedClubs] = useState([])
 
-  const initialShowNewCardsLimit = 2;
+  const initialShowCardsLimit = 2;
+
   const [showNewCardsLimit, setShowNewCardsLimit] = useState(
-    initialShowNewCardsLimit
+    initialShowCardsLimit
+  );
+  const [showRecommendedCardsLimit, setShowRecommendedCardsLimit] = useState(
+    initialShowCardsLimit
   );
 
+  const {userContext} = useContext(UserContext)
+
   // If the limit is equal to the initial limit, show all events, otherwise show the initial limit
-  const toggleNewEvents = () => {
+  const toggleNewClubs = () => {
     setShowNewCardsLimit((prevLimit) =>
-      prevLimit === initialShowNewCardsLimit
-        ? newEvents.length
-        : initialShowNewCardsLimit
+      prevLimit === initialShowCardsLimit
+        ? newClubs.length
+        : initialShowCardsLimit
+    );
+  };
+  const toggleRecommendedClubs = () => {
+    setShowRecommendedCardsLimit((prevLimit) =>
+      prevLimit === initialShowCardsLimit
+        ? recommendedClubs.length
+        : initialShowCardsLimit
     );
   };
 
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const newClubsRes = await backend.get('get-new-clubs/');
+      setNewClubs(newClubsRes.data);
+
+      if (userContext) {  // or userContext?.user
+        const recommendedClubsRes = await backend.get('get-recommended-clubs/');
+        setRecommendedClubs(recommendedClubsRes.data);
+      }
+
+    } catch (error) {
+      console.error('Failed to fetch clubs:', error);
+    }
+  };
+
+  fetchData();
+}, [userContext?.isAuthenticated]);  // Re-run when auth status changes
+
   return (
-    <div className="absolute w-[278px] h-[calc(100vh-80px)] top-[80px] left-0 bg-[rgba(253,78,183,0.8)] border border-black shadow-[4px_4px_0px_#000000] p-4">
+    <div className="absolute w-[278px] h-[calc(100vh-80px)] top-[80px] overflow-y-auto left-0 bg-[rgba(253,78,183,0.8)] border border-black shadow-[4px_4px_0px_#000000] p-4">
       {/* New Events Section */}
       <div className="flex flex-col items-center">
         <div>
@@ -67,22 +65,22 @@ const DiscoverSidebar = () => {
             New
           </h2>
           <div className="flex flex-col gap-3">
-            {newEvents.slice(0, showNewCardsLimit).map((event) => (
+            {newClubs.slice(0, showNewCardsLimit).map((club) => (
               <SidebarCard
-                key={event.id}
-                name={event.title}
-                image={event.image}
+                key={club.id}
+                name={club.club_name}
+                image={club.club_picture}
               />
             ))}
           </div>
           {/* Only show the button if there are more events than the initial limit */}
-          {newEvents.length > initialShowNewCardsLimit && (
+          {newClubs.length > initialShowCardsLimit && (
             <button>
               <p
                 className="mt-3 text-white hover:text-sky-100 text-sm font-medium"
-                onClick={toggleNewEvents}
+                onClick={toggleNewClubs}
               >
-                {showNewCardsLimit === initialShowNewCardsLimit
+                {showNewCardsLimit === initialShowCardsLimit
                   ? "Show All"
                   : "Show Less"}
               </p>
@@ -93,19 +91,31 @@ const DiscoverSidebar = () => {
 
       {/* Featured Events Section */}
       <div className="flex flex-col items-center">
-        <div className="mt-8">
-          <h2 className="font-normal text-[26px] leading-[31px] text-black mb-2">
-            Recommended
-          </h2>
+        <div className="mt-2 ">
+          {userContext &&
+              <h2 className="font-normal text-[26px] leading-[31px] text-black mb-2">Recommended</h2>
+          }
           <div className="flex flex-col gap-3">
-            {featuredEvents.map((event) => (
+            {recommendedClubs.slice(0, showRecommendedCardsLimit).map((recommendedClub) => (
               <SidebarCard
-                key={event.id}
-                name={event.title}
-                image={event.image}
+                key={recommendedClub.id}
+                name={recommendedClub.club_name}
+                image={recommendedClub.club_picture}
               />
             ))}
           </div>
+          {recommendedClubs.length > initialShowCardsLimit && (
+            <button>
+              <p
+                className="mt-3 text-white hover:text-sky-100 text-sm font-medium"
+                onClick={toggleRecommendedClubs}
+              >
+                {showRecommendedCardsLimit === initialShowCardsLimit
+                  ? "Show All"
+                  : "Show Less"}
+              </p>
+            </button>
+          )}
         </div>
       </div>
     </div>

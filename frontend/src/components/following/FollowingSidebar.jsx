@@ -6,6 +6,11 @@ import SidebarCard from "../discover/SidebarCard.jsx";
 const FollowingSidebar = () => {
   const [followedClubs, setFollowedClubs] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setPage("following");
+  }, [setPage]);
+
   
   useEffect(() => {
     // Fetch clubs the user is following

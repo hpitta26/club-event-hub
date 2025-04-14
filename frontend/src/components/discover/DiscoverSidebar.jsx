@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import dummyEventCardCover from "../../assets/dummyEventCardCover.jpg";
 import SidebarCard from "./SidebarCard";
+import { useSidebar } from "../../context/SidebarContext";
 
 const DiscoverSidebar = () => {
+  const { setPage, isMobileSidebarOpen } = useSidebar();
   const newEvents = [
     {
       id: 1,
@@ -58,12 +60,22 @@ const DiscoverSidebar = () => {
     );
   };
 
+  // Set the current page when the component mounts
+  useEffect(() => {
+    setPage("discover");
+  }, [setPage]);
+
+  // Determine which styles to apply based on whether it's mobile or desktop
+  const sidebarStyles = isMobileSidebarOpen
+    ? "w-full h-auto bg-[rgba(253,78,183,0.8)] p-4" // Mobile styles
+    : "absolute w-[278px] h-[calc(100vh-80px)] top-[80px] left-0 bg-[rgba(253,78,183,0.8)] border border-black shadow-[4px_4px_0px_#000000] p-4"; // Desktop styles
+
   return (
-    <div className="absolute w-[278px] h-[calc(100vh-80px)] top-[80px] left-0 bg-[rgba(253,78,183,0.8)] border border-black shadow-[4px_4px_0px_#000000] p-4">
+    <div className={sidebarStyles}>
       {/* New Events Section */}
       <div className="flex flex-col items-center">
         <div>
-          <h2 className="font-normal text-[26px] leading-[31px] text-black mb-2">
+          <h2 className="font-normal text-[20px] sm:text-[26px] leading-[31px] text-black mb-2">
             New
           </h2>
           <div className="flex flex-col gap-3">
@@ -93,8 +105,8 @@ const DiscoverSidebar = () => {
 
       {/* Featured Events Section */}
       <div className="flex flex-col items-center">
-        <div className="mt-8">
-          <h2 className="font-normal text-[26px] leading-[31px] text-black mb-2">
+        <div className="mt-6 sm:mt-8">
+          <h2 className="font-normal text-[20px] sm:text-[26px] leading-[31px] text-black mb-2">
             Recommended
           </h2>
           <div className="flex flex-col gap-3">

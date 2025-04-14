@@ -91,11 +91,8 @@ useEffect(() => {
           <div className="pt-[80px] h-full flex flex-col">
             {/* Title and Filters */}
             <div className="pt-6 px-6">
-              {selectedFilter === "All"
-                  ? <h1 className="text-2xl font-bold mb-4">Events This Week</h1>
-                  : <h1 className="text-2xl font-bold mb-4">{selectedFilter} Events</h1>
-              }
-              <Filterbar categories={categories} onFilterSelect={setSelectedFilter} />
+                <h1 className="text-2xl font-bold mb-4">Discover Events</h1>
+                <Filterbar categories={categories} onFilterSelect={setSelectedFilter} />
             </div>
             {/* Event Grid */}
                   <div className="overflow-y-auto flex-1 p-6">

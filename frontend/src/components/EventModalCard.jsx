@@ -11,7 +11,7 @@ function EventModalCard({
   upcoming = false,
 }) {
   return (
-    <div className="container flex gap-3 w-full px-4 py-4 bg-[#F0EFEB] rounded-lg hover:bg-[#E0DFDB] transition border-2 border-black">
+    <div className="container flex gap-3 w-full px-4 py-4 bg-white rounded-xl hover:bg-[#f7f7f5] transition border-[1.5px] border-black shadow-[2px_2px_0px_#000000]">
         <img src={dummyEventCardCover} alt="Event" className="w-[104px] h-[104px] rounded-lg object-cover border-2 border-black" />
         <div className="ml-1 flex flex-col gap-3 justify-center">
             {/* Event Date */}

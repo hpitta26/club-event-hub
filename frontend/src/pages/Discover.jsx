@@ -84,7 +84,7 @@ useEffect(() => {
         <div
           className={`${
             isSidebarOpen
-              ? "flex-1 ml-0" // Sidebar is open, main content takes remaining space
+              ? "flex-1 min-w-0" // Sidebar is open, main content takes remaining space
               : "w-[75%] mx-auto" // Sidebar is closed, main content is centered
           }`}
         >

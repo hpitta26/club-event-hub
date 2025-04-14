@@ -130,7 +130,7 @@ function CreateEvent() {
 
 
     return (
-        <section className="min-h-screen bg-[#FFFAFD] flex flex-col items-center pb-20 pt-16">
+        <section className="min-h-screen bg-[#FFFAFD] flex flex-col items-center pb-20 pt-24">
             <div className="w-full max-w-[860px] space-y-8">
                 {/* Page Title */}
                 <div className="flex justify-between items-center">

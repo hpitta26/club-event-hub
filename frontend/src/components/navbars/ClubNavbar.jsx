@@ -89,7 +89,7 @@ const ClubNavbar = () => {
           <img src={gatherULogo} alt="GatherU Logo" className="h-14 w-auto" />
         </a>
 
-        <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex space-x-8">
+        <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex space-x-16">
           <a href="/analytics" className="font-normal text-black text-lg tracking-wide hover:text-pink-500">
             Analytics
           </a>

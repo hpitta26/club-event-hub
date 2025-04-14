@@ -141,7 +141,7 @@ const StudentNavbar = () => {
                   <img src={gatherULogo} alt="GatherU Logo" className="h-14 w-auto" />
                 </a>
             </div>
-            <div className=" absolute left-1/2 transform -translate-x-1/2 flex space-x-6">
+            <div className=" absolute left-1/2 transform -translate-x-1/2 flex space-x-16">
               <a href="/discover" className={`md:block hidden font-normal text-black text-lg tracking-wide hover:text-pink-500`}>
                   Discover
               </a>

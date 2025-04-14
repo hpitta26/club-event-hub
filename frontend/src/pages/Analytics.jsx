@@ -226,7 +226,7 @@ const EventSidebar = ({ events }) => {
         bgcolor: 'background.paper',
         borderRadius: 2,
         overflow: 'auto',
-        boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.05)' // Added subtle shadow
+        boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.05)',
       }}
     >
       <Typography 
@@ -341,7 +341,7 @@ function Analytics() {
 
   return (
     <ThemeProvider theme={lightTheme}>
-      <Box sx={{ bgcolor: 'background.default', minHeight: '100vh', py: 9 }}>
+      <Box className="pt-24 pb-20" sx={{ minHeight: '100vh'}}>
         <Container maxWidth="xl">
           <Typography 
             variant="h4" 

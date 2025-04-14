@@ -82,7 +82,7 @@ function ClubEvents() {
   }, {});
 
   return (
-    <div className="min-h-screen p-10 flex flex-col items-center bg-gray-100">
+    <div className="min-h-screen pt-20 flex flex-col items-center">
       <div className="w-[60%] max-w-5xl relative mb-6 mt-6">
         <h1 className="text-4xl font-bold text-center">Events</h1>
 

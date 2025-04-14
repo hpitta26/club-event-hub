@@ -86,7 +86,7 @@ const ClubNavbar = () => {
     <nav className="fixed w-full h-20 bg-[#FFFAFD] z-40">
       <div className="relative flex items-center justify-between h-full px-4 md:px-8">
         <a className="flex items-center" href="/analytics">
-          <img src={gatherULogo} alt="GatherU Logo" className="h-10 w-auto" />
+          <img src={gatherULogo} alt="GatherU Logo" className="h-14 w-auto" />
         </a>
 
         <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex space-x-8">
@@ -104,7 +104,7 @@ const ClubNavbar = () => {
               className="bg-[#FD4EB7] text-black font-normal text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 rounded-md border border-black sm:border-[1.5px] shadow-[1px_1px_0px_#000000] sm:shadow-[2px_2px_0px_#000000]"
               onClick={handleEventsClick}
             >
-              +Create Event
+             Create Event
             </button>
             
             <div className="relative">

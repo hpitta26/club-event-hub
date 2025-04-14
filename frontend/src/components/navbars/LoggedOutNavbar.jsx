@@ -48,7 +48,7 @@ const LoggedOutNavbar = () => {
         {/* Left section */}
         <div className="flex-1 flex items-center">
           <a className="flex items-center" href="/discover">
-            <img src={gatherULogo} alt="GatherU Logo" className="h-10 w-auto" />
+            <img src={gatherULogo} alt="GatherU Logo" className="h-14 w-auto" />
           </a>
         </div>
 
@@ -94,7 +94,7 @@ const LoggedOutNavbar = () => {
 
       {/* Mobile Dropdown */}
       {mobileOpen && (
-        <div className="absolute top-20 mt-1 right-4 w-48 bg-[#] rounded-lg p-3 border-[1.5px] border-black shadow-[2px_2px_0px_#000000] rounded-md">
+        <div className="absolute top-20 mt-1 right-4 w-48 bg-[#] p-3 border-[1.5px] border-black shadow-[2px_2px_0px_#000000] rounded-md">
           <div className="flex flex-col space-y-2">
             <button
               className="bg-[#FD4EB7] text-black font-normal text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:bg-pink-400"

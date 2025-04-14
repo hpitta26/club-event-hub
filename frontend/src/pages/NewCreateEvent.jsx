@@ -101,7 +101,7 @@ function NewCreateEvent() {
     };
 
     return (
-        <section className="min-h-screen bg-[#FFFAFD] flex flex-col items-center pb-20 pt-16">
+        <section className="min-h-screen bg-[#FFFAFD] flex flex-col items-center pb-20 pt-24">
             <div className="w-full max-w-[860px] space-y-8">
                 {/* Page Title */}
                 <h1 className="text-black text-4xl font-semibold text-center">Create Event</h1>

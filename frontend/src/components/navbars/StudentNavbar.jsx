@@ -138,7 +138,7 @@ const StudentNavbar = () => {
                 <div className="flex items-center space-x-8">
               <HiMiniBars3 className="md:block hidden text-black w-8 h-8 cursor-pointer" onClick={toggleSidebar} />
                 <a href="/discover" className="flex items-center">
-                  <img src={gatherULogo} alt="GatherU Logo" className="h-10 w-auto" />
+                  <img src={gatherULogo} alt="GatherU Logo" className="h-14 w-auto" />
                 </a>
             </div>
             <div className=" absolute left-1/2 transform -translate-x-1/2 flex space-x-6">

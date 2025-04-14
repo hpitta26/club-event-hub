@@ -37,7 +37,7 @@ const Following = () => {
         <div className="flex h-full">
           {/* Sidebar */}
           {isSidebarOpen && (
-            <div className="w-1/4 hidden lg:block">
+            <div className="w-1/5 hidden lg:block">
               <FollowingSidebar />
             </div>
           )}
@@ -51,12 +51,12 @@ const Following = () => {
             }`}
           >
             <div className="pt-[80px] h-full flex flex-col">
-              {/* Title and Filters */}
-              <div className="pt-6 px-6">
+              {/* Title */}
+              <div className="pt-6 px-6 pl-10">
                 <h1 className="text-2xl font-bold mb-4">Your Club Feed</h1>
               </div>
               {/* Event Grid */}
-              <div className="overflow-y-auto flex-1 p-6">
+              <div className="overflow-y-auto flex-1 p-6 px-10 pr-14">
                 <EventGrid events={filteredEvents} />
               </div>
             </div>

@@ -56,7 +56,7 @@ const Discover = () => {
       <div className="flex h-full">
         {/* Sidebar */}
         {isSidebarOpen && (
-          <div className="w-1/4 hidden lg:block">
+          <div className="w-1/5 hidden lg:block">
             <DiscoverSidebar />
           </div>
         )}
@@ -71,7 +71,7 @@ const Discover = () => {
         >
           <div className="pt-[80px] h-full flex flex-col">
             {/* Title and Filters */}
-            <div className="pt-6 px-6">
+            <div className="pt-6 px-6 pl-10">
               {selectedFilter === "All"
                   ? <h1 className="text-2xl font-bold mb-4">Events This Week</h1>
                   : <h1 className="text-2xl font-bold mb-4">{selectedFilter} Events</h1>
@@ -79,7 +79,7 @@ const Discover = () => {
               <Filterbar categories={categories} onFilterSelect={setSelectedFilter} />
             </div>
             {/* Event Grid */}
-            <div className="overflow-y-auto flex-1 p-6">
+            <div className="overflow-y-auto flex-1 p-6 px-10 pr-14">
               <EventGrid events={filteredEvents} />
             </div>
           </div>

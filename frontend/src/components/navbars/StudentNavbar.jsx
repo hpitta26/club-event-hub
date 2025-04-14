@@ -137,7 +137,7 @@ const StudentNavbar = () => {
           </>
         )}
         <nav className="fixed w-full h-20 bg-white z-40 border-b-2 border-b-black border-solid">
-            <div className="relative flex items-center justify-between h-full px-4 md:px-8">
+            <div className="relative flex items-center justify-between h-full pr-4 md:px-8">
                 {/* Left: Hamburger Icon, Logo, and Links */}
                 <div className="flex items-center space-x-8">
               <HiMiniBars3 className="md:block hidden text-black w-8 h-8 cursor-pointer" onClick={toggleSidebar} />

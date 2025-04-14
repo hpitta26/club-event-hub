@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { LuTrophy, LuMedal, LuAward } from "react-icons/lu";
 import backend from "../components/backend";
+import { useSidebar } from "../context/SidebarContext";
 
 const Leaderboard = () => {
     const [users, setUsers] = useState([]);
     const [loggedInStudent, setLoggedInStudent] = useState(null);
+    const { setPage } = useSidebar();
 
     useEffect(() => {
+        // Set the current page when the component mounts
+        setPage("leaderboard");
+
         const fetchUsers = async () => {
             try {
                 const response = await backend.get("get-top-students/");
@@ -28,7 +33,7 @@ const Leaderboard = () => {
             }
         };
         fetchUsers();
-    }, []);
+    }, [setPage]);
 
     const getRankIcon = (rank) => {
         switch (rank) {
@@ -44,25 +49,25 @@ const Leaderboard = () => {
     };
 
     return (
-        <section className="min-h-screen bg-[#FFFAFD] flex flex-col items-center pb-20 pt-[120px]">
-            <div className="w-full max-w-[860px] space-y-8">
-                {/* Page Title */}
-                <div>
-                    <h1 className="text-4xl font-bold mb-4">Leaderboard</h1>
-                    <p>Top 50</p>
+        <section className="min-h-screen bg-[#FFFAFD] flex flex-col items-center pb-20 pt-[80px] md:pt-[120px]">
+            <div className="w-full max-w-[860px] px-4 md:px-8">
+                {/* Page Title - Centered for mobile */}
+                <div className="text-center md:text-left mb-6">
+                    <h1 className="text-3xl pt-4 md:text-4xl font-bold mb-2">Leaderboard</h1>
+                    <p className="text-sm md:text-base">Top 50</p>
                 </div>
 
                 {/* Leaderboard */}
                 <div className="bg-white border-2 border-black rounded-[10px] shadow-[2px_2px_0_#000] overflow-hidden">
                     <div className="relative w-full overflow-auto">
-                        <table className="w-full caption-bottom text-sm">
+                        <table className="w-full caption-bottom text-xs md:text-sm">
                             <thead className="[&_tr]:border-b">
                                 <tr className="border-b-2 border-b-black">
-                                    <th className="h-12 px-4 w-16 text-center align-middle font-medium text-muted-foreground">Rank</th>
-                                    <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">User</th>
-                                    <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Events Attended</th>
-                                    <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Spirit Score</th>
-                                    <th className="h-12 px-4 text-right align-middle font-medium text-muted-foreground">Points</th>
+                                    <th className="h-10 md:h-12 px-2 md:px-4 w-10 md:w-16 text-center align-middle font-medium text-muted-foreground">Rank</th>
+                                    <th className="h-10 md:h-12 px-2 md:px-4 text-left align-middle font-medium text-muted-foreground">User</th>
+                                    <th className="h-10 md:h-12 px-2 md:px-4 text-left align-middle font-medium text-muted-foreground">Events</th>
+                                    <th className="h-10 md:h-12 px-2 md:px-4 text-left align-middle font-medium text-muted-foreground">Spirit</th>
+                                    <th className="h-10 md:h-12 px-2 md:px-4 text-right align-middle font-medium text-muted-foreground">Points</th>
                                 </tr>
                             </thead>
                             <tbody className="[&_tr:last-child]:border-0">
@@ -73,28 +78,27 @@ const Leaderboard = () => {
                                             loggedInStudent && user.id === loggedInStudent.id ? "bg-yellow-100" : ""
                                         }`}
                                     >
-                                        <td className="p-4 text-center align-middle">
+                                        <td className="p-2 md:p-4 text-center align-middle">
                                             <div className="flex justify-center">
                                                 {getRankIcon(user.rank || 0)}
                                             </div>
                                         </td>
-                                        <td className="p-4 align-middle">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-full border-2 border-black overflow-hidden">
+                                        <td className="p-2 md:p-4 align-middle">
+                                            <div className="flex items-center gap-2 md:gap-3">
+                                                <div className="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-black overflow-hidden">
                                                     <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
                                                 </div>
-                                                <span className="font-medium">{user.name}</span>
+                                                <span className="font-medium text-xs md:text-sm">{user.name}</span>
                                             </div>
                                         </td>
-                                        <td className="p-4 text-left font-bold align-middle">
+                                        <td className="p-2 md:p-4 text-left font-bold align-middle text-xs md:text-sm">
                                             {user.events_attended}
                                         </td>
-                                        <td className="p-4 text-left font-bold align-middle">
-                                            {/* {user.spirit_score || "N/A"} */}
-                                            50 %
+                                        <td className="p-2 md:p-4 text-left font-bold align-middle text-xs md:text-sm">
+                                            50%
                                         </td>
-                                        <td className="p-4 text-right font-bold align-middle">
-                                            {user.points.toLocaleString()} pts
+                                        <td className="p-2 md:p-4 text-right font-bold align-middle text-xs md:text-sm">
+                                            {user.points.toLocaleString()}
                                         </td>
                                     </tr>
                                 ))}

@@ -29,7 +29,7 @@ function EventCard({
   const [numCapacity, setNumCapacity] = useState(capacity);
   const [isRSVP, setIsRSVP] = useState(is_rsvped);
 
-  // Click outside  to close the details card
+  // Click outside to close the details card
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -71,13 +71,13 @@ function EventCard({
     <>
       <div
         ref={cardRef}
-        className="relative w-[237.5px] h-[268.75px] bg-white border-[1.5px] border-black shadow-[2px_2px_0px_#000000] rounded-xl 
-                      hover:shadow-[4px_4px_0_#000] duration-200 transition-all transform hover:-translate-y-1 flex flex-col cursor-pointer"
+        className="relative w-full h-auto bg-white border-[1.5px] border-black shadow-[2px_2px_0px_#000000] rounded-xl 
+                      hover:shadow-[2px_2px_0px_#000000] transition-transform transform hover:scale-[1.02] p-2 sm:p-2.5 flex flex-col cursor-pointer"
         onClick={handleOnClick}
       >
         {/* Event Banner */}
-        <div className="relative w-full h-[142.75px] mb-2.5 border-black rounded-t-[10.5px] border-b-[1.5px] overflow-hidden">
-          <p className="absolute top-2 left-2 bg-[#4D9FFD] text-black px-1.5 py-px rounded-[3px] text-[10px] border-solid border border-black">
+        <div className="relative w-full h-[80px] sm:h-[123.75px] mb-2 sm:mb-2.5 border-[2px] sm:border-[2.5px] border-black rounded-lg overflow-hidden">
+          <p className="absolute top-1 left-1 sm:top-1.5 sm:left-1.5 bg-blue-500 text-white px-1 py-0.5 sm:px-1.5 sm:py-0.625 rounded-md text-[8px] sm:text-[10px] font-medium border shadow-[1px_1px_0px_#000000] sm:shadow-[2px_2px_0px_#000000] border-black">
             {dateFormat(date)}
           </p>
           <div className="absolute top-2 right-2 bg-yellow-100 text-black text-[10px] px-1.5 py-px rounded-[3px] border-solid border border-black flex items-center gap-1">
@@ -92,55 +92,50 @@ function EventCard({
         </div>
 
         {/* Title */}
-        <h3 className="absolute font-bold top-[147.5px] left-[10px] w-[207.5px] h-[23.75px] leading-[23.75px]">
-          {truncate(title, 30)}
-        </h3>
+        <p className="font-semibold text-[14px] sm:text-[20px] leading-tight sm:leading-[23.75px] mb-1 sm:mb-2">
+          {truncate(title, 25)}
+        </p>
 
         {/* Host & Location */}
-        <div className="absolute top-[176.75px] left-[10px] flex items-center gap-1.5 mb-1.25">
+        <div className="flex items-center gap-1 sm:gap-1.5 mb-1">
           <img
             src={hostLogo}
             alt="Host Logo"
-            className="w-4 h-4 object-cover rounded-full"
+            className="w-[16px] h-[16px] sm:w-[18px] sm:h-[18px] object-cover rounded-full"
           />
-          <p className="text-[12px] text-[#8F8F8F]">{host}</p>
+          <p className="text-[10px] sm:text-[12.5px] text-[#8F8F8F]">{truncate(host, 20)}</p>
         </div>
-        <div className="absolute top-[199.5px] left-[10px] flex items-center gap-1">
-          <GrLocation className="text-[#8F8F8F] w-4 h-4" />
-          <p className="text-[12px] text-[#8F8F8F]">{location}</p>
+        <div className="flex items-center gap-1 sm:gap-1.5 mb-2 sm:mb-3">
+          <GrLocation className="text-[#4EA0FD] w-[16px] h-[16px] sm:w-[18px] sm:h-[18px]" />
+          <p className="text-[10px] sm:text-[12.5px] text-[#8F8F8F]">{truncate(location, 20)}</p>
         </div>
 
-        {/* Divider */}
-        <div className="absolute bottom-[40px] border-t border-t-gray-200 w-full" />
-
-        {/* Profile Images and Going Count */}
-        <div className="absolute bottom-[11.5px] left-[10px] flex items-center gap-1">
-          {/* Avatars */}
-          <div className="flex items-center">
-            <img
-              src={dummyInitLogo}
-              alt="Attendee 1"
-              className="w-5 h-5 object-cover rounded-full border border-white"
-            />
-            <img
-              src={dummyInitLogo}
-              alt="Attendee 2"
-              className="w-5 h-5 object-cover rounded-full border border-white -ml-[6px]"
-            />
-            <img
-              src={dummyInitLogo}
-              alt="Attendee 3"
-              className="w-5 h-5 object-cover rounded-full border border-white -ml-[6px]"
-            />
+        {/* Bottom Row: Profile Images, Going Count, and Spots Left */}
+        <div className="flex justify-between items-center mt-auto">
+          {/* Avatars and Going Count */}
+          <div className="flex items-center gap-1">
+            <div className="flex items-center">
+              <img
+                src={dummyInitLogo}
+                alt="Attendee 1"
+                className="w-[16px] h-[16px] sm:w-[20px] sm:h-[20px] object-cover rounded-full border border-white"
+              />
+              <img
+                src={dummyInitLogo}
+                alt="Attendee 2"
+                className="w-[16px] h-[16px] sm:w-[20px] sm:h-[20px] object-cover rounded-full border border-white -ml-[4px] sm:-ml-[6px]"
+              />
+              <img
+                src={dummyInitLogo}
+                alt="Attendee 3"
+                className="w-[16px] h-[16px] sm:w-[20px] sm:h-[20px] object-cover rounded-full border border-white -ml-[4px] sm:-ml-[6px]"
+              />
+            </div>
+            <p className="text-[8px] sm:text-[10px] text-black">{numAttendees} GOING</p>
           </div>
 
-          {/* Number of People Going */}
-          <p className="text-[10px] text-black">{numAttendees} GOING</p>
-        </div>
-
-        {/* Spots Left */}
-        <div className="absolute bottom-[12.5px] right-[10px]">
-          <p className="text-[12.5px]" style={{ color: spotsLeftColor }}>
+          {/* Spots Left */}
+          <p className="text-[10px] sm:text-[12.5px]" style={{ color: spotsLeftColor }}>
             {spotsLeft} spots left
           </p>
         </div>

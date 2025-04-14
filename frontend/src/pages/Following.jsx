@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import NewSidebar from "../components/following/NewSidebar.jsx";
+import FollowingSidebar from "../components/following/FollowingSidebar.jsx";
 import EventGrid from "../components/discover/EventGrid.jsx";
 import backend from "../components/backend.jsx";
 import { useSidebar } from "../context/SidebarContext.jsx";
@@ -38,7 +38,7 @@ const Following = () => {
           {/* Sidebar */}
           {isSidebarOpen && (
             <div className="w-1/4 hidden lg:block">
-              <NewSidebar />
+              <FollowingSidebar />
             </div>
           )}
   

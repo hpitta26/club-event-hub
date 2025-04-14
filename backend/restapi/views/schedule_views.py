@@ -5,7 +5,7 @@ from restapi.models import Student
 from rest_framework.views import APIView
 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated]) 
+@permission_classes([IsAuthenticated]) 
 def get_all_student_availabilities(request):
     try:
         # Query all students and retrieve their availability

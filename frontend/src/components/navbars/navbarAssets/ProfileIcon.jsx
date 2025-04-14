@@ -1,4 +1,3 @@
-// ProfileIcon.jsx
 import React, { useState, useEffect, useRef } from 'react';
 
 const ProfileIcon = ({ src, alt = 'User Profile', children }) => {

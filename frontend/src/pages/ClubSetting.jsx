@@ -288,6 +288,5 @@ function ClubSetting() {
     </section>
   );
 }
-// }
 
 export default ClubSetting;

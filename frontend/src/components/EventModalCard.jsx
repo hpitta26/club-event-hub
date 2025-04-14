@@ -7,11 +7,12 @@ function EventModalCard({
   title = "Untitled Event", 
   date = "TBD", 
   host = "Unknown Host", 
-  image = dummyEventCardCover 
+  image = dummyEventCardCover,
+  upcoming = false,
 }) {
   return (
     <div className="container flex gap-3 w-full px-4 py-4 bg-[#F0EFEB] rounded-lg hover:bg-[#E0DFDB] transition border-2 border-black">
-        <img src={image} alt="Event" className="w-[104px] h-[104px] rounded-lg object-cover border-2 border-black" />
+        <img src={dummyEventCardCover} alt="Event" className="w-[104px] h-[104px] rounded-lg object-cover border-2 border-black" />
         <div className="ml-1 flex flex-col gap-3 justify-center">
             {/* Event Date */}
             <p className="text-black font-semibold text-xs">
@@ -26,11 +27,15 @@ function EventModalCard({
                 Hosted by: {host}
             </p>
         </div>
-        <div className="flex items-center">
-            <button className="bg-green-400 rounded-md py-2 px-3 hover:bg-green-500">
-                Survey
-            </button>
-        </div>
+        { !upcoming ? 
+            <div className="flex items-center">
+                <button className="bg-green-400 rounded-md py-2 px-3 hover:bg-green-500">
+                    Survey
+                </button>
+            </div>
+            :
+            <></>
+        }
     </div>
   );
 };

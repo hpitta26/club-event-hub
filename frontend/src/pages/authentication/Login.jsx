@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import backend from "../../components/backend.jsx";
 import { UserContext } from "../../context/UserContext.jsx";
 import { useNavigate } from "react-router-dom";
-import FormContainer from "../../components/FormContainer.jsx";
 import gatherULogo from '../../assets/icons/GatherUIcon.svg';
 
 function Login() {

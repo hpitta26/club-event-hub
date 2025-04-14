@@ -9,7 +9,7 @@ from ..serializers import EventSerializer
 from restapi.permissions import StudentPermission
 
 @api_view(["GET"])
-@permission_classes([IsAuthenticated])
+@permission_classes([])
 def get_events_this_week(request):
     try:
         now = timezone.now()
@@ -37,22 +37,6 @@ def rsvp(request):
     except Exception as e:
         print(e)
         return Response({'status': 'error', 'message': 'server error'}, status=404)
-
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
-def is_rsvp(request):
-    try:
-        event_id = request.query_params.get('event_id')
-        if not event_id:
-            return Response({'status': 'error', 'message': 'event_id is required'}, status=400)
-
-        event = Event.objects.get(id=event_id)
-        return Response(status=200, data={"RSVP": event.rsvps.filter(user=request.user).exists()})
-    except Event.DoesNotExist:
-        return Response({'status': 'error', 'message': 'Event not found'}, status=404)
-    except Exception as e:
-        print(e)
-        return Response({'status': 'error', 'message': 'server error'}, status=500)
 
 @api_view(["GET"])
 def filter_events(request,filter):

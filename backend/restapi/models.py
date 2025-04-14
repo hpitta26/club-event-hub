@@ -136,7 +136,7 @@ class Student(models.Model):
 
 
 
-ALLOWED_TAGS = ["Technology","Medical","Career","Fitness","Social","Wellness","Culture","Politics","Volunteering"]
+ALLOWED_TAGS = ["Technology","Medical","Career","Fitness","Social","Wellness","Culture","Politics","Volunteer"]
 def validate_tags(tag_list):
     if not isinstance(tag_list, list):
         raise TypeError("Tags must be a list")

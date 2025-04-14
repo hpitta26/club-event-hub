@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import NewSidebar from "../components/following/NewSidebar.jsx";
+import FollowingSidebar from "../components/following/FollowingSidebar.jsx";
 import EventGrid from "../components/discover/EventGrid.jsx";
 import backend from "../components/backend.jsx";
 import { useSidebar } from "../context/SidebarContext.jsx";
@@ -10,7 +10,6 @@ const Following = () => {
   const { isSidebarOpen } = useSidebar();
 
   useEffect(() => {
-    // Fetch events for this week
     backend.get('get-following-clubs-events/')
       .then(response => {
         if (response.status === 200) {
@@ -39,7 +38,7 @@ const Following = () => {
           {/* Sidebar */}
           {isSidebarOpen && (
             <div className="w-1/4 hidden lg:block">
-              <NewSidebar />
+              <FollowingSidebar />
             </div>
           )}
   
@@ -47,8 +46,8 @@ const Following = () => {
           <div
             className={`${
               isSidebarOpen
-                ? "flex-1 ml-0" // Sidebar is open, main content takes remaining space
-                : "w-[75%] mx-auto" // Sidebar is closed, main content is centered
+                ? "flex-1 ml-0"
+                : "w-[75%] mx-auto"
             }`}
           >
             <div className="pt-[80px] h-full flex flex-col">

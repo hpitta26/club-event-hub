@@ -1,38 +1,53 @@
 import backend from "../components/backend.jsx";
 import { useState } from 'react';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 import { useNavigate } from 'react-router-dom';
+import { GrLocation } from "react-icons/gr";
+import { MdOutlineFileUpload } from "react-icons/md";
+import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
+import ClubHeatmap from "../components/ClubHeatmap";
+import { BsPerson } from "react-icons/bs";
 
-// Will need to handle CSRF TOKENS in this component
 function CreateEvent() {
     const navigate = useNavigate();
 
+    const tags = [
+        "Career",
+        "Culture",
+        "Fitness",
+        "Medical",
+        "Politics",
+        "Social",
+        "Technology",
+        "Volunteer",
+        "Wellness",
+    ];
+
     const [formData, setFormData] = useState({
-        // Club is set in the backend using --> request.session['id']
         title: '',
         description: '',
         start_time: null,
         end_time: null,
         location: '',
         capacity: '',
+        tags: [],
     });
 
     const [errors, setErrors] = useState({})
+    const [activeTab, setActiveTab] = useState('details');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formErrors = validateForm(formData);
         setErrors(formErrors)
         if(Object.keys(formErrors).length === 0) {
-            // Formatting so that Django serializer can easily read this since it's in DateTime format already
             const formattedData={
                 ...formData,
                 start_time:format(formData.start_time,"yyyy-MM-dd'T'HH:mm:ssXXX"),
-                end_time:format(formData.end_time,"yyyy-MM-dd'T'H:mm:ssXXX")
+                end_time:format(formData.end_time,"yyyy-MM-dd'T'HH:mm:ssXXX")
             }
             try {
+                console.log("Creating event with data: ", formattedData);
                 const response = await backend.post("/events/", formattedData);
                 console.log(response);
                 setFormData({
@@ -42,6 +57,7 @@ function CreateEvent() {
                     end_time: null,
                     location: '',
                     capacity: '',
+                    tags: [],
                 })
                 navigate('/events')
             }
@@ -52,7 +68,14 @@ function CreateEvent() {
         }
     };
 
-    //Currently the only form validation relates to leaving the fields empty, we can expand this when needed
+    const handleTimeRangeSelect = ({ start_time, end_time }) => {
+        setFormData((prev) => ({
+            ...prev,
+            start_time,
+            end_time,
+        }));
+    };
+
     const validateForm = (data) => {
         const errors = {};
         if (!data.title.trim()){
@@ -76,7 +99,10 @@ function CreateEvent() {
         if(data.start_time && data.end_time && data.start_time>=data.end_time){
             alert("Start time must be before the end time");
         }
-
+        if (data.tags.length === 0) {
+            errors.tags = 'Please select at least one tag';
+        }
+        // console.log(errors)
         return errors;
     }
 
@@ -85,100 +111,170 @@ function CreateEvent() {
         setFormData(prev=>({...prev,[e.target.name]:e.target.value}));
     }
 
-    const filterTime = (time) => {
-        const hours = time.getHours();
-        return hours >= 8 && hours <= 22;
+    const handleTagToggle = (tag) => {
+        setFormData((prev) => {
+            const isSelected = prev.tags.includes(tag);
+            if (isSelected) {
+                return {
+                    ...prev,
+                    tags: prev.tags.filter((t) => t !== tag),
+                };
+            } else {
+                return {
+                    ...prev,
+                    tags: [...prev.tags, tag],
+                };
+            }
+        });
     };
 
+
     return (
-        <section className='min-h-screen bg-stone-900 flex justify-center items-center pt-10'>
-            <div className='grid grid-rows-8 gap-8'>
-                <div>
-                    <h1 className='text-white text-4xl mb-4'>
-                        Create Event
-                    </h1>
-                </div>
-                <div>
-                    <input
-                        onChange={handleChange}
-                        name='title'
-                        value={formData.title}
-                        placeholder='Event Title'
-                        className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full max-w-md'
-                    />
-                    {errors.title && <p className="text-red-500 text-xs italic">{errors.title}</p> }
-                </div>
-                <div>
-                    <input
-                        onChange={handleChange}
-                        name='description'
-                        value={formData.description}
-                        placeholder='Description'
-                        className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full max-w-md'
-                    />
-                    {errors.description && <p className="text-red-500 text-xs italic">{errors.description}</p> }
-                </div>
-                <div>
-                    <input
-                        required={true}
-                        onChange={handleChange}
-                        name='location'
-                        value={formData.location}
-                        placeholder='Location'
-                        className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full max-w-md'
-                    />
-                    {errors.location && <p className="text-red-500 text-xs italic">{errors.location}</p> }
-                </div>
-                <div>
-                    <DatePicker
-                        selected={formData.start_time}
-                        onChange={(date) => setFormData(prev => ({ ...prev, start_time: date }))}
-                        showTimeSelect
-                        dateFormat="yyyy-MM-dd HH:mm:ss"
-                        minDate={new Date()}
-                        filterTime={filterTime}
-                        timeIntervals={15}
-                        className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full max-w-md'
-                        wrapperClassName="w-full"
-                        placeholderText="Select Start Time"
-                    />
-                    {errors.start_time && <p className="text-red-500 text-xs italic">{errors.start_time}</p>}
-                </div>
-                <div>
-                    <DatePicker
-                        selected={formData.end_time}
-                        onChange={(date) => setFormData(prev => ({ ...prev, end_time: date }))}
-                        showTimeSelect
-                        dateFormat="yyyy-MM-dd HH:mm:ss"
-                        minDate={formData.start_time}
-                        maxDate={formData.start_time}
-                        filterTime={filterTime}
-                        timeIntervals={15}
-                        className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full max-w-md'
-                        wrapperClassName="w-full"
-                        placeholderText="Select End Time"
-                    />
-                    {errors.end_time && <p className="text-red-500 text-xs italic">{errors.end_time}</p> }
-                </div>
-                <div>
-                    <input
-                        onChange={handleChange}
-                        name='capacity'
-                        value={formData.capacity}
-                        placeholder='Event Capacity'
-                        type='number'
-                        className='bg-gray-700 focus:outline-none text-white rounded-md ps-4 py-2 w-full max-w-md'
-                    />
-                    {errors.capacity && <p className="text-red-500 text-xs italic">{errors.capacity}</p> }
-                </div>
-                <div>
+        <section className="min-h-screen bg-[#FFFAFD] flex flex-col items-center pb-20 pt-16">
+            <div className="w-full max-w-[860px] space-y-8">
+                {/* Page Title */}
+                <div className="flex justify-between items-center">
+                    <h1 className="text-4xl font-semibold tracking-tight">Create Event</h1>
                     <button
-                        type='submit'
+                        type="submit"
                         onClick={handleSubmit}
-                        className='bg-blue-600 w-full max-w-md py-2 text-white hover:bg-blue-500 rounded-md'
+                        className="bg-[#FD4EB7] border-[1px] border-black rounded-[4px] py-2 px-3 text-black font-medium hover:bg-[#E93DA6] transition"
                     >
                         Create Event
                     </button>
+                </div>
+
+                <div className="w-full">
+                    {/* Tabs Navigation */}
+                    <div className="border-b border-gray-200">
+                        <ul className="flex -mb-px">
+                            <li className="w-1/2">
+                                <button 
+                                    onClick={() => setActiveTab('details')} 
+                                    className={`w-full py-3 text-center font-medium ${
+                                        activeTab === 'details' 
+                                            ? 'border-b-2 border-black font-extrabold' 
+                                            : 'text-gray-500 hover:text-gray-700'
+                                    }`}
+                                >
+                                    Event Details
+                                </button>
+                            </li>
+                            <li className="w-1/2">
+                                <button 
+                                    onClick={() => setActiveTab('schedule')} 
+                                    className={`w-full py-3 text-center font-medium ${
+                                        activeTab === 'schedule' 
+                                            ? 'border-b-2 border-black font-extrabold' 
+                                            : 'text-gray-500 hover:text-gray-700'
+                                    }`}
+                                >
+                                    Schedule
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                {/* Event Details Tab */}
+                <div className={activeTab === 'details' ? 'block' : 'hidden'}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-2">
+                        {/* Left Column: Banner */}
+                        <div className="flex flex-col">
+                            <div className="w-full max-w-[416px] h-[242px] border-[2px] border-black shadow-[2px_2px_0px_#000000] rounded-lg relative">
+                                <img
+                                    src={dummyEventCardCover}
+                                    alt="Profile"
+                                    className="w-full h-full object-cover rounded-lg"
+                                />
+                                <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                                    <MdOutlineFileUpload className="text-white w-6 h-6" />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Right Column: Form */}
+                        <div className="flex flex-col gap-6">
+                            <div>
+                                <input
+                                    onChange={handleChange}
+                                    name="title"
+                                    value={formData.title}
+                                    placeholder="Event Title"
+                                    className="w-full bg-[#FFFAFD] border-[1px] border-black rounded-[4px] p-2 text-black"
+                                />
+                                {errors.title && <p className="text-red-500 text-xs italic">{errors.title}</p>}
+                            </div>
+
+                            <div>
+                                <textarea
+                                    onChange={handleChange}
+                                    name="description"
+                                    value={formData.description}
+                                    placeholder="Description"
+                                    className="w-full h-[80px] bg-[#FFFAFD] border-[1px] border-black rounded-[4px] p-2 text-black"
+                                ></textarea>
+                                {errors.description && <p className="text-red-500 text-xs italic">{errors.description}</p>}
+                            </div>
+
+                            <div>
+                                <div className="relative flex items-center">
+                                    <GrLocation className="absolute left-3 text-gray-500" />
+                                    <input
+                                        onChange={handleChange}
+                                        name="location"
+                                        value={formData.location}
+                                        placeholder="Location"
+                                        className="w-full bg-[#FFFAFD] border-[1px] border-black rounded-[4px] p-2 pl-10 text-black"
+                                    />
+                                </div>
+                                {errors.location && <p className="text-red-500 text-xs italic">{errors.location}</p>}
+                            </div>
+                            
+
+                            <div className="flex flex-col gap-2">
+                                <label className="text-black text-sm font-medium">Tags</label>
+                                <div className="flex flex-wrap gap-2">
+                                    {tags.map((tag) => (
+                                        <span
+                                            key={tag}
+                                            onClick={() => handleTagToggle(tag)}
+                                            className={`px-3 py-1 text-sm border rounded-lg cursor-pointer ${
+                                                formData.tags.includes(tag)
+                                                    ? "bg-[#FD4EB7] text-white border-[#E93DA6]"
+                                                    : "bg-gray-100 text-gray-600 border-gray-300 hover:bg-gray-200"
+                                            }`}
+                                        >
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                                {errors.tags && <p className="text-red-500 text-xs italic">{errors.tags}</p>}
+                            </div>
+
+                            <div>
+                                <div className="relative flex items-center">
+                                    <BsPerson className="absolute left-3 text-gray-500" />
+                                    <input
+                                        onChange={handleChange}
+                                        name="capacity"
+                                        value={formData.capacity}
+                                        placeholder="Event Capacity"
+                                        type="number"
+                                        className="w-full bg-[#FFFAFD] border-[1px] border-black rounded-[4px] p-2 pl-10 text-black"
+                                    />
+                                </div>
+                                {errors.capacity && <p className="text-red-500 text-xs italic">{errors.capacity}</p>}
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+
+                {/* Schedule Tab */}
+                <div className={activeTab === 'schedule' ? 'block' : 'hidden'}>
+                    <ClubHeatmap onTimeRangeSelect={handleTimeRangeSelect} />
                 </div>
             </div>
         </section>

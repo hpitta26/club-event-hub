@@ -15,19 +15,18 @@ function StudentTimes() {
     const [isDragging, setIsDragging] = useState(false); // Track if the user is dragging
     const [dragDay, setDragDay] = useState(null); // Track the day being dragged
 
-    // Generate time slots for 30-minute intervals, ending at 10:00 PM
+    // Generate time slots for 30-minute intervals
     const timeSlots = Array.from({ length: 24 }, (_, i) => {
         const startHour = Math.floor(i / 2) + 10; // Start at 10am
         const startMinutes = i % 2 === 0 ? "00" : "30";
 
-        // Calculate the end time
-        const endHour = i % 2 === 0 ? startHour : startHour + 1; // Increment hour for the next slot
+        const endHour = i % 2 === 0 ? startHour : startHour + 1;
         const endMinutes = i % 2 === 0 ? "30" : "00";
 
         return `${startHour.toString().padStart(2, "0")}:${startMinutes}-${endHour.toString().padStart(2, "0")}:${endMinutes}`;
     });
 
-    // Generate labels for the hour marks, ending at 9 PM
+    // Generate labels for the hour marks
     const timeLabels = Array.from({ length: 12 }, (_, i) => {
         const hour = i + 10; // Start at 10am
         return `${hour > 12 ? hour - 12 : hour}${hour >= 12 ? "pm" : "am"}`;
@@ -81,8 +80,8 @@ function StudentTimes() {
 
     const handleMouseDown = (day, timeSlot) => {
         setIsDragging(true);
-        setDragDay(day); // Set the day being dragged
-        toggleTimeSlot(day, timeSlot); // Toggle the initial cell
+        setDragDay(day);
+        toggleTimeSlot(day, timeSlot);
     };
 
     const handleMouseEnter = (day, timeSlot) => {
@@ -107,17 +106,16 @@ function StudentTimes() {
                 Fri: "Friday",
             };
 
-            // Construct the JSON object to send to the backend
             const formattedAvailability = {};
             Object.keys(availability).forEach((day) => {
                 const backendDay = formattedDay[day]; 
                 if (!formattedAvailability[backendDay]) {
-                    formattedAvailability[backendDay] = []; // Initialize the array for the day
+                    formattedAvailability[backendDay] = []; 
                 }
 
                 timeSlots.forEach((timeSlot) => {
                     if (availability[day].includes(timeSlot)) {
-                        formattedAvailability[backendDay].push(timeSlot); // Add the time slot to the day
+                        formattedAvailability[backendDay].push(timeSlot); 
                     }
                 });
             });
@@ -138,14 +136,14 @@ function StudentTimes() {
     return (
         <section
             className="min-h-screen flex flex-col justify-center items-center pt-20"
-            onMouseUp={handleMouseUp} // Stop dragging when the mouse is released
+            onMouseUp={handleMouseUp} 
         >
             <div className="w-full space-y-5 p-6 max-w-[1200px] -ml-8">
                 <h1 className="text-3xl text-black font-bold text-center mb-6">Your Availability</h1>
                 <div className="overflow-x-auto">
                     <div className="grid grid-cols-[100px_repeat(5,_1fr)] gap-1">
                         {/* Time Labels */}
-                        <div></div> {/* Empty top-left corner */}
+                        <div></div>
                         {Object.keys(availability).map((day) => (
                             <div key={day} className="text-center font-bold text-lg" style={{ userSelect: "none" }}>
                                 {day}

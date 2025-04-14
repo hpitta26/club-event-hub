@@ -1,6 +1,4 @@
 import React from "react";
-import EventCard from "../components/EventCard";
-import EventModal from "../components/EventModal";
 import EventDetailsCard from "../components/EventDetailsCard";
 
 // Temporary Page to visualize the EventCard component.

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, { useState, useEffect } from "react";
 import backend from "../components/backend";
 import NewSidebar from "../components/discover/NewSidebar";
 import EventGrid from "../components/discover/EventGrid";
@@ -14,6 +14,7 @@ const Discover = () => {
   const [filteredEvents, setFilteredEvents] = useState([])
   const [recommendedEvents, setRecommendedEvents] = useState([])
   const {userContext} = useContext(UserContext)
+
   const [allEvents, setAllEvents] = useState([{
         id: 0,
         title: "",
@@ -33,7 +34,6 @@ const Discover = () => {
     async function fetch_events() {
         try {
             const response = await backend.get("get-week-events/");
-            console.log(response.data);
             setAllEvents(response.data);
         } catch (err) {
             console.log(err);
@@ -57,7 +57,6 @@ const Discover = () => {
       setFilteredEvents(allEvents)
     }
   }, [allEvents,selectedFilter]);
-
 useEffect(() => {
   if (userContext) {
     backend.get("collaborative-filter/")
@@ -77,27 +76,28 @@ useEffect(() => {
         {/* Sidebar */}
         {isSidebarOpen && (
           <div className="w-1/4 hidden lg:block">
-            <NewSidebar />
+            <DiscoverSidebar />
           </div>
         )}
 
         {/* Main Content Wrapper */}
-          <div
-              className={`${
-                  isSidebarOpen
-                      ? "flex-1 min-w-0 ml-0" // Sidebar is open, main content takes remaining space
-                      : "w-[75%] mx-auto" // Sidebar is closed, main content is centered
-              }`}
-          >
-
-              <div className="pt-[80px] h-full flex flex-col">
-                  {/* Title and Filters */}
-                  <div className="pt-6 px-6">
-                      <h1 className="text-2xl font-bold mb-4">Discover Events</h1>
-                      <NewFilterBar categories={categories} onFilterSelect={setSelectedFilter}/>
-                  </div>
-
-                  {/* Event Grid */}
+        <div
+          className={`${
+            isSidebarOpen
+              ? "flex-1 ml-0" // Sidebar is open, main content takes remaining space
+              : "w-[75%] mx-auto" // Sidebar is closed, main content is centered
+          }`}
+        >
+          <div className="pt-[80px] h-full flex flex-col">
+            {/* Title and Filters */}
+            <div className="pt-6 px-6">
+              {selectedFilter === "All"
+                  ? <h1 className="text-2xl font-bold mb-4">Events This Week</h1>
+                  : <h1 className="text-2xl font-bold mb-4">{selectedFilter} Events</h1>
+              }
+              <Filterbar categories={categories} onFilterSelect={setSelectedFilter} />
+            </div>
+            {/* Event Grid */}
                   <div className="overflow-y-auto flex-1 p-6">
                       {recommendedEvents.length>3 && <RecommendedEvents events={recommendedEvents}/>}
                       {selectedFilter === "All"
@@ -106,8 +106,8 @@ useEffect(() => {
                       }
                       <EventGrid events={filteredEvents}/>
                   </div>
-              </div>
           </div>
+        </div>
       </div>
     </div>
   );

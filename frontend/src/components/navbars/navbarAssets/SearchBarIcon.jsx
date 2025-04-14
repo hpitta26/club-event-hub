@@ -1,4 +1,3 @@
-// SearchBarTrigger.jsx
 import React from 'react';
 
 const SearchBarTrigger = ({ onClick, className }) => {

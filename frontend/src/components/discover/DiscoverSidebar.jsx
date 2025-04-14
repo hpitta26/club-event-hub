@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import dummyEventCardCover from "../../assets/dummyEventCardCover.jpg";
-import NewSidebarCard from "./NewSidebarCard";
+import SidebarCard from "./SidebarCard";
 
-const NewSidebar = () => {
+const DiscoverSidebar = () => {
   const newEvents = [
     {
       id: 1,
@@ -68,7 +68,7 @@ const NewSidebar = () => {
           </h2>
           <div className="flex flex-col gap-3">
             {newEvents.slice(0, showNewCardsLimit).map((event) => (
-              <NewSidebarCard
+              <SidebarCard
                 key={event.id}
                 name={event.title}
                 image={event.image}
@@ -95,11 +95,11 @@ const NewSidebar = () => {
       <div className="flex flex-col items-center">
         <div className="mt-8">
           <h2 className="font-normal text-[26px] leading-[31px] text-black mb-2">
-            Featured
+            Recommended
           </h2>
           <div className="flex flex-col gap-3">
             {featuredEvents.map((event) => (
-              <NewSidebarCard
+              <SidebarCard
                 key={event.id}
                 name={event.title}
                 image={event.image}
@@ -112,4 +112,4 @@ const NewSidebar = () => {
   );
 };
 
-export default NewSidebar;
+export default DiscoverSidebar;

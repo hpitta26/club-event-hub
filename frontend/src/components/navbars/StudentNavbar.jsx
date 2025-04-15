@@ -7,7 +7,10 @@ import FollowingModal from "../FollowingModal";
 import { FaBell } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import EventModal from "../EventModal";
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
+=======
+>>>>>>> a187e79 (updated the logo to a png)
 
 const StudentNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -158,6 +161,7 @@ const StudentNavbar = () => {
               </button>
               <ProfileIcon src={userProfileSrc}>
                 <div className="py-2">
+<<<<<<< HEAD
                   <Link
                     to="#"
                     className="block px-4 py-1 text-sm hover:bg-white/10"
@@ -171,17 +175,41 @@ const StudentNavbar = () => {
                     Settings
                   </Link>
                   <Link
+=======
+                  <a
+                    href="#"
+                    className="block px-4 py-1 text-sm hover:bg-white/10"
+                  >
+                    Profile
+                  </a>
+                  <a
+                    href="/student-settings"
+                    className="block px-4 py-1 text-sm hover:bg-white/10"
+                  >
+                    Settings
+                  </a>
+                  <a
+>>>>>>> a187e79 (updated the logo to a png)
                     onClick={() => setFollowingModalOpen(true)}
                     className="block px-4 py-1 text-sm hover:bg-white/10"
                   >
                     Following
+<<<<<<< HEAD
                   </Link>
                   <Link
+=======
+                  </a>
+                  <a
+>>>>>>> a187e79 (updated the logo to a png)
                     onClick={handleLogout}
                     className="block px-4 py-1 text-sm hover:bg-white/10"
                   >
                     Logout
+<<<<<<< HEAD
                   </Link>
+=======
+                  </a>
+>>>>>>> a187e79 (updated the logo to a png)
                 </div>
               </ProfileIcon>
               <SearchBar open={searchOpen} onClose={handleSearchClose} />

@@ -20,6 +20,7 @@ import StudentSettings from "./pages/StudentSettings.jsx";
 import ClubProfile from "./pages/ClubProfile.jsx";
 import StudentTimes from "./pages/StudentTimes.jsx";
 import StudentProfile from "./pages/StudentProfile.jsx";
+import Leaderboard from "./pages/Leaderboard.jsx";
 
 // Club Side Imports
 import Analytics from "./pages/Analytics.jsx";
@@ -50,6 +51,7 @@ function App() {
           {/* Protected --> can only be accessed by people with role STUDENT */}
           <Route element={<EnsureLoggedIn expRole="STUDENT" />}> 
             <Route path="/following" element={<Following />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/student-times" element={<StudentTimes />} />
             <Route path="/student-profile" element={<StudentProfile/>} />
             <Route path="/student-settings" element={<StudentSettings />} />

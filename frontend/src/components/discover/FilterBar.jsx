@@ -13,7 +13,7 @@ const Filterbar = ({ categories, onFilterSelect }) => {
             {categories.map((category) => (
                 <button
                     key={category}
-                    className={`px-3 text-[16px] rounded-lg border-[1.5px] border-black transition text-sm md:text-base ${
+                    className={`px-3 text-[16px] rounded-md border-[1.5px] border-black transition text-sm md:text-base ${
                         activeFilter === category
                             ? "bg-[#CFCCCC] shadow-[2px_2px_0px_#000000]"
                             : "bg-white"

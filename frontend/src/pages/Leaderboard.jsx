@@ -7,6 +7,8 @@
       - 30-35 pts for competitions: Done
   - Display points on leaderboard
 */
+import React, { useEffect } from "react";
+import UserPointsDisplay from "../components/UserPointsDisplay";
 
 const mockUsers = [
   {
@@ -42,10 +44,12 @@ const mockUsers = [
 ];
 
 const Leaderboard = () => {
+  useEffect(() => {});
   return (
     <div className="max-w-[1400px] mx-auto h-[calc(100vh)]">
       <div className="px-1 py-6">
         <h1 className="mt-20 text-3xl font-bold mb-6">Leaderboard</h1>
+        <UserPointsDisplay points={15} />
         <div className="bg-white border-2 border-black rounded-[10px] shadow-[2px_2px_0_#000] overflow-hidden">
           <table className="w-full">
             <thead>

@@ -52,7 +52,7 @@ class ClubSerializer(serializers.ModelSerializer):
 
    def get_followers_count(self, obj): # Return the number of students following this club
        return obj.followers.count()
-  
+
    def get_events_count(self, obj): # Return the number of events hosted by this club
        return obj.events.count()
 
@@ -91,7 +91,7 @@ class StudentSerializer(serializers.ModelSerializer):
        fields = [
            'user_id', 'user', 'major', 'graduation_year', 'spirit_points', 'first_name', 'last_name'
        ]
-  
+
    def create(self, validated_data):
        user_data = validated_data.pop('user') # get nested user data
        user_serializer = UserSerializer(data=user_data) # create the user using the UserSerializer
@@ -99,7 +99,7 @@ class StudentSerializer(serializers.ModelSerializer):
        user = user_serializer.save()
        student = Student.objects.create(user=user, **validated_data)
        return student
-  
+
    def update(self, instance, validated_data):
        # Update nested user data if provided
        user_data = validated_data.pop('user', None)
@@ -127,7 +127,7 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = [
-            'id', 'club', 'title', 'description', 'start_time', 'end_time', 'location', 'capacity', 'rsvps', 'tags', 'attending'
+            'id', 'club', 'title', 'description', 'start_time', 'end_time', 'location', 'capacity', 'rsvps', 'tags', 'attending', 'spirit_points', 'event_type'
         ]
 
     def get_attending(self, event): # get the number of attendees per event

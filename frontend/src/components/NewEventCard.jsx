@@ -14,9 +14,11 @@ function NewEventCard({
   capacity = "N/A",
   coverImage = dummyEventCardCover,
   hostLogo = dummyInitLogo,
-  description= "No detailed description available.",
+  description = "No detailed description available.",
   universityName = "Florida International University",
   is_rsvped = false,
+  // eventType = "Online",
+  // spiritPoints = 0,
 }) {
   const [showDetails, setShowDetails] = useState(false);
   const cardRef = useRef(null);
@@ -130,7 +132,7 @@ function NewEventCard({
     <>
       <div
         ref={cardRef}
-        className="relative w-[237.5px] h-[268.75px] bg-white border-[1.5px] border-black shadow-[2px_2px_0px_#000000] rounded-xl 
+        className="relative w-[237.5px] h-[268.75px] bg-white border-[1.5px] border-black shadow-[2px_2px_0px_#000000] rounded-xl
                       hover:shadow-[2px_2px_0px_#000000] transition-transform transform hover:scale-[1.02] p-2.5 flex flex-col cursor-pointer"
         onClick={handleOnClick}
       >

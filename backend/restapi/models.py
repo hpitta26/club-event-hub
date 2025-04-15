@@ -107,7 +107,7 @@ class Student(models.Model):
     following_clubs = models.ManyToManyField(
         Club, related_name='followers', blank=True
     )  # accessible through Club as followers
-    
+
     def save(self, *args, **kwargs):
         student_group = Group.objects.get(name='STUDENT')
         self.user.groups.add(student_group)
@@ -138,11 +138,16 @@ class Event(models.Model):
     )  # accessible through Club as events
 
     title = models.CharField(max_length=255)
+    event_type = models.CharField(choices=[('regular', 'Regular'), ('workshop', 'Workshop'), ('competition', 'Competition')],
+      max_length=20,
+      default='regular'
+    )
     description = models.TextField()
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     location = models.CharField(max_length=255)
     capacity = models.PositiveIntegerField()
+    spirit_points = models.PositiveIntegerField(default=15)
     # picture = models.ImageField(
     #     upload_to='event_thumbnails/', blank=True, null=True
     # )

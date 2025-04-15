@@ -7,6 +7,7 @@ import FollowingModal from "../FollowingModal";
 import { FaBell } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import EventModal from "../EventModal";
+import { Link } from "react-router-dom";
 
 const StudentNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -87,14 +88,14 @@ const StudentNavbar = () => {
         {/* Main row */}
         <div className="w-full relative flex items-center justify-between h-10">
           {/* Left: Logo */}
-          <a className="pl-4 flex items-center" href="/discover">
+          <Link className="pl-4 flex items-center" to="/discover">
             <img src={gatherULogo} alt="GatherU Logo" className="h-5 w-auto" />
-          </a>
+          </Link>
 
           {/* Center: Links (hidden on mobile) */}
           <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex space-x-8">
-            <a
-              href="/discover"
+            <Link
+              to="/discover"
               className={`text-sm transition-all duration-300 ease-out transform px-2 py-1 rounded-md
                 ${
                   clickedLink === "following"
@@ -104,9 +105,9 @@ const StudentNavbar = () => {
               onClick={() => handleLinkClick("following")}
             >
               Discover
-            </a>
-            <a
-              href="/following"
+            </Link>
+            <Link
+              to="/following"
               className={`text-sm transition-all duration-300 ease-out transform px-2 py-1 rounded-md
                 ${
                   clickedLink === "discover"
@@ -116,7 +117,19 @@ const StudentNavbar = () => {
               onClick={() => handleLinkClick("discover")}
             >
               Following
-            </a>
+            </Link>
+            <Link
+              to="/leaderboard"
+              className={`text-sm transition-all duration-300 ease-out transform px-2 py-1 rounded-md
+                ${
+                  clickedLink === "leaderboard"
+                    ? "text-blue-500 bg-blue-500/20 scale-110 shadow-lg"
+                    : "text-[#F0EFEB] bg-transparent scale-100 hover:text-blue-500"
+                }`}
+              onClick={() => handleLinkClick("leaderboard")}
+            >
+              Following
+            </Link>
           </div>
 
           {/* Right: Events Button + Notification + Profile + Mobile Toggle */}
@@ -145,30 +158,30 @@ const StudentNavbar = () => {
               </button>
               <ProfileIcon src={userProfileSrc}>
                 <div className="py-2">
-                  <a
-                    href="#"
+                  <Link
+                    to="#"
                     className="block px-4 py-1 text-sm hover:bg-white/10"
                   >
                     Profile
-                  </a>
-                  <a
-                    href="/student-settings"
+                  </Link>
+                  <Link
+                    to="/student-settings"
                     className="block px-4 py-1 text-sm hover:bg-white/10"
                   >
                     Settings
-                  </a>
-                  <a
+                  </Link>
+                  <Link
                     onClick={() => setFollowingModalOpen(true)}
                     className="block px-4 py-1 text-sm hover:bg-white/10"
                   >
                     Following
-                  </a>
-                  <a
+                  </Link>
+                  <Link
                     onClick={handleLogout}
                     className="block px-4 py-1 text-sm hover:bg-white/10"
                   >
                     Logout
-                  </a>
+                  </Link>
                 </div>
               </ProfileIcon>
               <SearchBar open={searchOpen} onClose={handleSearchClose} />
@@ -206,22 +219,22 @@ const StudentNavbar = () => {
         {mobileOpen && (
           <div className="md:hidden bg-black border-t border-white/10">
             <div className="flex flex-col items-center py-2 space-y-2">
-              <a
-                href="/discover"
+              <Link
+                to="/discover"
                 className={`text-sm text-[#F0EFEB] transition-all duration-300 ease-out px-2 py-1 rounded-md
                   ${clickedLink === "following" ? "bg-pink-500/20 text-pink-500" : "hover:text-pink-500 bg-transparent"}`}
                 onClick={() => handleLinkClick("following")}
               >
                 Discover
-              </a>
-              <a
-                href="/following"
+              </Link>
+              <Link
+                to="/following"
                 className={`text-sm text-[#F0EFEB] transition-all duration-300 ease-out px-2 py-1 rounded-md
                   ${clickedLink === "discover" ? "bg-blue-500/20 text-blue-500" : "hover:text-blue-500 bg-transparent"}`}
                 onClick={() => handleLinkClick("discover")}
               >
                 Following
-              </a>
+              </Link>
               <SearchBarTrigger onClick={handleSearchOpen} />
             </div>
           </div>

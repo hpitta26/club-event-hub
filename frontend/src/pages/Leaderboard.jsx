@@ -1,3 +1,13 @@
+/*
+  Points feature implementation
+  - Add points to users: Done
+    - users need to rsvp to events: Done
+      - 10-15 pts for regular events: Done
+      - 20-25 pts for workshops and learning sessions: Done
+      - 30-35 pts for competitions: Done
+  - Display points on leaderboard
+*/
+
 import React from "react";
 
 const mockUsers = [
@@ -35,9 +45,9 @@ const mockUsers = [
 
 const Leaderboard = () => {
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="max-w-[1400px] mx-auto h-[calc(100vh)]">
       <div className="px-1 py-6">
-        <h1 className="text-3xl font-bold mb-6">Leaderboard</h1>
+        <h1 className="mt-20 text-3xl font-bold mb-6">Leaderboard</h1>
         <div className="bg-white border-2 border-black rounded-[10px] shadow-[2px_2px_0_#000] overflow-hidden">
           <table className="w-full">
             <thead>

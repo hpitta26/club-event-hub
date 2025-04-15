@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
   Points feature implementation
   - Add points to users: Done
@@ -8,6 +9,8 @@
   - Display points on leaderboard
 */
 
+=======
+>>>>>>> acb6295 (Just added the leaderboard page for the points into the project linked it to the navbar and layout file)
 import React from "react";
 
 const mockUsers = [
@@ -45,9 +48,15 @@ const mockUsers = [
 
 const Leaderboard = () => {
   return (
+<<<<<<< HEAD
     <div className="max-w-[1400px] mx-auto h-[calc(100vh)]">
       <div className="px-1 py-6">
         <h1 className="mt-20 text-3xl font-bold mb-6">Leaderboard</h1>
+=======
+    <div className="min-h-screen bg-gray-100">
+      <div className="px-1 py-6">
+        <h1 className="text-3xl font-bold mb-6">Leaderboard</h1>
+>>>>>>> acb6295 (Just added the leaderboard page for the points into the project linked it to the navbar and layout file)
         <div className="bg-white border-2 border-black rounded-[10px] shadow-[2px_2px_0_#000] overflow-hidden">
           <table className="w-full">
             <thead>

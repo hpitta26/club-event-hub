@@ -7,9 +7,13 @@ import EventModal from "../EventModal";
 import { useSidebar } from "../../context/SidebarContext";
 import backend from "../backend";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
 =======
 >>>>>>> a187e79 (updated the logo to a png)
+=======
+import { Link } from "react-router-dom";
+>>>>>>> acb6295 (Just added the leaderboard page for the points into the project linked it to the navbar and layout file)
 
 const NewStudentNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -145,6 +149,7 @@ const NewStudentNavbar = () => {
             </a>
             <div className="flex space-x-6">
 <<<<<<< HEAD
+<<<<<<< HEAD
               <Link
                 to="/discover"
                 className={`font-normal text-black text-lg tracking-wide hover:text-pink-500`}
@@ -166,6 +171,10 @@ const NewStudentNavbar = () => {
 =======
               <a
                 href="/discover"
+=======
+              <Link
+                to="/discover"
+>>>>>>> acb6295 (Just added the leaderboard page for the points into the project linked it to the navbar and layout file)
                 className={`font-normal text-black text-lg tracking-wide hover:text-pink-500`}
               >
                 Discover
@@ -175,8 +184,18 @@ const NewStudentNavbar = () => {
                 className={`font-normal text-black text-lg tracking-wide hover:text-blue-500`}
               >
                 Following
+<<<<<<< HEAD
               </a>
 >>>>>>> a187e79 (updated the logo to a png)
+=======
+              </Link>
+              <Link
+                to="/Leaderboard"
+                className={`font-normal text-black text-lg tracking-wide hover:text-blue-500`}
+              >
+                Leaderboard
+              </Link>
+>>>>>>> acb6295 (Just added the leaderboard page for the points into the project linked it to the navbar and layout file)
             </div>
           </div>
           {/* Center: Search Bar */}
@@ -259,6 +278,10 @@ const NewStudentNavbar = () => {
 =======
                   <a
                     href="#"
+=======
+                  <Link
+                    to="#"
+>>>>>>> acb6295 (Just added the leaderboard page for the points into the project linked it to the navbar and layout file)
                     className="block px-4 py-2 text-sm text-black hover:bg-gray-100"
                   >
                     Profile
@@ -268,9 +291,9 @@ const NewStudentNavbar = () => {
                     className="block px-4 py-2 text-sm text-black hover:bg-gray-100"
                   >
                     Availability
-                  </a>
-                  <a
-                    href="/student-settings"
+                  </Link>
+                  <Link
+                    to="/student-settings"
                     className="block px-4 py-2 text-sm text-black hover:bg-gray-100"
                   >
                     Settings
@@ -282,6 +305,9 @@ const NewStudentNavbar = () => {
                     Logout
                   </a>
 >>>>>>> a187e79 (updated the logo to a png)
+=======
+                  </Link>
+>>>>>>> acb6295 (Just added the leaderboard page for the points into the project linked it to the navbar and layout file)
                 </div>
               )}
             </div>

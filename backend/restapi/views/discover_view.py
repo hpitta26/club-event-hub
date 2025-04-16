@@ -55,6 +55,7 @@ def collaborative_filter(request):
     try:
         session_student = Student.objects.get(user=request.user)
         past_events = Event.objects.filter(rsvps=session_student).order_by("-start_time")[:10]
+        excluded_ids = set(past_events.values_list('id', flat=True))
         now = timezone.now()
         student_count = defaultdict(int)
         attended_tags = set()
@@ -74,9 +75,22 @@ def collaborative_filter(request):
             if any(tag in filtered_event.tags for tag in attended_tags):
                 recommended_events.append(filtered_event)
 
-        print(recommended_events)
-        # List is reversed so that events belonging to most similar students are returned first
-        return Response(EventSerializer(list(recommended_events)[::-1][:10], many=True).data)
+        #remaining spots are filled up with the most popular events (used for newer users)
+        remaining = 10 - len(recommended_events)
+        if remaining > 0:
+            popular_events = Event.objects.annotate(
+                popularity=Count('rsvps')
+            ).filter(
+                start_time__gte=now
+            ).exclude(
+                id__in=excluded_ids.union({event.id for event in recommended_events})
+            ).order_by('-popularity')[:remaining]
+
+            recommended_events = list(recommended_events)[::-1] + list(popular_events)
+        else:
+            recommended_events = list(recommended_events)
+        print(sorted_students)
+        return Response(EventSerializer(list(recommended_events)[:10], many=True).data)
 
     except Student.DoesNotExist:
         return Response({'status': 'error', 'message': 'Student not found'}, status=404)
@@ -98,7 +112,7 @@ def get_recommended_clubs(request):
         excluded_ids = set(following_clubs_ids)
 
         student_count = defaultdict(int)
-        past_events = Event.objects.filter(rsvps=session_student)[:10]
+        past_events = Event.objects.filter(rsvps=session_student).order_by("-start_time")[:10]
 
         for past_event in past_events:
             for iterated_student in past_event.rsvps.exclude(user_id=session_student.user_id):

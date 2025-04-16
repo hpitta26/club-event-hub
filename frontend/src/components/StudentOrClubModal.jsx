@@ -1,52 +1,59 @@
 import { useEffect } from 'react';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
+import gatherULogo from '../assets/icons/GatherUIcon.png';
 
 const StudentOrClubModal = ({ modalIsOpen, setIsOpen }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
         Modal.setAppElement('#root');
-    }, []);
-
-    const customStyles = {
-        overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-        },
-        content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-            backgroundColor: "#1e1e1e",
-            textAlign: "center",
-        },
-    };
+        
+        // Add this effect to prevent scrolling of the background content
+        if (modalIsOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [modalIsOpen]);
 
     return (
         <Modal
             isOpen={modalIsOpen}
-            style={customStyles}
             onRequestClose={() => setIsOpen(false)}
+            className="rounded-[20px] border-black border-2 shadow-[2px_2px_0px_#000000] bg-white text-white max-w-md w-full p-6 mx-auto"
+            overlayClassName="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50"
+            // Ensure the modal content has a higher z-index
+            style={{
+                overlay: {
+                    zIndex: 1000,
+                    backgroundColor: "rgba(0, 0, 0, 0.85)", // Darker overlay for better hiding
+                },
+                content: {
+                    zIndex: 1001,
+                }
+            }}
         >
-            <div className="flex justify-between items-center mb-4">
-                <h2 className="text-white text-lg font-semibold">
+            {/* Rest of your modal content remains the same */}
+            <div className="flex flex-col items-center mb-4">
+                <div className="flex items-center justify-center">
+                    <span className="text-2xl font-bold mr-2 text-black">Welcome to</span>
+                    <img src={gatherULogo} alt="GatherU Logo" className="h-10" />
+                </div>
+                <h2 className="text-black text-lg font-semibold mt-2 text-center">
                     Are you a student or a club?
                 </h2>
-                <button
-                    className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition ms-10"
-                    onClick={() => setIsOpen(false)}
-                >
-                    ✕
-                </button>
             </div>
+
             <div className="flex flex-col space-y-4">
-                <button onClick={() => {navigate(`/student-register`); setIsOpen(false)}} className="bg-blue-500 text-white font-medium rounded-md py-2 px-4 hover:bg-blue-600 transition">
+                <button onClick={() => {navigate(`/student-register`); setIsOpen(false)}} className="bg-[#FD4EB7] hover:bg-[#E93DA6] text-black py-2 px-4 rounded w-full border-black border-2 shadow-[2px_2px_0px_#000000]">
                     I am a student!
                 </button>
-                <button onClick={() => {navigate(`/club-register`); setIsOpen(false)}} className="bg-green-500 text-white font-medium rounded-md py-2 px-4 hover:bg-green-600 transition">
+                <button onClick={() => {navigate(`/club-register`); setIsOpen(false)}} className="bg-[#4D9FFD] hover:bg-[#288afa] text-black py-2 px-4 rounded w-full flex items-center justify-center border-black border-2 shadow-[2px_2px_0px_#000000]">
                     I am a club!
                 </button>
             </div>

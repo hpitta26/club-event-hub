@@ -42,7 +42,8 @@ def rsvp(request):
 @api_view(["GET"])
 def filter_events(request,filter):
     try:
-        events = Event.objects.filter(tags__icontains=filter)
+        now = timezone.now()
+        events = Event.objects.filter(tags__icontains=filter,start_time__gte=now).order_by('start_time')
         return Response({'status': 'success', 'data': EventSerializer(events, many=True).data})
     except Exception as e:
         print(e)
@@ -56,14 +57,23 @@ def collaborative_filter(request):
         past_events = Event.objects.filter(rsvps=session_student).order_by("-start_time")[:10]
 
         student_count = defaultdict(int)
+        attended_tags = set()
 
         for past_event in past_events:
+            attended_tags.update(past_event.tags)
             for iterated_student in past_event.rsvps.exclude(user_id=session_student.user_id):
                 student_count[iterated_student] += 1
 
         sorted_students = sorted(student_count.items(), key=lambda x: x[1], reverse=True)
         top_students = [student[0] for student in sorted_students]
-        recommended_events = Event.objects.filter(rsvps__in=top_students).exclude(rsvps=session_student).distinct()
+        filtered_events = Event.objects.filter(rsvps__in=top_students).exclude(rsvps=session_student).distinct()
+
+        # recommended events are checked w the tags of attended events for more accurate recommendations
+        recommended_events = []
+        for filtered_event in filtered_events:
+            if any(tag in filtered_event.tags for tag in attended_tags):
+                recommended_events.append(filtered_event)
+
         # List is reversed so that events belonging to most similar students are returned first
         return Response(EventSerializer(list(recommended_events)[::-1][:10], many=True).data)
 

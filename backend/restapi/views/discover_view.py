@@ -41,12 +41,11 @@ def rsvp(request):
         if not event.rsvps.filter(user=request.user).exists():
             # If the student is not already in the RSVP list, add them.
             event.rsvps.add(student)
-            if event.event_type.lower() == "regular":
-              event.spirit_points = 15
-            elif event.event_type.lower() == "workshop":
-              event.spirit_points = 25
-            elif event.event_type.lower() == "competition":
-              event.spirit_points = 35
+
+            if event.event_type.lower() == "workshop":
+                event.spirit_points = 25
+            if event.event_type.lower() == "competition":
+                event.spirit_points = 35
             student.spirit_points += event.spirit_points
             student.save()
             # Return a success response (HTTP 200). The data confirms the current RSVP status (True after adding).
@@ -54,6 +53,15 @@ def rsvp(request):
         else:
             # If the student is already in the RSVP list, remove them (toggle behavior).
             event.rsvps.remove(student)
+            if event.event_type.lower() == "workshop":
+                points_to_remove = 25
+            elif event.event_type.lower() == "competition":
+                points_to_remove = 35
+            else:  # regular event
+                points_to_remove = 15
+
+            student.spirit_points -= points_to_remove
+            student.save()
             # Return a success response (HTTP 200). The data confirms the current RSVP status (False after removing).
             return Response(status=200, data={"Contains RSVP": event.rsvps.filter(user=request.user).exists()})
     # Catch any potential exceptions during the process (e.g., Event.DoesNotExist, Student.DoesNotExist, database errors).

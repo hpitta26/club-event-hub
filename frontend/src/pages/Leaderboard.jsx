@@ -7,8 +7,9 @@
       - 30-35 pts for competitions: Done
   - Display points on leaderboard
 */
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import UserPointsDisplay from "../components/UserPointsDisplay";
+import backend from "../components/backend";
 
 const mockUsers = [
   {
@@ -44,12 +45,30 @@ const mockUsers = [
 ];
 
 const Leaderboard = () => {
-  useEffect(() => {});
+  const [userPoints, setUserPoints] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // When fetching an event
+    const fetchUserPoints = async () => {
+      try {
+        const response = await backend.get("students/");
+        setUserPoints(response.data.spirit_points);
+      } catch (error) {
+        console.error("Error fetching user points:", error);
+      }
+    };
+
+    Promise.all([fetchUserPoints()]).finally(() => setLoading(false));
+  });
+
   return (
     <div className="max-w-[1400px] mx-auto h-[calc(100vh)]">
       <div className="px-1 py-6">
-        <h1 className="mt-20 text-3xl font-bold mb-6">Leaderboard</h1>
-        <UserPointsDisplay points={15} />
+        <div className="flex justify-between mb-6 mt-20">
+          <h1 className="text-3xl font-bold">Leaderboard</h1>
+          <UserPointsDisplay points={userPoints} />
+        </div>
         <div className="bg-white border-2 border-black rounded-[10px] shadow-[2px_2px_0_#000] overflow-hidden">
           <table className="w-full">
             <thead>

@@ -1,5 +1,4 @@
 import React, {useContext, useEffect, useState} from "react";
-import dummyEventCardCover from "../../assets/dummyEventCardCover.jpg";
 import SidebarCard from "./SidebarCard";
 import backend from "../backend.jsx";
 import {UserContext} from "../../context/UserContext.jsx";
@@ -58,68 +57,68 @@ useEffect(() => {
 
   return (
     <div className="absolute w-[278px] h-[calc(100vh-80px)] top-[80px] overflow-y-auto left-0 bg-[#4D9FFD] border border-black shadow-[4px_4px_0px_#000000] p-4">
-      {/* New Events Section */}
-      <div className="flex flex-col items-center">
-        <div>
-          <h2 className="font-normal text-[26px] leading-[31px] text-black mb-2">
-            New
-          </h2>
-          <div className="flex flex-col gap-3">
-            {newClubs.slice(0, showNewCardsLimit).map((club) => (
-              <SidebarCard
-                key={club.id}
-                name={club.club_name}
-                image={club.club_picture}
-              />
-            ))}
+        {/* New Events Section */}
+        <div className="flex flex-col items-center">
+          <div>
+            <h2 className="font-normal text-[26px] leading-[31px] text-black mb-2">
+              New
+            </h2>
+            <div className="flex flex-col gap-3">
+              {newClubs.slice(0, showNewCardsLimit).map((club) => (
+                  <SidebarCard
+                      key={club.id}
+                      name={club.club_name}
+                      image={club.club_picture}
+                  />
+              ))}
+            </div>
+            {/* Only show the button if there are more events than the initial limit */}
+            {newClubs.length > initialShowCardsLimit && (
+                <button>
+                  <p
+                      className="mt-3 text-white hover:text-sky-100 text-sm font-medium"
+                      onClick={toggleNewClubs}
+                  >
+                    {showNewCardsLimit === initialShowCardsLimit
+                        ? "Show All"
+                        : "Show Less"}
+                  </p>
+                </button>
+            )}
           </div>
-          {/* Only show the button if there are more events than the initial limit */}
-          {newClubs.length > initialShowCardsLimit && (
-            <button>
-              <p
-                className="mt-3 text-white hover:text-sky-100 text-sm font-medium"
-                onClick={toggleNewClubs}
-              >
-                {showNewCardsLimit === initialShowCardsLimit
-                  ? "Show All"
-                  : "Show Less"}
-              </p>
-            </button>
-          )}
+        </div>
+
+        {/* Featured Events Section */}
+        <div className="flex flex-col items-center">
+          <div className="mt-2 ">
+            {userContext &&
+                <h2 className="font-normal text-[26px] leading-[31px] text-black mb-2">Recommended</h2>
+            }
+            <div className="flex flex-col gap-3">
+              {recommendedClubs.slice(0, showRecommendedCardsLimit).map((recommendedClub) => (
+                  <SidebarCard
+                      key={recommendedClub.id}
+                      name={recommendedClub.club_name}
+                      image={recommendedClub.club_picture}
+                  />
+              ))}
+            </div>
+            {recommendedClubs.length > initialShowCardsLimit && (
+                <button>
+                  <p
+                      className="mt-3 text-white hover:text-sky-100 text-sm font-medium"
+                      onClick={toggleRecommendedClubs}
+                  >
+                    {showRecommendedCardsLimit === initialShowCardsLimit
+                        ? "Show All"
+                        : "Show Less"}
+                  </p>
+                </button>
+            )}
+          </div>
         </div>
       </div>
+      );
+      };
 
-      {/* Featured Events Section */}
-      <div className="flex flex-col items-center">
-        <div className="mt-2 ">
-          {userContext &&
-              <h2 className="font-normal text-[26px] leading-[31px] text-black mb-2">Recommended</h2>
-          }
-          <div className="flex flex-col gap-3">
-            {recommendedClubs.slice(0, showRecommendedCardsLimit).map((recommendedClub) => (
-              <SidebarCard
-                key={recommendedClub.id}
-                name={recommendedClub.club_name}
-                image={recommendedClub.club_picture}
-              />
-            ))}
-          </div>
-          {recommendedClubs.length > initialShowCardsLimit && (
-            <button>
-              <p
-                className="mt-3 text-white hover:text-sky-100 text-sm font-medium"
-                onClick={toggleRecommendedClubs}
-              >
-                {showRecommendedCardsLimit === initialShowCardsLimit
-                  ? "Show All"
-                  : "Show Less"}
-              </p>
-            </button>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default DiscoverSidebar;
+      export default DiscoverSidebar;

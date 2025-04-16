@@ -4,6 +4,7 @@ import { truncate } from "../utils/truncate";
 import { dateFormat } from "../utils/dates";
 import SurveyModal from "./SurveyModal";
 import { FcSurvey } from "react-icons/fc";
+import { LuAward } from "react-icons/lu";
 
 function EventModalCard({ 
   title = "Untitled Event", 
@@ -24,7 +25,18 @@ function EventModalCard({
 
     return (
         <div className="container flex gap-3 w-full px-4 py-4 bg-white rounded-xl hover:bg-[#f7f7f5] transition border-[1.5px] border-black shadow-[2px_2px_0px_#000000]">
-            <img src={dummyEventCardCover} alt="Event" className="w-[104px] h-[104px] rounded-lg object-cover border-2 border-black" />
+            <div className="relative w-[104px] h-[104px] flex-shrink-0 rounded-lg overflow-hidden border-2 border-black">
+                {/* Spirit Points Badge */}
+                { upcoming ? 
+                    <div className="absolute top-1 left-1 bg-yellow-100 text-black text-[10px] px-1.5 py-px rounded-[3px] border-solid border border-black flex items-center gap-1">
+                        <LuAward className="h-3 w-3" />
+                        20
+                    </div>
+                    :
+                    <></>
+                }
+                <img src={dummyEventCardCover} alt="Event" className="w-full h-full object-cover" /> {/* Event Image */}
+            </div>
             <div className="ml-1 flex flex-col gap-3 justify-center">
                 {/* Event Date */}
                 <p className="text-black font-semibold text-xs">

@@ -280,8 +280,8 @@ function ClubHeatmap({ onTimeRangeSelect }) {
                   <div
                     key={`${day}-${timeSlot}`}
                     className={`py-2 border border-gray-300 rounded flex items-center justify-center text-xs 
-                      ${isCellInPast(dayIndex) 
-                        ? "bg-gray-200 cursor-not-allowed" 
+                      ${isCellInPast(dayIndex)
+                        ? "bg-gray-200 cursor-not-allowed"
                         : isCellSelected(dayIndex, index)
                           ? getSelectedColorIntensity(availabilityCounts[dayIndex][index], maxStudents)
                           : getColorIntensity(availabilityCounts[dayIndex][index], maxStudents)

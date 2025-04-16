@@ -83,7 +83,7 @@ const ClubNavbar = () => {
   };
 
   return (
-    <nav className="fixed w-full h-20 bg-[#FFFAFD] z-40">
+    <nav className="fixed w-full h-20 bg-white z-40 border-b-2 border-b-black border-solid">
       <div className="relative flex items-center justify-between h-full px-4 md:px-8">
         <a className="flex items-center" href="/analytics">
           <img src={gatherULogo} alt="GatherU Logo" className="h-14 w-auto" />
@@ -101,7 +101,7 @@ const ClubNavbar = () => {
         <div className="pr-4 flex items-center space-x-2 sm:space-x-3 md:space-x-4">
           <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4">
             <button
-              className="bg-[#FD4EB7] text-black font-normal text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 rounded-md border border-black sm:border-[1.5px] shadow-[1px_1px_0px_#000000] sm:shadow-[2px_2px_0px_#000000]"
+              className="bg-[#FD4EB7] hover:bg-[#ff23a7] text-white font-normal text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 rounded-md border border-black sm:border-[1.5px] shadow-[2px_2px_0px_#000000] hover:shadow-[3px_3px_0_#000] transition-all duration-300"
               onClick={handleEventsClick}
             >
              Create Event

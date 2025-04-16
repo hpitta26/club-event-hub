@@ -37,14 +37,10 @@ const Landing = () => {
         </div>
       </section>
       
-      {/* Events Section - REMOVED FROM MOBILE, ONLY VISIBLE ON DESKTOP */}
       <section className="mt-4 md:mt-8 px-4 md:px-6 text-center">
         <div className="w-full max-w-3xl mx-auto">
-          {/* Mobile cards completely removed */}
           
-          {/* For desktop: Overlapping cards (still visible) */}
           <div className="hidden md:block relative h-96 pb-96">
-            {/* First card (left) */}
             <div className="absolute left-2 transform -rotate-6 hover:rotate-0 transition-transform duration-300 z-10 hover:z-30">
               <EventCard
                 title="Intro To Product..."
@@ -58,9 +54,7 @@ const Landing = () => {
                 points={15}
                 show_model={false}
               />
-            </div>
-            
-            {/* Middle card */}
+            </div>            
             <div className="absolute z-20 left-1/2 transform -translate-x-1/2">
               <EventCard
                 title="AI Beginner Workshop"
@@ -76,7 +70,6 @@ const Landing = () => {
               />
             </div>
             
-            {/* Third card (right) */}
             <div className="absolute right-2 transform rotate-6 hover:rotate-0 transition-transform duration-300 z-10 hover:z-30">
               <EventCard
                 title="Miami AI Hub..."
@@ -95,7 +88,6 @@ const Landing = () => {
         </div>
       </section>
       
-      {/* Register/Login Section */}
       <section className="flex justify-center mt-10 md:mt-16">
         <div className="flex flex-col gap-4 md:gap-6 max-w-xl mx-auto w-full px-4 md:px-8">
           <button
@@ -127,7 +119,7 @@ const Landing = () => {
             <p className="mt-2 font-light">Find and join exciting university events tailored to your interests</p>
           </div>
           
-          <div className="border-black border-2 shadow-[2px_2px_0px_#000000] rounded-lg hover:shadow-[5px_5px_0_#000] transition-all duration-200 w-full p-4 bg-red-100">
+          <div className="border-black border-2 shadow-[2px_2px_0px_#000000] rounded-lg hover:shadow-[5px_5px_0_#000] transition-all duration-200 w-full p-4 bg-[#f7e6e6]">
             <div className="flex items-center gap-3">
               <img className="h-10 p-1 bg-[#FD4EB7] border-black border-2 rounded-full" src={connectLogo} alt="Connect"/>
               <h1 className="text-xl font-bold">Build Community</h1>
@@ -135,7 +127,7 @@ const Landing = () => {
             <p className="mt-2 font-light">Connect with peers who share your passions and build your network</p>
           </div>
           
-          <div className=" border-black border-2 shadow-[2px_2px_0px_#000000] rounded-lg hover:shadow-[5px_5px_0_#000] transition-all duration-200 w-full p-4 ">
+          <div className=" border-black border-2 shadow-[2px_2px_0px_#000000] rounded-lg hover:shadow-[5px_5px_0_#000] transition-all duration-200 w-full p-4 bg-[#f7f7cd] ">
             <div className="flex items-center gap-3">
               <img className="h-10 p-1 bg-[#FDD74D] border-black border-2 rounded-full" src={awardLogo} alt="Award"/>
               <h1 className="text-xl font-bold">Earn Points</h1>
@@ -152,7 +144,7 @@ const Landing = () => {
             <p className="ml-10 mt-2 font-light">Find and join exciting university events tailored to your interests</p>
           </div>
           
-          <div className="border-black border-2 shadow-[2px_2px_0px_#000000] rounded-lg hover:shadow-[5px_5px_0_#000] transition-all duration-200 w-full h-60 bg-red-100">
+          <div className="border-black border-2 shadow-[2px_2px_0px_#000000] rounded-lg hover:shadow-[5px_5px_0_#000] transition-all duration-200 w-full h-60 bg-[#f7e6e6]">
             <img className="h-12 p-1 bg-[#FD4EB7] ml-10 mt-5 border-black border-2 rounded-full" src={connectLogo} alt="Connect"/>
             <h1 className="text-2xl font-bold ml-10 mt-5">Build Community</h1>
             <p className="ml-10 mt-2 font-light">Connect with peers who share your passions and build your network</p>
@@ -167,8 +159,8 @@ const Landing = () => {
       </section>
 
       {/* Points System Section */}
-      <section className="flex justify-center pb-10 border-t-2 border-black pt-6 md:pt-10 bg-blue-100">
-        <div className="flex flex-col justify-center gap-4 p-4 md:p-5 border-black border-2 shadow-[2px_2px_0px_#000000] rounded-lg hover:shadow-[5px_5px_0_#000] transition-all duration-200 w-full mx-4 md:w-4/5 lg:w-3/4 xl:w-[70rem] bg-pink-100">
+      <section className="flex justify-center pb-10 border-t-2 border-black pt-6 md:pt-10 bg-white">
+        <div className="flex flex-col justify-center gap-4 p-4 md:p-5 border-black border-2 shadow-[2px_2px_0px_#000000] rounded-lg hover:shadow-[5px_5px_0_#000] transition-all duration-200 w-full mx-4 md:w-4/5 lg:w-3/4 xl:w-[70rem] bg-[#f7e6e6]">
           <div className="flex gap-3 md:gap-4 flex-col">
             <div className="flex items-center gap-2">
               <img className="h-8 md:h-10 p-1 bg-[#FDD74D] border-black border-2 rounded-full" src={awardLogo} alt="Award"/>
@@ -179,6 +171,7 @@ const Landing = () => {
           </div>
           
           <div className="flex flex-col gap-3 md:gap-4">
+            
             <div className="border-black bg-white md:py-3 w-full border-2 shadow-[2px_2px_0px_#000000] rounded-lg hover:shadow-[5px_5px_0_#000] transition-all duration-200 min-h-12">
               <div className="flex items-center pl-3 md:pl-5 gap-3 md:gap-4">
                 <img className="h-8 md:h-10 p-1 bg-[#4D9FFD] border-black border-2 rounded-full" src={calendarLogo} alt="Calendar"/>
@@ -188,7 +181,7 @@ const Landing = () => {
               </div>
             </div>
             
-            <div className="border-black py-6 md:py-3 bg-white w-full border-2 shadow-[2px_2px_0px_#000000] rounded-lg hover:shadow-[5px_5px_0_#000] transition-all duration-200 min-h-12">
+            <div className="border-black md:py-3 bg-white w-full border-2 shadow-[2px_2px_0px_#000000] rounded-lg hover:shadow-[5px_5px_0_#000] transition-all duration-200 min-h-12">
               <div className="flex items-center pl-3 md:pl-5 gap-3 md:gap-4">
                 <img className="h-8 md:h-10 p-1 bg-[#53c258] border-black border-2 rounded-full" src={bookLogo} alt="Book"/>
                 <p className="font-bold text-sm md:text-base">
@@ -197,7 +190,7 @@ const Landing = () => {
               </div>
             </div>
             
-            <div className="border-black py-6 md:py-3 bg-white w-full border-2 shadow-[2px_2px_0px_#000000] rounded-lg hover:shadow-[5px_5px_0_#000] transition-all duration-200 min-h-12">
+            <div className="border-black md:py-3 bg-white w-full border-2 shadow-[2px_2px_0px_#000000] rounded-lg hover:shadow-[5px_5px_0_#000] transition-all duration-200 min-h-12">
               <div className="flex items-center pl-3 md:pl-5 gap-3 md:gap-4">
                 <img className="h-8 md:h-10 p-1 bg-[#C9A0DC] border-black border-2 rounded-full" src={connectLogo} alt="Connect"/>
                 <p className="font-bold text-sm md:text-base">

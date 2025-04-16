@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
-import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
 import { GrLocation } from "react-icons/gr";
 import EventDetailsCard from "./EventDetailsCard";
 import { dateFormat, formatDay, formatTimeRange } from '../utils/dates';
 import { truncate } from "../utils/truncate";
+import { LuAward } from "react-icons/lu";
+
 
 function EventCard({
   id = 0,
@@ -14,7 +15,7 @@ function EventCard({
   location = "Location TBD",
   attendees = 79,
   capacity = "N/A",
-  coverImage = dummyEventCardCover,
+  coverImage = null,
   hostLogo = dummyInitLogo,
   description= "No detailed description available.",
   universityName = "Florida International University",
@@ -25,6 +26,20 @@ function EventCard({
   const [numAttendees, setNumAttendees] = useState(attendees);
   const [numCapacity, setNumCapacity] = useState(capacity);
   const [isRSVP, setIsRSVP] = useState(is_rsvped);
+
+
+  const imageUrls = [ // Dummy image URLs
+    "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=400&h=250",
+    "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&h=250",
+    "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=400&h=250",
+    "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=400&h=250",
+    "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&w=400&h=250",
+    "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&h=250",
+    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&h=250",
+    "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=400&h=250",
+  ]
+
+  const randomCoverImage = coverImage || imageUrls[Math.floor(Math.random() * imageUrls.length)];
 
   // Click outside  to close the details card
   useEffect(() => {
@@ -73,14 +88,18 @@ function EventCard({
         onClick={handleOnClick}
       >
         {/* Event Banner */}
-        <div className="relative w-full h-[142.75px] mb-2.5 border-black rounded-t-xl border-b-[1.5px] overflow-hidden">
+        <div className="relative w-full h-[142.75px] mb-2.5 border-black rounded-t-[10.5px] border-b-[1.5px] overflow-hidden">
           <p className="absolute top-2 left-2 bg-[#4D9FFD] text-black px-1.5 py-px rounded-[3px] text-[10px] border-solid border border-black">
             {dateFormat(date)}
           </p>
+          <div className="absolute top-2 right-2 bg-yellow-100 text-black text-[10px] px-1.5 py-px rounded-[3px] border-solid border border-black flex items-center gap-1">
+            <LuAward className="h-3 w-3" />
+            20
+          </div>
           <img
-            src={coverImage}
+            src={randomCoverImage}
             alt="Event Cover"
-            className="w-full h-full object-cover rounded-sm"
+            className="w-full h-full object-cover"
           />
         </div>
 
@@ -156,7 +175,7 @@ function EventCard({
           setAttendees={setNumAttendees}
           capacity={numCapacity}
           setCapacity={setNumCapacity}
-          image={coverImage}
+          image={randomCoverImage}
           isRSVP={isRSVP}
           setIsRSVP={setIsRSVP}
         />

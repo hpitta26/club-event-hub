@@ -105,7 +105,7 @@ class Student(models.Model):
     last_name = models.CharField(max_length=255)
     major = models.CharField(max_length=255, blank=True, null=True)
     graduation_year = models.PositiveIntegerField(blank=True, null=True) # current_year =< grad_year =< current_year + 4
-    spirit_points = models.PositiveIntegerField(default=0)
+    spirit_points = models.PositiveIntegerField(default=10)
 
     password_change_token = models.CharField(max_length=100, blank=True)
     password_change_pending = models.BooleanField(default=False)

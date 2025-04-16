@@ -5,7 +5,7 @@ const RecommendedEvents = ({ events }) => {
   return (
       <div>
           <h1 className="text-lg font-bold mb-4">Recommended Events</h1>
-          <div className="flex overflow-x-auto gap-x-5 h-72 snap-x">
+          <div className="flex overflow-x-auto gap-x-4 h-72 snap-x">
               {events.map((event) => (
               <div key={event.id} className="snap-start">
                   <EventCard

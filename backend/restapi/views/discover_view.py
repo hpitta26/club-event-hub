@@ -55,7 +55,7 @@ def collaborative_filter(request):
     try:
         session_student = Student.objects.get(user=request.user)
         past_events = Event.objects.filter(rsvps=session_student).order_by("-start_time")[:10]
-
+        now = timezone.now()
         student_count = defaultdict(int)
         attended_tags = set()
 
@@ -66,7 +66,7 @@ def collaborative_filter(request):
 
         sorted_students = sorted(student_count.items(), key=lambda x: x[1], reverse=True)
         top_students = [student[0] for student in sorted_students]
-        filtered_events = Event.objects.filter(rsvps__in=top_students).exclude(rsvps=session_student).distinct()
+        filtered_events = Event.objects.filter(rsvps__in=top_students,start_time__gte=now).exclude(rsvps=session_student).distinct()
 
         # recommended events are checked w the tags of attended events for more accurate recommendations
         recommended_events = []
@@ -74,6 +74,7 @@ def collaborative_filter(request):
             if any(tag in filtered_event.tags for tag in attended_tags):
                 recommended_events.append(filtered_event)
 
+        print(recommended_events)
         # List is reversed so that events belonging to most similar students are returned first
         return Response(EventSerializer(list(recommended_events)[::-1][:10], many=True).data)
 

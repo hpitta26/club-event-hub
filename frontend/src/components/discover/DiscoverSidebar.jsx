@@ -57,7 +57,7 @@ useEffect(() => {
 }, [userContext?.isAuthenticated]);  // Re-run when auth status changes
 
   return (
-    <div className="absolute w-[278px] h-[calc(100vh-80px)] top-[80px] overflow-y-auto left-0 bg-[rgba(253,78,183,0.8)] border border-black shadow-[4px_4px_0px_#000000] p-4">
+    <div className="absolute w-[278px] h-[calc(100vh-80px)] top-[80px] overflow-y-auto left-0 bg-[#4D9FFD] border border-black shadow-[4px_4px_0px_#000000] p-4">
       {/* New Events Section */}
       <div className="flex flex-col items-center">
         <div>

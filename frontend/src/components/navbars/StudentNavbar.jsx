@@ -7,9 +7,11 @@ import EventModal from '../EventModal';
 import { useSidebar } from '../../context/SidebarContext';
 import backend from '../backend';
 import NotificationDropDown from '../NotificationDropDown';
+import { LuAward } from "react-icons/lu";
 
 const StudentNavbar = () => {
   const [profileImage, setProfileImage] = useState(null);
+  const [spiritPoints, setSpiritPoints] = useState(0);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [events, setEvents] = useState([]);
   const [eventsClicked, setEventsClicked] = useState(false);
@@ -83,6 +85,8 @@ const StudentNavbar = () => {
       try {
         const response = await backend.get('student-profile-image/');
         setProfileImage(response.data.image_url);
+        const response2 = await backend.get('get-spirit-points/');
+        setSpiritPoints(response2.data.spirit_points);
       } catch (error) {
         console.error("Error fetching profile image:", error);
       }
@@ -132,7 +136,7 @@ const StudentNavbar = () => {
             </div>
           </>
         )}
-        <nav className="fixed w-full h-20 bg-[#FFFAFD] z-40">
+        <nav className="fixed w-full h-20 bg-white z-40 border-b-2 border-b-black border-solid">
             <div className="relative flex items-center justify-between h-full px-4 md:px-8">
                 {/* Left: Hamburger Icon, Logo, and Links */}
                 <div className="flex items-center space-x-8">
@@ -148,18 +152,24 @@ const StudentNavbar = () => {
               <a href="/following" className={`md:block hidden font-normal text-black text-lg tracking-wide hover:text-blue-500`}>
                   Following 
               </a>
+              <a href="/leaderboard" className={`md:block hidden font-normal text-black text-lg tracking-wide hover:text-pink-500`}>
+                  Leaderboard
+              </a>
                 </div>
                 
                 {/* Right: Events, Notifications, and Profile */}
                 <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4">
+                  <div className='bg-[#FDD74D] hover:bg-yellow-400 text-black p-1 sm:p-2 rounded-md border border-black sm:border-[1.5px] shadow-[2px_2px_0px_#000000] hover:shadow-[3px_3px_0px_#000000] transition-all flex flex-row'>
+                    <LuAward className="w-5 h-5" /> <span className='ml-1 -mt-[2px]'>{spiritPoints}</span>
+                  </div>
                   {/* Events Button */}
-                  <button className=" sm:block bg-[#FD4EB7] text-black font-normal text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 rounded-md border border-black sm:border-[1.5px] shadow-[1px_1px_0px_#000000] sm:shadow-[2px_2px_0px_#000000] hover:bg-pink-400" onClick={handleEventsClick}>
+                  <button className="bg-[#FD4EB7] hover:bg-[#ff23a7] text-white font-normal text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 rounded-md border border-black sm:border-[1.5px] shadow-[2px_2px_0px_#000000] hover:shadow-[3px_3px_0_#000] transition-all" onClick={handleEventsClick}>
                     Your Events
                   </button>
                   {/* Notifications */}
                   <div className="relative" ref={notificationsRef}>
                     <button 
-                      className="bg-[#4D9FFD] text-black p-1 sm:p-2 rounded-md border border-black sm:border-[1.5px] shadow-[1px_1px_0px_#000000] sm:shadow-[2px_2px_0px_#000000] hover:bg-blue-400"
+                      className="bg-[#4D9FFD] hover:bg-[#4287ff] text-black p-1 sm:p-2 rounded-md border border-black sm:border-[1.5px] shadow-[2px_2px_0px_#000000] hover:shadow-[3px_3px_0px_#000000]  transition-all"
                       onClick={toggleNotifications}
                     >
                       <GoBell className="w-5 h-5" />

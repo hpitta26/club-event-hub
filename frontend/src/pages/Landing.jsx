@@ -19,7 +19,7 @@ const Landing = () => {
   return (
     <div className="min-h-screen overflow-y-auto">
       {/* Hero Section with Logo */}
-      <section className="flex flex-col justify-center items-center text-center pt-24 md:pt-28 pb-8 md:pb-16 px-4">
+      <section className="flex flex-col justify-center items-center text-center pt-[10rem] md:pt-28 pb-8 md:pb-16 px-4">
         <div className="flex flex-col md:flex-row items-center justify-center mb-4 md:mb-6">
             <h1 className="text-4xl md:text-6xl font-black text-black">Welcome to</h1>
             <img 
@@ -40,7 +40,7 @@ const Landing = () => {
       <section className="mt-4 md:mt-8 px-4 md:px-6 text-center">
         <div className="w-full max-w-3xl mx-auto">
           
-          <div className="hidden md:block relative h-96 pb-96">
+          <div className="hidden md:block relative h-[22rem] pb-[22rem] pb-1">
             <div className="absolute left-2 transform -rotate-6 hover:rotate-0 transition-transform duration-300 z-10 hover:z-30">
               <EventCard
                 title="Intro To Product..."
@@ -88,7 +88,7 @@ const Landing = () => {
         </div>
       </section>
       
-      <section className="flex justify-center mt-10 md:mt-16">
+      <section className="flex justify-center mt-1 md:mt-1">
         <div className="flex flex-col gap-4 md:gap-6 max-w-xl mx-auto w-full px-4 md:px-8">
           <button
             onClick={() => setIsOpen(true)}
@@ -106,7 +106,7 @@ const Landing = () => {
       </section>
       
       {/* Why Join Section */}
-      <section className="border-t-2 border-black mt-12 md:mt-20 pt-6 md:pt-10 pb-8 md:pb-12 bg-white">
+      <section className="border-t-2 border-black mt-[14rem] md:mt-[9rem] pt-6 md:pt-10 pb-8 md:pb-12 bg-white">
         <h1 className="mt-6 md:mt-10 text-3xl md:text-4xl font-bold text-center">Why join GatherU?</h1>
 
         {/* Mobile: Stack cards vertically */}
@@ -189,7 +189,6 @@ const Landing = () => {
                 </p>
               </div>
             </div>
-            
             <div className="border-black md:py-3 bg-white w-full border-2 shadow-[2px_2px_0px_#000000] rounded-lg hover:shadow-[5px_5px_0_#000] transition-all duration-200 min-h-12">
               <div className="flex items-center pl-3 md:pl-5 gap-3 md:gap-4">
                 <img className="h-8 md:h-10 p-1 bg-[#C9A0DC] border-black border-2 rounded-full" src={connectLogo} alt="Connect"/>

@@ -1,35 +1,37 @@
 import React from "react";
 import NewEventCard from "../newEventCard";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 const EventGrid = ({ events }) => {
-  return (
-    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-7">
-      {events.length > 0 ? (
-        events.map((event) => (
-          <div key={event.id} className="flex">
-            <NewEventCard
-              id={event.id}
-              title={event.title}
-              description={event.description}
-              date={event.start_time}
-              host={event.host}
-              location={event.location}
-              attendees={event.attending}
-              capacity={event.capacity - event.attending}
-              // coverImage={event.coverImage}
-              // hostLogo={event.hostLogo}
-              is_rsvped={event.is_rsvped}
-            />
-          </div>
-        ))
-      ) : (
-        <p className="text-gray-500 col-span-full text-center">
-          No events available.
-        </p>
-      )}
-    </div>
-  );
+    return (
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-7">
+            {events.length > 0 ? (
+                events.map((event) => (
+                    <div key={event.id} className="flex">
+                        <NewEventCard
+                            id={event.id}
+                            title={event.title}
+                            description={event.description}
+                            date={event.start_time}
+                            host={event.host}
+                            location={event.location}
+                            attendees={event.attending}
+                            capacity={event.capacity - event.attending}
+                            // coverImage={event.coverImage}
+                            // hostLogo={event.hostLogo}
+                            is_rsvped={event.is_rsvped}
+                            // eventType={event.event_type}
+                            spiritPoints={event.spirit_points}
+                        />
+                    </div>
+                ))
+            ) : (
+                <p className="text-gray-500 col-span-full text-center">
+                    No events available.
+                </p>
+            )}
+        </div>
+    );
 };
 
 export default EventGrid;
@@ -47,7 +49,7 @@ EventGrid.propTypes = {
             capacity: PropTypes.number.isRequired,
             coverImage: PropTypes.string.isRequired,
             hostLogo: PropTypes.string.isRequired,
-            is_rsvped: PropTypes.bool.isRequired
-        })
+            is_rsvped: PropTypes.bool.isRequired,
+        }),
     ).isRequired,
 };

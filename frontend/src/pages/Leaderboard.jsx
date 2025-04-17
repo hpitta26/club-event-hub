@@ -45,22 +45,49 @@ const mockUsers = [
 ];
 
 const Leaderboard = () => {
+  const [users, setUsers] = useState([]);
   const [userPoints, setUserPoints] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // When fetching an event
-    const fetchUserPoints = async () => {
+    const fetchData = async () => {
       try {
+        const usersResponse = await backend.get("/all-students/");
+        console.log("Received data:", usersResponse.data);
+        // Sort users by points and add rank
+        const sortedUsers = usersResponse.data
+          .sort((a, b) => b.spirit_points - a.spirit_points)
+          .map((user, index) => ({
+            ...user,
+            rank: index + 1,
+            name: `${user.first_name} ${user.last_name}`,
+          }));
+
+        console.log("Processed users:", sortedUsers);
+        setUsers(sortedUsers);
+
         const response = await backend.get("students/");
         setUserPoints(response.data.spirit_points);
       } catch (error) {
         console.error("Error fetching user points:", error);
+        setUsers([]);
+      } finally {
+        setLoading(false);
       }
     };
 
-    Promise.all([fetchUserPoints()]).finally(() => setLoading(false));
-  });
+    fetchData();
+    const intervalId = setInterval(fetchData, 5000);
+    return () => clearInterval(intervalId);
+  }, []);
+
+  console.log("Current users state:", users);
+  console.log("Loading state:", loading);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="max-w-[1400px] mx-auto h-[calc(100vh)]">
@@ -79,20 +106,39 @@ const Leaderboard = () => {
               </tr>
             </thead>
             <tbody>
-              {mockUsers.map((user) => (
+              {users.map((user) => (
                 <tr
                   key={user.id}
                   className="border-b border-gray-200 hover:bg-[#F5F8FF]"
                 >
                   <td className="text-center px-4 py-2">
-                    <div className="flex justify-center">{user.rank}</div>
+                    <div className="flex justify-center">
+                      {user.rank <= 3 ? (
+                        <span
+                          className={`
+                            text-lg font-bold
+                            ${user.rank === 1 ? "text-yellow-500" : ""}
+                            ${user.rank === 2 ? "text-gray-500" : ""}
+                            ${user.rank === 3 ? "text-amber-700" : ""}
+                          `}
+                        >
+                          {user.rank === 1
+                            ? "🥇"
+                            : user.rank === 2
+                              ? "🥈"
+                              : "🥉"}
+                        </span>
+                      ) : (
+                        user.rank
+                      )}
+                    </div>
                   </td>
                   <td className="px-4 py-2">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full border-2 border-black overflow-hidden">
                         <img
                           src={user.avatar}
-                          alt={user.name}
+                          alt={user.first_name[0]}
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -100,7 +146,7 @@ const Leaderboard = () => {
                     </div>
                   </td>
                   <td className="text-right font-bold px-4 py-2">
-                    {user.points.toLocaleString()} pts
+                    {user.spirit_points.toLocaleString()} pts
                   </td>
                 </tr>
               ))}

@@ -15,6 +15,7 @@ function EventCard({
   location = "Location TBD",
   attendees = 79,
   capacity = "N/A",
+  tags=[],
   coverImage = null,
   hostLogo = dummyInitLogo,
   description= "No detailed description available.",
@@ -175,6 +176,7 @@ function EventCard({
           attendees={numAttendees}
           setAttendees={setNumAttendees}
           capacity={numCapacity}
+          tags={tags}
           setCapacity={setNumCapacity}
           image={randomCoverImage}
           isRSVP={isRSVP}

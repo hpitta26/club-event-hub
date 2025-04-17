@@ -43,7 +43,7 @@ const LoggedOutNavbar = () => {
   }, []);
 
   return (
-    <nav className="fixed w-full h-20 bg-[#FFFAFD] z-40 text-color-black">
+    <nav className="fixed w-full h-20 bg-white z-40 text-color-black border-b-2 border-b-black border-solid">
       <div className="relative flex items-center h-full px-4 md:px-8">
         {/* Left section */}
         <div className="flex-1 flex items-center">

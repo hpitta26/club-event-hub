@@ -11,17 +11,22 @@ const StudentOrClubModal = ({ modalIsOpen, setIsOpen }) => {
 
     const customStyles = {
         overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            zIndex: 1000,
         },
         content: {
             top: '50%',
             left: '50%',
             right: 'auto',
             bottom: 'auto',
-            marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
-            backgroundColor: "#1e1e1e",
-            textAlign: "center",
+            borderRadius: '1rem',
+            padding: '2rem',
+            maxWidth: '400px',
+            width: '90%',
+            backgroundColor: '#FFFAFD',
+            border: '1.5px solid black',
+            boxShadow: '4px 4px 0px #000000',
         },
     };
 
@@ -31,23 +36,38 @@ const StudentOrClubModal = ({ modalIsOpen, setIsOpen }) => {
             style={customStyles}
             onRequestClose={() => setIsOpen(false)}
         >
-            <div className="flex justify-between items-center mb-4">
-                <h2 className="text-white text-lg font-semibold">
-                    Are you a student or a club?
+            <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl sm:text-2xl font-bold text-black">
+                    You are joining as:
                 </h2>
                 <button
-                    className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition ms-10"
+                    className="text-gray-400 hover:text-[#FD4EB7] text-2xl font-bold transition-all"
                     onClick={() => setIsOpen(false)}
+                    aria-label="Close"
                 >
                     ✕
                 </button>
             </div>
-            <div className="flex flex-col space-y-4">
-                <button onClick={() => {navigate(`/student-register`); setIsOpen(false)}} className="bg-blue-500 text-white font-medium rounded-md py-2 px-4 hover:bg-blue-600 transition">
-                    I am a student!
+
+            <div className="flex flex-col gap-4">
+                <button
+                    onClick={() => {
+                        navigate('/student-register');
+                        setIsOpen(false);
+                    }}
+                    className="bg-white text-black font-medium text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:bg-blue-100 transition-all"
+                >
+                    I'm a student
                 </button>
-                <button onClick={() => {navigate(`/club-register`); setIsOpen(false)}} className="bg-green-500 text-white font-medium rounded-md py-2 px-4 hover:bg-green-600 transition">
-                    I am a club!
+
+                <button
+                    onClick={() => {
+                        navigate('/club-register');
+                        setIsOpen(false);
+                    }}
+                    className="bg-white text-black font-medium text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:bg-purple-100 transition-all"
+                >
+                    I'm a club
                 </button>
             </div>
         </Modal>

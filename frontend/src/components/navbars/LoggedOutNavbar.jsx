@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import gatherULogo from '../../assets/icons/GatherUIcon.png';
 import { useNavigate } from 'react-router-dom';
 import StudentOrClubModal from '../StudentOrClubModal';
+import { HiMiniBars3 } from "react-icons/hi2";
 
 const LoggedOutNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -79,22 +80,16 @@ const LoggedOutNavbar = () => {
             </button>
           </div>
 
-          {/* Profile icon dropdown button */}
-          <div
-            ref={dropdownRef}
-            className="md:hidden w-10 h-10 bg-gray-300 border-[1.5px] border-black rounded-full overflow-hidden cursor-pointer flex items-center justify-center"
-            onClick={() => setMobileOpen(!mobileOpen)}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-black" fill="currentColor" viewBox="0 0 24 24">
-              <path />
-            </svg>
-          </div>
+          {/* Dropdown button */}
+            <div ref={dropdownRef} className="flex items-center space-x-8">
+                <HiMiniBars3 className="md:hidden block text-black w-8 h-8 cursor-pointer" onClick={() => setMobileOpen(!mobileOpen)} />
+            </div>
         </div>
       </div>
 
       {/* Mobile Dropdown */}
       {mobileOpen && (
-        <div className="absolute top-20 mt-1 right-4 w-48 bg-[#] p-3 border-[1.5px] border-black shadow-[2px_2px_0px_#000000] rounded-md">
+        <div className="absolute top-20 mt-1 right-4 w-48 bg-white p-3 border-[1.5px] border-black shadow-[2px_2px_0px_#000000] rounded-md">
           <div className="flex flex-col space-y-2">
             <button
               className="bg-[#FD4EB7] text-black font-normal text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:bg-pink-400"

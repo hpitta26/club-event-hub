@@ -90,5 +90,4 @@ class Command(BaseCommand):
                 tags=tags,
                 profilebanner=profilebanner,
             )
-
         self.stdout.write(self.style.SUCCESS(f'Successfully created {num_events} events!'))

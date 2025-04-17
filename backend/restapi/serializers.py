@@ -141,7 +141,7 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = [
-            'id', 'club', 'title', 'description', 'start_time', 'end_time', 'location', 'capacity', 'rsvps', 'tags', 'attending'
+            'id', 'club', 'title', 'description', 'start_time', 'end_time', 'location', 'capacity', 'rsvps', 'tags', 'attending','profilebanner'
         ]
 
     def get_attending(self, event): # get the number of attendees per event

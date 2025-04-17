@@ -158,9 +158,7 @@ class Event(models.Model):
     profilepicture = models.ImageField(
         upload_to='club_profilepic/', blank=True, null=True
     )
-    profilebanner = models.ImageField(
-        upload_to='club_banner/', blank=True, null=True
-    )
+    profilebanner = models.URLField(max_length=500, blank=True, null=True)
 
     # private/public boolean
     # tags --> type of event

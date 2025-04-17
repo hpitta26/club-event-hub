@@ -25,6 +25,7 @@ const Discover = () => {
         attending: 0,
         capacity: 0,
         tags:[],
+        profilebanner: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=400&h=250",
         coverImage: "",
         hostLogo: "",
         is_rsvped: false,
@@ -37,6 +38,8 @@ const Discover = () => {
             const response = await backend.get("get-week-events/");
             console.log(response);
             setAllEvents(response.data);
+            console.log("API Response:", response.data);
+
         } catch (err) {
             console.log(err);
         }

@@ -16,7 +16,7 @@ function EventModalUpcomingList({ events = [], upcoming = false }) {
       <div className="flex flex-col gap-3">
         {events.map((event, index) => (
           <div key={index}>
-            <EventModalCard title={event.title} date={event.start_time} host={event.host} image={event.hostLogo} upcoming={upcoming} />
+            <EventModalCard title={event.title} date={event.start_time} host={event.host} profilebanner={event.profilebanner} upcoming={upcoming} />
           </div>
         ))}
       </div>

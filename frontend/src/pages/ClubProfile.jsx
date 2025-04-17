@@ -166,6 +166,7 @@ function ClubProfile() {
                   attendees={weeklyEvent.attending}
                   capacity={weeklyEvent.capacity - weeklyEvent.attending}
                   is_rsvped={weeklyEvent.is_rsvped}
+                  profilebanner={weeklyEvent.profilebanner}
                 />
               ))
               : <p className="flex justify-center items-center text-gray-500 col-span-full w-full">No events available.</p>
@@ -191,6 +192,7 @@ function ClubProfile() {
                     attendees={event.attending}
                     capacity={event.capacity - event.attending}
                     is_rsvped={event.is_rsvped}
+                    profilebanner={event.profilebanner}
                   />))
             : <p className="flex justify-center items-center text-gray-500 col-span-full w-full">No events available.</p>}
           </div>

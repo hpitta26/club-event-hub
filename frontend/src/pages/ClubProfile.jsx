@@ -12,6 +12,8 @@ function ClubProfile() {
   const [events, setEvents] = useState([])
   const [weeklyEvents, setWeeklyEvents] = useState([])
 
+  const [followers, setFollowers] = useState(0)
+
   const [loading, setLoading] = useState(true);
   const [isFollowing, setIsFollowing] = useState(false);
 
@@ -24,6 +26,7 @@ function ClubProfile() {
       .then((response) => {
         setClub(response.data);
         setPageData(response.data)
+        setFollowers(response.data.followers_count)
         setLoading(false);
       })
       .catch(() => {
@@ -51,11 +54,13 @@ function ClubProfile() {
     function handleFollow(clubID){
         backend.patch(`/follow-club/${clubID}/`);
         setIsFollowing(true);
+        setFollowers(followers+1)
     }
 
     function handleUnfollow(clubID){
         backend.delete(`/unfollow-club/${clubID}/`);
         setIsFollowing(false);
+        setFollowers(followers-1)
     }
   if (loading) {
     return (
@@ -119,7 +124,7 @@ function ClubProfile() {
         {/* Followers and Following */}
         <div className="flex items-center space-x-[100px]">
           <p className="text-[16px] font-normal font-['Pramukh Rounded'] text-black leading-[19px]">
-            {club.followers || 0} Followers
+            {followers} Followers
           </p>
           {/* Social Media Links */}
           <div className="flex items-center space-x-3">

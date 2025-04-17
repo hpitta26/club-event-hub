@@ -31,6 +31,9 @@ urlpatterns = [
     path('rsvp/', discover_view.rsvp, name='rsvp'),
     path('get-student-events/', student_views.get_student_events, name='get_student_events'),
     path('filter-events/<str:filter>/', discover_view.filter_events, name='filter-events'),
+    path('collaborative-filter/', discover_view.collaborative_filter, name='collaborative-filter'),
+    path('get-new-clubs/',discover_view.get_new_clubs, name='get-new-clubs'),
+    path('get-recommended-clubs/',discover_view.get_recommended_clubs, name='get-recommended-clubs'),
 
     path('get-club-events/<int:pk>/', club_profile_views.get_club_events, name='get-club-events'),
     path('get-weekly-club-events/<int:pk>/', club_profile_views.get_weekly_club_events, name='get-weekly-club-events'),

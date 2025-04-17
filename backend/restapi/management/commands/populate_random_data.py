@@ -65,7 +65,7 @@ class Command(BaseCommand):
             start_time = timezone.now() + timedelta(days=random.randint(1, 30))
             end_time = start_time + timedelta(hours=random.randint(1, 5))
             tags=random.sample([
-                "Technology", "Medical", "Career", "Fitness", "Social", "Wellness", "Culture", "Politics", "Volunteering"
+                "Technology", "Medical", "Career", "Fitness", "Social", "Wellness", "Culture", "Politics", "Volunteer"
             ],k=random.randint(1,2))
 
             Event.objects.create(

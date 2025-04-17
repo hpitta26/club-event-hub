@@ -18,6 +18,7 @@ const RecommendedEvents = ({ events }) => {
                       attendees={event.attending}
                       capacity={event.capacity - event.attending}
                       tags={event.tags}
+                      profilebanner={event.profilebanner}
                       // coverImage={event.coverImage}
                       // hostLogo={event.hostLogo}
                       is_rsvped={event.is_rsvped}

@@ -2,7 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import gatherULogo from '../../assets/icons/GatherUIcon.png';
 import { GoBell } from "react-icons/go";
 import { HiMiniBars3 } from "react-icons/hi2";
+<<<<<<< HEAD
 import { useNavigate, Link, useLocation } from "react-router-dom";
+=======
+import { Link, useNavigate } from "react-router-dom";
+>>>>>>> 7f40281 (fixing ui bugs)
 import EventModal from '../EventModal';
 import { useSidebar } from '../../context/SidebarContext';
 import backend from '../backend';

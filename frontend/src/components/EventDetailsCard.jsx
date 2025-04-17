@@ -149,7 +149,7 @@ function EventDetailsCard({
                     key={index}
                     className="text-sm bg-gray-100 text-[#7D7D7D] px-3 py-1 rounded-md border border-gray-200"
                 >
-                  #{tag}
+                  # {tag}
                 </div>
             ))}
           </div>

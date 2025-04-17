@@ -2,12 +2,7 @@ import { useContext, useState } from "react";
 import backend from "../../components/backend.jsx";
 import { UserContext } from "../../context/UserContext.jsx";
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
-import gatherULogo from '../../assets/icons/GatherUIcon.png';
-=======
-import FormContainer from "../../components/FormContainer.jsx";
 import gatherULogo from "../../assets/icons/GatherUIcon.png";
->>>>>>> 63f935c (Update GatherU logo to PNG format and fix quote style)
 
 function Login() {
   const [formData, setFormData] = useState({

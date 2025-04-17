@@ -1,17 +1,8 @@
-<<<<<<< HEAD
-  import { useState } from "react";
-  import { useNavigate } from "react-router-dom";
-  import backend from "../../components/backend";
-  import { FaArrowRight } from "react-icons/fa";
-  import gatherULogo from '../../assets/icons/GatherUIcon.png';
-=======
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import backend from "../../components/backend";
-import FormContainer from "../../components/FormContainer";
 import { FaArrowRight } from "react-icons/fa";
 import gatherULogo from "../../assets/icons/GatherUIcon.png";
->>>>>>> 63f935c (Update GatherU logo to PNG format and fix quote style)
 
 function ClubSignup() {
   const [formData, setFormData] = useState({

@@ -18,6 +18,7 @@
     "apexcharts": "^4.5.0",
     "axios": "^1.7.9",
     "date-fns": "^4.1.0",
+    "lucide-react": "^0.488.0",
     "react": "^18.3.1",
     "react-apexcharts": "^1.7.0",
     "react-datepicker": "^8.3.0",

@@ -126,7 +126,7 @@ function ClubEvents() {
       {loading ? (
         <p className="text-center">Loading events...</p>
       ) : filteredEvents.length > 0 ? (
-        <div className="w-[60%] max-w-5xl flex">
+        <div className="w-[30%] max-w-5xl flex">
           {/* Timeline */}
           <div className="relative w-10 flex flex-col items-center">
             <div className="absolute top-0 bottom-0 w-1 bg-gray-300 rounded-full"></div>

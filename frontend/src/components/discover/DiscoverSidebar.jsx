@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import SidebarCard from "./SidebarCard";
 import backend from "../backend.jsx";
 import {UserContext} from "../../context/UserContext.jsx";
+import dummyEventCardCover from "../../assets/dummyEventCardCover.jpg"; // Fallback image
 
 const DiscoverSidebar = () => {
 
@@ -66,9 +67,9 @@ useEffect(() => {
             <div className="flex flex-col gap-3">
               {newClubs.slice(0, showNewCardsLimit).map((club) => (
                   <SidebarCard
-                      key={club.id}
+                      key={club.club_name}
                       name={club.club_name}
-                      image={club.club_picture}
+                      image={club.club_picture || dummyEventCardCover}
                   />
               ))}
             </div>
@@ -97,9 +98,9 @@ useEffect(() => {
             <div className="flex flex-col gap-3">
               {recommendedClubs.slice(0, showRecommendedCardsLimit).map((recommendedClub) => (
                   <SidebarCard
-                      key={recommendedClub.id}
+                      key={recommendedClub.club_name}
                       name={recommendedClub.club_name}
-                      image={recommendedClub.club_picture}
+                      image={recommendedClub.club_picture || dummyEventCardCover}
                   />
               ))}
             </div>

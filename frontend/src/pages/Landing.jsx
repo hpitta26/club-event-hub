@@ -49,7 +49,7 @@ const Landing = () => {
                 location="FIU, PG6 116"
                 attendees={79}
                 capacity={100}
-                coverImage={dummyEventCardCover}
+                profilebanner="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=400&h=250"
                 hostLogo={dummyInitLogo}
                 points={15}
                 show_model={false}
@@ -63,7 +63,7 @@ const Landing = () => {
                 location="FIU, PG6 116"
                 attendees={79}
                 capacity={100}
-                coverImage={dummyEventCardCover}
+                profilebanner={"https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=400&h=250"}
                 hostLogo={dummyInitLogo}
                 points={25}
                 show_model={false}
@@ -78,7 +78,7 @@ const Landing = () => {
                 location="The Lab Miami"
                 attendees={79}
                 capacity={100}
-                coverImage={dummyEventCardCover}
+                profilebanner={"https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&h=250"}
                 hostLogo={dummyInitLogo}
                 points={10}
                 show_model={false}

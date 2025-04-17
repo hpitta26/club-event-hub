@@ -665,8 +665,8 @@ class Command(BaseCommand):
     "student13@fiu.edu", "student14@fiu.edu", "student15@fiu.edu",
     "student16@fiu.edu"],
                 "tags": ["Fitness", "Wellness"],
-                "profilebanner": "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=400&h=250"
-            },
+                "profilebanner":"https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&w=400&h=250",
+        },
             {
                 "club": "club1@example.com",
                 "title": "Coding Workshop",
@@ -697,7 +697,7 @@ class Command(BaseCommand):
     "student10@fiu.edu", "student11@fiu.edu", "student12@fiu.edu",
     "student13@fiu.edu", "student14@fiu.edu"],
                 "tags": ["Culture", "Wellness"],
-                "profilebanner": "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=400&h=250"
+                "profilebanner": "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&w=400&h=250"
             },
             {
                 "club": "club3@example.com",
@@ -713,7 +713,7 @@ class Command(BaseCommand):
     "student10@fiu.edu", "student11@fiu.edu", "student12@fiu.edu",
     "student13@fiu.edu"],
                 "tags": ["Wellness", "Fitness"],
-                "profilebanner": "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=400&h=250"
+                "profilebanner": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&h=250"
             },
             {
                 "club": "club1@example.com",
@@ -728,7 +728,7 @@ class Command(BaseCommand):
     "student7@fiu.edu", "student8@fiu.edu", "student9@fiu.edu",
     "student10@fiu.edu", "student11@fiu.edu", "student12@fiu.edu"],
                 "tags": ["Technology"],
-                "profilebanner": "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=400&h=250"
+                "profilebanner": "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=400&h=250"
             },
             {
                 "club": "club2@example.com",
@@ -743,7 +743,7 @@ class Command(BaseCommand):
     "student7@fiu.edu", "student8@fiu.edu", "student9@fiu.edu",
     "student10@fiu.edu", "student11@fiu.edu"],
                 "tags": ["Culture", "Career"],
-                "profilebanner": "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=400&h=250"
+                "profilebanner": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&h=250"
             },
             {
                 "club": "club3@example.com",
@@ -758,7 +758,7 @@ class Command(BaseCommand):
     "student7@fiu.edu", "student8@fiu.edu", "student9@fiu.edu",
     "student10@fiu.edu"],
                 "tags": ["Volunteer", "Wellness"],
-                "profilebanner": "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=400&h=250"
+                "profilebanner": "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=400&h=250"
             },
             {
                 "club": "club1@example.com",
@@ -772,7 +772,7 @@ class Command(BaseCommand):
     "student4@fiu.edu", "student5@fiu.edu", "student6@fiu.edu",
     "student7@fiu.edu", "student8@fiu.edu", "student9@fiu.edu"],
                 "tags": ["Technology", "Career"],
-                "profilebanner": "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=400&h=250"
+                "profilebanner": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&h=250"
             },
             {
                 "club": "club2@example.com",
@@ -786,7 +786,7 @@ class Command(BaseCommand):
     "student4@fiu.edu", "student5@fiu.edu", "student6@fiu.edu",
     "student7@fiu.edu", "student8@fiu.edu"],
                 "tags": ["Culture", "Social"],
-                "profilebanner": "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=400&h=250"
+                "profilebanner": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=400&h=250"
             },
             {
                 "club": "club3@example.com",
@@ -813,7 +813,7 @@ class Command(BaseCommand):
                 "rsvps": ["student1@fiu.edu", "student2@fiu.edu", "student3@fiu.edu",
     "student4@fiu.edu", "student5@fiu.edu"],
                 "tags": ["Technology", "Career"],
-                "profilebanner": "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=400&h=250"
+                "profilebanner": "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&w=400&h=250"
             },
             {
                 "club": "club2@example.com",
@@ -825,7 +825,7 @@ class Command(BaseCommand):
                 "capacity": 25,
                 "rsvps": ["student1@fiu.edu", "student2@fiu.edu", "student3@fiu.edu"],
                 "tags": ["Culture", "Wellness"],
-                "profilebanner": "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=400&h=250"
+                "profilebanner": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&h=250"
             },
             {
                 "club": "club3@example.com",
@@ -837,7 +837,7 @@ class Command(BaseCommand):
                 "capacity": 30,
                 "rsvps": ["student1@fiu.edu", "student2@fiu.edu"],
                 "tags": ["Wellness", "Fitness"],
-                "profilebanner": "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=400&h=250"
+                "profilebanner": "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=400&h=250"
             },
             {
                 "club": "club1@example.com",
@@ -849,7 +849,7 @@ class Command(BaseCommand):
                 "capacity": 40,
                 "rsvps": ["student1@fiu.edu"],
                 "tags": ["Technology", "Career"],
-                "profilebanner": "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=400&h=250"
+                "profilebanner": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&h=250"
             },
             {
                 "club": "club2@example.com",
@@ -861,7 +861,7 @@ class Command(BaseCommand):
                 "capacity": 15,
                 "rsvps": ["student1@fiu.edu"],
                 "tags": ["Culture", "Wellness"],
-                "profilebanner": "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=400&h=250"
+                "profilebanner": "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=400&h=250"
             },
             {
                 "club": "club3@example.com",
@@ -873,7 +873,7 @@ class Command(BaseCommand):
                 "capacity": 50,
                 "rsvps": [],
                 "tags": ["Volunteer", "Social"],
-                "profilebanner": "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=400&h=250"
+                "profilebanner": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&h=250"
             },
             # Add more events to ensure students meet the required number of past events attended
         ]

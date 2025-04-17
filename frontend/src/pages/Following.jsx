@@ -37,7 +37,7 @@ const Following = () => {
         <div className="flex h-full">
           {/* Sidebar */}
           {isSidebarOpen && (
-            <div className="w-1/5 hidden lg:block">
+            <div className="w-[300px] hidden lg:block">
               <FollowingSidebar />
             </div>
           )}

@@ -155,7 +155,7 @@ function StudentTimes() {
                             <React.Fragment key={timeSlot}>
                                 {/* Time Label */}
                                 {index % 2 === 0 ? (
-                                    <div className="text-right text-xs pr-2 font-medium" style={{ userSelect: "none" }}>
+                                    <div className="text-right text-xs pr-2 font-semibold" style={{ userSelect: "none" }}>
                                         {timeLabels[Math.floor(index / 2)]}
                                     </div>
                                 ) : (
@@ -166,9 +166,9 @@ function StudentTimes() {
                                 {Object.keys(availability).map((day) => (
                                     <div
                                         key={`${day}-${timeSlot}`}
-                                        className={`py-2 text-sm cursor-pointer text-center border ${
+                                        className={`py-2 text-sm rounded cursor-pointer text-center border ${
                                             availability[day].includes(timeSlot)
-                                                ? "bg-blue-500 text-white"
+                                                ? "bg-blue-300 text-white"
                                                 : "bg-gray-100 text-black"
                                         }`}
                                         onMouseDown={() => handleMouseDown(day, timeSlot)}
@@ -183,7 +183,7 @@ function StudentTimes() {
                 </div>
                 <div className="flex justify-center mt-6">
                     <button
-                        className="bg-[#FD4EB7] text-black px-4 py-2 rounded-md border-black border-[1.5px]"
+                        className="bg-[#FD4EB7] hover:bg-[#ff23a7] text-black px-4 py-2 rounded-md border-black border-[1.5px]"
                         onClick={handleSave}
                     >
                         Save Times

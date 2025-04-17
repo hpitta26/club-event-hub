@@ -227,7 +227,7 @@ function StudentSettings() {
                         {errors.major_blank &&  <p className="text-red-500 text-xs italic"> {errors.major_blank} </p>}
                     </div>
                     <div className="w-full">
-                        <button type="button" className="bg-[#FD4EB7] rounded-md border-black border-[1.5px] p-2 mt-2" onClick={handleSubmit}>
+                        <button type="button" className="bg-[#FD4EB7] hover:bg-[#ff23a7] rounded-md border-black border-[1.5px] p-2 mt-2" onClick={handleSubmit}>
                             Save Changes
                         </button>
                     </div>

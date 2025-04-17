@@ -12,10 +12,10 @@ class ClubAdmin(admin.ModelAdmin):
     get_email.short_description = 'Email'
 
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ('get_email', 'major', 'graduation_year', 'get_following_clubs')
+    list_display = ('get_email', 'major', 'graduation_year', 'spirit_points', 'get_following_clubs')
     search_fields = ('user__email',)
     filter_horizontal = ('following_clubs',)
-    fields = ('user', 'major', 'graduation_year', 'following_clubs')
+    fields = ('user', 'major', 'graduation_year', 'spirit_points', 'following_clubs')
 
     def get_email(self, obj):
         return obj.user.email

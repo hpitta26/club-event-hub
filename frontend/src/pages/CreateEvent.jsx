@@ -138,7 +138,7 @@ function CreateEvent() {
                     <button
                         type="submit"
                         onClick={handleSubmit}
-                        className="bg-[#FD4EB7] border-[1px] border-black rounded-[4px] py-2 px-3 text-black font-medium hover:bg-[#E93DA6] transition"
+                        className="bg-[#FD4EB7] border-[1.5px] border-black rounded-[4px] py-2 px-3 text-black font-medium hover:bg-[#E93DA6] transition"
                     >
                         Create Event
                     </button>

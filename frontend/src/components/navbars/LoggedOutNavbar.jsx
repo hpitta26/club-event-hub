@@ -47,7 +47,7 @@ const LoggedOutNavbar = () => {
       <div className="relative flex items-center h-full px-4 md:px-8">
         {/* Left section */}
         <div className="flex-1 flex items-center">
-          <a className="flex items-center" href="/discover">
+          <a className="flex items-center" href="/">
             <img src={gatherULogo} alt="GatherU Logo" className="h-14 w-auto" />
           </a>
         </div>

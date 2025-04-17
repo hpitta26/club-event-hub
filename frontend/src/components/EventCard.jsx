@@ -20,6 +20,7 @@ function EventCard({
   description= "No detailed description available.",
   universityName = "Florida International University",
   is_rsvped = false,
+  show_model= true
 }) {
   const [showDetails, setShowDetails] = useState(false);
   const cardRef = useRef(null);
@@ -159,7 +160,7 @@ function EventCard({
       </div>
 
       {/* Event Details Card */}
-      {showDetails && (
+      {showDetails && show_model && (
         <EventDetailsCard
           event_id={id}
           isOpen={showDetails}

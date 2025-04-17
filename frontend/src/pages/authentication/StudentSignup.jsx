@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import backend from "../../components/backend.jsx";
-import gatherULogo from '../../assets/icons/GatherUIcon.svg';
+import gatherULogo from '../../assets/icons/GatherUIcon.png';
 
 function StudentSignup() {
   const [formData, setFormData] = useState({
@@ -239,7 +239,7 @@ function StudentSignup() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-300 flex justify-center items-center">
+    <div className="min-h-screen flex justify-center items-center">
       <div className="flex flex-col gap-8 w-full" style={{ maxWidth: "400px" }}>
         {renderPhase()}
       </div>

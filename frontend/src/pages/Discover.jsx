@@ -24,6 +24,7 @@ const Discover = () => {
         location: "",
         attending: 0,
         capacity: 0,
+        tags:[],
         coverImage: "",
         hostLogo: "",
         is_rsvped: false,

@@ -77,12 +77,12 @@ useEffect(() => {
             {newClubs.length > initialShowCardsLimit && (
                 <button>
                   <p
-                      className="mt-3 text-white hover:text-sky-100 text-sm font-medium"
-                      onClick={toggleNewClubs}
+                    className="mt-3 text-white hover:text-sky-100 text-sm font-medium"
+                    onClick={toggleNewClubs}
                   >
                     {showNewCardsLimit === initialShowCardsLimit
-                        ? "Show All"
-                        : "Show Less"}
+                      ? "Show All"
+                      : "Show Less"}
                   </p>
                 </button>
             )}

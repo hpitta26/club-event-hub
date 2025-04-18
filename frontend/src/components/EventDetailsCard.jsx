@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useContext } from "react";
 import { FiChevronsRight } from "react-icons/fi";
 import { FiCalendar, FiMapPin, FiUsers } from "react-icons/fi";
 import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
 import backend from "./backend";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
+
 
 function EventDetailsCard({
   event_id = 0,
@@ -28,9 +30,8 @@ function EventDetailsCard({
   setIsRSVP = () => {}
 }) {
   if (!isOpen) return null;
-
+  const { userContext } = useContext(UserContext);
   const navigate = useNavigate();
-
   const handleCardClick = (e) => {
     e.stopPropagation();
   };
@@ -94,7 +95,7 @@ function EventDetailsCard({
         {/* Event Title and RSVP Button */}
         <div className="flex flex-row justify-between items-center w-full">
           <h1 className="text-3xl font-semibold">{title}</h1>
-          {isRSVP ?
+          {userContext.role.includes("STUDENT") ? (isRSVP) ?
               <button onClick={handleRSVP}
                       className="bg-[#35A25D] text-white py-1 px-4 rounded-md text-sm font-semibold border-black border-[1.5px]">
                 Attending!
@@ -103,7 +104,9 @@ function EventDetailsCard({
               <button onClick={handleRSVP}
                       className="bg-[#FD4DB7] text-black py-1 px-4 rounded-md text-sm font-semibold border-black border-[1.5px]">
                 RSVP
-              </button>
+              </button> :
+               <>
+              </>
           }
         </div>
 

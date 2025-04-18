@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { HiOutlineGlobeAlt } from "react-icons/hi";
@@ -6,6 +6,7 @@ import { RiTwitterXFill } from "react-icons/ri";
 import backend from "../components/backend.jsx";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
 import EventCard from "../components/EventCard.jsx";
+import { UserContext } from "../context/UserContext.jsx";
 
 function ClubProfile() {
   const [club, setClub] = useState(null);
@@ -16,6 +17,7 @@ function ClubProfile() {
 
   const [loading, setLoading] = useState(true);
   const [isFollowing, setIsFollowing] = useState(false);
+  const { userContext } = useContext(UserContext);
 
   const slug = useParams();
   const navigate = useNavigate();
@@ -45,10 +47,14 @@ function ClubProfile() {
           console.log(weeklyEventData.data)
           setWeeklyEvents(weeklyEventData.data);
         })
-    backend.get(`/check-user-following/${data.user_id}/`)
-        .then((followingData)=>{
-          setIsFollowing(followingData.data);
-        })
+
+        if (userContext.role.includes("STUDENT")) {
+            backend.get(`/check-user-following/${data.user_id}/`)
+                .then((followingData)=>{
+                  setIsFollowing(followingData.data);
+                })
+        };
+        
     }
 
     function handleFollow(clubID){
@@ -91,8 +97,8 @@ function ClubProfile() {
             className="w-full h-full object-cover"
           />
         </div>
-
-        {!isFollowing ?
+        {userContext.role.includes("STUDENT") ?        
+        (!isFollowing) ?
         /* Follow Button */
         <div className="absolute top-[205px] right-5">
           <button
@@ -112,7 +118,10 @@ function ClubProfile() {
             Unfollow
           </button>
         </div>
-        }
+         : 
+        <></>
+         }
+
       </div>
       {/* Club Info */}
       <div className="w-full max-w-[860px] px-6 mt-6 space-y-4">

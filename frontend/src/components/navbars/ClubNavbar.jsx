@@ -4,6 +4,7 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import { UserContext } from '../../context/UserContext';
 
 const ClubNavbar = () => {
+  const [spiritPoints, setSpiritPoints] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [clickedLink, setClickedLink] = useState(null);
   const [eventsClicked, setEventsClicked] = useState(false);
@@ -18,6 +19,11 @@ const ClubNavbar = () => {
   const burgerButtonRef = useRef(null);
 
   useEffect(() => {
+    const fetchSpiritPoints = async () => {
+        const response = await backend.get('get-spirit-points/');
+        setSpiritPoints(response.data.spirit_points);
+    };
+    fetchSpiritPoints();
       const handleClickOutside = (event) => {
       if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
         setProfileDropdownOpen(false);
@@ -102,7 +108,7 @@ const ClubNavbar = () => {
                   ref={profileDropdownRef}
                   className="absolute right-0 mt-1 py-2 w-48 bg-white border-[1.5px] border-black shadow-[2px_2px_0px_#000000] rounded-md"
                 >
-                  <Link to="#" className="block px-4 py-2 text-sm text-black hover:bg-gray-100">
+                  <Link to={`/club/${userContext.club_slug}`} className="block px-4 py-2 text-sm text-black hover:bg-gray-100">
                     Profile
                   </Link>
                   <Link to="/club-settings" className="block px-4 py-2 text-sm text-black hover:bg-gray-100">

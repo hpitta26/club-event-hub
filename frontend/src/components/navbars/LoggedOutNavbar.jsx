@@ -12,6 +12,8 @@ const LoggedOutNavbar = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
+  const location = useLocation();
+  const isActiveLink = (path) => location.pathname === path;
 
   const handleLinkClick = (link) => {
     setClickedLink(link);
@@ -57,7 +59,7 @@ const LoggedOutNavbar = () => {
         <div className="absolute left-0 right-0 flex justify-center items-center h-full pointer-events-none">
           <Link
             to="/discover"
-            className="font-normal text-black text-lg tracking-wide hover:text-pink-500 pointer-events-auto"
+            className={`` + (isActiveLink('/discover') ? 'font-normal text-pink-500 border-pink-500 border-b-2' : 'font-normal text-black') + ` text-lg tracking-wide hover:text-pink-500 pointer-events-auto`}
           >
             Discover
           </Link>

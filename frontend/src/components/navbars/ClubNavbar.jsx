@@ -9,6 +9,8 @@ const ClubNavbar = () => {
   const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
+  const isActiveLink = (path) => location.pathname === path;
 
   const notificationsRef = useRef(null);
   const profileDropdownRef = useRef(null);
@@ -82,10 +84,16 @@ const ClubNavbar = () => {
         </Link>
 
         <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex space-x-16">
-          <Link to="/analytics" className="font-normal text-black text-lg tracking-wide hover:text-pink-500">
+          <Link
+            to="/analytics"
+            className={`` + (isActiveLink('/analytics') ? 'font-normal text-pink-500 border-pink-500 border-b-2' : 'font-normal text-black') + ` text-lg tracking-wide hover:text-pink-500`}
+          >
             Analytics
           </Link>
-          <Link to="/events" className="font-normal text-black text-lg tracking-wide hover:text-blue-500">
+          <Link 
+            to="/events"
+            className={`` + (isActiveLink('/events') ? 'font-normal text-blue-500 border-blue-500 border-b-2' : 'font-normal text-black') + ` text-lg tracking-wide hover:text-blue-500`}
+          >
             Events
           </Link>
         </div>

@@ -29,6 +29,8 @@ const StudentNavbar = () => {
   const sidebarRef = useRef(null); 
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const isActiveLink = (path) => location.pathname === path;
 
   const handleLinkClick = (link) => {
     setClickedLink(link);
@@ -146,13 +148,22 @@ const StudentNavbar = () => {
                 </Link>
             </div>
             <div className=" absolute left-1/2 transform -translate-x-1/2 flex space-x-16">
-              <Link to="/discover" className={`md:block hidden font-normal text-black text-lg tracking-wide hover:text-pink-500`}>
+              <Link 
+                to="/discover" 
+                className={`` + (isActiveLink('/discover') ? 'font-normal text-pink-500 border-pink-500 border-b-2' : 'font-normal text-black') + ` text-lg tracking-wide hover:text-pink-500`}
+              >
                   Discover
               </Link>
-              <Link to="/following" className={`md:block hidden font-normal text-black text-lg tracking-wide hover:text-blue-500`}>
+              <Link 
+                  to="/following" 
+                  className={`` + (isActiveLink('/following') ? 'font-normal text-blue-500 border-blue-500 border-b-2' : 'font-normal text-black') + ` text-lg tracking-wide hover:text-blue-500`}
+              >
                   Following 
               </Link>
-              <Link to="/leaderboard" className={`md:block hidden font-normal text-black text-lg tracking-wide hover:text-pink-500`}>
+              <Link 
+                to="/leaderboard"
+                className={`` + (isActiveLink('/leaderboard') ? 'font-normal text-pink-500 border-pink-500 border-b-2' : 'font-normal text-black') + ` text-lg tracking-wide hover:text-pink-500`}
+              >
                   Leaderboard
               </Link>
                 </div>
@@ -241,6 +252,14 @@ const StudentNavbar = () => {
             onClick={() => handleLinkClick('Following')}
           >
             Following
+          </Link>
+          <Link
+            to="/leaderboard"
+            className={`block px-4 py-2 text-sm text-black rounded-md hover:bg-gray-100
+              ${clickedLink === 'Leaderboard' ? 'bg-pink-500/20 text-pink-500' : ''}`}
+            onClick={() => handleLinkClick('Leaderboard')}
+          >
+            Leaderboard
           </Link>
         </div>
       )}

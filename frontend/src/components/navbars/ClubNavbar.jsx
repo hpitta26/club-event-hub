@@ -13,7 +13,6 @@ const ClubNavbar = () => {
   const isActiveLink = (path) => location.pathname === path;
   const { userContext } = useContext(UserContext);
 
-  const notificationsRef = useRef(null);
   const profileDropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
   const burgerButtonRef = useRef(null);
@@ -22,9 +21,6 @@ const ClubNavbar = () => {
       const handleClickOutside = (event) => {
       if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
         setProfileDropdownOpen(false);
-      }
-      if (notificationsRef.current && !notificationsRef.current.contains(event.target)) {
-        setIsNotificationsOpen(false);
       }
       // Close mobile menu when clicking outside
       if (
@@ -57,7 +53,6 @@ const ClubNavbar = () => {
 
   const toggleProfileDropdown = () => {
     setProfileDropdownOpen((prev) => !prev);
-    setIsNotificationsOpen(false);
   };
 
   const handleLogout = () => {

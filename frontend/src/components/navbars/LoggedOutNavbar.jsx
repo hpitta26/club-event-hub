@@ -67,15 +67,15 @@ const LoggedOutNavbar = () => {
 
         {/* Right section */}
         <div className="flex-1 flex items-center justify-end space-x-2 sm:space-x-3 md:space-x-4">
-          <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4 text-black">
             <button
-              className="hidden md:block bg-[#FD4EB7] shadow-[2px_2px_0_#000] text-black font-normal text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:hover:bg-[#ff23a7] hover:shadow-[3px_3px_0_#000] transition-all duration-300"
+              className="hidden md:block bg-[#FD4EB7] shadow-[2px_2px_0_#000] font-normal text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:hover:bg-[#ff23a7] hover:shadow-[3px_3px_0_#000] transition-all duration-300"
               onClick={handleSignupClick}
             >
               Sign up
             </button>
             <button
-              className="hidden md:block bg-[#4D9FFD] shadow-[2px_2px_0_#000] text-black font-normal text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:bg-[#4287ff] hover:shadow-[3px_3px_0_#000] transition-all duration-300"
+              className="hidden md:block bg-[#4D9FFD] shadow-[2px_2px_0_#000] font-normal text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:bg-[#4287ff] hover:shadow-[3px_3px_0_#000] transition-all duration-300"
               onClick={handleLoginClick}
             >
               Log in

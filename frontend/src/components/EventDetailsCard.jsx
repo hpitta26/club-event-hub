@@ -95,7 +95,8 @@ function EventDetailsCard({
         {/* Event Title and RSVP Button */}
         <div className="flex flex-row justify-between items-center w-full">
           <h1 className="text-3xl font-semibold">{title}</h1>
-          {userContext.role.includes("STUDENT") ? (isRSVP) ?
+          {userContext && (
+          userContext.role.includes("STUDENT") ? (isRSVP) ?
               <button onClick={handleRSVP}
                       className="bg-[#35A25D] text-white py-1 px-4 rounded-md text-sm font-semibold border-black border-[1.5px]">
                 Attending!
@@ -107,6 +108,7 @@ function EventDetailsCard({
               </button> :
                <>
               </>
+          )
           }
         </div>
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import dummyEventCardCover from "../../assets/dummyEventCardCover.jpg"; // Fallback image
+import dummyInitLogo from "../../assets/dummyInitLogo.png";
 import backend from "../backend";
 import SidebarCard from "../discover/SidebarCard.jsx";
 
@@ -16,7 +16,7 @@ const FollowingSidebar = () => {
           const clubs = response.data.data.map(club => ({
             id: club.user_id,
             name: club.club_name,
-            imageUrl: dummyEventCardCover, // Using dummy image as fallback
+            imageUrl: dummyInitLogo, // Using dummy image as fallback
             description: club.description
           }));
           setFollowedClubs(clubs);

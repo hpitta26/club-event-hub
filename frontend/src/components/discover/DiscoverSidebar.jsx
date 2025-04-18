@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import SidebarCard from "./SidebarCard";
 import backend from "../backend.jsx";
 import {UserContext} from "../../context/UserContext.jsx";
-import dummyEventCardCover from "../../assets/dummyEventCardCover.jpg"; // Fallback image
+import dummyInitLogo from "../../assets/dummyInitLogo.png";
 
 const DiscoverSidebar = () => {
 
@@ -69,7 +69,7 @@ useEffect(() => {
                   <SidebarCard
                       key={club.club_name}
                       name={club.club_name}
-                      image={club.club_picture || dummyEventCardCover}
+                      image={club.club_picture || dummyInitLogo}
                   />
               ))}
             </div>
@@ -100,7 +100,7 @@ useEffect(() => {
                   <SidebarCard
                       key={recommendedClub.club_name}
                       name={recommendedClub.club_name}
-                      image={recommendedClub.club_picture || dummyEventCardCover}
+                      image={recommendedClub.club_picture || dummyInitLogo}
                   />
               ))}
             </div>

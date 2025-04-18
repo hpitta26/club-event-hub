@@ -50,8 +50,14 @@ def verify_session(request):
         user = request.user
 
         if user.is_authenticated:
+            session = {"role": request.session['role'], "profile_picture": request.session['profile_picture']}
+            
+            if "CLUB" in request.session['role']:
+                session["banner"] = request.session['banner']
+                
+
             return Response(
-                {"user": {"role": request.session['role']}},
+                {"user": session},
                 status=200
             )  # pass to front-end
 
@@ -165,8 +171,14 @@ def login_view(request):
 
         request.session['id'] = str(user.pk)  # populate session
         request.session['role'] = group_names   # populate session
+        request.session['profile_picture'] = user.profile_picture.url
+            
+        session_data = {"role": group_names, "profile_picture": user.profile_picture.url}
+        if "CLUB" in group_names:
+            session_data["banner"] = user.club_profile.club_banner.url
+            request.session["banner"] = user.club_profile.club_banner.url
 
-        return Response({"user": {"role": group_names}}, status=200)
+        return Response({"user": session_data}, status=200)
     
     error_message = 'Invalid account credentials'
     print(error_message)

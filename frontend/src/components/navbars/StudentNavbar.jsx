@@ -1,20 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import gatherULogo from '../../assets/icons/GatherUIcon.png';
 import { GoBell } from "react-icons/go";
 import { HiMiniBars3 } from "react-icons/hi2";
-<<<<<<< HEAD
-import { useNavigate, Link, useLocation } from "react-router-dom";
-=======
-import { Link, useNavigate } from "react-router-dom";
->>>>>>> 7f40281 (fixing ui bugs)
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import EventModal from '../EventModal';
 import { useSidebar } from '../../context/SidebarContext';
 import backend from '../backend';
 import NotificationDropDown from '../NotificationDropDown';
 import { LuAward } from "react-icons/lu";
+import { UserContext } from '../../context/UserContext';
 
 const StudentNavbar = () => {
-  const [profileImage, setProfileImage] = useState(null);
   const [spiritPoints, setSpiritPoints] = useState(0);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [events, setEvents] = useState([]);
@@ -22,7 +18,7 @@ const StudentNavbar = () => {
   const { toggleSidebar } = useSidebar(); 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [clickedLink, setClickedLink] = useState(null);
-
+  const { userContext } = useContext(UserContext);
   const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const profileDropdownRef = useRef(null);
   const notificationsRef = useRef(null); 
@@ -83,21 +79,6 @@ const StudentNavbar = () => {
   const handleLogout = () => {
     navigate("/logout");
   };
-
-  // Fetch the profile image URL when the component mounts
-  useEffect(() => {
-    const fetchProfileImage = async () => {
-      try {
-        const response = await backend.get('student-profile-image/');
-        setProfileImage(response.data.image_url);
-        const response2 = await backend.get('get-spirit-points/');
-        setSpiritPoints(response2.data.spirit_points);
-      } catch (error) {
-        console.error("Error fetching profile image:", error);
-      }
-    };
-    fetchProfileImage();
-  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {

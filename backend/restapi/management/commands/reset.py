@@ -53,5 +53,6 @@ class Command(BaseCommand):
         management.call_command("create_super_user", email, password)
         management.call_command("populate")
         # management.call_command("populate_random_data")
+        management.call_command("upload_images")
         
         self.stdout.write(self.style.SUCCESS('Successfully ran RESET command'))

@@ -1,25 +1,27 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import backend from "../components/backend.jsx";
 import { MdOutlineFileUpload } from "react-icons/md";
+import { UserContext } from "../context/UserContext.jsx";
 
 function ClubSetting() {
-  const [club, setClub] = useState(null);
   const [loading, setLoading] = useState(true);
   const slug = useParams();
   const navigate = useNavigate();
-  const [user, setUser] = useState(false);
-  const [profileImage, setProfileImage] = useState(null);
-  const [profileBanner, setProfileBanner] = useState(null);
+  const { updateProfilePic, updateBanner } = useContext(UserContext);
   const [formData, setFormData] = useState({
+    club_name: "",
+    email: "",
     description: "",
     social_media_handles: {
       twitter: "",
       instagram: "",
       linkedIn: "",
     },
-    club_picture: null,
-    club_banner: null,
+    profile_picture: "",
+    profile_picture_url: "",
+    club_banner: "",
+    club_banner_url: "",
   });
 
   useEffect(() => {
@@ -27,115 +29,63 @@ function ClubSetting() {
       //useParams() extracts the URL parameter as an object so slug.clubSlug gets the clubSlug field of the object
       .get(`clubs/`)
       .then((response) => {
-        setClub(response.data);
-        console.log("response");
-        console.log(response.data);
-        console.log(club);
+        setFormData(response.data);
         setLoading(false);
       })
       .catch(() => {
         navigate("/*");
       });
-
-    async function fetchClubProfilePic() {
-      try {
-        // This is based on the URLs defined in urls.py
-        const response = await backend.get("club-profile-image/");
-        setProfileImage(response.data.image_url);
-        console.log("Profile image URL: ", response.data.image_url);
-      } catch (error) {
-        console.error("Error fetching profile image:", error);
-        setProfileImage(null);
-      }
-    }
-
-    async function fetchClubProfileBanner() {
-      try {
-        const response = await backend.get("club-banner-image/");
-        setProfileBanner(response.data.image_url);
-      } catch (error) {
-        console.error("Error fetching Banner image:", error);
-        setProfileBanner(null);
-      }
-    }
-
-    fetchClubProfileBanner();
-    fetchClubProfilePic();
   }, [slug]);
-
-  const handleBannerSubmit = async (e) => {
-    if (formData.club_banner !== null) {
-      const uploadData = new FormData();
-      uploadData.append("banner_image_url", formData.club_banner);
-      console.log("file that will be submitted", uploadData.get('banner_image_url'))
-      try {
-        const response = await backend.post("club-banner-image/", uploadData, {
-          headers: {}
-        });
-        console.log("Profile image updated successfully:", response.data);
-      } catch (error) {
-        console.error("Error uploading banner image:", error);
-      }
-    }
-  };
-
-  const handleProfileSubmit = async (e) => {
-    if (formData.club_picture !== null){
-      const uploadData = new FormData();
-      uploadData.append("profile_image_url", formData.club_picture);
-      console.log("file that will be submitted", uploadData.get('profile_image_url'))
-      try {
-        const response = await backend.post("club-profile-image/", uploadData, {
-          headers: {}
-        });
-        console.log("Profile image updated with: ", response.image_url)
-      }
-      catch(error) {
-        console.error("Erorr with profile upload: ", error)
-      }
-    }
-  }
 
   const handleProfileUpload = (e) => {
     const file = e.target.files[0];
-    setFormData((prev) => ({ ...prev, club_picture: file }));
-    console.log("uploaded Profile pic:", file);
+    if (file) {
+        setFormData((prev) => ({ ...prev, profile_picture: file, profile_picture_url: URL.createObjectURL(file) }));
+        console.log("uploaded Profile pic:", file);
+    }
   };
 
   const handleBannerUpload = (e) => {
     const file = e.target.files[0];
-    setFormData((prev) => ({ ...prev, club_banner: file }));
-    console.log("uploaded banner pic:", file);
+    if (file) {
+        setFormData((prev) => ({ ...prev, club_banner: file, club_banner_url: URL.createObjectURL(file) }));
+        console.log("uploaded banner pic:", file);
+    }
   };
 
 
-  const handleText = async(e) =>{
 
-    var updatedFormInfo = new FormData()
-    updatedFormInfo.append("description", formData.description)
-    updatedFormInfo.append("social_media_handles", JSON.stringify(formData.social_media_handles))
-    console.log("updatedFormInfo", updatedFormInfo)
+
+  async function handleSubmit() {
     console.log("Form data", formData)
     try{
-    const response = await backend.patch(
-      `clubs/`, updatedFormInfo,
-        {
-          headers: { 'Content-Type': "multipart/form-data" },
-        })  
-        console.log("Bruh", JSON.stringify(response))
-    
-    }
-    catch(error){
+        const payload = new FormData();
+
+        Object.entries(formData).forEach(([key, value]) => {
+        if (key === 'social_media_handles') {
+            Object.entries(value).forEach(([subKey, subVal]) => {
+                payload.append(`social_media_handles.${subKey}`, subVal);
+            });
+        } else if (value !== null && value !== "") {
+            payload.append(key, value);
+        }
+        });
+
+        const response = await backend.patch('/clubs/', payload,  {
+            headers: { 'Content-Type': "multipart/form-data" }
+        });
+
+        console.log("TEST", response)
+        console.log(response.data.user.profile_picture)
+        console.log(response.data.club_banner)
+
+        if (response.status === 200) {
+            updateProfilePic(response.data.user.profile_picture);
+            updateBanner(response.data.club_banner);
+        }
+    } catch(error){
       console.error("Error with profile upload: ", error)
     }   
-  }
-
-
-  function handleSubmit() {
-    handleText();
-    handleProfileSubmit();
-    handleBannerSubmit();
-    // window.location.reload();
   }
 
   const handleLinkChange = (e) =>{
@@ -175,7 +125,7 @@ function ClubSetting() {
             >
               <div className="bg-stone-500 h-[140px] w-full hover:opacity-50 rounded-3xl relative">
                 <img
-                  src={profileBanner}
+                  src={formData.club_banner_url}
                   alt="dummy banner"
                   className="w-full h-full rounded-3xl object-cover"
                 ></img>
@@ -201,7 +151,7 @@ function ClubSetting() {
                 <div>
                   <label htmlFor="profileUpload" className="block relative">
                     <img
-                      src={profileImage}
+                      src={formData.profile_picture_url}
                       alt="dummy picture"
                       className="rounded-full h-24 w-24 hover:cursor-pointer hover:opacity-50 object-cover"
                     />
@@ -223,10 +173,10 @@ function ClubSetting() {
 
           <div className="flex-col pl-6 pt-4">
             <h2 className="text-xl font-semibold font-['Pramukh Rounded'] font-semibold">
-              {club?.club_name || "Club Name"}
+              {formData.club_name || "Club Name"}
             </h2>
             <p className="text-gray-600 font-['Pramukh Rounded'] font-semibold">
-              {club?.user?.email || "club@example.com"}
+              {formData.email || "club@example.com"}
             </p>
           </div>
         </div>

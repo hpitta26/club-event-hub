@@ -5,6 +5,9 @@ from django.utils import timezone
 from ..models import Student, Event
 from ..serializers import EventSerializer
 from restapi.permissions import StudentPermission
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from storages.backends.s3boto3 import S3Boto3Storage
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated, StudentPermission])
@@ -23,3 +26,19 @@ def get_student_events(request):
         return Response({'upcoming': serialized_upcoming, 'past': serialized_past}, status=200)
     except Student.DoesNotExist:
         return Response({'status': 'error', 'message': 'User is not a student'}, status=404)
+
+@api_view(['GET'])
+def list_avatars(request):
+    storage = S3Boto3Storage()
+    bucket_name = storage.bucket_name
+    client = storage.connection.meta.client
+
+    prefix = "default/avatars/"
+    response = client.list_objects_v2(Bucket=bucket_name, Prefix=prefix)
+
+    avatar_urls = []
+    for obj in response.get('Contents', []):
+        key = obj['Key']
+        avatar_urls.append(storage.url(key))
+
+    return Response({"avatars": avatar_urls})

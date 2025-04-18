@@ -182,7 +182,7 @@ const StudentNavbar = () => {
 
                 {/* Profile Icon */}
                 <div className="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] bg-white border border-black sm:border-[1.5px] rounded-full overflow-hidden cursor-pointer" onClick={toggleProfileDropdown}>
-                  <img src={profileImage || "something"} alt="Profile" className="w-full h-full object-cover"/>
+                  <img src={userContext.profile_picture || "something"} alt="Profile" className="w-full h-full object-cover"/>
                   {isProfileDropdownOpen && (
                     <div ref={profileDropdownRef} className="absolute right-5 mt-1 py-2 w-48 bg-white border-[1.5px] border-black shadow-[2px_2px_0px_#000000] rounded-md">
                       <Link to="/student-profile" className="block px-4 py-2 text-sm text-black hover:bg-gray-100">

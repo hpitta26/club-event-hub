@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import backend from "../components/backend";
+import { UserContext } from "../context/UserContext";
 
 function StudentProfile() {
   const [name, setName] = useState(""); 
   const [gradYear, setGradYear] = useState("");
   const [major, setMajor] = useState("");
-  const [profileImage, setProfileImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { userContext } = useContext(UserContext);
 
   // fetch full name and pfp
   useEffect(() => {
@@ -24,20 +25,7 @@ function StudentProfile() {
         setLoading(false);
       }
     }
-    async function fetchProfileImage() {
-      try {
-        setLoading(true);
-        const response = await backend.get("student-profile-image/");
-        setProfileImage(response.data.image_url);
-      } catch (error) {
-        console.error("Error fetching profile image:", error);
-        setProfileImage(null);
-      } finally {
-        setLoading(false);
-      }
-    }
     fetchUserDetails();
-    fetchProfileImage();
   }, []);
 
   // generate a 2d array of contribution data
@@ -73,7 +61,7 @@ function StudentProfile() {
     <div className="flex flex-col max-w-5xl mx-auto pt-40 p-3 ">
       <div className="w-24 h-24 rounded-full overflow-hidden mb-2 sm:mb-4 border-2 border-black">
         <img
-          src={profileImage || "something"}
+          src={userContext.profile_picture || "something"}
           alt="Profile Picture"
           className="w-full h-full object-cover"
         />

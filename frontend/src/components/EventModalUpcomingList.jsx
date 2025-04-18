@@ -1,6 +1,5 @@
 import EventModalCard from "./EventModalCard";
 
-{/* Custom Scroll Bar Styling */}
 const customScrollbarStyle = {
   scrollbarWidth: "none",  
   scrollSnapType: "proximity",
@@ -12,7 +11,7 @@ const customScrollbarStyle = {
 function EventModalUpcomingList({ events = [], upcoming = false }) {
 
   return (
-    <div className="w-full h-full rounded-md pr-1" style={customScrollbarStyle}>
+    <div className="w-full h-full rounded-md pr-1 pb-2" style={customScrollbarStyle}>
       <div className="flex flex-col gap-3">
         {events.map((event, index) => (
           <div key={index}>

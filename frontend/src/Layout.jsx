@@ -28,9 +28,6 @@ import ClubEvents from "./pages/ClubEvents.jsx";
 import ClubSetting from "./pages/ClubSetting.jsx";
 import CreateEvent from "./pages/CreateEvent.jsx";
 
-/* Temporary Only */
-import TempPage from "./pages/TempPage.jsx";
-
 function App() {
   return (
     <UserProvider>
@@ -38,7 +35,6 @@ function App() {
         <NavbarSelector /> 
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/temp" element={<TempPage />} />
           <Route path="/discover" element={<Discover />} />
           <Route path="/club/:clubSlug" element={<ClubProfile />} />
           {/* Protected --> makes sure users that are logged in can't visit register page */}

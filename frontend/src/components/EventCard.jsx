@@ -6,6 +6,9 @@ import { dateFormat, formatDay, formatTimeRange } from '../utils/dates';
 import { truncate } from "../utils/truncate";
 import { LuAward } from "react-icons/lu";
 import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
+import dummyAvatar0 from "../assets/dummy-avatar0.png";
+import dummyAvatar1 from "../assets/dummy-avatar1.png";
+import dummyAvatar2 from "../assets/dummy-avatar2.png";
 
 
 function EventCard({
@@ -94,7 +97,7 @@ function EventCard({
 
         {/* Title */}
         <h3 className="absolute font-bold top-[147.5px] left-[10px] w-[207.5px] h-[23.75px] leading-[23.75px]">
-          {truncate(title, 30)}
+          {truncate(title, 20)}
         </h3>
 
         {/* Host & Location */}
@@ -119,17 +122,17 @@ function EventCard({
           {/* Avatars */}
           <div className="flex items-center">
             <img
-              src={dummyInitLogo}
+              src={dummyAvatar0}
               alt="Attendee 1"
               className="w-5 h-5 object-cover rounded-full border border-white"
             />
             <img
-              src={dummyInitLogo}
+              src={dummyAvatar1}
               alt="Attendee 2"
               className="w-5 h-5 object-cover rounded-full border border-white -ml-[6px]"
             />
             <img
-              src={dummyInitLogo}
+              src={dummyAvatar2}
               alt="Attendee 3"
               className="w-5 h-5 object-cover rounded-full border border-white -ml-[6px]"
             />

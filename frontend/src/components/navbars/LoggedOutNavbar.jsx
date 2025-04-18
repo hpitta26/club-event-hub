@@ -3,6 +3,8 @@ import gatherULogo from '../../assets/icons/GatherUIcon.png';
 import { useNavigate } from 'react-router-dom';
 import StudentOrClubModal from '../StudentOrClubModal';
 import { Link, useLocation } from 'react-router-dom';
+import { useSidebar } from '../../context/SidebarContext';
+import { HiMiniBars3 } from "react-icons/hi2";
 
 const LoggedOutNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -14,6 +16,8 @@ const LoggedOutNavbar = () => {
   const dropdownRef = useRef(null);
   const location = useLocation();
   const isActiveLink = (path) => location.pathname === path;
+  const { toggleSidebar } = useSidebar(); 
+  const showHamburgerIcon = ['/discover'].includes(location.pathname);
 
   const handleLinkClick = (link) => {
     setClickedLink(link);
@@ -49,7 +53,13 @@ const LoggedOutNavbar = () => {
     <nav className="fixed w-full h-20 bg-white z-40 text-color-black border-b-2 border-b-black border-solid">
       <div className="relative flex items-center h-full px-4 md:px-8">
         {/* Left section */}
-        <div className="flex-1 flex items-center">
+        <div className="flex-1 flex items-center space-x-8">
+          {showHamburgerIcon && (
+            <HiMiniBars3
+              className="md:block hidden text-black w-8 h-8 cursor-pointer"
+              onClick={toggleSidebar}
+            />
+          )}
           <Link className="flex items-center" to="/">
             <img src={gatherULogo} alt="GatherU Logo" className="h-14 w-auto" />
           </Link>

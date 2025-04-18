@@ -30,7 +30,7 @@ const NotificationDropDown = ({ isOpen, onClose }) => {
     {
       id: 4,
       source: "GatherU",
-      sourceLogo: "/src/assets/icons/GatherUIcon.svg",
+      sourceLogo: "/src/assets/gatheru-logo-troll.png",
       message: "We Think you might like this club: INIT",
       time: "2/14/2025",
       isNew: false,

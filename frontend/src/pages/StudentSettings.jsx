@@ -153,23 +153,25 @@ function StudentSettings() {
                 </div>
                 {isModalOpen && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-                    -     <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-                            <h2 className="text-xl font-bold mb-4">Select an Avatar</h2>
+                        <div className="bg-[#F0EFEB] p-6 rounded-lg border-[4px] border-black max-w-md w-full">
+                            <h2 className="text-2xl font-bold text-black mb-4">Select an Avatar</h2>
                             <div className="grid grid-cols-3 gap-4">
                                 {[...Array(9)].map((_, index) => {
                                     const avatarName = `avatar${index + 1}.png`;
                                     return (
                                         <div
                                             key={avatarName}
-                                            className={`avatar-option border-2 rounded-lg cursor-pointer ${
-                                                selectedAvatar === avatarName ? "border-blue-500" : "border-gray-300"
+                                            className={`avatar-option border-2 p-1 rounded-lg cursor-pointer transition-all ${
+                                                selectedAvatar === avatarName
+                                                    ? "border-[#4D9FFD] bg-[#E6F4FF] shadow-[2px_2px_0px_#000000]"
+                                                    : "border-gray-300 hover:border-blue-500"
                                             }`}
                                             onClick={() => setSelectedAvatar(avatarName)}
                                         >
                                             <img
                                                 src={`http://localhost:9000/dev-bucket/${avatarName}`}
                                                 alt={`Avatar ${index + 1}`}
-                                                className="w-full h-full object-cover"
+                                                className="w-full h-full object-cover rounded-lg"
                                             />
                                         </div>
                                     );
@@ -177,7 +179,7 @@ function StudentSettings() {
                             </div>
                             <div className="flex justify-end mt-4">
                                 <button
-                                    className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                                    className="bg-[#4D9FFD] hover:bg-[#4287ff] text-white px-4 py-2 rounded-md border-2 border-black hover:shadow-[2px_2px_0px_#000000] mr-2 transition-all"
                                     onClick={() => {
                                         setIsModalOpen(false);
                                         setProfileImage(`http://localhost:9000/dev-bucket/${selectedAvatar}`);
@@ -186,7 +188,7 @@ function StudentSettings() {
                                     Save
                                 </button>
                                 <button
-                                    className="bg-gray-300 text-black px-4 py-2 rounded-md"
+                                    className="bg-[#FD4EB7] hover:bg-[#ff23a7] text-black px-4 py-2 rounded-md border-2 border-black hover:shadow-[2px_2px_0px_#000000] transition-all"
                                     onClick={() => setIsModalOpen(false)}
                                 >
                                     Cancel

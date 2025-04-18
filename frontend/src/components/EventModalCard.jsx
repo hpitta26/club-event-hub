@@ -44,7 +44,7 @@ function EventModalCard({
                 </p>
                 {/* Event Title */}
                 <p className="text-black text-sm font-bold leading-none">
-                    {truncate(title, 29)} 
+                    {truncate(title, 12)} 
                 </p>
                 {/* Event Host */}
                 <p className="text-black font-semibold text-xs">

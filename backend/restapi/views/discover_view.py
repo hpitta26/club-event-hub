@@ -89,7 +89,6 @@ def collaborative_filter(request):
             recommended_events = list(recommended_events)[::-1] + list(popular_events)
         else:
             recommended_events = list(recommended_events)
-        print(sorted_students)
         return Response(EventSerializer(list(recommended_events)[:10], many=True).data)
 
     except Student.DoesNotExist:

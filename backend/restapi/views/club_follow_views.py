@@ -1,3 +1,4 @@
+from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -76,8 +77,8 @@ def get_following_club_events(request):
     try:
         student = Student.objects.get(user=request.user)
         following_clubs = student.following_clubs.all()
-        events = Event.objects.filter(club__in=following_clubs)
-        events.order_by('-start_time')
+        now = timezone.now()
+        events = Event.objects.filter(club__in=following_clubs,start_time__gte=now).order_by('start_time')
 
         serialized_events = EventSerializer(events, many=True, context={'request': request, 'student_context_rsvps': True, 'attending': True}).data
         return Response(serialized_events, status=200)

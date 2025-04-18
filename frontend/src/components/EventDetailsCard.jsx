@@ -5,6 +5,9 @@ import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
 import backend from "./backend";
 import { useNavigate } from "react-router-dom";
+import dummyAvatar0 from "../assets/dummy-avatar0.png";
+import dummyAvatar1 from "../assets/dummy-avatar1.png";
+import dummyAvatar2 from "../assets/dummy-avatar2.png";
 
 function EventDetailsCard({
   event_id = 0,
@@ -162,15 +165,24 @@ function EventDetailsCard({
           <h2 className="font-medium text-base mb-3">Attendees</h2>
           <div className="flex justify-between items-center">
             <div className="flex items-center">
-              {[1, 2, 3].map((i) => (
-                  <img
-                      src={dummyInitLogo}
-                      alt={`Attendee ${i}`}
-                      key={i}
-                      className="w-10 h-10 rounded-full border-2 border-white -mr-2 object-cover"
-                      style={{zIndex: i}}
-                  />
-              ))}
+              <img
+                src={dummyAvatar0}
+                alt={`Attendee ${0}`}
+                className="w-10 h-10 rounded-full border-2 border-white -mr-2 object-cover"
+                style={{zIndex: 3}}
+              />
+              <img
+                src={dummyAvatar1}
+                alt={`Attendee ${1}`}
+                className="w-10 h-10 rounded-full border-2 border-white -mr-2 object-cover"
+                style={{zIndex: 2}}
+              />
+              <img
+                src={dummyAvatar2}
+                alt={`Attendee ${2}`}
+                className="w-10 h-10 rounded-full border-2 border-white -mr-2 object-cover"
+                style={{zIndex: 3}}
+              />
               <p className="text-sm text-gray-500 ml-3">{attendees} GOING</p>
             </div>
 

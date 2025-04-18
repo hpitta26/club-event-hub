@@ -31,13 +31,27 @@ const StudentNavbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const isActiveLink = (path) => location.pathname === path;
-  const showHamburgerIcon = ['/discover', '/following', '/leaderboard'].includes(location.pathname);
+  const showHamburgerIcon = ['/discover', '/following'].includes(location.pathname);
 
   const handleLinkClick = (link) => {
     setClickedLink(link);
     setTimeout(() => setClickedLink(null), 300);
     setMobileOpen(false);
   };
+
+  useEffect(() => {
+    const fetchSpiritPoints = async () => {
+      try {
+        const response = await backend.get('get-spirit-points/');
+        if (response.status === 200) {
+          setSpiritPoints(response.data.spirit_points);
+        }
+      } catch (error) {
+        console.error("Error fetching spirit points:", error);
+      }
+    };
+    fetchSpiritPoints(); 
+  }, []);
 
 
   const handleEventsClick = () => {

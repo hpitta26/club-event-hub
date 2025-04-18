@@ -54,7 +54,7 @@ def verify_session(request):
             
             if "CLUB" in request.session['role']:
                 session["banner"] = request.session['banner']
-                
+                session["club_slug"] = user.club_profile.slug
 
             return Response(
                 {"user": session},
@@ -176,6 +176,8 @@ def login_view(request):
         session_data = {"role": group_names, "profile_picture": user.profile_picture.url}
         if "CLUB" in group_names:
             session_data["banner"] = user.club_profile.club_banner.url
+            session_data["club_slug"] = user.club_profile.slug
+            request.session["club_slug"] = user.club_profile.slug
             request.session["banner"] = user.club_profile.club_banner.url
 
         return Response({"user": session_data}, status=200)

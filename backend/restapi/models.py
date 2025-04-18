@@ -16,6 +16,11 @@ from django.utils.text import slugify
 from .manager import CustomUserManager
 import uuid
 from django.contrib.auth.models import Permission, Group
+import random
+
+def get_random_avatar():
+    return f'default/avatars/avatar{random.randint(1, 8)}.png'
+
 
 class CustomUser(AbstractUser):
     username = None
@@ -27,6 +32,8 @@ class CustomUser(AbstractUser):
     verification_token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    profile_picture = models.FileField(upload_to='avatars/', default=get_random_avatar)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
@@ -37,10 +44,6 @@ class CustomUser(AbstractUser):
         return self.email
     
 
-def club_directory_path(instance, filename):
-    club_name_slug = slugify(instance.club_name)
-    return f'{club_name_slug}/{filename}'
-
 
 class Club(models.Model):
     user = models.OneToOneField(
@@ -49,17 +52,9 @@ class Club(models.Model):
 
     club_name = models.CharField(max_length=255, unique=True)    
 
-    club_picture = models.FileField(
-        upload_to=club_directory_path,
-        # default='images/default-banner.png' ,
-        blank=True, 
-        null=True
-    )
     club_banner = models.FileField(
-        upload_to=club_directory_path,
-        # default='images/default-banner.png',  
-        blank=True, 
-        null=True
+        upload_to='banners/',
+        default='default/banners/default-banner.png'
     )
     description = models.TextField(blank=True, null=True)  # possibly change to required --> depending on form in the frontend
     slug = models.SlugField(unique=True, blank=True)
@@ -110,7 +105,6 @@ class Student(models.Model):
     password_change_token = models.CharField(max_length=100, blank=True)
     password_change_pending = models.BooleanField(default=False)
     new_password_hash = models.CharField(max_length=128, blank=True)
-    profile_picture = models.URLField(max_length=500, blank=True, null=True) # Only supports selecting from preset dummy images
 
     availability = models.JSONField(blank=True, null=True)
 

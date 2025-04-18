@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import drf_views, auth_views, club_follow_views, discover_view,club_profile_views, image_views, schedule_views, import_luma_events, student_views, spirit_views
+from .views import drf_views, auth_views, club_follow_views, discover_view,club_profile_views, schedule_views, import_luma_events, student_views, spirit_views
 from django.views.decorators.http import require_http_methods
 
 from django.conf import settings
@@ -30,6 +30,7 @@ urlpatterns = [
     path('get-week-events/', discover_view.get_events_this_week, name='get-week-events'),
     path('rsvp/', discover_view.rsvp, name='rsvp'),
     path('get-student-events/', student_views.get_student_events, name='get_student_events'),
+    path('list-avatars', student_views.list_avatars, name='list-avatars'),
     path('filter-events/<str:filter>/', discover_view.filter_events, name='filter-events'),
     path('collaborative-filter/', discover_view.collaborative_filter, name='collaborative-filter'),
     path('get-new-clubs/',discover_view.get_new_clubs, name='get-new-clubs'),
@@ -38,12 +39,8 @@ urlpatterns = [
     path('get-club-events/<int:pk>/', club_profile_views.get_club_events, name='get-club-events'),
     path('get-weekly-club-events/<int:pk>/', club_profile_views.get_weekly_club_events, name='get-weekly-club-events'),
 
-    path('student-profile-image/', image_views.StudentProfileImageView.as_view(), name='student-profile-image'),
-
     path('all-student-schedules/', schedule_views.get_all_student_availabilities, name='all-student-schedules'),
     path('student-schedule/', schedule_views.StudentAvailabilityView.as_view(), name='student-schedule'),
-    path('club-profile-image/', image_views.ClubProfileImageView.as_view(), name='club-profile-image'),
-    path('club-banner-image/', image_views.ClubProfileBannerView.as_view(), name='club-banner-image'),
 
     path('get-week-events/', discover_view.get_events_this_week, name='get-week-events'),
 

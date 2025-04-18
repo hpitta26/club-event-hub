@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import gatherULogo from '../../assets/icons/GatherUIcon.png';
 import { GoBell } from "react-icons/go";
 import { HiMiniBars3 } from "react-icons/hi2";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import EventModal from '../EventModal';
 import { useSidebar } from '../../context/SidebarContext';
 import backend from '../backend';
 import NotificationDropDown from '../NotificationDropDown';
 import { LuAward } from "react-icons/lu";
+import { UserContext } from '../../context/UserContext';
 
 const StudentNavbar = () => {
-  const [profileImage, setProfileImage] = useState(null);
   const [spiritPoints, setSpiritPoints] = useState(0);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [events, setEvents] = useState([]);
@@ -18,7 +18,7 @@ const StudentNavbar = () => {
   const { toggleSidebar } = useSidebar(); 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [clickedLink, setClickedLink] = useState(null);
-
+  const { userContext } = useContext(UserContext);
   const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const profileDropdownRef = useRef(null);
   const notificationsRef = useRef(null); 
@@ -79,21 +79,6 @@ const StudentNavbar = () => {
   const handleLogout = () => {
     navigate("/logout");
   };
-
-  // Fetch the profile image URL when the component mounts
-  useEffect(() => {
-    const fetchProfileImage = async () => {
-      try {
-        const response = await backend.get('student-profile-image/');
-        setProfileImage(response.data.image_url);
-        const response2 = await backend.get('get-spirit-points/');
-        setSpiritPoints(response2.data.spirit_points);
-      } catch (error) {
-        console.error("Error fetching profile image:", error);
-      }
-    };
-    fetchProfileImage();
-  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -197,7 +182,7 @@ const StudentNavbar = () => {
 
                 {/* Profile Icon */}
                 <div className="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] bg-white border border-black sm:border-[1.5px] rounded-full overflow-hidden cursor-pointer" onClick={toggleProfileDropdown}>
-                  <img src={profileImage || "something"} alt="Profile" className="w-full h-full object-cover"/>
+                  <img src={userContext.profile_picture || "something"} alt="Profile" className="w-full h-full object-cover"/>
                   {isProfileDropdownOpen && (
                     <div ref={profileDropdownRef} className="absolute right-5 mt-1 py-2 w-48 bg-white border-[1.5px] border-black shadow-[2px_2px_0px_#000000] rounded-md">
                       <Link to="/student-profile" className="block px-4 py-2 text-sm text-black hover:bg-gray-100">

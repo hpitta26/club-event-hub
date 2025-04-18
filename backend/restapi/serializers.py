@@ -11,124 +11,140 @@ from restapi.models import Club, Student, Event, CustomUser
 
 
 class UserSerializer(serializers.ModelSerializer):
-   class Meta:
-       model = CustomUser
-       fields = [ # Include the user fields you want to expose
-           'email', 'password'
-       ]
-       extra_kwargs = {
-           'password': {'write_only': True},  # Do not return password in responses
-       }
+    class Meta:
+        model = CustomUser
+        fields = [ # Include the user fields you want to expose
+            'email', 'password', 'profile_picture'
+        ]
+        extra_kwargs = {
+            'password': {'write_only': True},  # Do not return password in responses
+        }
 
 
-   def create(self, validated_data): # override create with hashed password
-       password = validated_data.pop('password')
-       user = CustomUser(**validated_data)
-       user.set_password(password)
-       user.save()
-       return user
+    def create(self, validated_data): # override create with hashed password
+        password = validated_data.pop('password')
+        user = CustomUser(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user
 
+    def update(self, instance, validated_data):
+        self.changed_fields = {}
 
-   def update(self, instance, validated_data):
-       instance.email = validated_data.get('email', instance.email)
-       password = validated_data.get('password', None) # hash new password if user wants to update it
-       if password:
-           instance.set_password(password)
-       instance.save()
-       return instance
+        password = validated_data.pop('password', None)
+        if password:
+            instance.set_password(password)
+            self.changed_fields['password'] = '********'  # or skip if sensitive
+
+        for field in validated_data:
+            new_value = validated_data[field]
+            old_value = getattr(instance, field)
+            if new_value != old_value:
+                setattr(instance, field, new_value)
+                self.changed_fields[field] = new_value
+
+        instance.save()
+        return instance
+
 
 
 class ClubSerializer(serializers.ModelSerializer):
-   # Fields not serialized: followers, events
-   user = UserSerializer()
-   followers_count = serializers.SerializerMethodField()
-   events_count = serializers.SerializerMethodField()
-   class Meta:
-       model = Club
-       # added profile picture and banner fields
-       fields = [ # expose fields that will be sent in API calls
-           'user_id', 'slug', 'user', 'club_name', 'description', 'social_media_handles', 'spirit_rating', 'followers_count', 'events_count', 
-           'club_picture',
-           'club_banner'
-       ]
+    user = UserSerializer()
+    followers_count = serializers.SerializerMethodField()
+    events_count = serializers.SerializerMethodField()
 
-   def get_followers_count(self, obj): # Return the number of students following this club
-       return obj.followers.count()
-  
-   def get_events_count(self, obj): # Return the number of events hosted by this club
-       return obj.events.count()
+    class Meta:
+        model = Club
+        fields = [
+            'user_id', 'slug', 'user', 'club_name', 'description',
+            'social_media_handles', 'spirit_rating',
+            'followers_count', 'events_count', 'club_banner'
+        ]
 
+    def get_followers_count(self, obj):
+        return obj.followers.count()
 
-   def create(self, validated_data):
-       user_data = validated_data.pop('user') # get nested user data
-       user_serializer = UserSerializer(data=user_data) # create the user using the UserSerializer
-       user_serializer.is_valid(raise_exception=True)
-       user = user_serializer.save()       
-       club = Club.objects.create(user=user, **validated_data)
-       return club
+    def get_events_count(self, obj):
+        return obj.events.count()
 
+    def create(self, validated_data):
+        user_data = validated_data.pop('user')
+        user_serializer = UserSerializer(data=user_data)
+        user_serializer.is_valid(raise_exception=True)
+        user = user_serializer.save()
+        club = Club.objects.create(user=user, **validated_data)
+        return club
 
-   def update(self, instance, validated_data): # self->serializer, instance->(model instance you are updating), validated_data->(data from the frontend)
-       # Update nested user data if provided
-       user_data = validated_data.pop('user', None)
-       if user_data:
-           user_serializer = UserSerializer(instance=instance.user, data=user_data, partial=True)
-           user_serializer.is_valid(raise_exception=True)   
-           user_serializer.save()
-       # Update club-specific fields
-       
-        #Addded that 
+    def update(self, instance, validated_data):
+        self.changed_fields = {}
 
-       instance.club_name = validated_data.get('club_name', instance.club_name)
-       instance.description = validated_data.get('description', instance.description)
-       instance.social_media_handles = validated_data.get('social_media_handles', instance.social_media_handles)
-       instance.spirit_rating = validated_data.get('spirit_rating', instance.spirit_rating)
+        # Handle nested user data if present
+        user_data = validated_data.pop('user', None)
+        if user_data:
+            user_serializer = UserSerializer(instance=instance.user, data=user_data, partial=True)
+            user_serializer.is_valid(raise_exception=True)
+            user_serializer.save()
+            self.changed_fields['user'] = user_serializer.changed_fields if hasattr(user_serializer, 'changed_fields') else True
 
-       # added these instances for pfp and profile banner
-       instance.profile_picture = validated_data.get('club_picture', None)
-       instance.profile_banner = validated_data.get('club_banner', None)
+        fields_to_check = [
+            'club_name', 'description', 'social_media_handles',
+            'spirit_rating', 'club_banner'
+        ]
 
-       print(self.context['request'].FILES) 
-       print("Received data:", validated_data)
+        for field in fields_to_check:
+            if field in validated_data:
+                new_value = validated_data[field]
+                old_value = getattr(instance, field)
+                if new_value != old_value:
+                    setattr(instance, field, new_value)
+                    self.changed_fields[field] = new_value
 
+        instance.save()
+        return instance
 
-       instance.save() # saves updated instance to the DB
-       return instance
 
 
 
 class StudentSerializer(serializers.ModelSerializer):
-   # Fields not serialized: rsvp_events
-   user = UserSerializer()
-   class Meta:
-       model = Student
-       fields = [
-           'user_id', 'user', 'major', 'graduation_year', 'spirit_points', 'first_name', 'last_name'
-       ]
+    # Fields not serialized: rsvp_events
+    user = UserSerializer()
+    class Meta:
+        model = Student
+        fields = [
+            'user_id', 'user', 'major', 'graduation_year', 'spirit_points', 'first_name', 'last_name'
+        ]
   
-   def create(self, validated_data):
-       user_data = validated_data.pop('user') # get nested user data
-       user_serializer = UserSerializer(data=user_data) # create the user using the UserSerializer
-       user_serializer.is_valid(raise_exception=True)
-       user = user_serializer.save()
-       student = Student.objects.create(user=user, **validated_data)
-       return student
+    def create(self, validated_data):
+        user_data = validated_data.pop('user') # get nested user data
+        user_serializer = UserSerializer(data=user_data) # create the user using the UserSerializer
+        user_serializer.is_valid(raise_exception=True)
+        user = user_serializer.save()
+        student = Student.objects.create(user=user, **validated_data)
+        return student
   
-   def update(self, instance, validated_data):
-       # Update nested user data if provided
-       user_data = validated_data.pop('user', None)
-       if user_data:
-           user_serializer = UserSerializer(instance=instance.user, data=user_data, partial=True)
-           user_serializer.is_valid(raise_exception=True)
-           user_serializer.save()
-       # Update student-specific fields
-       instance.first_name = validated_data.get('first_name', instance.first_name)
-       instance.last_name = validated_data.get('last_name', instance.last_name)
-       instance.major = validated_data.get('major', instance.major)
-       instance.graduation_year = validated_data.get('graduation_year', instance.graduation_year)
-       instance.spirit_points = validated_data.get('spirit_points', instance.spirit_points)
-       instance.save()
-       return instance
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user', None)
+        if user_data:
+            user_serializer = UserSerializer(instance=instance.user, data=user_data, partial=True)
+            user_serializer.is_valid(raise_exception=True)
+            user_serializer.save()
+            
+        fields_to_check = [
+            'first_name', 'last_name',
+            'major', 'graduation_year'
+        ]
+
+        for field in fields_to_check:
+            if field in validated_data:
+                new_value = validated_data[field]
+                old_value = getattr(instance, field)
+                if new_value != old_value:
+                    setattr(instance, field, new_value)
+                    self.changed_fields[field] = new_value
+
+        instance.save()
+        return instance
+
 
 
 

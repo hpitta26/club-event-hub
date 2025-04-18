@@ -7,12 +7,18 @@ from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 
 from ..models import Event, Student, Club
-from ..serializers import EventSerializer, StudentSerializer, ClubSerializer
+from ..serializers import EventSerializer, StudentSerializer, ClubSerializer, UserSerializer
 from restapi.permissions import ClubPermission, Admin, StudentPermission
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
+
+import os
+from django.core.files.base import ContentFile
+from storages.backends.s3boto3 import S3Boto3Storage
+import boto3
+import re
 
 # List all events or create a new event
 class EventListCreateView(generics.ListCreateAPIView):
@@ -68,6 +74,42 @@ class ClubDetailView(generics.RetrieveUpdateDestroyAPIView):
             raise Exception("No Club ID found in session")
         return get_object_or_404(Club,user_id=club_id)
 
+    def get(self, request, *args, **kwargs):
+        club = Club.objects.get(user=request.user)
+
+        data = {
+            "club_name": club.club_name,
+            "description": club.description,
+            "club_banner_url": club.club_banner.url if club.club_banner else None,
+            "profile_picture_url": request.user.profile_picture.url if request.user.profile_picture else None,
+            "email": request.user.email,
+            "social_media_handles": club.social_media_handles,
+        }
+        return Response(data, status=status.HTTP_200_OK)
+
+    def patch(self, request, *args, **kwargs):
+        data = {k: v for k, v in request.data.items() if v not in [None, "", [], {}, '']}
+        print("Filtered patch data:", data)
+
+        user = request.user
+        club = Club.objects.get(user=user)
+
+        user_serializer = UserSerializer(instance=user, data=data, partial=True)
+        user_serializer.is_valid(raise_exception=True)
+        user_serializer.save()
+
+        club_serializer = ClubSerializer(instance=club, data=data, partial=True)
+        club_serializer.is_valid(raise_exception=True)
+        club_serializer.save()
+        
+        print(club_serializer.data)
+        print(user_serializer.data)
+
+        request.session["profile_picture"] = user_serializer.data.get("profile_picture")
+        request.session["banner"] = club_serializer.data.get("club_banner")
+
+        return Response({**user_serializer.data, **club_serializer.data}, status=status.HTTP_200_OK)
+
 #Retrieve, update, or delete a single club through Slug instead of PK
 class ClubDetailBySlugView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Club.objects.all()
@@ -86,3 +128,39 @@ class StudentDetailView(generics.RetrieveUpdateDestroyAPIView):
             raise Exception("No student ID found in session.")
 
         return get_object_or_404(Student, user_id=student_id)
+
+    def patch(self, request, *args, **kwargs):
+        data = {k: v for k, v in request.data.items() if v not in [None, "", [], {}, '']}
+
+        user = request.user
+        student = Student.objects.get(user=user)
+
+        profile_url = data.pop("profile_picture_url", None)
+        if profile_url:
+            match = re.search(r'/dev-bucket/(.*)', profile_url)
+            if match:
+                s3_key = match.group(1)
+                storage = S3Boto3Storage()
+                s3 = storage.connection.meta.client
+                bucket = storage.bucket_name
+
+                response = s3.get_object(Bucket=bucket, Key=s3_key)
+                file_data = response['Body'].read()
+                filename = os.path.basename(s3_key)
+                data['profile_picture'] = ContentFile(file_data, name=filename)
+        print("Filtered patch data:", data)
+
+        user_serializer = UserSerializer(instance=user, data=data, partial=True)
+        user_serializer.is_valid(raise_exception=True)
+        user_serializer.save()
+
+        student_serializer = StudentSerializer(instance=student, data=data, partial=True)
+        student_serializer.is_valid(raise_exception=True)
+        student_serializer.save()
+
+        request.session["profile_picture"] = user_serializer.data.get("profile_picture")
+
+        print(student_serializer.data)
+        print(user_serializer.data)
+
+        return Response({**user_serializer.data, **student_serializer.data}, status=status.HTTP_200_OK)

@@ -34,11 +34,11 @@ function App() {
       <Router>
         <NavbarSelector /> 
         <Routes>
-          <Route path="/" element={<Landing />} />
           <Route path="/discover" element={<Discover />} />
           <Route path="/club/:clubSlug" element={<ClubProfile />} />
           {/* Protected --> makes sure users that are logged in can't visit register page */}
           <Route element={<EnsureLoggedIn expRole="NotLoggedIn" />}>
+            <Route path="/" element={<Landing />} />
             <Route path="/student-register" element={<StudentSignup />} /> {/* Student Signup */}
             <Route path="/club-register" element={<ClubSignup />} />
             <Route path="/login" element={<Login />} />

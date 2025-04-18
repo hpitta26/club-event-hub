@@ -1,42 +1,26 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import gatherULogo from '../../assets/icons/GatherUIcon.png';
 import { useNavigate, Link, useLocation } from "react-router-dom";
+import { UserContext } from '../../context/UserContext';
 
 const ClubNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [clickedLink, setClickedLink] = useState(null);
   const [eventsClicked, setEventsClicked] = useState(false);
   const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false);
-  const [profileImage, setProfileImage] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
   const isActiveLink = (path) => location.pathname === path;
+  const { userContext } = useContext(UserContext);
 
-  const notificationsRef = useRef(null);
   const profileDropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
   const burgerButtonRef = useRef(null);
 
   useEffect(() => {
-    const fetchProfileImage = async () => {
-      try {
-        const response = await fetch('/api/profile-image');
-        const data = await response.json();
-        setProfileImage(data.image_url);
-      } catch (error) {
-        console.error("Error fetching profile image:", error);
-      }
-    };
-    fetchProfileImage();
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
+      const handleClickOutside = (event) => {
       if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
         setProfileDropdownOpen(false);
-      }
-      if (notificationsRef.current && !notificationsRef.current.contains(event.target)) {
-        setIsNotificationsOpen(false);
       }
       // Close mobile menu when clicking outside
       if (
@@ -69,7 +53,6 @@ const ClubNavbar = () => {
 
   const toggleProfileDropdown = () => {
     setProfileDropdownOpen((prev) => !prev);
-    setIsNotificationsOpen(false);
   };
 
   const handleLogout = () => {
@@ -112,7 +95,7 @@ const ClubNavbar = () => {
                 className="w-[50px] h-[50px] bg-white border-[1.5px] border-black rounded-full overflow-hidden cursor-pointer"
                 onClick={toggleProfileDropdown}
               >
-                <img src={profileImage || "something"} alt="Profile" className="w-full h-full object-cover" />
+                <img src={userContext.profile_picture || "something"} alt="Profile" className="w-full h-full object-cover" />
               </div>
               {isProfileDropdownOpen && (
                 <div

@@ -92,7 +92,7 @@ function ClubHeatmap({ onTimeRangeSelect }) {
     const maxIntensity = Math.max(1, maxStudents); 
     const intensity = count / maxIntensity;
     
-    if (intensity === 0) return "bg-gray-50";
+    if (intensity === 0) return "bg-pink-50";
     if (intensity < 0.25) return "bg-pink-100";
     if (intensity < 0.5) return "bg-pink-200";
     if (intensity < 0.75) return "bg-pink-300";

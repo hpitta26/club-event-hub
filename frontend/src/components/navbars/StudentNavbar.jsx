@@ -95,6 +95,11 @@ const StudentNavbar = () => {
   };
 
   useEffect(() => {
+    const fetchSpiritPoints = async () => {
+        const response = await backend.get('get-spirit-points/');
+        setSpiritPoints(response.data.spirit_points);
+    };
+    fetchSpiritPoints();
     const handleClickOutside = (event) => {
       if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
         closeProfileDropdown();

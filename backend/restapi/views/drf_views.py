@@ -83,7 +83,7 @@ class ClubDetailView(generics.RetrieveUpdateDestroyAPIView):
             "club_banner_url": club.club_banner.url if club.club_banner else None,
             "profile_picture_url": request.user.profile_picture.url if request.user.profile_picture else None,
             "email": request.user.email,
-            "social_media_handles": club.social_media_handles,
+            "social_media_handles": club.social_media_handles if club.social_media_handles else "{\"twitter\": \"\", \"instagram\": \"\", \"linkedIn\": \"\"}",
         }
         return Response(data, status=status.HTTP_200_OK)
 

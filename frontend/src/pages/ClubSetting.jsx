@@ -189,7 +189,7 @@ function ClubSetting() {
                 name="twitter"
                 onChange={handleLinkChange}
                 className=" text-black bg-[#D9D2D6]  p-2 placeholder-gray-600 rounded-md border-[1.5px] border-black pl-1 "
-                value={formData.social_media_handles.twitter}
+                value={formData.social_media_handles?.twitter || ""}
               ></input>
             </div>
             <div className="flex flex-col mt-3">
@@ -198,7 +198,7 @@ function ClubSetting() {
                 name="instagram"
                 onChange={handleLinkChange}
                 className="text-black bg-[#D9D2D6]  p-2 placeholder-gray-600 rounded-md border-[1.5px] border-black pl-1"
-                value={formData.social_media_handles.instagram}
+                value={formData.social_media_handles?.instagram || ""}
               ></input>
             </div>
             <div className="flex flex-col mt-3">
@@ -207,7 +207,7 @@ function ClubSetting() {
                 name="linkedIn"
                 onChange={handleLinkChange}
                 className="text-black bg-[#D9D2D6]  p-2 placeholder-gray-600 rounded-md border-[1.5px] border-black pl-1"
-                value={formData.social_media_handles.linkedIn}
+                value={formData.social_media_handles?.linkedIn || ""}
               ></input>
             </div>
           </div>

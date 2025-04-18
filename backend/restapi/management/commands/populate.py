@@ -82,7 +82,7 @@ class Command(BaseCommand):
             {
                 "email": "club1@example.com",
                 "club_name": "Chess Club",
-                "password": "password",
+                "password": "password1234567",
                 "description": "We love playing and studying chess.",
                 "social_media_handles": {"twitter": "@chessclub1", "instagram": "@chessclub1"}
             },
@@ -247,7 +247,7 @@ class Command(BaseCommand):
                 "email": "student1@fiu.edu",
                 "first_name": "Jane",
                 "last_name": "Smith",
-                "password": "password",
+                "password": "password1234567",
                 "major": "Computer Science",
                 "graduation_year": 2027,
                 "following_clubs": ["club2@example.com", "club3@example.com"],

@@ -25,7 +25,7 @@ function EventListCard({
     <div className="border shadow-[3px_3px_0_#000] hover:shadow-[4px_4px_0_#000] transition-all duration-300 bg-white rounded-[12px] border-black flex max-w-[600px] w-full transform hover:-translate-y-1">
       <div className="w-[130px] min-w-[130px]">
         <img
-          src={image}
+          src={image || dummyEventCardCover}
           alt={title}
           className="w-full h-full object-cover border-r-2 border-black rounded-l-[12px]"
         />

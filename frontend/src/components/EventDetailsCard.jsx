@@ -6,9 +6,9 @@ import dummyInitLogo from "../assets/dummyInitLogo.png";
 import backend from "./backend";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
-import dummyAvatar0 from "../assets/dummyAvatar0.png";
-import dummyAvatar1 from "../assets/dummyAvatar1.png";
-import dummyAvatar2 from "../assets/dummyAvatar2.png";
+import dummyAvatar0 from "../assets/dummy-avatar0.png";
+import dummyAvatar1 from "../assets/dummy-avatar1.png";
+import dummyAvatar2 from "../assets/dummy-avatar2.png";
 
 function EventDetailsCard({
   event_id = 0,

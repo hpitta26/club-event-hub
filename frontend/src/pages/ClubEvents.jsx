@@ -159,7 +159,7 @@ function ClubEvents() {
                       location={event.location}
                       attendees={event.attendees_count}
                       capacity={event.capacity}
-                      coverImage={event.cover_image}
+                      image={event.profilebanner}
                       hostLogo={event.host_logo}
                     />
                   ))}

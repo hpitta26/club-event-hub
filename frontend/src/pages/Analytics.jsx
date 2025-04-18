@@ -341,16 +341,16 @@ function Analytics() {
 
   return (
     <ThemeProvider theme={lightTheme}>
-      <Box className="pt-24 pb-20" sx={{ minHeight: '100vh'}}>
+      <Box className="pt-28 pb-20" sx={{ minHeight: '100vh'}}>
         <Container maxWidth="xl">
           <Typography 
             variant="h4" 
             component="h1" 
             align="center" 
             gutterBottom
-            sx={{ color: 'text.primary' }}
+            sx={{ color: 'black' }}
           >
-            Club Analytics Dashboard
+            Analytics Dashboard
           </Typography>
           <Typography 
             variant="subtitle1" 

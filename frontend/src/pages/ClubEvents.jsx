@@ -82,29 +82,38 @@ function ClubEvents() {
   }, {});
 
   return (
-    <div className="min-h-screen pt-20 flex flex-col items-center">
+    <div className="min-h-screen pt-20 flex flex-col items-center pb-20">
       <div className="w-[60%] max-w-5xl relative mb-6 mt-6">
         <h1 className="text-4xl font-bold text-center">Events</h1>
 
-        {/* Filter Buttons */}
-        <div className="absolute top-0 right-0 flex space-x-2 bg-white rounded-full shadow-md p-1">
-          <button
-            className={`px-4 py-2 text-sm font-semibold rounded-full ${
-              filter === "upcoming" ? "bg-gray-900 text-white" : "text-gray-600"
-            }`}
-            onClick={() => setFilter("upcoming")}
-          >
-            Upcoming
-          </button>
-          <button
-            className={`px-4 py-2 text-sm font-semibold rounded-full ${
-              filter === "past" ? "bg-gray-900 text-white" : "text-gray-600"
-            }`}
-            onClick={() => setFilter("past")}
-          >
-            Past
-          </button>
+        {/* Upcoming/past Toggle */}
+        <div className="absolute top-0 right-0 flex items-center justify-center bg-[#F0EFEB] rounded-md p-[3px] border border-black shadow-[2px_2px_0px_#000000]">
+          <div className="relative flex text-center rounded-md w-44 font-semibold text-sm">
+            <div
+              className={`absolute top-0 left-0 h-full w-1/2 bg-[#4D9FFD] rounded-md transition-transform duration-200`}
+              style={{
+                transform: filter === "upcoming" ? "translateX(0%)" : "translateX(100%)",
+              }}
+            ></div>
+            <button
+              onClick={() => setFilter("upcoming")}
+              className={`w-1/2 py-2 rounded-md z-10 ${
+                filter === "upcoming" ? "text-black font-bold" : "text-gray-600"
+              }`}
+            >
+              Upcoming
+            </button>
+            <button
+              onClick={() => setFilter("past")}
+              className={`w-1/2 py-2 rounded-md z-10 ${
+                filter === "past" ? "text-black font-bold" : "text-gray-600"
+              }`}
+            >
+              Past
+            </button>
+          </div>
         </div>
+        
 
         {/* Import Events */}
         <div className="mt-6">
@@ -126,7 +135,7 @@ function ClubEvents() {
       {loading ? (
         <p className="text-center">Loading events...</p>
       ) : filteredEvents.length > 0 ? (
-        <div className="w-[60%] max-w-5xl flex">
+        <div className="w-[40%] max-w-5xl flex">
           {/* Timeline */}
           <div className="relative w-10 flex flex-col items-center">
             <div className="absolute top-0 bottom-0 w-1 bg-gray-300 rounded-full"></div>

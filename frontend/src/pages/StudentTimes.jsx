@@ -139,7 +139,11 @@ function StudentTimes() {
             onMouseUp={handleMouseUp} 
         >
             <div className="w-full space-y-5 p-6 max-w-[1200px] -ml-8">
-                <h1 className="text-3xl text-black font-bold text-center mb-6">Your Availability</h1>
+                <div className="flex flex-col items-center mb-4">
+                    <h1 className="text-3xl text-black font-bold text-center mb-1">Your Availability</h1>
+                    <span className="text-sm text-[#666666]">Fill out your weekly availability to help clubs plan around you!</span>
+                </div>
+                
                 <div className="overflow-x-auto">
                     <div className="grid grid-cols-[100px_repeat(5,_1fr)] gap-1">
                         {/* Time Labels */}

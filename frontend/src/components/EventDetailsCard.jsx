@@ -86,7 +86,7 @@ function EventDetailsCard({
 
         {/* Event Image */}
         <img
-            src={image}
+            src={image || dummyEventCardCover}
             alt={title}
             className="rounded-lg w-full h-64 object-cover border-black border-2"
         />

@@ -10,7 +10,7 @@ function EventModalCard({
   title = "Untitled Event", 
   date = "TBD", 
   host = "Unknown Host", 
-  profilebanner = "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=400&h=250",
+  profilebanner = "",
   upcoming = false,
 }) {
 
@@ -35,7 +35,7 @@ function EventModalCard({
                     :
                     <></>
                 }
-                <img src={profilebanner} alt="Event" className="w-full h-full object-cover" /> {/* Event Image */}
+                <img src={profilebanner || dummyEventCardCover} alt="Event" className="w-full h-full object-cover" /> {/* Event Image */}
             </div>
             <div className="ml-1 flex flex-col gap-3 justify-center">
                 {/* Event Date */}

@@ -3,6 +3,8 @@ import backend from "../components/backend";
 
 function StudentProfile() {
   const [name, setName] = useState(""); 
+  const [gradYear, setGradYear] = useState("");
+  const [major, setMajor] = useState("");
   const [profileImage, setProfileImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -13,6 +15,9 @@ function StudentProfile() {
         setLoading(true);
         const response = await backend.get("students/");
         setName(response.data.first_name + " " + response.data.last_name);
+        setGradYear(response.data.graduation_year);
+        setMajor(response.data.major);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching user data: ", error);
       } finally {
@@ -66,7 +71,7 @@ function StudentProfile() {
 
   return (
     <div className="flex flex-col max-w-5xl mx-auto pt-40 p-3 ">
-      <div className="w-24 h-24 rounded-full overflow-hidden mb-2 sm:mb-6 border-2 border-black">
+      <div className="w-24 h-24 rounded-full overflow-hidden mb-2 sm:mb-4 border-2 border-black">
         <img
           src={profileImage || "something"}
           alt="Profile Picture"
@@ -75,12 +80,14 @@ function StudentProfile() {
       </div>
 
       {/* full name */}
-      <h1 className="text-4xl font-bold mb-2">{name}</h1>
-
+      <h1 className="text-4xl font-bold mb-1">{name}</h1>
+      {/* graduation year */}
+      <p className="text-gray-800 mb-2 sm:mb-4 text-xs sm:text-lg">
+        {gradYear} | {major} @ FIU
+      </p>
       {/* description */}
       <p className="text-gray-800 mb-4 sm:mb-7 text-xs sm:text-lg">
-        A group does just collaborating to build a startup or collaborate on
-        one.
+        Your bio goes here!
       </p>
 
       {/* grid */}

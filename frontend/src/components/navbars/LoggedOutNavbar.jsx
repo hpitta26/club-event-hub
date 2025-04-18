@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import gatherULogo from '../../assets/icons/GatherUIcon.png';
 import { useNavigate } from 'react-router-dom';
 import StudentOrClubModal from '../StudentOrClubModal';
+import { Link, useLocation } from 'react-router-dom';
 
 const LoggedOutNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -47,32 +48,32 @@ const LoggedOutNavbar = () => {
       <div className="relative flex items-center h-full px-4 md:px-8">
         {/* Left section */}
         <div className="flex-1 flex items-center">
-          <a className="flex items-center" href="/">
+          <Link className="flex items-center" to="/">
             <img src={gatherULogo} alt="GatherU Logo" className="h-14 w-auto" />
-          </a>
+          </Link>
         </div>
 
         {/* Center section */}
         <div className="absolute left-0 right-0 flex justify-center items-center h-full pointer-events-none">
-          <a
-            href="/discover"
+          <Link
+            to="/discover"
             className="font-normal text-black text-lg tracking-wide hover:text-pink-500 pointer-events-auto"
           >
             Discover
-          </a>
+          </Link>
         </div>
 
         {/* Right section */}
         <div className="flex-1 flex items-center justify-end space-x-2 sm:space-x-3 md:space-x-4">
           <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4">
             <button
-              className="hidden md:block bg-[#FD4EB7] text-black font-normal text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:bg-pink-400"
+              className="hidden md:block bg-[#FD4EB7] shadow-[2px_2px_0_#000] text-black font-normal text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:hover:bg-[#ff23a7] hover:shadow-[3px_3px_0_#000] transition-all duration-300"
               onClick={handleSignupClick}
             >
               Sign up
             </button>
             <button
-              className="hidden md:block bg-[#4D9FFD] text-black font-normal text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:bg-blue-400"
+              className="hidden md:block bg-[#4D9FFD] shadow-[2px_2px_0_#000] text-black font-normal text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:bg-[#4287ff] hover:shadow-[3px_3px_0_#000] transition-all duration-300"
               onClick={handleLoginClick}
             >
               Log in
@@ -97,13 +98,13 @@ const LoggedOutNavbar = () => {
         <div className="absolute top-20 mt-1 right-4 w-48 bg-[#] p-3 border-[1.5px] border-black shadow-[2px_2px_0px_#000000] rounded-md bg-white">
           <div className="flex flex-col space-y-2">
             <button
-              className="bg-[#FD4EB7] text-black font-normal text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:bg-pink-400"
+              className="bg-[#FD4EB7] text-black font-normal text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:bg-[#ff23a7]"
               onClick={handleSignupClick}
             >
               Sign up
             </button>
             <button
-              className="bg-[#4D9FFD] text-black font-normal text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:bg-blue-400"
+              className="bg-[#4D9FFD] text-black font-normal text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:bg-[#4287ff]"
               onClick={handleLoginClick}
             >
               Log in

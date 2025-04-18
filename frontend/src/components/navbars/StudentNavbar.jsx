@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import gatherULogo from '../../assets/icons/GatherUIcon.png';
 import { GoBell } from "react-icons/go";
 import { HiMiniBars3 } from "react-icons/hi2";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import EventModal from '../EventModal';
 import { useSidebar } from '../../context/SidebarContext';
 import backend from '../backend';
@@ -141,35 +141,35 @@ const StudentNavbar = () => {
                 {/* Left: Hamburger Icon, Logo, and Links */}
                 <div className="flex items-center space-x-8">
               <HiMiniBars3 className="md:block hidden text-black w-8 h-8 cursor-pointer" onClick={toggleSidebar} />
-                <a href="/discover" className="flex items-center">
+                <Link to="/discover" className="flex items-center">
                   <img src={gatherULogo} alt="GatherU Logo" className="h-14 w-auto" />
-                </a>
+                </Link>
             </div>
             <div className=" absolute left-1/2 transform -translate-x-1/2 flex space-x-16">
-              <a href="/discover" className={`md:block hidden font-normal text-black text-lg tracking-wide hover:text-pink-500`}>
+              <Link to="/discover" className={`md:block hidden font-normal text-black text-lg tracking-wide hover:text-pink-500`}>
                   Discover
-              </a>
-              <a href="/following" className={`md:block hidden font-normal text-black text-lg tracking-wide hover:text-blue-500`}>
+              </Link>
+              <Link to="/following" className={`md:block hidden font-normal text-black text-lg tracking-wide hover:text-blue-500`}>
                   Following 
-              </a>
-              <a href="/leaderboard" className={`md:block hidden font-normal text-black text-lg tracking-wide hover:text-pink-500`}>
+              </Link>
+              <Link to="/leaderboard" className={`md:block hidden font-normal text-black text-lg tracking-wide hover:text-pink-500`}>
                   Leaderboard
-              </a>
+              </Link>
                 </div>
                 
                 {/* Right: Events, Notifications, and Profile */}
                 <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4">
-                  <div className='bg-[#FDD74D] hover:bg-yellow-400 text-black p-1 sm:p-2 rounded-md border border-black sm:border-[1.5px] shadow-[2px_2px_0px_#000000] hover:shadow-[3px_3px_0px_#000000] transition-all flex flex-row'>
+                  <div className='bg-[#FDD74D] hover:bg-yellow-400 text-black p-1 sm:p-2 rounded-md border border-black sm:border-[1.5px] hover:shadow-[2px_2px_0px_#000000] transition-all flex flex-row'>
                     <LuAward className="w-5 h-5" /> <span className='ml-1 -mt-[2px]'>{spiritPoints}</span>
                   </div>
                   {/* Events Button */}
-                  <button className="bg-[#FD4EB7] hover:bg-[#ff23a7] text-white font-normal text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 rounded-md border border-black sm:border-[1.5px] shadow-[2px_2px_0px_#000000] hover:shadow-[3px_3px_0_#000] transition-all" onClick={handleEventsClick}>
+                  <button className="bg-[#FD4EB7] hover:bg-[#ff23a7] text-white font-normal text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 rounded-md border border-black sm:border-[1.5px] hover:shadow-[2px_2px_0_#000] transition-all" onClick={handleEventsClick}>
                     Your Events
                   </button>
                   {/* Notifications */}
                   <div className="relative" ref={notificationsRef}>
                     <button 
-                      className="bg-[#4D9FFD] hover:bg-[#4287ff] text-black p-1 sm:p-2 rounded-md border border-black sm:border-[1.5px] shadow-[2px_2px_0px_#000000] hover:shadow-[3px_3px_0px_#000000]  transition-all"
+                      className="bg-[#4D9FFD] hover:bg-[#4287ff] text-black p-1 sm:p-2 rounded-md border border-black sm:border-[1.5px] hover:shadow-[2px_2px_0px_#000000]  transition-all"
                       onClick={toggleNotifications}
                     >
                       <GoBell className="w-5 h-5" />
@@ -185,18 +185,18 @@ const StudentNavbar = () => {
                     <img src={profileImage || "something"} alt="Profile" className="w-full h-full object-cover"/>
                     {isProfileDropdownOpen && (
                       <div ref={profileDropdownRef} className="absolute right-5 mt-1 py-2 w-48 bg-white border-[1.5px] border-black shadow-[2px_2px_0px_#000000] rounded-md">
-                        <a href="/student-profile" className="block px-4 py-2 text-sm text-black hover:bg-gray-100">
+                        <Link to="/student-profile" className="block px-4 py-2 text-sm text-black hover:bg-gray-100">
                           Profile
-                        </a>
-                        <a href="/student-times" className="block px-4 py-2 text-sm text-black hover:bg-gray-100">
+                        </Link>
+                        <Link to="/student-times" className="block px-4 py-2 text-sm text-black hover:bg-gray-100">
                           Availability
-                        </a>
-                        <a href="/student-settings" className="block px-4 py-2 text-sm text-black hover:bg-gray-100">
+                        </Link>
+                        <Link to="/student-settings" className="block px-4 py-2 text-sm text-black hover:bg-gray-100">
                           Settings
-                        </a>
-                        <a onClick={handleLogout} className="block px-4 py-2 text-sm text-black hover:bg-gray-100 cursor-pointer">
+                        </Link>
+                        <div onClick={handleLogout} className="block px-4 py-2 text-sm text-black hover:bg-gray-100 cursor-pointer">
                           Logout
-                        </a>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -226,22 +226,22 @@ const StudentNavbar = () => {
           ref={mobileMenuRef}
           className="absolute right-4 top-12 mt-5 py-2 w-48 bg-white border-[1.5px] border-black shadow-[2px_2px_0px_#000000] rounded-md md:hidden z-50"
         >
-          <a
-            href="/discover"
+          <Link
+            to="/discover"
             className={`block px-4 py-2 text-sm text-black rounded-md hover:bg-gray-100
               ${clickedLink === 'Discover' ? 'bg-pink-500/20 text-pink-500' : ''}`}
             onClick={() => handleLinkClick('Discover')}
           >
             Discover
-          </a>
-          <a
-            href="/following"
+          </Link>
+          <Link
+            to="/following"
             className={`block px-4 py-2 text-sm text-black rounded-md hover:bg-gray-100
               ${clickedLink === 'Following' ? 'bg-blue-500/20 text-blue-500' : ''}`}
             onClick={() => handleLinkClick('Following')}
           >
             Following
-          </a>
+          </Link>
         </div>
       )}
         </nav>

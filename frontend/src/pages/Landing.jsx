@@ -40,7 +40,7 @@ const Landing = () => {
       <section className="mt-4 md:mt-8 px-4 md:px-6 text-center">
         <div className="w-full max-w-3xl mx-auto">
           
-          <div className="hidden md:block relative h-[22rem] pb-[22rem] pb-1">
+          <div className="hidden md:block relative h-[22rem] pb-[22rem]">
             <div className="absolute left-2 transform -rotate-6 hover:rotate-0 transition-transform duration-300 z-10 hover:z-30">
               <EventCard
                 title="Intro To Product..."
@@ -92,13 +92,13 @@ const Landing = () => {
         <div className="flex flex-col gap-4 md:gap-6 max-w-xl mx-auto w-full px-4 md:px-8">
           <button
             onClick={() => setIsOpen(true)}
-            className="w-full text-xl md:text-2xl py-3 md:py-4 bg-[#FD4EB7] hover:bg-pink-400 text-black border-2 border-black rounded-lg shadow-[3px_3px_0_#000] hover:shadow-[5px_5px_0_#000] transition-all duration-200"
+            className="w-full text-xl md:text-2xl py-3 md:py-4 bg-[#FD4EB7] hover:bg-[#ff23a7] text-black border-2 border-black rounded-lg shadow-[3px_3px_0_#000] hover:shadow-[5px_5px_0_#000] transition-all duration-200"
           >
             Register
           </button>
           <button
             onClick={() => navigate("/login")}
-            className="w-full text-xl md:text-2xl py-3 md:py-4 bg-[#4D9FFD] hover:bg-blue-400 text-black border-2 border-black rounded-lg shadow-[3px_3px_0_#000] hover:shadow-[5px_5px_0_#000] transition-all duration-200"
+            className="w-full text-xl md:text-2xl py-3 md:py-4 bg-[#4D9FFD] hover:bg-[#4287ff] text-black border-2 border-black rounded-lg shadow-[3px_3px_0_#000] hover:shadow-[5px_5px_0_#000] transition-all duration-200"
           >
             Login
           </button>

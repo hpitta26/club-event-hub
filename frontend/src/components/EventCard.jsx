@@ -5,6 +5,7 @@ import EventDetailsCard from "./EventDetailsCard";
 import { dateFormat, formatDay, formatTimeRange } from '../utils/dates';
 import { truncate } from "../utils/truncate";
 import { LuAward } from "react-icons/lu";
+import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 
 
 function EventCard({
@@ -85,7 +86,7 @@ function EventCard({
             20
           </div>
           <img
-            src={profilebanner}
+            src={profilebanner || dummyEventCardCover}
             alt="Event Cover"
             className="w-full h-full object-cover"
           />

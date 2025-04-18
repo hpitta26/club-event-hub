@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 
-
 function EventDetailsCard({
   event_id = 0,
   isOpen = false,

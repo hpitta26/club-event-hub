@@ -178,6 +178,7 @@ function ClubProfile() {
                   capacity={weeklyEvent.capacity - weeklyEvent.attending}
                   tags={weeklyEvent.tags}
                   is_rsvped={weeklyEvent.is_rsvped}
+                  description={weeklyEvent.description}
                   profilebanner={weeklyEvent.profilebanner}
                 />
               ))

@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
+import PropTypes from "prop-types";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
 import { GrLocation } from "react-icons/gr";
 import EventDetailsCard from "./EventDetailsCard";
-import { dateFormat, formatDay, formatTimeRange } from '../utils/dates';
+import { dateFormat, formatDay, formatTimeRange } from "../utils/dates";
 import { truncate } from "../utils/truncate";
 import { LuAward } from "react-icons/lu";
-
 
 function EventCard({
   id = 0,
@@ -15,13 +15,13 @@ function EventCard({
   location = "Location TBD",
   attendees = 79,
   capacity = "N/A",
-  tags=[],
+  tags = [],
   coverImage = null,
   hostLogo = dummyInitLogo,
-  description= "No detailed description available.",
+  description = "No detailed description available.",
   universityName = "Florida International University",
   is_rsvped = false,
-  show_model= true
+  show_model = true,
 }) {
   const [showDetails, setShowDetails] = useState(false);
   const cardRef = useRef(null);
@@ -29,8 +29,8 @@ function EventCard({
   const [numCapacity, setNumCapacity] = useState(capacity);
   const [isRSVP, setIsRSVP] = useState(is_rsvped);
 
-
-  const imageUrls = [ // Dummy image URLs
+  const imageUrls = [
+    // Dummy image URLs
     "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=400&h=250",
     "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&h=250",
     "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=400&h=250",
@@ -39,9 +39,10 @@ function EventCard({
     "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&h=250",
     "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&h=250",
     "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=400&h=250",
-  ]
+  ];
 
-  const randomCoverImage = coverImage || imageUrls[Math.floor(Math.random() * imageUrls.length)];
+  const randomCoverImage =
+    coverImage || imageUrls[Math.floor(Math.random() * imageUrls.length)];
 
   // Click outside  to close the details card
   useEffect(() => {
@@ -85,7 +86,7 @@ function EventCard({
     <>
       <div
         ref={cardRef}
-        className="relative w-[237.5px] h-[268.75px] bg-white border-[1.5px] border-black shadow-[2px_2px_0px_#000000] rounded-xl 
+        className="relative w-[237.5px] h-[268.75px] bg-white border-[1.5px] border-black  rounded-xl
                       hover:shadow-[4px_4px_0_#000] duration-200 transition-all transform hover:-translate-y-1 flex flex-col cursor-pointer"
         onClick={handleOnClick}
       >
@@ -161,30 +162,45 @@ function EventCard({
       </div>
 
       {/* Event Details Card */}
-      {showDetails && show_model && (
-        <EventDetailsCard
-          event_id={id}
-          isOpen={showDetails}
-          onClose={handleCloseDetails}
-          title={title}
-          club={host}
-          day={formatDay(date)}
-          time={formatTimeRange(date)}
-          description={description}
-          universityName={universityName}
-          roomLocation={location}
-          attendees={numAttendees}
-          setAttendees={setNumAttendees}
-          capacity={numCapacity}
-          tags={tags}
-          setCapacity={setNumCapacity}
-          image={randomCoverImage}
-          isRSVP={isRSVP}
-          setIsRSVP={setIsRSVP}
-        />
-      )}
+      <EventDetailsCard
+        event_id={id}
+        isOpen={showDetails && show_model}
+        onClose={handleCloseDetails}
+        title={title}
+        club={host}
+        day={formatDay(date)}
+        time={formatTimeRange(date)}
+        description={description}
+        universityName={universityName}
+        roomLocation={location}
+        attendees={numAttendees}
+        setAttendees={setNumAttendees}
+        capacity={numCapacity}
+        tags={tags}
+        setCapacity={setNumCapacity}
+        image={randomCoverImage}
+        isRSVP={isRSVP}
+        setIsRSVP={setIsRSVP}
+      />
     </>
   );
 }
+
+EventCard.propTypes = {
+  id: PropTypes.number,
+  title: PropTypes.string,
+  date: PropTypes.string,
+  host: PropTypes.string,
+  location: PropTypes.string,
+  attendees: PropTypes.number,
+  capacity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  tags: PropTypes.arrayOf(PropTypes.string),
+  coverImage: PropTypes.string,
+  hostLogo: PropTypes.string,
+  description: PropTypes.string,
+  universityName: PropTypes.string,
+  is_rsvped: PropTypes.bool,
+  show_model: PropTypes.bool,
+};
 
 export default EventCard;

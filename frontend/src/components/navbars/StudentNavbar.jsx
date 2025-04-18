@@ -182,13 +182,13 @@ const StudentNavbar = () => {
 
           {/* Right: Events, Notifications, and Profile */}
           <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4">
-            <div className="bg-[#FDD74D] hover:bg-yellow-400 text-black p-1 sm:p-2 rounded-md border border-black sm:border-[1.5px] shadow-[2px_2px_0px_#000000] hover:shadow-[3px_3px_0px_#000000] transition-all flex flex-row">
+            <div className="bg-[#FDD74D] hover:bg-yellow-400 text-black p-1 sm:p-2 rounded-md border border-black sm:border-[1.5px] hover:shadow-[3px_3px_0px_#000000] transition-all flex flex-row">
               <LuAward className="w-5 h-5" />{" "}
               <span className="ml-1 -mt-[2px]">{spiritPoints}</span>
             </div>
             {/* Events Button */}
             <button
-              className="bg-[#FD4EB7] hover:bg-[#ff23a7] text-white font-normal text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 rounded-md border border-black sm:border-[1.5px] shadow-[2px_2px_0px_#000000] hover:shadow-[3px_3px_0_#000] transition-all"
+              className="bg-[#FD4EB7] hover:bg-[#ff23a7] text-black font-normal text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 rounded-md border border-black sm:border-[1.5px]  hover:shadow-[3px_3px_0_#000] transition-all"
               onClick={handleEventsClick}
             >
               Your Events
@@ -196,7 +196,7 @@ const StudentNavbar = () => {
             {/* Notifications */}
             <div className="relative" ref={notificationsRef}>
               <button
-                className="bg-[#4D9FFD] hover:bg-[#4287ff] text-black p-1 sm:p-2 rounded-md border border-black sm:border-[1.5px] shadow-[2px_2px_0px_#000000] hover:shadow-[3px_3px_0px_#000000]  transition-all"
+                className="bg-[#4D9FFD] hover:bg-[#4287ff] text-black p-1 sm:p-2 rounded-md border border-black sm:border-[1.5px] hover:shadow-[3px_3px_0px_#000000]  transition-all"
                 onClick={toggleNotifications}
               >
                 <GoBell className="w-5 h-5" />

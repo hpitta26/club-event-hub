@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
 import { FiChevronsRight } from "react-icons/fi";
 import { FiCalendar, FiMapPin, FiUsers } from "react-icons/fi";
 import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
 import backend from "./backend";
 import { useNavigate } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 function EventDetailsCard({
   event_id = 0,
@@ -20,24 +20,22 @@ function EventDetailsCard({
   setAttendees = () => {},
   capacity = "200-300",
   setCapacity = () => {},
-  tags=[],
+  tags = [],
   onClose = () => {},
   profilePicture = dummyInitLogo,
   image = dummyEventCardCover,
   isRSVP = false,
-  setIsRSVP = () => {}
+  setIsRSVP = () => {},
 }) {
-  if (!isOpen) return null;
-
   const navigate = useNavigate();
 
   const handleCardClick = (e) => {
     e.stopPropagation();
   };
 
-  const handleRSVP = async (e) => {
+  const handleRSVP = async () => {
     try {
-      const response = await backend.post('/rsvp/', { event_id: event_id });
+      const response = await backend.post("/rsvp/", { event_id: event_id });
 
       console.log(response.data);
 
@@ -54,71 +52,81 @@ function EventDetailsCard({
       }
     } catch (error) {
       if (error.status === 403) {
-        navigate('/student-register');
-      };
+        navigate("/student-register");
+      }
       console.error("Error handling RSVP:", error);
     }
   };
 
   const handleClubClick = () => {
-    const clubSlug = club.toLowerCase().replace(/\s+/g, '-');
+    const clubSlug = club.toLowerCase().replace(/\s+/g, "-");
     navigate(`/club/${clubSlug}`);
-  }
+  };
 
   return (
-    <div className="fixed top-0 right-0 z-50 h-screen flex items-start justify-end p-4">
-      {/* Dark overlay */}
+    <div className={`fixed inset-0 z-50 ${!isOpen && 'pointer-events-none invisible'}`}>
+      {/* Dark overlay with fade transition */}
       <div
-        className="fixed inset-0 bg-black bg-opacity-50 z-40"
+        className={`fixed inset-0 bg-black transition-opacity duration-300 ease-in-out z-40 
+          ${isOpen ? 'opacity-50' : 'opacity-0'}`}
         onClick={onClose}
       />
       <div
-          className="event-details-card container flex flex-col items-start justify-start bg-[#F0EFEB] p-6 gap-4 w-96 h-[calc(100vh-2rem)] overflow-y-auto z-50 rounded-lg border-black border-2 shadow-[3px_3px_0px_#000000]"
-          onClick={handleCardClick}
+        className={`fixed top-0 right-0 event-details-card container flex flex-col items-start justify-start bg-[#F0EFEB] p-6 gap-4 w-96 h-[calc(100vh-2rem)] overflow-y-auto z-50 rounded-lg border-black border-2 shadow-[3px_3px_0px_#000000] m-4
+          transform transition-all duration-300 ease-in-out
+          ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        onClick={handleCardClick}
       >
         <div>
           {/* Icon Button */}
           <FiChevronsRight
-              className="cursor-pointer text-lg font-extrabold"
-              onClick={onClose}
+            className="cursor-pointer text-lg font-extrabold"
+            onClick={onClose}
           />
         </div>
 
         {/* Event Image */}
         <img
-            src={image}
-            alt={title}
-            className="rounded-lg w-full h-64 object-cover border-black border-2"
+          src={image}
+          alt={title}
+          className="rounded-lg w-full h-64 object-cover border-black border-2"
         />
 
         {/* Event Title and RSVP Button */}
         <div className="flex flex-row justify-between items-center w-full">
           <h1 className="text-3xl font-semibold">{title}</h1>
-          {isRSVP ?
-              <button onClick={handleRSVP}
-                      className="bg-[#35A25D] text-white py-1 px-4 rounded-md text-sm font-semibold border-black border-[1.5px]">
-                Attending!
-              </button>
-              :
-              <button onClick={handleRSVP}
-                      className="bg-[#FD4DB7] text-black py-1 px-4 rounded-md text-sm font-semibold border-black border-[1.5px]">
-                RSVP
-              </button>
-          }
+          {isRSVP ? (
+            <button
+              onClick={handleRSVP}
+              className="bg-[#35A25D] text-white py-1 px-4 rounded-md text-sm font-semibold border-black border-[1.5px]"
+            >
+              Attending!
+            </button>
+          ) : (
+            <button
+              onClick={handleRSVP}
+              className="bg-[#FD4DB7] text-black py-1 px-4 rounded-md text-sm font-semibold border-black border-[1.5px]"
+            >
+              RSVP
+            </button>
+          )}
         </div>
 
         <div className="flex flex-col gap-1">
           {/* Club Name */}
-          <div className="flex items-center gap-2 cursor-pointer" onClick={handleClubClick}>
+          <div
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={handleClubClick}
+          >
             <img
-                src={profilePicture}
-                className="w-6 h-6 rounded-full bg-gray-400 flex items-center justify-center"
+              src={profilePicture}
+              className="w-6 h-6 rounded-full bg-gray-400 flex items-center justify-center"
             ></img>
             <span className="text-sm text-black uppercase">{club}</span>
           </div>
           {/* Date and Time */}
           <div className="flex items-center gap-2">
-            <FiCalendar className="text-gray-500 w-6 h-6"/>
+            <FiCalendar className="text-gray-500 w-6 h-6" />
             <div className="flex flex-col">
               <span className="text-sm">{day}</span>
               <span className="text-xs text-[#7D7D7D]">{time}</span>
@@ -126,7 +134,7 @@ function EventDetailsCard({
           </div>
           {/* Location */}
           <div className="flex items-center gap-2">
-            <FiMapPin className="text-gray-500 w-6 h-6"/>
+            <FiMapPin className="text-gray-500 w-6 h-6" />
             <div className="flex flex-col">
               <span className="text-sm">{universityName}</span>
               <span className="text-xs text-[#7D7D7D]">{roomLocation}</span>
@@ -140,17 +148,16 @@ function EventDetailsCard({
           <p className="text-sm text-[#7D7D7D]">{description}</p>
         </div>
 
-
         <div className="w-full">
           <h2 className="font-semibold text-lg mb-1">Tags</h2>
           <div className="flex flex-wrap gap-2">
             {tags.map((tag, index) => (
-                <div
-                    key={index}
-                    className="text-sm bg-gray-100 text-[#7D7D7D] px-3 py-1 rounded-md border border-gray-200"
-                >
-                  # {tag}
-                </div>
+              <div
+                key={index}
+                className="text-sm bg-gray-100 text-[#7D7D7D] px-3 py-1 rounded-md border border-gray-200"
+              >
+                # {tag}
+              </div>
             ))}
           </div>
         </div>
@@ -163,19 +170,19 @@ function EventDetailsCard({
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               {[1, 2, 3].map((i) => (
-                  <img
-                      src={dummyInitLogo}
-                      alt={`Attendee ${i}`}
-                      key={i}
-                      className="w-10 h-10 rounded-full border-2 border-white -mr-2 object-cover"
-                      style={{zIndex: i}}
-                  />
+                <img
+                  src={dummyInitLogo}
+                  alt={`Attendee ${i}`}
+                  key={i}
+                  className="w-10 h-10 rounded-full border-2 border-white -mr-2 object-cover"
+                  style={{ zIndex: i }}
+                />
               ))}
               <p className="text-sm text-gray-500 ml-3">{attendees} GOING</p>
             </div>
 
             <div className="flex items-center gap-2">
-              <FiUsers className="text-gray-500 w-6 h-6"/>
+              <FiUsers className="text-gray-500 w-6 h-6" />
               <span className="text-sm text-gray-500">{capacity}</span>
             </div>
           </div>
@@ -184,5 +191,27 @@ function EventDetailsCard({
     </div>
   );
 }
+
+EventDetailsCard.propTypes = {
+  event_id: PropTypes.number,
+  isOpen: PropTypes.bool,
+  title: PropTypes.string,
+  club: PropTypes.string,
+  day: PropTypes.string,
+  time: PropTypes.string,
+  description: PropTypes.string,
+  universityName: PropTypes.string,
+  roomLocation: PropTypes.string,
+  attendees: PropTypes.number,
+  setAttendees: PropTypes.func,
+  capacity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  setCapacity: PropTypes.func,
+  tags: PropTypes.arrayOf(PropTypes.string),
+  onClose: PropTypes.func,
+  profilePicture: PropTypes.string,
+  image: PropTypes.string,
+  isRSVP: PropTypes.bool,
+  setIsRSVP: PropTypes.func
+};
 
 export default EventDetailsCard;

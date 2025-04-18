@@ -9,7 +9,7 @@ const DiscoverSidebar = () => {
   const [newClubs, setNewClubs] = useState([])
   const [recommendedClubs, setRecommendedClubs] = useState([])
 
-  const initialShowCardsLimit = 2;
+  const initialShowCardsLimit = 3;
 
   const [showNewCardsLimit, setShowNewCardsLimit] = useState(
     initialShowCardsLimit

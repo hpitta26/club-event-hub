@@ -48,7 +48,7 @@ function ClubProfile() {
           setWeeklyEvents(weeklyEventData.data);
         })
 
-        if (userContext.role.includes("STUDENT")) {
+        if (userContext && userContext.role.includes("STUDENT")) {
             backend.get(`/check-user-following/${data.user_id}/`)
                 .then((followingData)=>{
                   setIsFollowing(followingData.data);
@@ -97,7 +97,8 @@ function ClubProfile() {
             className="w-full h-full object-cover"
           />
         </div>
-        {userContext.role.includes("STUDENT") ?        
+        {userContext && (
+            userContext.role.includes("STUDENT") ?
         (!isFollowing) ?
         /* Follow Button */
         <div className="absolute top-[205px] right-5">
@@ -120,6 +121,7 @@ function ClubProfile() {
         </div>
          : 
         <></>
+        )
          }
 
       </div>

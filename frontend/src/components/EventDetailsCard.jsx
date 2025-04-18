@@ -4,7 +4,7 @@ import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
 import backend from "./backend";
 import { useNavigate } from "react-router-dom";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 function EventDetailsCard({
   event_id = 0,
@@ -26,6 +26,7 @@ function EventDetailsCard({
   image = dummyEventCardCover,
   isRSVP = false,
   setIsRSVP = () => {},
+  detailsCardRef, //added
 }) {
   const navigate = useNavigate();
 
@@ -64,17 +65,20 @@ function EventDetailsCard({
   };
 
   return (
-    <div className={`fixed inset-0 z-50 ${!isOpen && 'pointer-events-none invisible'}`}>
+    <div
+      className={`fixed inset-0 z-50 ${!isOpen && "pointer-events-none invisible"}`}
+    >
       {/* Dark overlay with fade transition */}
       <div
-        className={`fixed inset-0 bg-black transition-opacity duration-300 ease-in-out z-40 
-          ${isOpen ? 'opacity-50' : 'opacity-0'}`}
+        className={`fixed inset-0 bg-black transition-opacity duration-300 ease-in-out z-55
+          ${isOpen ? "opacity-50" : "opacity-0"}`}
         onClick={onClose}
       />
       <div
-        className={`fixed top-0 right-0 event-details-card container flex flex-col items-start justify-start bg-[#F0EFEB] p-6 gap-4 w-96 h-[calc(100vh-2rem)] overflow-y-auto z-50 rounded-lg border-black border-2 shadow-[3px_3px_0px_#000000] m-4
+        ref={detailsCardRef} //added
+        className={`fixed top-0 right-0 event-details-card container flex flex-col items-start justify-start bg-[#F0EFEB] p-6 gap-4 w-96 h-[calc(100vh-2rem)] overflow-y-auto z-60 rounded-lg border-black border-2 shadow-[3px_3px_0px_#000000] m-4
           transform transition-all duration-300 ease-in-out
-          ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+          ${isOpen ? "translate-x-0" : "translate-x-full"}`}
         onClick={handleCardClick}
       >
         <div>
@@ -211,7 +215,8 @@ EventDetailsCard.propTypes = {
   profilePicture: PropTypes.string,
   image: PropTypes.string,
   isRSVP: PropTypes.bool,
-  setIsRSVP: PropTypes.func
+  setIsRSVP: PropTypes.func,
+  detailsCardRef: PropTypes.object, //added
 };
 
 export default EventDetailsCard;

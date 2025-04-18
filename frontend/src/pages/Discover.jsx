@@ -98,7 +98,7 @@ const Discover = () => {
           className={`transition-all duration-300 ${
             isSidebarOpen
               ? "flex-1 min-w-0" // Sidebar is open, main content takes remaining space
-              : "flex-1 absolute left-0 right-0 mx-auto w-[80%] z-20" // Sidebar is closed, main content is centered and overlaid
+              : "flex-1 absolute left-0 right-0 mx-auto w-[80%] z-45" // Sidebar is closed, main content is centered and overlaid
           }`}
         >
           <div className="pt-[80px] h-full flex flex-col">

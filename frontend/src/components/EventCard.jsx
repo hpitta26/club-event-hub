@@ -25,6 +25,7 @@ function EventCard({
 }) {
   const [showDetails, setShowDetails] = useState(false);
   const cardRef = useRef(null);
+  const detailsCardRef = useRef(null); //added
   const [numAttendees, setNumAttendees] = useState(attendees);
   const [numCapacity, setNumCapacity] = useState(capacity);
   const [isRSVP, setIsRSVP] = useState(is_rsvped);
@@ -47,15 +48,15 @@ function EventCard({
   // Click outside  to close the details card
   useEffect(() => {
     const handleClickOutside = (event) => {
+      //changed this function
       if (
         showDetails &&
         cardRef.current &&
-        !cardRef.current.contains(event.target)
+        !cardRef.current.contains(event.target) &&
+        detailsCardRef.current &&
+        !detailsCardRef.current.contains(event.target)
       ) {
-        const detailsCard = document.querySelector(".event-details-card");
-        if (!detailsCard || !detailsCard.contains(event.target)) {
-          setShowDetails(false);
-        }
+        setShowDetails(false);
       }
     };
 
@@ -181,6 +182,7 @@ function EventCard({
         image={randomCoverImage}
         isRSVP={isRSVP}
         setIsRSVP={setIsRSVP}
+        detailsCardRef={detailsCardRef} //added
       />
     </>
   );

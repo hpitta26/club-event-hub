@@ -6,6 +6,8 @@ import dummyInitLogo from "../assets/dummyInitLogo.png";
 import backend from "./backend";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import { truncate } from "../utils/truncate";
+
 
 
 function EventDetailsCard({
@@ -94,7 +96,9 @@ function EventDetailsCard({
 
         {/* Event Title and RSVP Button */}
         <div className="flex flex-row justify-between items-center w-full">
-          <h1 className="text-3xl font-semibold">{title}</h1>
+          <h1 className="text-3xl font-semibold">
+            {truncate(title, 20)}
+          </h1>
           {userContext && (
           userContext.role.includes("STUDENT") ? (isRSVP) ?
               <button onClick={handleRSVP}

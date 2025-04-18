@@ -95,9 +95,9 @@ function EventDetailsCard({
         />
 
         {/* Event Title and RSVP Button */}
-        <div className="flex flex-row justify-between items-center w-full">
+        <div className="flex justify-between items-center w-full">
           <h1 className="text-3xl font-semibold">
-            {truncate(title, 20)}
+            {title}
           </h1>
           {userContext && (
           userContext.role.includes("STUDENT") ? (isRSVP) ?

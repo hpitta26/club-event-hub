@@ -113,7 +113,7 @@
     console.log("Current form state:", formData);
 
     return (
-      <div className="min-h-screen bg-gray-300 flex justify-center items-center">
+      <div className="min-h-screen flex justify-center items-center">
         <div className="flex flex-col gap-8 w-full" style={{ maxWidth: "400px" }}>
           {phase === 0 && (
             <div className="bg-white rounded-[20px] p-6 border-black border-2 shadow-[2px_2px_0px_#000000]" style={{ height: "470px" }}>

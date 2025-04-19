@@ -188,7 +188,7 @@ const StudentNavbar = () => {
                 {/* Notifications */}
                 <div className="relative" ref={notificationsRef}>
                   <button 
-                    className="bg-[#4D9FFD] hover:bg-[#4287ff] text-black p-1 sm:p-2 rounded-md border border-black sm:border-[1.5px] hover:shadow-[2px_2px_0px_#000000]  transition-all"
+                    className="bg-[#4D9FFD] hover:bg-[#4287ff] text-black p-1 sm:p-2 rounded-md border border-black sm:border-[1.5px] hover:shadow-[2px_2px_0px_#000000] transition-all"
                     onClick={toggleNotifications}
                   >
                     <GoBell className="w-5 h-5" />

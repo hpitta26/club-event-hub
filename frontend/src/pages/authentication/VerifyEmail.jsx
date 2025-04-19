@@ -39,10 +39,10 @@ function VerifyEmail() {
     }, [token]);
 
     return (
-        <section className="min-h-screen bg-stone-900 flex justify-center items-center text-center pt-10">
+        <section className="min-h-screen flex justify-center items-center text-center pt-10">
             <div>
-                {status && <p className="text-green-400 text-2xl">{status}</p>}
-                {error && <p className="text-red-400 text-2xl">{error}</p>}
+                {status && <p className="text-green-400 text-4xl font-bold">{status}</p>}
+                {error && <p className="text-[#ff3535] text-4xl font-bold">{error}</p>}
             </div>
         </section>
     );

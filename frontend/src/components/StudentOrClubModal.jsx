@@ -50,10 +50,10 @@ const StudentOrClubModal = ({ modalIsOpen, setIsOpen }) => {
             </div>
 
             <div className="flex flex-col space-y-4">
-                <button onClick={() => {navigate(`/student-register`); setIsOpen(false)}} className="bg-[#FD4EB7] hover:bg-[#E93DA6] text-black py-2 px-4 rounded w-full border-black border-2 shadow-[2px_2px_0px_#000000]">
+                <button onClick={() => {navigate(`/student-register`); setIsOpen(false)}} className="bg-[#FD4EB7] hover:bg-[#ff23a7] text-black py-2 px-4 rounded w-full border-black border-2 hover:shadow-[2px_2px_0px_#000000] transition-all">
                     I am a student!
                 </button>
-                <button onClick={() => {navigate(`/club-register`); setIsOpen(false)}} className="bg-[#4D9FFD] hover:bg-[#288afa] text-black py-2 px-4 rounded w-full flex items-center justify-center border-black border-2 shadow-[2px_2px_0px_#000000]">
+                <button onClick={() => {navigate(`/club-register`); setIsOpen(false)}} className="bg-[#4D9FFD] hover:bg-[#4287ff] text-black py-2 px-4 rounded w-full flex items-center justify-center border-black border-2 hover:shadow-[2px_2px_0px_#000000] transition-all">
                     I am a club!
                 </button>
             </div>

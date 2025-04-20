@@ -163,7 +163,7 @@ function ClubProfile() {
         <div className="mx-2 mt-4">
           <h5 className="text-black">This Week</h5>
         </div>
-        <div className="flex gap-4 overflow-x-auto whitespace-nowrap no-scrollbar">
+        <div className="flex gap-4 overflow-x-auto no-scrollbar">
           <div className="inline-flex gap-4 m-2">
             {weeklyEvents.length > 0 ?
               weeklyEvents.map((weeklyEvent) => (
@@ -178,6 +178,7 @@ function ClubProfile() {
                   capacity={weeklyEvent.capacity - weeklyEvent.attending}
                   tags={weeklyEvent.tags}
                   is_rsvped={weeklyEvent.is_rsvped}
+                  description={weeklyEvent.description}
                   profilebanner={weeklyEvent.profilebanner}
                 />
               ))
@@ -190,7 +191,7 @@ function ClubProfile() {
             <h5 className="text-black">Upcoming</h5>
           </div>
         </div>
-        <div className="flex gap-4 overflow-x-auto whitespace-nowrap no-scrollbar">
+        <div className="flex gap-4 overflow-x-auto no-scrollbar">
           <div className="inline-flex gap-4 m-2">
             {events.length > 0 ?
               events.map((event) => (

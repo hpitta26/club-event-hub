@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import StudentOrClubModal from "../components/StudentOrClubModal";
-import EventCard from "../components/EventCard";
-import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
+import EventCard from "../components/student/EventCard";
 import dummyInitLogo from "../assets/dummyInitLogo.png";
 import gatherULogo from '../assets/icons/GatherUIcon.png';
 import calendarLogo from '../assets/icons/calender.png';

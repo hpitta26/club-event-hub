@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import FollowingSidebar from "../components/following/FollowingSidebar.jsx";
-import EventGrid from "../components/discover/EventGrid.jsx";
-import backend from "../components/backend.jsx";
-import { useSidebar } from "../context/SidebarContext.jsx";
+import FollowingSidebar from "../../components/student/following/FollowingSidebar.jsx";
+import EventGrid from "../../components/student/discover/EventGrid.jsx";
+import backend from "../../middleware/backend.jsx";
+import { useSidebar } from "../../context/SidebarContext.jsx";
 
 const Following = () => {
   const [allEvents, setAllEvents] = useState([]);

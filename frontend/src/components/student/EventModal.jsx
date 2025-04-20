@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import EventModalUpcomingList from "./EventModalUpcomingList";
+import EventModalUpcomingList from "./EventModalList";
 import { FiChevronsRight } from "react-icons/fi";
 
 function EventModal({ events = { upcoming: [], past: [] }, onClose }) {

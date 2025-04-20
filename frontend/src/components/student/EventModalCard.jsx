@@ -1,7 +1,7 @@
 import { useState } from "react"
-import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
-import { truncate } from "../utils/truncate";
-import { dateFormat } from "../utils/dates";
+import dummyEventCardCover from "../../assets/dummyEventCardCover.jpg";
+import { truncate } from "../../utils/truncate";
+import { dateFormat } from "../../utils/dates";
 import SurveyModal from "./SurveyModal";
 import { FcSurvey } from "react-icons/fc";
 import { LuAward } from "react-icons/lu";

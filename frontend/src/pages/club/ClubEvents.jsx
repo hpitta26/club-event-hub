@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import backend from "../components/backend";
-import EventListCard from "../components/EventListCard";
+import backend from "../../middleware/backend";
+import EventListCard from "../../components/club/EventListCard";
 
 function ClubEvents() {
   const [events, setEvents] = useState([]);

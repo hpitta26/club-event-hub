@@ -1,7 +1,7 @@
 import { MdOutlineFileUpload } from "react-icons/md";
 import { useContext, useEffect, useState } from "react";
-import backend from "../components/backend.jsx";
-import { UserContext } from "../context/UserContext.jsx";
+import backend from "../../middleware/backend.jsx";
+import { UserContext } from "../../context/UserContext.jsx";
 
 function StudentSettings() {
     const [globalEmail, setGlobalEmail] = useState("");

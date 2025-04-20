@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
-import dummyInitLogo from "../assets/dummyInitLogo.png";
+import dummyInitLogo from "../../assets/dummyInitLogo.png";
 import { GrLocation } from "react-icons/gr";
 import EventDetailsCard from "./EventDetailsCard";
-import { dateFormat, formatDay, formatTimeRange } from '../utils/dates';
-import { truncate } from "../utils/truncate";
+import { dateFormat, formatDay, formatTimeRange } from '../../utils/dates';
+import { truncate } from "../../utils/truncate";
 import { LuAward } from "react-icons/lu";
-import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
-import dummyAvatar0 from "../assets/dummy-avatar0.png";
-import dummyAvatar1 from "../assets/dummy-avatar1.png";
-import dummyAvatar2 from "../assets/dummy-avatar2.png";
+import dummyEventCardCover from "../../assets/dummyEventCardCover.jpg";
+import dummyAvatar0 from "../../assets/dummy-avatar0.png";
+import dummyAvatar1 from "../../assets/dummy-avatar1.png";
+import dummyAvatar2 from "../../assets/dummy-avatar2.png";
 
 
 function EventCard({

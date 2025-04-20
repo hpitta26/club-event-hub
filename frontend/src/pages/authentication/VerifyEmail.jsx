@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import backend from '../../components/backend';
+import backend from '../../middleware/backend';
 
 function VerifyEmail() {
     const { token } = useParams();

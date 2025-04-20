@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import backend from '../components/backend';
+import backend from '../middleware/backend';
 
 function useUserContextState() {
     const user_data = JSON.parse(localStorage.getItem('user_data'));

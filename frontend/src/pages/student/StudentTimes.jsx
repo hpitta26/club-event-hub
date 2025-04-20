@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import backend from "../components/backend.jsx";
+import backend from "../../middleware/backend.jsx";
 
 function StudentTimes() {
     const [isLoading, setIsLoading] = useState(true);

@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import backend from "../components/backend.jsx";
+import backend from "../../middleware/backend.jsx";
 import { MdOutlineFileUpload } from "react-icons/md";
-import { UserContext } from "../context/UserContext.jsx";
+import { UserContext } from "../../context/UserContext.jsx";
 
 function ClubSetting() {
   const [loading, setLoading] = useState(true);

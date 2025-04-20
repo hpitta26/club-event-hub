@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
-import backend from "../components/backend";
-import { UserContext } from "../context/UserContext";
+import backend from "../../middleware/backend";
+import { UserContext } from "../../context/UserContext";
 
 function StudentProfile() {
   const [name, setName] = useState(""); 

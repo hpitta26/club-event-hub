@@ -1,7 +1,7 @@
 import React from "react";
-import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
-import { truncate } from "../utils/truncate";
-import { dateFormat } from "../utils/dates";
+import dummyEventCardCover from "../../assets/dummyEventCardCover.jpg";
+import { truncate } from "../../utils/truncate";
+import { dateFormat } from "../../utils/dates";
 import { GrLocation } from "react-icons/gr"
 import { LuUsers } from "react-icons/lu";
 

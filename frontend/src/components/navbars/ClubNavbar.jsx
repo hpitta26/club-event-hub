@@ -4,7 +4,6 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import { UserContext } from '../../context/UserContext';
 
 const ClubNavbar = () => {
-  const [spiritPoints, setSpiritPoints] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [clickedLink, setClickedLink] = useState(null);
   const [eventsClicked, setEventsClicked] = useState(false);
@@ -19,7 +18,7 @@ const ClubNavbar = () => {
   const burgerButtonRef = useRef(null);
 
   useEffect(() => {
-      const handleClickOutside = (event) => {
+    const handleClickOutside = (event) => {
       if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
         setProfileDropdownOpen(false);
       }

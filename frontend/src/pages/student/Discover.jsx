@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import backend from "../components/backend";
-import DiscoverSidebar from "../components/discover/DiscoverSidebar";
-import EventGrid from "../components/discover/EventGrid";
-import Filterbar from "../components/discover/FilterBar";
-import { useSidebar } from "../context/SidebarContext";
-import RecommendedEvents from "../components/discover/RecommendedEvents.jsx";
-import {UserContext} from "../context/UserContext.jsx";
+import backend from "../../middleware/backend.jsx";
+import DiscoverSidebar from "../../components/student/discover/DiscoverSidebar";
+import EventGrid from "../../components/student/discover/EventGrid";
+import Filterbar from "../../components/student/discover/FilterBar";
+import { useSidebar } from "../../context/SidebarContext.jsx";
+import RecommendedEvents from "../../components/student/discover/RecommendedEvents.jsx";
+import {UserContext} from "../../context/UserContext.jsx";
 
 const Discover = () => {
   const categories = ["All", "Career", "Culture","Fitness", "Medical", "Politics", "Social", "Technology","Volunteer", "Wellness"];

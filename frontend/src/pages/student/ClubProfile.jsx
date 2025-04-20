@@ -3,10 +3,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { HiOutlineGlobeAlt } from "react-icons/hi";
 import { RiTwitterXFill } from "react-icons/ri";
-import backend from "../components/backend.jsx";
-import dummyInitLogo from "../assets/dummyInitLogo.png";
-import EventCard from "../components/EventCard.jsx";
-import { UserContext } from "../context/UserContext.jsx";
+import backend from "../../middleware/backend.jsx";
+import dummyInitLogo from "../../assets/dummyInitLogo.png";
+import EventCard from "../../components/student/EventCard.jsx";
+import { UserContext } from "../../context/UserContext.jsx";
 
 function ClubProfile() {
   const [club, setClub] = useState(null);

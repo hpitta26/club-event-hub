@@ -1,6 +1,6 @@
   import { useState } from "react";
   import { useNavigate } from "react-router-dom";
-  import backend from "../../components/backend";
+  import backend from "../../middleware/backend";
   import { FaArrowRight } from "react-icons/fa";
   import gatherULogo from '../../assets/icons/GatherUIcon.png';
 

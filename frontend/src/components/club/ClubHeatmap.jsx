@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FiClock } from "react-icons/fi";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
-import backend from "../components/backend.jsx";
+import backend from "../../middleware/backend.jsx";
 
 function ClubHeatmap({ onTimeRangeSelect }) {
   const timeSlots = Array.from({ length: 24 }, (_, i) => {

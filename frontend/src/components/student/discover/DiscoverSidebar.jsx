@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useState} from "react";
 import SidebarCard from "./SidebarCard";
-import backend from "../backend.jsx";
-import {UserContext} from "../../context/UserContext.jsx";
-import dummyInitLogo from "../../assets/dummyInitLogo.png";
+import backend from "../../../middleware/backend.jsx";
+import {UserContext} from "../../../context/UserContext.jsx";
+import dummyInitLogo from "../../../assets/dummyInitLogo.png";
 
 const DiscoverSidebar = () => {
 

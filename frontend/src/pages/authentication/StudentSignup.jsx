@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import backend from "../../components/backend.jsx";
+import backend from "../../middleware/backend.jsx";
 import gatherULogo from '../../assets/icons/GatherUIcon.png';
 
 function StudentSignup() {

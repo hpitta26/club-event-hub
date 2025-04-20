@@ -3,10 +3,10 @@ import gatherULogo from '../../assets/icons/GatherUIcon.png';
 import { GoBell } from "react-icons/go";
 import { HiMiniBars3 } from "react-icons/hi2";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import EventModal from '../EventModal';
+import EventModal from '../student/EventModal';
 import { useSidebar } from '../../context/SidebarContext';
-import backend from '../backend';
-import NotificationDropDown from '../NotificationDropDown';
+import backend from '../../middleware/backend';
+import NotificationDropDown from '../student/NotificationDropDown';
 import { LuAward } from "react-icons/lu";
 import { UserContext } from '../../context/UserContext';
 

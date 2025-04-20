@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { UserProvider } from "./context/UserContext.jsx";
-import { EnsureLoggedIn } from "./pages/authorization/EnsureLoggedIn.jsx";
+import { EnsureLoggedIn } from "./middleware/EnsureLoggedIn.jsx";
 import './index.css';
 
 // General Imports
@@ -14,19 +14,19 @@ import ClubSignup from './pages/authentication/ClubSignup.jsx';
 import StudentSignup from "./pages/authentication/StudentSignup.jsx";
 
 // Student Side Imports
-import Discover from "./pages/Discover.jsx";
-import Following from "./pages/Following.jsx";
-import StudentSettings from "./pages/StudentSettings.jsx";
-import ClubProfile from "./pages/ClubProfile.jsx";
-import StudentTimes from "./pages/StudentTimes.jsx";
-import StudentProfile from "./pages/StudentProfile.jsx";
-import Leaderboard from "./pages/Leaderboard.jsx";
+import Discover from "./pages/student/Discover.jsx";
+import Following from "./pages/student/Following.jsx";
+import StudentSettings from "./pages/student/StudentSettings.jsx";
+import ClubProfile from "./pages/student/ClubProfile.jsx";
+import StudentTimes from "./pages/student/StudentTimes.jsx";
+import StudentProfile from "./pages/student/StudentProfile.jsx";
+import Leaderboard from "./pages/student/Leaderboard.jsx";
 
 // Club Side Imports
-import Analytics from "./pages/Analytics.jsx";
-import ClubEvents from "./pages/ClubEvents.jsx";
-import ClubSetting from "./pages/ClubSetting.jsx";
-import CreateEvent from "./pages/CreateEvent.jsx";
+import Analytics from "./pages/club/Analytics.jsx";
+import ClubEvents from "./pages/club/ClubEvents.jsx";
+import ClubSetting from "./pages/club/ClubSetting.jsx";
+import CreateEvent from "./pages/club/CreateEvent.jsx";
 
 function App() {
   return (

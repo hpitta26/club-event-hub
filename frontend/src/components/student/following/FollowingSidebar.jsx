@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import dummyInitLogo from "../../assets/dummyInitLogo.png";
-import backend from "../backend";
+import dummyInitLogo from "../../../assets/dummyInitLogo.png";
+import backend from "../../../middleware/backend.jsx";
 import SidebarCard from "../discover/SidebarCard.jsx";
 
 const FollowingSidebar = () => {

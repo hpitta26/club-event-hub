@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { LuTrophy, LuMedal, LuAward } from "react-icons/lu";
-import backend from "../components/backend";
+import backend from "../../middleware/backend";
 
 const Leaderboard = () => {
     const [users, setUsers] = useState([]);

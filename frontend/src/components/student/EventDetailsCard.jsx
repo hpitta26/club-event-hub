@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import { FiChevronsRight } from "react-icons/fi";
 import { FiCalendar, FiMapPin, FiUsers } from "react-icons/fi";
-import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
-import dummyInitLogo from "../assets/dummyInitLogo.png";
-import backend from "./backend";
+import dummyEventCardCover from "../../assets/dummyEventCardCover.jpg";
+import dummyInitLogo from "../../assets/dummyInitLogo.png";
+import backend from "../../middleware/backend";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../context/UserContext";
-import dummyAvatar0 from "../assets/dummy-avatar0.png";
-import dummyAvatar1 from "../assets/dummy-avatar1.png";
-import dummyAvatar2 from "../assets/dummy-avatar2.png";
+import { UserContext } from "../../context/UserContext";
+import dummyAvatar0 from "../../assets/dummy-avatar0.png";
+import dummyAvatar1 from "../../assets/dummy-avatar1.png";
+import dummyAvatar2 from "../../assets/dummy-avatar2.png";
 
 function EventDetailsCard({
   event_id = 0,

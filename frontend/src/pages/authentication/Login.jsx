@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import backend from "../../components/backend.jsx";
+import backend from "../../middleware/backend.jsx";
 import { UserContext } from "../../context/UserContext.jsx";
 import { useNavigate } from "react-router-dom";
 import gatherULogo from '../../assets/icons/GatherUIcon.png';

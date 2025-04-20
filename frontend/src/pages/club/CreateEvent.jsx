@@ -1,11 +1,11 @@
-import backend from "../components/backend.jsx";
+import backend from "../../middleware/backend.jsx";
 import { useState } from 'react';
 import { format } from "date-fns";
 import { useNavigate } from 'react-router-dom';
 import { GrLocation } from "react-icons/gr";
 import { MdOutlineFileUpload } from "react-icons/md";
-import dummyEventCardCover from "../assets/dummyEventCardCover.jpg";
-import ClubHeatmap from "../components/ClubHeatmap";
+import dummyEventCardCover from "../../assets/dummyEventCardCover.jpg";
+import ClubHeatmap from "../../components/club/ClubHeatmap";
 import { BsPerson } from "react-icons/bs";
 
 function CreateEvent() {

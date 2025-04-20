@@ -191,7 +191,7 @@ function ClubProfile() {
             <h5 className="text-black">Upcoming</h5>
           </div>
         </div>
-        <div className="flex gap-4 overflow-x-auto whitespace-nowrap no-scrollbar">
+        <div className="flex gap-4 overflow-x-auto no-scrollbar">
           <div className="inline-flex gap-4 m-2">
             {events.length > 0 ?
               events.map((event) => (

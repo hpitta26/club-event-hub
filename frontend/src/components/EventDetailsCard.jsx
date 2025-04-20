@@ -66,6 +66,13 @@ function EventDetailsCard({
     navigate(`/club/${clubSlug}`);
   }
 
+  const truncateLongWords = (text, maxLength = 12) => {
+    return text
+      .split(" ")
+      .map((word) => (word.length > maxLength ? `${word.slice(0, maxLength)}.` : word))
+      .join(" ");
+  };
+
   return (
     <div className="fixed top-0 right-0 z-50 h-screen flex items-start justify-end p-4">
       {/* Dark overlay */}
@@ -94,7 +101,7 @@ function EventDetailsCard({
 
         {/* Event Title and RSVP Button */}
         <div className="flex flex-row justify-between items-center w-full">
-          <h1 className="text-3xl font-semibold">{title}</h1>
+          <h1 className="text-3xl font-semibold">{truncateLongWords(title)}</h1>
           {userContext && (
           userContext.role.includes("STUDENT") ? (isRSVP) ?
               <button onClick={handleRSVP}

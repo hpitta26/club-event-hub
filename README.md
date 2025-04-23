@@ -1,4 +1,4 @@
-# 🚀 FIU Club-Event Hub
+# 🚀 GatherU - FIU
 
 An event discovery platform designed to help **FIU students** find and RSVP to club events, fostering community engagement on campus.  
 
@@ -22,33 +22,16 @@ An event discovery platform designed to help **FIU students** find and RSVP to c
 | **Frontend** | React (Vite) + TailwindCSS |
 | **Backend** | Django |
 | **Database** | PostgreSQL (or SQLite at the start) |
-| **Deployment** | Docker + Vercel (Frontend) + AWS (Backend) |
-
----
-
-## 🚀 Getting Started  
-
-### **Prerequisites**  
-Before running the project, ensure you have:  
-- [Docker Desktop](https://www.docker.com/products/docker-desktop) installed  
-- [Git](https://git-scm.com/downloads) installed  
-- [VSCode](https://code.visualstudio.com/) (recommended for development)  
-
-### **Rest**  
-🔹 [Onboarding Guide](docs/onboarding.md) – Step-by-step setup guide 
 
 ---
 
 ## 📖 Documentation  
 🔹 [Onboarding Guide](docs/onboarding.md) – Step-by-step setup guide  
-🔹 [Database Schema](docs/database.md) – Models & relationships  
-🔹 [Contribution Guide](docs/contributing.md) – How to contribute  
 🔹 [Windows Setup Guide](docs/windows.md) – Windows-specific setup  
-<!-- 🔹 [API Documentation](docs/api.md) – REST API reference   -->
+🔹 [Contribution Guide](docs/contributing.md) – How to contribute  
 
 ---
 
 ## 🎯 Team & Acknowledgements
-- Developed by: INIT BUILD WebDev Advanced Spring 2025
-- Special thanks to [ contributors ]
+- Being developed by: INIT BUILD WebDev Advanced Spring 2025
 

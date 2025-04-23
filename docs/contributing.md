@@ -71,8 +71,7 @@ git push origin feature/add-event-filter
 
 ## **✅ 3️⃣ Code Style & Standards**
 
-- Component Naming: PascalCase
-- File Naming: camelCase.js
+- Component and File Naming: PascalCase
 - Keep CSS inside Tailwind classes unless necessary.
 
 ```js

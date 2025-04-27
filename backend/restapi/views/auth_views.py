@@ -1,9 +1,10 @@
 from django.contrib.auth import logout
+from django.utils.text import slugify
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from restapi.models import CustomUser
+from restapi.models import CustomUser,Club
 from restapi.forms import ClubCreationForm, StudentCreationForm
 from django.contrib.auth import login, authenticate
 from django.views.decorators.csrf import csrf_protect
@@ -187,3 +188,16 @@ def login_view(request):
     return Response(
         {'error': error_message}, status=401
     )
+
+@api_view(['GET'])
+def check_email_exists(request):
+    email = request.GET.get('email')
+    exists = CustomUser.objects.filter(email=email).exists()
+    return Response({'exists': exists})
+
+@api_view(['GET'])
+def check_club_name_exists(request):
+    club_name = request.GET.get('club_name')
+    slug = slugify(club_name)
+    exists = Club.objects.filter(slug=slug).exists()
+    return Response({'exists': exists})

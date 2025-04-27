@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaArrowRight } from "react-icons/fa";
+import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import backend from "../../middleware/backend.jsx";
 import gatherULogo from '../../assets/icons/GatherUIcon.png';
@@ -38,13 +38,18 @@ function StudentSignup() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const [error, setError] = useState("");
+  async function checkEmail(email){
+    const response = await backend.get(`check-email-exists/?email=${email}`);
+    return !response.data.exists;
+  }
+
+  const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setErrors({});
     setSuccess("");
 
     console.log("Submitting form data:", formData);
@@ -72,7 +77,7 @@ function StudentSignup() {
         setPhase(0); // reset the phase
         navigate("/login");
       } else {
-        setError(data.message || "Registration failed. Please try again.");
+        setErrors(data.message || "Registration failed. Please try again.");
         setPhase(0);
       }
     } catch (err) {
@@ -80,13 +85,15 @@ function StudentSignup() {
       console.error("Error response:", err.response);
 
       if (err.response?.data?.errors) {
-        const errors = err.response.data.errors;
-        const errorMessage = Object.entries(errors)
-          .map(([key, value]) => `${key}: ${value.join(", ")}`)
-          .join("\n");
-        setError(errorMessage);
+        const errorMessages = err.response.data.errors;
+          setErrors(errorMessages)
+        // redirects user back to first phase so that they can see the "common password"
+        // error that django's auth raises
+        if(errorMessages.password1 || errorMessages.password2){
+          setPhase(0)
+        }
       } else {
-        setError(
+        setErrors(
           err.response?.data?.message ||
             "Registration failed. Please try again."
         );
@@ -100,7 +107,7 @@ function StudentSignup() {
       case 0:
         return (
           <div className="bg-white rounded-[20px] p-6 border-black border-2 shadow-[2px_2px_0px_#000000]" style={{ height: "470px" }}>
-            <div className="text-center mb-6 mt-3">
+            <div className="text-center mb-3 mt-3">
               <div className="flex justify-center items-center mb-2">
                 <span className="text-2xl font-bold mr-2">Welcome to</span>
                 <img src={gatherULogo} alt="GatherU Logo" className="h-10" />
@@ -108,14 +115,27 @@ function StudentSignup() {
               <p className="text-gray-600">University Events at a Glance</p>
             </div>
             
-            <form onSubmit={(e) => {
+            <form onSubmit={async(e) => {
+              let nonSubmittedErrors={};
               e.preventDefault();
               if (!formData.email || !formData.email.endsWith("@fiu.edu")) {
-                setError("Email must end in @fiu.edu");
-                return;
+                nonSubmittedErrors.email="Email must end in @fiu.edu";
               } else if (formData.password1 !== formData.password2) {
-                setError("Passwords don't match");
-                return;
+                nonSubmittedErrors.password1="Passwords must match";
+                nonSubmittedErrors.password2="Passwords must match";
+              } else if(formData.password1.length < 8){
+                nonSubmittedErrors.password1 ="Passwords must be at least 8 characters long";
+                nonSubmittedErrors.password2 ="Passwords must be at least 8 characters long";
+              }
+              const emailAvailable = await checkEmail(formData.email)
+              if(!emailAvailable) {
+                nonSubmittedErrors.email = "An account with this email already exists"
+              }
+              if(Object.keys(nonSubmittedErrors).length>0) {
+                setErrors(nonSubmittedErrors);
+                return
+              } else {
+                setErrors({}); // clear errors
               }
               setPhase(1);
             }}>
@@ -132,17 +152,18 @@ function StudentSignup() {
                     className="appearance-none rounded w-full py-2 px-3 text-gray-700 text-sm leading-tight bg-[#D9D2D6] border-black border-[1.5px]"
                     required
                   />
+                  {errors[field.name] && <p className="text-red-500 text-xs italic mb-4">{errors[field.name]}</p>}
                 </div>
               ))}
               
-              {error && <p className="text-red-500 text-xs italic mb-4">{error}</p>}
-              
+
               <div className="flex items-center justify-center mt-6">
                 <button
-                  className="bg-[#FD4EB7] hover:bg-[#E93DA6] border-black border-[1.5px] text-black font-bold py-2 px-4 rounded w-full"
+                  className="bg-[#FD4EB7] hover:bg-[#E93DA6] text-black font-bold py-2 px-4 rounded border-black border-[1.5px] w-full flex items-center justify-center"
                   type="submit"
                 >
-                  Submit
+                  <span>Next</span>
+                  <FaArrowRight className="ml-2"/>
                 </button>
               </div>
             </form>
@@ -151,99 +172,110 @@ function StudentSignup() {
       
       case 1:
         return (
-          <div className="bg-white rounded-[20px] p-6 border-black border-2 shadow-[2px_2px_0px_#000000]" style={{ height: "380px" }}>
-            <div className="flex flex-col justify-center h-full">
-              <div className="text-center mb-6">
-                <h1 className="text-3xl font-bold mb-2">Creating a Profile</h1>
-              </div>
-              
-              <form onSubmit={(e) => {
-                e.preventDefault();
-                setPhase(2);
-              }}>
-                {personalFields.map((field) => (
-                  <div className="mb-4" key={field.name}>
-                    <label className="block text-gray-700 text-sm font-bold mb-2">
-                      {field.label}
-                    </label>
-                    <input
-                      type={field.type}
-                      name={field.name}
-                      value={formData[field.name]}
-                      onChange={handleChange}
-                      className="appearance-none rounded w-full py-2 px-3 text-gray-700 text-sm leading-tight bg-[#D9D2D6] border-black border-[1.5px]"
-                      required
-                    />
-                  </div>
-                ))}
-                
-                {error && <p className="text-red-500 text-xs italic mb-4">{error}</p>}
-                
-                <div className="flex items-center justify-center mt-6">
-                  <button
-                    className="bg-[#FD4EB7] hover:bg-[#E93DA6] text-black font-bold py-2 px-4 rounded border-black border-[1.5px] w-full flex items-center justify-center"
-                    type="submit"
-                  >
-                    <span>Next</span>
-                    <FaArrowRight className="ml-2" />
-                  </button>
+              <div className="bg-white rounded-[20px] p-8 border-black border-2 shadow-[2px_2px_0px_#000000] relative">
+                <button
+                    type="button"
+                    onClick={() => setPhase(phase - 1)}
+                    className="absolute top-10 left- text-black hover:text-[#4D9FFD]"
+                >
+                  <FaArrowLeft size={24}/>
+                </button>
+
+                <div className="text-center mb-6">
+                  <h1 className="text-3xl font-bold mb-2">Creating a Profile</h1>
                 </div>
-              </form>
-            </div>
-          </div>
-        );
-      
+
+                <form onSubmit={(e) => {
+                  e.preventDefault();
+                  setPhase(2);
+                }}>
+                  {personalFields.map((field) => (
+                      <div className="mb-4" key={field.name}>
+                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                          {field.label}
+                        </label>
+                        <input
+                            type={field.type}
+                            name={field.name}
+                            value={formData[field.name]}
+                            onChange={handleChange}
+                            className="appearance-none rounded w-full py-2 px-3 text-gray-700 text-sm leading-tight bg-[#D9D2D6] border-black border-[1.5px]"
+                            required
+                        />
+                        {errors[field.name] && <p className="text-red-500 text-xs italic mb-4">{errors[field.name]}</p>}
+                      </div>
+                  ))}
+
+                  <div className="flex items-center justify-center mt-6">
+                    <button
+                        className="bg-[#FD4EB7] hover:bg-[#E93DA6] text-black font-bold py-2 px-4 rounded border-black border-[1.5px] w-full flex items-center justify-center"
+                        type="submit"
+                    >
+                      <span>Next</span>
+                      <FaArrowRight className="ml-2"/>
+                    </button>
+                  </div>
+                </form>
+              </div>
+      )
+
       case 2:
         return (
-          <div className="bg-white rounded-[20px] p-6 border-black border-2 shadow-[2px_2px_0px_#000000]" style={{ height: "380px" }}>
-            <div className="flex flex-col justify-center h-full">
+            <div className="bg-white rounded-[20px] p-8 border-black border-2 shadow-[2px_2px_0px_#000000] relative">
+              <button
+                  type="button"
+                  onClick={() => setPhase(phase - 1)}
+                  className="absolute top-10 left- text-black hover:text-[#4D9FFD]"
+              >
+                <FaArrowLeft size={24}/>
+              </button>
+
               <div className="text-center mb-6">
                 <h1 className="text-3xl font-bold mb-2">Finishing Up Profile</h1>
               </div>
-              
+
               <form onSubmit={handleSubmit}>
                 {academicFields.map((field) => (
-                  <div className="mb-4" key={field.name}>
-                    <label className="block text-gray-700 text-sm font-bold mb-2">
-                      {field.label}
-                    </label>
-                    <input
-                      type={field.type}
-                      name={field.name}
-                      value={formData[field.name]}
-                      onChange={handleChange}
-                      className="appearance-none rounded w-full py-2 px-3 text-gray-700 text-sm leading-tight bg-[#D9D2D6] border-black border-[1.5px]"
-                      required
-                    />
-                  </div>
+                    <div className="mb-4" key={field.name}>
+                      <label className="block text-gray-700 text-sm font-bold mb-2">
+                        {field.label}
+                      </label>
+                      <input
+                          type={field.type}
+                          name={field.name}
+                          value={formData[field.name]}
+                          onChange={handleChange}
+                          className="appearance-none rounded w-full py-2 px-3 text-gray-700 text-sm leading-tight bg-[#D9D2D6] border-black border-[1.5px]"
+                          required
+                      />
+                      {errors[field.name] && <p className="text-red-500 text-xs italic mb-4">{errors[field.name]}</p>}
+                    </div>
                 ))}
-                
-                {error && <p className="text-red-500 text-xs italic mb-4">{error}</p>}
-                
+
                 <div className="flex items-center justify-center mt-6">
                   <button
-                    className="bg-[#FD4EB7] hover:bg-[#E93DA6] text-black font-bold py-2 px-4 rounded border-black border-[1.5px] w-full"
-                    type="submit"
+                      className="bg-[#FD4EB7] hover:bg-[#E93DA6] text-black font-bold py-2 px-4 rounded border-black border-[1.5px] w-full"
+                      type="submit"
                   >
                     Finish
                   </button>
                 </div>
               </form>
             </div>
-          </div>
-        );
-      
+      )
+        ;
+
       default:
         return null;
     }
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center">
-      <div className="flex flex-col gap-8 w-full" style={{ maxWidth: "400px" }}>
-        {renderPhase()}
+      <div className="min-h-screen flex justify-center items-center">
+        <div className="flex flex-col gap-8 w-full" style={{maxWidth: "400px"}}>
+          {renderPhase()}
+        </div>
       </div>
-    </div>
   );
 }
 

@@ -19,7 +19,10 @@ urlpatterns = [
     path('csrf-provider/', require_http_methods(['GET'])(auth_views.csrf_provider), name='provider'),
     path('logout/', require_http_methods(['GET'])(auth_views.logout_view), name='logout'),
     path('verify-session/', require_http_methods(['GET'])(auth_views.verify_session), name='verify-session'),
-    path('verify-email/<str:token>/', auth_views.verify_email, name='verify-email'), 
+    path('verify-email/<str:token>/', auth_views.verify_email, name='verify-email'),
+    path('check-club-exists/',auth_views.check_club_name_exists, name='check-club-exists'),
+    path('check-email-exists/',auth_views.check_email_exists, name='check-email-exists'),
+
 
     path('following-clubs/', club_follow_views.get_following_clubs, name='following-clubs'),
     path('unfollow-club/<int:pk>/', club_follow_views.unfollow_club, name='unfollow-club'),

@@ -90,23 +90,15 @@
         console.error("Error response:", err.response);
 
         if (err.response?.data?.errors) {
-        const errorMessages = err.response.data.errors;
-          setErrors(errorMessages)
-        // redirects user back to first phase so that they can see the "common password"
-        // error that django's auth raises
-        if(errorMessages.password1 || errorMessages.password2){
-          setPhase(0);
+          const errorMessages = err.response.data.errors;
+            setErrors(errorMessages)
+          // redirects user back to first phase so that they can see the "common password"
+          // error that django's auth raises
+          if(errorMessages.password1 || errorMessages.password2){
+            setPhase(0);
+          }
         }
-        // redirects user back to first phase so that they can see the "user w this email exists"
-        // error that django's auth raises
-        else if(errorMessages.email){
-          setPhase(0);
-        }
-        // redirects user to second phase so that they can see the "club with this name exists" (also works w slug)
-        else if(errorMessages.club_name){
-          setPhase(1)
-        }
-        } else {
+        else {
         setErrors(
           err.response?.data?.message ||
             "Registration failed. Please try again."
@@ -120,6 +112,16 @@
       setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
+    async function checkEmail(email){
+      const response = await backend.get(`check-email-exists/?email=${email}`);
+      return !response.data.exists;
+    }
+
+    async function checkClubName(clubName){
+      const response = await backend.get(`check-club-exists/?club_name=${clubName}`);
+      return !response.data.exists;
+    }
+
     console.log("Current form state:", formData);
 
     return (
@@ -127,7 +129,7 @@
         <div className="flex flex-col gap-8 w-full" style={{ maxWidth: "400px" }}>
           {phase === 0 && (
             <div className="bg-white rounded-[20px] p-6 border-black border-2 shadow-[2px_2px_0px_#000000]" style={{ height: "470px" }}>
-              <div className="text-center mb-6 mt-3">
+              <div className="text-center mb-3 mt-3">
                 <div className="flex justify-center items-center mb-2">
                   <span className="text-2xl font-bold mr-2">Welcome to</span>
                   <img src={gatherULogo} alt="GatherU Logo" className="h-10" />
@@ -135,7 +137,7 @@
                 <p className="text-gray-600">University Events at a Glance</p>
               </div>
               
-              <form onSubmit={(e) => {
+              <form onSubmit={async(e) => {
                 let nonSubmittedErrors={};
                 e.preventDefault();
                 if (formData.password1 !== formData.password2) {
@@ -144,6 +146,10 @@
                 }else if(formData.password1.length < 8){
                   nonSubmittedErrors.password1 ="Passwords must be at least 8 characters long";
                   nonSubmittedErrors.password2 ="Passwords must be at least 8 characters long";
+                }
+                const emailAvailable = await checkEmail(formData.email)
+                if(!emailAvailable) {
+                  nonSubmittedErrors.email = "An account with this email already exists"
                 }
                 if(Object.keys(nonSubmittedErrors).length>0) {
                   setErrors(nonSubmittedErrors);
@@ -167,7 +173,6 @@
                     {errors[field.name] && <p className="text-red-500 text-xs italic mb-4">{errors[field.name]}</p>}
                   </div>
                 ))}
-
                 <div className="flex items-center justify-center mt-6">
                   <button
                     className="bg-[#FD4EB7] hover:bg-[#E93DA6] text-black font-bold py-2 px-4 rounded border-black border-[1.5px] w-full"
@@ -194,8 +199,21 @@
                 <h1 className="text-3xl font-bold mb-2">Creating a Profile</h1>
               </div>
 
-                <form onSubmit={(e) => {
+                <form onSubmit={async(e) => {
                   e.preventDefault();
+                  let nonSubmittedErrors = {};
+
+                  const clubNameAvailable = await checkClubName(formData.club_name);
+
+                  if(!clubNameAvailable) {
+                    nonSubmittedErrors.club_name = "A club with this name already exists";
+                  }
+
+                  if (Object.keys(nonSubmittedErrors).length > 0) {
+                      setErrors(nonSubmittedErrors);
+                      return;
+                  }
+
                   setPhase(2);
                 }}>
                   {clubDetailsFields.map((field) => {

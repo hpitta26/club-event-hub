@@ -38,6 +38,11 @@ function StudentSignup() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  async function checkEmail(email){
+    const response = await backend.get(`check-email-exists/?email=${email}`);
+    return !response.data.exists;
+  }
+
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
@@ -87,11 +92,6 @@ function StudentSignup() {
         if(errorMessages.password1 || errorMessages.password2){
           setPhase(0)
         }
-        // redirects user back to first phase so that they can see the "user w this email exists"
-        // error that django's auth raises
-        else if(errorMessages.email){
-          setPhase(0)
-        }
       } else {
         setErrors(
           err.response?.data?.message ||
@@ -107,7 +107,7 @@ function StudentSignup() {
       case 0:
         return (
           <div className="bg-white rounded-[20px] p-6 border-black border-2 shadow-[2px_2px_0px_#000000]" style={{ height: "470px" }}>
-            <div className="text-center mb-6 mt-3">
+            <div className="text-center mb-3 mt-3">
               <div className="flex justify-center items-center mb-2">
                 <span className="text-2xl font-bold mr-2">Welcome to</span>
                 <img src={gatherULogo} alt="GatherU Logo" className="h-10" />
@@ -115,7 +115,7 @@ function StudentSignup() {
               <p className="text-gray-600">University Events at a Glance</p>
             </div>
             
-            <form onSubmit={(e) => {
+            <form onSubmit={async(e) => {
               let nonSubmittedErrors={};
               e.preventDefault();
               if (!formData.email || !formData.email.endsWith("@fiu.edu")) {
@@ -126,6 +126,10 @@ function StudentSignup() {
               } else if(formData.password1.length < 8){
                 nonSubmittedErrors.password1 ="Passwords must be at least 8 characters long";
                 nonSubmittedErrors.password2 ="Passwords must be at least 8 characters long";
+              }
+              const emailAvailable = await checkEmail(formData.email)
+              if(!emailAvailable) {
+                nonSubmittedErrors.email = "An account with this email already exists"
               }
               if(Object.keys(nonSubmittedErrors).length>0) {
                 setErrors(nonSubmittedErrors);

@@ -143,7 +143,7 @@
                 if (formData.password1 !== formData.password2) {
                   nonSubmittedErrors.password1=("Passwords don't match");
                   nonSubmittedErrors.password2=("Passwords don't match");
-                }else if(formData.password1.length < 8){
+                } else if(formData.password1.length < 8){
                   nonSubmittedErrors.password1 ="Passwords must be at least 8 characters long";
                   nonSubmittedErrors.password2 ="Passwords must be at least 8 characters long";
                 }
@@ -154,6 +154,8 @@
                 if(Object.keys(nonSubmittedErrors).length>0) {
                   setErrors(nonSubmittedErrors);
                   return
+                } else {
+                  setErrors({}); // clear errors
                 }
                 setPhase(1);
               }}>
@@ -175,10 +177,11 @@
                 ))}
                 <div className="flex items-center justify-center mt-6">
                   <button
-                    className="bg-[#FD4EB7] hover:bg-[#E93DA6] text-black font-bold py-2 px-4 rounded border-black border-[1.5px] w-full"
+                    className="bg-[#FD4EB7] hover:bg-[#E93DA6] text-black font-bold py-2 px-4 rounded border-black border-[1.5px] w-full flex items-center justify-center"
                     type="submit"
                   >
-                    Submit
+                    <span>Next</span>
+                    <FaArrowRight className="ml-2"/>
                   </button>
                 </div>
               </form>
@@ -204,14 +207,19 @@
                   let nonSubmittedErrors = {};
 
                   const clubNameAvailable = await checkClubName(formData.club_name);
-
                   if(!clubNameAvailable) {
                     nonSubmittedErrors.club_name = "A club with this name already exists";
+                  } 
+                  const currentYear = new Date().getFullYear();
+                  if (formData.year > currentYear) {
+                    nonSubmittedErrors.year = "Year founded cannot be in the future";
                   }
 
                   if (Object.keys(nonSubmittedErrors).length > 0) {
-                      setErrors(nonSubmittedErrors);
-                      return;
+                    setErrors(nonSubmittedErrors);
+                    return;
+                  } else {
+                    setErrors({}); // clear errors
                   }
 
                   setPhase(2);

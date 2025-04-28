@@ -7,7 +7,7 @@ import {format} from "date-fns";
 import backend from "../../middleware/backend.jsx";
 import {useNavigate} from "react-router-dom";
 import ClubHeatmap from "./ClubHeatmap.jsx";
-import {FiChevronsLeft} from "react-icons/fi";
+import {FiX} from "react-icons/fi";
 
 function EditEventModal({ event, onClose }) {
     const navigate = useNavigate();
@@ -49,18 +49,9 @@ function EditEventModal({ event, onClose }) {
             }
             try {
                 console.log("Creating event with data: ", formattedData);
-                const response = await backend.post("/events/", formattedData);
+                const response = await backend.patch(`/events/${event.id}/`, formattedData);
                 console.log(response);
-                setFormData({
-                    title: '',
-                    description: '',
-                    start_time: null,
-                    end_time: null,
-                    location: '',
-                    capacity: '',
-                    tags: [],
-                })
-                navigate('/events')
+                window.location.reload()
             }
             catch (err){
                 console.error("Error creating event ", err)
@@ -131,13 +122,13 @@ function EditEventModal({ event, onClose }) {
 
       return (
           <div
-              className="flex flex-col bg-[#FFFAFD] p-8 gap-5 w-8/12 max-w-6xl h-[80%] overflow-y-auto rounded-lg border-black border-2 shadow-[3px_3px_0px_#000000]">
-              <section className="min-h-screen  flex flex-col items-center">
+              className="flex flex-col bg-[#FFFAFD] p-6 gap-5 w-8/12 max-w-6xl h-[90%] overflow-y-auto rounded-lg border-black border-2 shadow-[3px_3px_0px_#000000]">
+              <section className="  flex flex-col items-center">
                   <div className="w-full max-w-[860px] space-y-2">
                       {/* Page Title */}
                       <div className="flex justify-between items-center">
                           <div className={"flex items-center gap-5 "}>
-                              <FiChevronsLeft className="cursor-pointer text-lg" onClick={onClose}/>
+                              <FiX className="cursor-pointer text-3xl" onClick={onClose}/>
                               <h1 className="text-4xl font-semibold tracking-tight">Edit Event</h1>
                           </div>
                           <button
@@ -187,7 +178,7 @@ function EditEventModal({ event, onClose }) {
                               {/* Left Column: Banner */}
                               <div className="flex flex-col">
                                   <div
-                                      className="w-full max-w-[416px] h-[242px] border-[2px] border-black shadow-[2px_2px_0px_#000000] rounded-lg relative">
+                                      className="w-full max-w-[416px] h-[220px] border-[2px] border-black shadow-[2px_2px_0px_#000000] rounded-lg relative">
                                       <img
                                           src={dummyEventCardCover}
                                           alt="Profile"
@@ -262,7 +253,7 @@ function EditEventModal({ event, onClose }) {
                                   </div>
 
                                   <div>
-                                      <div className="relative flex items-center">
+                                      <div className="relative flex items-center ">
                                           <BsPerson className="absolute left-3 text-gray-500"/>
                                           <input
                                               onChange={handleChange}

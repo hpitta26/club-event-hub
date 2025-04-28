@@ -26,6 +26,7 @@ function ClubEvents() {
         console.log("Error fetching events:", err);
       } finally {
         setLoading(false);
+        console.log(filter)
       }
     }
 
@@ -71,6 +72,7 @@ function ClubEvents() {
   }
 
   const currentDate = new Date();
+
   const filteredEvents = events.filter((event) => {
     const eventDate = new Date(event.start_time);
     return filter === "upcoming" ? eventDate >= currentDate : eventDate < currentDate;
@@ -175,24 +177,29 @@ function ClubEvents() {
                   <p className="text-gray-500 text-sm">{dayName}</p>
                 </div>
                 <div className="space-y-6">
-                  {events.map((event) => (
-                    <EventListCard
-                      key={event.id}
-                      title={event.title}
-                      date={event.start_time}
-                      host={event.club?.club_name || "Unknown"}
-                      location={event.location}
-                      attendees={event.attendees_count}
-                      capacity={event.capacity}
-                      image={event.profilebanner}
-                      hostLogo={event.host_logo}
-                      onEditClick={()=> {
-                        setSelectedEvent(event);
-                        setEditModalOpen(displayModal)
-                      }
-                      }
-                    />
-                  ))}
+                  {events.map((event) => {
+                    const isUpcoming = new Date(event.start_time) > new Date();
+
+                    return(
+                      <EventListCard
+                          key={event.id}
+                          title={event.title}
+                          date={event.start_time}
+                          host={event.club?.club_name || "Unknown"}
+                          location={event.location}
+                          attendees={event.attendees_count}
+                          capacity={event.capacity}
+                          image={event.profilebanner}
+                          hostLogo={event.host_logo}
+                          upcoming={isUpcoming}
+                          onEditClick={() => {
+                            setSelectedEvent(event);
+                            setEditModalOpen(displayModal)
+                          }
+                          }
+                      />
+                    )
+                  })}
                 </div>
               </div>
             ))}

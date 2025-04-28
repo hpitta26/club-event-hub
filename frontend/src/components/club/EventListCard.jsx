@@ -12,6 +12,7 @@ function EventListCard({
   capacity = "N/A",
   host = "Unknown Host",
   image = dummyEventCardCover,
+  onEditClick,
 }) {
   const spotsLeft = capacity === "N/A" ? "N/A" : capacity;
   let spotsLeftColor = "text-green-600";
@@ -35,7 +36,7 @@ function EventListCard({
         <div>
           <div className={"flex justify-between items-center"}>
             <h3 className="text-lg font-bold line-clamp-1">{truncate(title, 60)}</h3>
-            <FaEdit className="cursor-pointer text-xl" />
+            <FaEdit className="cursor-pointer text-xl" onClick={onEditClick} />
           </div>
           <p className="text-sm text-[#6b7280] mt-1 font-medium">Hosted by: {host}</p>
         </div>

@@ -12,6 +12,7 @@ function ClubEvents() {
   const [clubName, setClubName] = useState("");
   const [importError, setImportError] = useState("");
   const [editModalOpen, setEditModalOpen] = useState(false)
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   useEffect(() => {
     async function fetchEvents() {
@@ -97,7 +98,12 @@ function ClubEvents() {
 
           {/* Event Modal */}
           <div className="fixed inset-0 z-[110] flex items-center justify-center">
-            <EditEventModal onClose={displayModal}/>
+            <EditEventModal
+                  event={selectedEvent}
+                  onClose={()=>{
+                    setSelectedEvent(null)
+                    setEditModalOpen(displayModal)
+                  }}/>
           </div>
         </>
     )}
@@ -180,6 +186,11 @@ function ClubEvents() {
                       capacity={event.capacity}
                       image={event.profilebanner}
                       hostLogo={event.host_logo}
+                      onEditClick={()=> {
+                        setSelectedEvent(event);
+                        setEditModalOpen(displayModal)
+                      }
+                      }
                     />
                   ))}
                 </div>

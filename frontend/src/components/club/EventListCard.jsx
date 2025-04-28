@@ -39,7 +39,7 @@ function EventListCard({
             <h3 className="text-lg font-bold line-clamp-1">{truncate(title, 60)}</h3>
             {upcoming && <FaEdit className="cursor-pointer text-xl" onClick={onEditClick} />}
           </div>
-          <p className="text-sm text-[#6b7280] mt-1 font-medium">Hosted by: {upcoming}</p>
+          <p className="text-sm text-[#6b7280] mt-1 font-medium">Hosted by: {host}</p>
         </div>
 
         <div className="flex justify-between items-end mt-3">

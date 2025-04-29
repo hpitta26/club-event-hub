@@ -5,13 +5,10 @@ import {GrLocation} from "react-icons/gr";
 import {BsPerson} from "react-icons/bs";
 import {format} from "date-fns";
 import backend from "../../middleware/backend.jsx";
-import {useNavigate} from "react-router-dom";
 import ClubHeatmap from "./ClubHeatmap.jsx";
 import {FiX} from "react-icons/fi";
 
-function EditEventModal({ event, onClose }) {
-    const navigate = useNavigate();
-
+function EditEventModal({ event, onClose, onEventUpdate}) {
     const tags = [
         "Career",
         "Culture",
@@ -50,8 +47,8 @@ function EditEventModal({ event, onClose }) {
             try {
                 console.log("Creating event with data: ", formattedData);
                 const response = await backend.patch(`/events/${event.id}/`, formattedData);
-                console.log(response);
-                window.location.reload()
+                onEventUpdate(response.data)
+                onClose();
             }
             catch (err){
                 console.error("Error creating event ", err)
@@ -136,7 +133,7 @@ function EditEventModal({ event, onClose }) {
                               onClick={handleSubmit}
                               className="bg-[#FD4EB7] border-[1.5px] border-black rounded-[4px] py-2 px-3 text-black font-medium hover:bg-[#E93DA6] transition"
                           >
-                              Edit Event
+                              Save
                           </button>
                       </div>
 

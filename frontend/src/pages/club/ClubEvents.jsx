@@ -71,6 +71,14 @@ function ClubEvents() {
     setEditModalOpen(!editModalOpen);
   }
 
+  const updateEvents = (updatedEvent) => {
+    setEvents((prevEvents) => {
+      return prevEvents.map((event) =>
+        event.id === updatedEvent.id ? updatedEvent : event
+      );
+    });
+  }
+
   const currentDate = new Date();
 
   const filteredEvents = events.filter((event) => {
@@ -104,8 +112,10 @@ function ClubEvents() {
                   event={selectedEvent}
                   onClose={()=>{
                     setSelectedEvent(null)
-                    setEditModalOpen(displayModal)
-                  }}/>
+                    setEditModalOpen(false)
+                  }}
+             onEventUpdate={updateEvents}
+            />
           </div>
         </>
     )}
@@ -194,7 +204,7 @@ function ClubEvents() {
                           upcoming={isUpcoming}
                           onEditClick={() => {
                             setSelectedEvent(event);
-                            setEditModalOpen(displayModal)
+                            setEditModalOpen(true)
                           }
                           }
                       />

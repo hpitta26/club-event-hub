@@ -125,13 +125,13 @@ function EditEventModal({ event, onClose, onEventUpdate}) {
                       {/* Page Title */}
                       <div className="flex justify-between items-center">
                           <div className={"flex items-center gap-5 "}>
-                              <FiX className="cursor-pointer text-3xl" onClick={onClose}/>
+                              <FiX className="transform cursor-pointer text-4xl hover:text-blue-500 hover:scale-105 duration-300 transition" onClick={onClose}/>
                               <h1 className="text-4xl font-semibold tracking-tight">Edit Event</h1>
                           </div>
                           <button
                               type="submit"
                               onClick={handleSubmit}
-                              className="bg-[#FD4EB7] border-[1.5px] border-black rounded-[4px] py-2 px-3 text-black font-medium hover:bg-[#E93DA6] transition"
+                              className="bg-[#FD4EB7] border-[1.5px] border-black rounded-[4px] py-2 px-4 text-black font-medium hover:bg-[#E93DA6] transition"
                           >
                               Save
                           </button>

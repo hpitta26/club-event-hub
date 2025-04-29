@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import backend from "../../middleware/backend";
 import EventListCard from "../../components/club/EventListCard";
+import EventModal from "../../components/student/EventModal.jsx";
+import EditEventModal from "../../components/club/EditEventModal.jsx";
 
 function ClubEvents() {
   const [events, setEvents] = useState([]);
@@ -9,6 +11,8 @@ function ClubEvents() {
   const [importing, setImporting] = useState(false);
   const [clubName, setClubName] = useState("");
   const [importError, setImportError] = useState("");
+  const [editModalOpen, setEditModalOpen] = useState(false)
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   useEffect(() => {
     async function fetchEvents() {
@@ -22,6 +26,7 @@ function ClubEvents() {
         console.log("Error fetching events:", err);
       } finally {
         setLoading(false);
+        console.log(filter)
       }
     }
 
@@ -62,7 +67,20 @@ function ClubEvents() {
     }
   };
 
+  const displayModal = () =>{
+    setEditModalOpen(!editModalOpen);
+  }
+
+  const updateEvents = (updatedEvent) => {
+    setEvents((prevEvents) => {
+      return prevEvents.map((event) =>
+        event.id === updatedEvent.id ? updatedEvent : event
+      );
+    });
+  }
+
   const currentDate = new Date();
+
   const filteredEvents = events.filter((event) => {
     const eventDate = new Date(event.start_time);
     return filter === "upcoming" ? eventDate >= currentDate : eventDate < currentDate;
@@ -82,6 +100,25 @@ function ClubEvents() {
   }, {});
 
   return (
+  <>
+    {editModalOpen && (
+        <>
+          {/* Overlay */}
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-[100]"/>
+
+          {/* Event Modal */}
+          <div className="fixed inset-0 z-[110] flex items-center justify-center">
+            <EditEventModal
+                  event={selectedEvent}
+                  onClose={()=>{
+                    setSelectedEvent(null)
+                    setEditModalOpen(false)
+                  }}
+             onEventUpdate={updateEvents}
+            />
+          </div>
+        </>
+    )}
     <div className="min-h-screen pt-20 flex flex-col items-center pb-20">
       <div className="w-[60%] max-w-5xl relative mb-6 mt-6">
         <h1 className="text-4xl font-bold text-center">Events</h1>
@@ -150,19 +187,29 @@ function ClubEvents() {
                   <p className="text-gray-500 text-sm">{dayName}</p>
                 </div>
                 <div className="space-y-6">
-                  {events.map((event) => (
-                    <EventListCard
-                      key={event.id}
-                      title={event.title}
-                      date={event.start_time}
-                      host={event.club?.club_name || "Unknown"}
-                      location={event.location}
-                      attendees={event.attendees_count}
-                      capacity={event.capacity}
-                      image={event.profilebanner}
-                      hostLogo={event.host_logo}
-                    />
-                  ))}
+                  {events.map((event) => {
+                    const isUpcoming = new Date(event.start_time) > new Date();
+
+                    return(
+                      <EventListCard
+                          key={event.id}
+                          title={event.title}
+                          date={event.start_time}
+                          host={event.club?.club_name || "Unknown"}
+                          location={event.location}
+                          attendees={event.attendees_count}
+                          capacity={event.capacity}
+                          image={event.profilebanner}
+                          hostLogo={event.host_logo}
+                          upcoming={isUpcoming}
+                          onEditClick={() => {
+                            setSelectedEvent(event);
+                            setEditModalOpen(true)
+                          }
+                          }
+                      />
+                    )
+                  })}
                 </div>
               </div>
             ))}
@@ -172,6 +219,7 @@ function ClubEvents() {
         <p className="text-center">No events available.</p>
       )}
     </div>
+    </>
   );
 }
 

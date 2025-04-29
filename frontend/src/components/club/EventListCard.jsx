@@ -4,6 +4,7 @@ import { truncate } from "../../utils/truncate";
 import { dateFormat } from "../../utils/dates";
 import { GrLocation } from "react-icons/gr"
 import { LuUsers } from "react-icons/lu";
+import { FaEdit } from "react-icons/fa";
 
 function EventListCard({
   title = "Untitled Event",
@@ -11,6 +12,8 @@ function EventListCard({
   capacity = "N/A",
   host = "Unknown Host",
   image = dummyEventCardCover,
+  onEditClick,
+  upcoming=false
 }) {
   const spotsLeft = capacity === "N/A" ? "N/A" : capacity;
   let spotsLeftColor = "text-green-600";
@@ -32,7 +35,10 @@ function EventListCard({
       </div>
       <div className="flex flex-col flex-grow p-4 justify-between">
         <div>
-          <h3 className="text-lg font-bold line-clamp-1">{truncate(title, 60)}</h3>
+          <div className={"flex justify-between items-center"}>
+            <h3 className="text-lg font-bold line-clamp-1">{truncate(title, 60)}</h3>
+            {upcoming && <FaEdit className="transform cursor-pointer text-xl hover:text-blue-500 transition duration-200" onClick={onEditClick} />}
+          </div>
           <p className="text-sm text-[#6b7280] mt-1 font-medium">Hosted by: {host}</p>
         </div>
 

@@ -7,7 +7,9 @@ import dummyInitLogo from "../assets/dummyInitLogo.png";
 import gatherULogo from '../assets/icons/GatherUIcon.png';
 import calendarLogo from '../assets/icons/calender.png';
 import connectLogo from '../assets/icons/connect.png';
-import awardLogo from '../assets/icons/award.png';
+import awardLogo  from '../assets/icons/award.png';
+import { LuAward } from "react-icons/lu";
+
 import bookLogo from '../assets/icons/book.webp';
 
 

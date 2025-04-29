@@ -8,6 +8,8 @@ import { useSidebar } from '../../context/SidebarContext';
 import backend from '../backend';
 import NotificationDropDown from '../NotificationDropDown';
 import { LuAward } from "react-icons/lu";
+import { useLocation } from 'react-router-dom';
+
 
 const StudentNavbar = () => {
   const [profileImage, setProfileImage] = useState(null);
@@ -79,6 +81,10 @@ const StudentNavbar = () => {
     navigate("/logout");
   };
 
+  const location = useLocation();
+  const visiblePaths = ['/discover', '/following'];
+  const isVisible = visiblePaths.includes(location.pathname);
+
   // Fetch the profile image URL when the component mounts
   useEffect(() => {
     const fetchProfileImage = async () => {
@@ -140,44 +146,36 @@ const StudentNavbar = () => {
             <div className="relative flex items-center justify-between h-full px-4 md:px-8">
                 {/* Left: Hamburger Icon, Logo, and Links */}
                 <div className="flex items-center space-x-8">
-              <HiMiniBars3 className="md:block hidden text-black w-8 h-8 cursor-pointer" onClick={toggleSidebar} />
-                <a href="/discover" className="flex items-center">
+                {isVisible && (
+                  <HiMiniBars3 
+                    className="md:block hidden text-black w-8 h-8 cursor-pointer" 
+                    onClick={toggleSidebar} 
+                  />
+                )}                <a href="/discover" className="flex items-center">
                   <img src={gatherULogo} alt="GatherU Logo" className="h-14 w-auto" />
                 </a>
             </div>
             <div className=" absolute left-1/2 transform -translate-x-1/2 flex space-x-16">
-              <a href="/discover" className={`md:block hidden font-normal text-black text-lg tracking-wide hover:text-pink-500`}>
+              <a href="/discover" className={`lg:block hidden font-normal text-black text-lg tracking-wide hover:text-pink-500`}>
                   Discover
               </a>
-              <a href="/following" className={`md:block hidden font-normal text-black text-lg tracking-wide hover:text-blue-500`}>
+              <a href="/following" className={`lg:block hidden font-normal text-black text-lg tracking-wide hover:text-blue-500`}>
                   Following 
               </a>
-              <a href="/leaderboard" className={`md:block hidden font-normal text-black text-lg tracking-wide hover:text-pink-500`}>
+              <a href="/leaderboard" className={`lg:block hidden font-normal text-black text-lg tracking-wide hover:text-pink-500`}>
                   Leaderboard
               </a>
                 </div>
                 
                 {/* Right: Events, Notifications, and Profile */}
                 <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4">
-                  <div className='bg-[#FDD74D] hover:bg-yellow-400 text-black p-1 sm:p-2 rounded-md border border-black sm:border-[1.5px] shadow-[2px_2px_0px_#000000] hover:shadow-[3px_3px_0px_#000000] transition-all flex flex-row'>
-                    <LuAward className="w-5 h-5" /> <span className='ml-1 -mt-[2px]'>{spiritPoints}</span>
-                  </div>
+
                   {/* Events Button */}
                   <button className="bg-[#FD4EB7] hover:bg-[#ff23a7] text-white font-normal text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 rounded-md border border-black sm:border-[1.5px] shadow-[2px_2px_0px_#000000] hover:shadow-[3px_3px_0_#000] transition-all" onClick={handleEventsClick}>
                     Your Events
                   </button>
-                  {/* Notifications */}
-                  <div className="relative" ref={notificationsRef}>
-                    <button 
-                      className="bg-[#4D9FFD] hover:bg-[#4287ff] text-black p-1 sm:p-2 rounded-md border border-black sm:border-[1.5px] shadow-[2px_2px_0px_#000000] hover:shadow-[3px_3px_0px_#000000]  transition-all"
-                      onClick={toggleNotifications}
-                    >
-                      <GoBell className="w-5 h-5" />
-                    </button>
-                    <NotificationDropDown 
-                      isOpen={isNotificationsOpen} 
-                      onClose={closeNotificationsDropdown} 
-                    />
+                  <div className='bg-[#FDD74D] hover:bg-yellow-400 text-black p-1 sm:p-2 rounded-md border border-black sm:border-[1.5px] shadow-[2px_2px_0px_#000000] hover:shadow-[3px_3px_0px_#000000] transition-all flex flex-row'>
+                    <LuAward className="w-5 h-5" /> <span className='ml-1 -mt-[2px]'>{spiritPoints}</span>
                   </div>
 
                   {/* Profile Icon */}
@@ -202,7 +200,7 @@ const StudentNavbar = () => {
                   </div>
                   <button
                     ref={burgerButtonRef}
-                    className="md:hidden flex-shrink-0"
+                    className="lg:hidden flex-shrink-0"
                     onClick={() => setMobileOpen(!mobileOpen)}
                   >
                     <svg

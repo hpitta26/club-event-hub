@@ -7,12 +7,13 @@ const customScrollbarStyle = {
   scrollBehavior: "smooth",
   overflowY: "scroll",
   msOverflowStyle: "none",  
+  
 };
 
 function EventModalUpcomingList({ events = [], upcoming = false }) {
 
   return (
-    <div className="w-full h-full rounded-md pr-1" style={customScrollbarStyle}>
+    <div className="w-full h-full bvg rounded-md pr-1" style={customScrollbarStyle}>
       <div className="flex flex-col gap-3">
         {events.map((event, index) => (
           <div key={index}>

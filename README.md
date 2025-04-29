@@ -19,9 +19,10 @@ An event discovery platform designed to help **FIU students** find and RSVP to c
 | **Component** | **Technology** |
 |-------------|---------------|
 | **UI/UX** | Figma |
-| **Frontend** | React (Vite) + TailwindCSS |
+| **Frontend** | React + TailwindCSS |
 | **Backend** | Django |
-| **Database** | PostgreSQL (or SQLite at the start) |
+| **Database** | SQLite (local), PostgreSQL (deployment) |
+| **Object Storage** | MinIO (local), AWS S3 (deployment) |
 
 ---
 

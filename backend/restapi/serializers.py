@@ -153,15 +153,27 @@ class EventSerializer(serializers.ModelSerializer):
     club = ClubSerializer(read_only=True)
     rsvps = serializers.PrimaryKeyRelatedField(queryset=Student.objects.all(), many=True, required=False)
     attending = serializers.SerializerMethodField()
+    checked_in_students = serializers.PrimaryKeyRelatedField(queryset = Student.objects.all(),many = True, required = False)
 
     class Meta:
         model = Event
         fields = [
-            'id', 'club', 'title', 'description', 'start_time', 'end_time', 'location', 'capacity', 'rsvps', 'tags', 'attending','profilebanner'
+            'id', 'club', 'title', 'description', 'start_time', 'end_time', 'location', 'capacity', 'rsvps', 'tags', 'attending','profilebanner','checked_in_students'
         ]
 
     def get_attending(self, event): # get the number of attendees per event
         return event.rsvps.count()
+    
+    def get_is_checked_in(self,event): #check in student
+        request = self.context.get('request')
+        if not request or not request.user or not request.user.is_authenticated:
+            return False
+        try:
+            student = Student.object.get(user = request.user)
+            return event.checked_in_students.filter(user_id = student.user_id).exists()
+        except Student.DoesNotExist:
+            return False
+
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -169,7 +181,9 @@ class EventSerializer(serializers.ModelSerializer):
         if self.context.get('student_context_rsvps', False): # used to get event cards for students only
             self.fields.pop('rsvps', None)
             self.fields.pop('club', None)
+            self.fields.pop('checked_in_students',None)
             self.fields['is_rsvped'] = serializers.SerializerMethodField()
+            self.fields['is_checked_in'] = serializers.SerializerMethodField()  
             self.fields['host'] = serializers.SerializerMethodField()
             self.fields['coverImage'] = serializers.SerializerMethodField()
             self.fields['hostLogo'] = serializers.SerializerMethodField()
@@ -197,3 +211,4 @@ class EventSerializer(serializers.ModelSerializer):
             return event.rsvps.filter(user_id=student.user_id).exists()
         except Student.DoesNotExist:
             return False
+         

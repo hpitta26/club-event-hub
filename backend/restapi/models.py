@@ -163,7 +163,15 @@ class Event(models.Model):
 
     rsvps = models.ManyToManyField(
         Student, related_name='rsvp_events', blank=True
-    )  # accessible through Student as rsvp_events
+    ) 
+     # accessible through Student as rsvp_events
+
+    check_in_students = models.ManyToManyField(
+        Student,
+        through='EventCheckIn',
+        related_name='checked_in_events',
+        blank=True
+    )
 
     def __str__(self):
         return str(self.title)
@@ -181,3 +189,14 @@ class Event(models.Model):
 
 # null=False --> null not allowed (default)
 # null=True --> null allowed
+class EventCheckIn(models.Model):
+    event = models.ForeignKey(Event , on_delete = models.CASCADE)
+    student = models.ForeignKey(Student , on_delete= models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+
+    class Meta:
+        unique_together = ['event','student'] #this should prevent farming points
+
+    def __str__(self):
+        return f"{self.student} checked into {self.event} at {self.timestamp}"      

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import drf_views, auth_views, club_follow_views, discover_view,club_profile_views, schedule_views, import_luma_events, student_views, spirit_views
+from .views import drf_views, auth_views, club_follow_views, discover_view,club_profile_views, schedule_views, import_luma_events, student_views, spirit_views,check_in_views
 from django.views.decorators.http import require_http_methods
 
 from django.conf import settings
@@ -49,6 +49,11 @@ urlpatterns = [
 
     path('get-spirit-points/', spirit_views.get_spirit_points, name='get_spirit_points'),
     path('get-top-students/', spirit_views.get_top_students, name='get_top_students'),
+
+    path('events/<int:event_id>/check-in/<int:student_id>/',check_in_views.check_in_student , name ='check-in-student'),
+
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
 
 # That last little bit was added so that the media folder would be public and allow for files to be sent there

@@ -51,6 +51,7 @@ urlpatterns = [
     path('get-top-students/', spirit_views.get_top_students, name='get_top_students'),
 
     path('events/<int:event_id>/check-in/<int:student_id>/',check_in_views.check_in_student , name ='check-in-student'),
+    #get all the RSVP for an event
     path('events/<int:event_id>/rsvps/', your_views_file.get_rsvp_list, name='event-rsvps'),
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

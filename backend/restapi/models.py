@@ -16,6 +16,10 @@ from django.utils.text import slugify
 from .manager import CustomUserManager
 import uuid
 from django.contrib.auth.models import Permission, Group
+import random
+
+def get_random_avatar():
+    return f'default/avatars/avatar{random.randint(1, 8)}.png'
 
 class CustomUser(AbstractUser):
     username = None
@@ -35,7 +39,7 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
-    
+
 
 def club_directory_path(instance, filename):
     club_name_slug = slugify(instance.club_name)
@@ -47,18 +51,18 @@ class Club(models.Model):
         CustomUser, on_delete=models.CASCADE, related_name='club_profile', primary_key=True # Link the pks
     )
 
-    club_name = models.CharField(max_length=255, unique=True)    
+    club_name = models.CharField(max_length=255, unique=True)
 
     club_picture = models.FileField(
         upload_to=club_directory_path,
         # default='images/default-banner.png' ,
-        blank=True, 
+        blank=True,
         null=True
     )
     club_banner = models.FileField(
         upload_to=club_directory_path,
-        # default='images/default-banner.png',  
-        blank=True, 
+        # default='images/default-banner.png',
+        blank=True,
         null=True
     )
     description = models.TextField(blank=True, null=True)  # possibly change to required --> depending on form in the frontend
@@ -119,7 +123,7 @@ class Student(models.Model):
     following_clubs = models.ManyToManyField(
         Club, related_name='followers', blank=True
     )  # accessible through Club as followers
-    
+
     def save(self, *args, **kwargs):
         student_group = Group.objects.get(name='STUDENT')
         self.user.groups.add(student_group)

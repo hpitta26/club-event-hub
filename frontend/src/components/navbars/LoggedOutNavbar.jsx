@@ -65,13 +65,13 @@ const LoggedOutNavbar = () => {
         <div className="flex-1 flex items-center justify-end space-x-2 sm:space-x-3 md:space-x-4">
           <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4">
             <button
-              className="hidden md:block bg-[#FD4EB7] text-black font-normal text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:bg-pink-400"
+              className="hidden md:block bg-[#FD4EB7] text-black font-normal text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:bg-pink-400 hover:shadow-[3px_3px_0_#000] transition-all"
               onClick={handleSignupClick}
             >
               Sign up
             </button>
             <button
-              className="hidden md:block bg-[#4D9FFD] text-black font-normal text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:bg-blue-400"
+              className="hidden md:block bg-[#4D9FFD] text-black font-normal text-sm px-4 py-2 rounded-md border-[1.5px] border-black hover:bg-blue-400 hover:shadow-[3px_3px_0_#000] transition-all"
               onClick={handleLoginClick}
             >
               Log in

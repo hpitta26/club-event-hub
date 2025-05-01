@@ -129,20 +129,6 @@ const StudentNavbar = () => {
 
   return (
     <>
-      {showEventModal && (
-        <>
-          {/* Overlay */}
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-[100]"
-            onClick={displayEventModal}
-          />
-
-          {/* Event Modal */}
-          <div ref={sidebarRef} className="z-[110] relative">
-            <EventModal events={events} onClose={displayEventModal} />
-          </div>
-        </>
-      )}
       <nav className="fixed w-full h-20 bg-white z-40 border-b-2 border-b-black border-solid">
         <div className="relative flex items-center justify-between h-full px-4 md:px-8">
           {/* Left: Hamburger Icon, Logo, and Links */}
@@ -302,6 +288,12 @@ const StudentNavbar = () => {
           </div>
         )}
       </nav>
+      <EventModal
+        sidebarRef={sidebarRef}
+        isOpen={showEventModal}
+        events={events}
+        onClose={displayEventModal}
+      />
     </>
   );
 };

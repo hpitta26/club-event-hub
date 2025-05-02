@@ -148,19 +148,19 @@ const StudentNavbar = () => {
           <div className=" absolute left-1/2 transform -translate-x-1/2 flex space-x-16">
             <a
               href="/discover"
-              className={`md:block hidden font-normal text-black text-lg tracking-wide hover:text-pink-500`}
+              className={`md:block hidden font-normal text-black text-lg tracking-wide hover:font-bold ease-in-out duration-300`}
             >
               Discover
             </a>
             <a
               href="/following"
-              className={`md:block hidden font-normal text-black text-lg tracking-wide hover:text-blue-500`}
+              className={`md:block hidden font-normal text-black text-lg tracking-wide hover:font-bold ease-in-out duration-300`}
             >
               Following
             </a>
             <a
               href="/leaderboard"
-              className={`md:block hidden font-normal text-black text-lg tracking-wide hover:text-pink-500`}
+              className={`md:block hidden font-normal text-black text-lg tracking-wide hover:font-bold ease-in-out duration-300`}
             >
               Leaderboard
             </a>

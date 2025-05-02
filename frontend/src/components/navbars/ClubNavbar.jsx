@@ -98,13 +98,13 @@ const ClubNavbar = () => {
         <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex space-x-16">
           <a
             href="/analytics"
-            className="font-normal text-black text-lg tracking-wide hover:text-pink-500"
+            className="font-normal text-black text-lg tracking-wide hover:font-bold ease-in-out duration-300"
           >
             Analytics
           </a>
           <a
             href="/events"
-            className="font-normal text-black text-lg tracking-wide hover:text-blue-500"
+            className="font-normal text-black text-lg tracking-wide hover:font-bold ease-in-out duration-300"
           >
             Events
           </a>
@@ -113,7 +113,7 @@ const ClubNavbar = () => {
         <div className="pr-4 flex items-center space-x-2 sm:space-x-3 md:space-x-4">
           <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4">
             <button
-              className="bg-[#FD4EB7] hover:bg-[#ff23a7] text-white font-normal text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 rounded-md border border-black sm:border-[1.5px] shadow-[2px_2px_0px_#000000] hover:shadow-[3px_3px_0_#000] transition-all duration-300"
+              className="bg-[#FD4EB7] hover:bg-[#ff23a7] text-black font-normal text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 rounded-md border border-black sm:border-[1.5px] hover:shadow-[3px_3px_0_#000] transition-all duration-300"
               onClick={handleEventsClick}
             >
               Create Event

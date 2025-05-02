@@ -272,7 +272,7 @@ function EditEventModal({ event, onClose, onEventUpdate}) {
 
                       {/* Schedule Tab */}
                       <div className={activeTab === 'schedule' ? 'block' : 'hidden'}>
-                          <ClubHeatmap onTimeRangeSelect={handleTimeRangeSelect}/>
+                          <ClubHeatmap onTimeRangeSelect={handleTimeRangeSelect} preselected_start_time={formData.start_time} preselected_end_time={formData.end_time}/>
                       </div>
                   </div>
               </section>

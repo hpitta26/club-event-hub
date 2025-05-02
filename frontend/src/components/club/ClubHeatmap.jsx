@@ -3,7 +3,7 @@ import { FiClock } from "react-icons/fi";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import backend from "../../middleware/backend.jsx";
 
-function ClubHeatmap({ onTimeRangeSelect }) {
+function ClubHeatmap({ onTimeRangeSelect, preselected_start_time, preselected_end_time }) {
   const timeSlots = Array.from({ length: 24 }, (_, i) => {
     const startHour = Math.floor(i / 2) + 10; // Start at 10am
     const startMinutes = i % 2 === 0 ? "00" : "30";
@@ -75,6 +75,51 @@ function ClubHeatmap({ onTimeRangeSelect }) {
       }
     };
     fetchData();
+
+    if (preselected_start_time && preselected_end_time) { // Logic for populating preselected time slots --> in edit mode
+      const startDate = new Date(preselected_start_time);
+      const endDate = new Date(preselected_end_time);
+      // console.log(startDate)
+      // console.log(endDate)
+
+      // Navigate to the week of the preselected start time
+      const today = new Date();
+      const startOfWeek = new Date(today);
+      const dayOfWeek = startOfWeek.getDay();
+      const daysFromMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+      startOfWeek.setDate(startOfWeek.getDate() - daysFromMonday);
+      startOfWeek.setHours(0, 0, 0, 0); // Start of the current week (Monday at 00:00:00)
+
+      const startOfPreselectedWeek = new Date(startDate);
+      const preselectedDayOfWeek = startOfPreselectedWeek.getDay();
+      const preselectedDaysFromMonday = preselectedDayOfWeek === 0 ? 6 : preselectedDayOfWeek - 1;
+      startOfPreselectedWeek.setDate(startOfPreselectedWeek.getDate() - preselectedDaysFromMonday); 
+      startOfPreselectedWeek.setHours(0, 0, 0, 0); // Start of the preselected week (Monday at 00:00:00)
+
+      const weekDifference = Math.floor((startOfPreselectedWeek - startOfWeek) / (7 * 24 * 60 * 60 * 1000));
+      // console.log(weekDifference)
+
+      setCurrentWeek(weekDifference);
+
+      // Select time slots based on the preselected start and end times
+      const startDayIndex = startDate.getDay() === 0 ? 6 : startDate.getDay() - 1; // Adjust for Monday-based index
+      const endDayIndex = endDate.getDay() === 0 ? 6 : endDate.getDay() - 1;
+
+      const startTimeIndex = timeSlots.indexOf(
+        `${startDate.getHours().toString().padStart(2, "0")}:${startDate.getMinutes() === 0 ? "00" : "30"}`
+      );
+      const endTimeIndex = timeSlots.indexOf(
+        `${endDate.getHours().toString().padStart(2, "0")}:${endDate.getMinutes() === 0 ? "00" : "30"}`
+      );
+  
+      if (startDayIndex >= 0 && endDayIndex >= 0 && startTimeIndex >= 0 && endTimeIndex >= 0) {
+        const preselectedCells = [];
+        for (let timeIndex = startTimeIndex; timeIndex <= endTimeIndex; timeIndex++) {
+          preselectedCells.push({ dayIndex: startDayIndex, timeIndex });
+        }
+        setSelectedCells(preselectedCells);
+      }
+    }
   }, []);
 
   const getColorIntensity = (count, maxStudents) => {

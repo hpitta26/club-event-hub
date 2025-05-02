@@ -55,7 +55,7 @@ const LoggedOutNavbar = () => {
         <div className="absolute left-0 right-0 flex justify-center items-center h-full pointer-events-none">
           <a
             href="/discover"
-            className="font-normal text-black text-lg tracking-wide hover:text-pink-500 pointer-events-auto"
+            className="font-normal text-black text-lg tracking-wide hover:font-bold ease-in-out duration-300 pointer-events-auto"
           >
             Discover
           </a>

@@ -259,7 +259,7 @@ function Analytics() {
 
   return (
     <ThemeProvider theme={lightTheme}>
-      <Box sx={{ minHeight: '100vh', bgcolor: 'background.default', pt: 12, pb: 10 }}>
+      <Box sx={{ minHeight: '100vh', pt: 12, pb: 10 }}>
         <Container maxWidth="xl">
           <Typography 
             variant="h4" 

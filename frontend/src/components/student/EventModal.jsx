@@ -15,7 +15,7 @@ function EventModal({ events = { upcoming: [], past: [] }, onClose }) {
       <div className="container flex flex-col bg-[#F0EFEB] p-4 gap-5 w-96 h-[calc(100vh-2rem)] overflow-y-hidden rounded-lg border-black border-2 shadow-[3px_3px_0px_#000000]">
         <div className="flex items-center justify-between">
           <div>
-            {isUpcoming && <FiChevronsRight className="cursor-pointer text-lg" onClick={() => onClose()} />}
+            <FiChevronsRight className="cursor-pointer text-lg" onClick={() => onClose()} />
             <p className="text-2xl font-bold my-3">Your Events</p>
           </div>
           <div className="relative flex items-center justify-center bg-neutral-300 rounded-md p-[3px]">

@@ -113,27 +113,14 @@ function StudentSettings() {
     }
 
     return (
-        <section className="min-h-screen flex flex-col justify-center items-center">
-            <div className="w-full space-y-5 p-6 max-w-[500px] ">
-                <div className="flex items-end space-x-5">
-                    <div className="relative h-32 rounded-full cursor-pointer" onClick={() => setIsModalOpen(true)}>
-                        <img
-                            src={formData.profile_picture_url || "https://via.placeholder.com/150"}
-                            alt="Profile"
-                            className="w-full h-full object-cover border border-black rounded-full"
-                        />
-                        <div className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex justify-center items-center">
-                            <MdOutlineFileUpload className="text-white w-6 h-6" />
-                        </div>
-                    </div>
-                    <div className="space-y-2">
-                        <p className="text-5xl text-black">{formData.username}</p>
-                        <p className="text-sm text-gray-600">{globalEmail}</p>
-                    </div>
-                </div>
+        <>
+            {isModalOpen && (
+                <>
+                    {/* Overlay */}
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex z-[100]"/>
 
-                {isModalOpen && (
-                    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                    {/* Select Avatars Modal */}
+                    <div className="fixed inset-0 flex items-center justify-center z-[110]">
                         <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
                             <h2 className="text-xl font-bold mb-4">Select an Avatar</h2>
                             <div className="grid grid-cols-3 gap-4">
@@ -155,7 +142,7 @@ function StudentSettings() {
                             </div>
                             <div className="flex justify-end mt-4">
                                 <button
-                                    className="bg-[#4D9FFD] hover:bg-[#4287ff] text-white px-4 py-2 rounded-md border-2 border-black hover:shadow-[2px_2px_0px_#000000] mr-2 transition-all"
+                                    className="bg-[#4D9FFD] hover:bg-[#4287ff] text-white px-4 py-2 rounded-md border-[1.5px] border-black hover:shadow-[2px_2px_0px_#000000] mr-2 duration-200 transition-all"
                                     onClick={() => {
                                         if (selectedAvatar) {
                                             setFormData((prev) => ({
@@ -169,7 +156,7 @@ function StudentSettings() {
                                     Save
                                 </button>
                                 <button
-                                    className="bg-[#FD4EB7] hover:bg-[#ff23a7] text-black px-4 py-2 rounded-md border-2 border-black hover:shadow-[2px_2px_0px_#000000] transition-all"
+                                    className="bg-[#FD4EB7] hover:bg-[#ff23a7] text-black px-4 py-2 rounded-md border-[1.5px] border-black hover:shadow-[2px_2px_0px_#000000] duration-200 transition-all"
                                     onClick={() => setIsModalOpen(false)}
                                 >
                                     Cancel
@@ -177,50 +164,71 @@ function StudentSettings() {
                             </div>
                         </div>
                     </div>
-                )}
-
-                <div className="space-y-5">
-                    <div className="flex items-end justify-between">
-                        <div className="w-1/2">
-                            <p className="text-black">First Name</p>
-                            <input name="first_name" onChange={handleChange} className="text-black w-11/12 bg-[#D9D2D6] h-[36px] p-2 placeholder-gray-600 rounded-md border-[1.5px] border-black" placeholder={formData.first_name}/>
-                            {errors.first_name_blank && <p className="text-red-500 text-xs italic">{errors.first_name_blank}</p>}
+                </>
+            )}
+            {/* Main Settings Page */}
+            <section className="min-h-screen flex flex-col justify-center items-center">
+                <div className="w-full space-y-5 p-6 max-w-[500px] ">
+                    <div className="flex items-end space-x-5">
+                        <div className="relative h-32 rounded-full cursor-pointer" onClick={() => setIsModalOpen(true)}>
+                            <img
+                                src={formData.profile_picture_url || "https://via.placeholder.com/150"}
+                                alt="Profile"
+                                className="w-full h-full object-cover border border-black rounded-full"
+                            />
+                            <div className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex justify-center items-center">
+                                <MdOutlineFileUpload className="text-white w-6 h-6" />
+                            </div>
                         </div>
-                        <div className="w-1/2">
-                            <p className="text-black">Last Name</p>
-                            <input name="last_name" onChange={handleChange} className="text-black w-full bg-[#D9D2D6] h-[36px] p-2 placeholder-gray-600 rounded-md border-[1.5px] border-black" placeholder={formData.last_name}/>
-                            {errors.last_name_blank && <p className="text-red-500 text-xs italic">{errors.last_name_blank}</p>}
-                        </div>
-                    </div>
-
-                    <div className="flex items-end justify-between">
-                        <div className="w-1/2">
-                            <p className="text-black">Email</p>
-                            <input name="email" onChange={handleChange} className="text-black bg-[#D9D2D6] w-11/12 h-[36px] p-2 placeholder-gray-600 rounded-md border-[1.5px] border-black" placeholder={formData.email}/>
-                            {errors.email_blank && <p className="text-red-500 text-xs italic">{errors.email_blank}</p>}
-                            {errors.invalid_email && <p className="text-red-500 text-xs italic">{errors.invalid_email}</p>}
-                        </div>
-                        <div className="w-1/2">
-                            <p className="text-black">Graduation Year</p>
-                            <input name="graduation_year" onChange={handleChange} type="number" className="text-black bg-[#D9D2D6] w-full p-2 h-[36px] placeholder-gray-600 rounded-md border-[1.5px] border-black" placeholder={formData.graduation_year}/>
-                            {errors.invalid_graduation_year && <p className="text-red-500 text-xs italic">{errors.invalid_graduation_year}</p>}
+                        <div className="space-y-2">
+                            <p className="text-5xl text-black">{formData.username}</p>
+                            <p className="text-sm text-gray-600">{globalEmail}</p>
                         </div>
                     </div>
 
-                    <div className="w-full">
-                        <p className="text-black">Major</p>
-                        <input name="major" onChange={handleChange} className="text-black bg-[#D9D2D6] w-full h-[36px] p-2 placeholder-gray-600 rounded-md border-[1.5px] border-black" placeholder={formData.major}/>
-                        {errors.major_blank && <p className="text-red-500 text-xs italic">{errors.major_blank}</p>}
-                    </div>
+                    <div className="space-y-5">
+                        <div className="flex items-end justify-between">
+                            <div className="w-1/2">
+                                <p className="text-black">First Name</p>
+                                <input name="first_name" onChange={handleChange} className="text-black w-11/12 bg-[#D9D2D6] h-[36px] p-2 placeholder-gray-600 rounded-md border-[1.5px] border-black" placeholder={formData.first_name}/>
+                                {errors.first_name_blank && <p className="text-red-500 text-xs italic">{errors.first_name_blank}</p>}
+                            </div>
+                            <div className="w-1/2">
+                                <p className="text-black">Last Name</p>
+                                <input name="last_name" onChange={handleChange} className="text-black w-full bg-[#D9D2D6] h-[36px] p-2 placeholder-gray-600 rounded-md border-[1.5px] border-black" placeholder={formData.last_name}/>
+                                {errors.last_name_blank && <p className="text-red-500 text-xs italic">{errors.last_name_blank}</p>}
+                            </div>
+                        </div>
 
-                    <div className="w-full">
-                        <button type="button" className="bg-[#FD4EB7] hover:bg-[#ff23a7] rounded-md border-black border-[1.5px] p-2 mt-2" onClick={handleSubmit}>
-                            Save Changes
-                        </button>
+                        <div className="flex items-end justify-between">
+                            <div className="w-1/2">
+                                <p className="text-black">Email</p>
+                                <input name="email" onChange={handleChange} className="text-black bg-[#D9D2D6] w-11/12 h-[36px] p-2 placeholder-gray-600 rounded-md border-[1.5px] border-black" placeholder={formData.email}/>
+                                {errors.email_blank && <p className="text-red-500 text-xs italic">{errors.email_blank}</p>}
+                                {errors.invalid_email && <p className="text-red-500 text-xs italic">{errors.invalid_email}</p>}
+                            </div>
+                            <div className="w-1/2">
+                                <p className="text-black">Graduation Year</p>
+                                <input name="graduation_year" onChange={handleChange} type="number" className="text-black bg-[#D9D2D6] w-full p-2 h-[36px] placeholder-gray-600 rounded-md border-[1.5px] border-black" placeholder={formData.graduation_year}/>
+                                {errors.invalid_graduation_year && <p className="text-red-500 text-xs italic">{errors.invalid_graduation_year}</p>}
+                            </div>
+                        </div>
+
+                        <div className="w-full">
+                            <p className="text-black">Major</p>
+                            <input name="major" onChange={handleChange} className="text-black bg-[#D9D2D6] w-full h-[36px] p-2 placeholder-gray-600 rounded-md border-[1.5px] border-black" placeholder={formData.major}/>
+                            {errors.major_blank && <p className="text-red-500 text-xs italic">{errors.major_blank}</p>}
+                        </div>
+
+                        <div className="w-full">
+                            <button type="button" className="bg-[#FD4EB7] hover:bg-[#ff23a7] rounded-md border-black border-[1.5px] p-2 mt-2" onClick={handleSubmit}>
+                                Save Changes
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </>
     );
 }
 

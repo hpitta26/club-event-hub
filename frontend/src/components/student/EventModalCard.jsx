@@ -12,6 +12,7 @@ function EventModalCard({
   host = "Unknown Host", 
   profilebanner = "",
   upcoming = false,
+  onClick,
 }) {
 
     const [isSurveyOpen, setIsSurveyOpen] = useState(false)
@@ -21,10 +22,10 @@ function EventModalCard({
     const closeSurvey = () => {
         setIsSurveyOpen(false)
     }
-    
+
 
     return (
-        <div className="container flex gap-3 w-full px-4 py-4 bg-white rounded-xl hover:bg-[#f7f7f5] transition border-[1.5px] border-black shadow-[2px_2px_0px_#000000]">
+        <div className="container flex gap-3 w-full px-4 py-4 bg-white rounded-xl hover:bg-[#f7f7f5] transition border-[1.5px] border-black shadow-[2px_2px_0px_#000000]" onClick={onClick}>
             <div className="relative w-[104px] h-[104px] flex-shrink-0 rounded-lg overflow-hidden border-2 border-black">
                 {/* Spirit Points Badge */}
                 { upcoming ? 
@@ -51,13 +52,19 @@ function EventModalCard({
                     Hosted by: {host}
                 </p>
             </div>
-            { !upcoming ? 
+            { !upcoming ?
                 <div className="flex items-center">
-                    <div className="bg-green-400 rounded-md py-1 px-1 cursor-pointer border-[1.5px] border-black" onClick={openSurvey}> 
-                        <FcSurvey className="w-12 h-12" /> 
+                    <div className="bg-green-400 rounded-md py-1 px-1 cursor-pointer border-[1.5px] border-black" onClick={openSurvey}>
+                        <FcSurvey className="w-12 h-12" />
                     </div>
                 </div>
                 :
+                // <div className="flex items-center text-center">
+                //     <div className="bg-blue-500  w-20 rounded-md py-1 px-1 cursor-pointer border-[1.5px] border-black"
+                //          onClick={openSurvey}>
+                //         Un-RSVP
+                //     </div>
+                // </div>
                 <></>
             }
 
@@ -69,7 +76,7 @@ function EventModalCard({
                 eventHost={'GatherU'}
             />
 
-            
+
         </div>
     );
 };

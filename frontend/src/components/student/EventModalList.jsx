@@ -1,5 +1,6 @@
 import EventModalCard from "./EventModalCard";
 import {useEffect, useState} from "react";
+import backend from "../../middleware/backend.jsx";
 
 const customScrollbarStyle = {
   scrollbarWidth: "none",  
@@ -17,11 +18,17 @@ const [modalEvents, setModalEvents] = useState(events)
     setModalEvents(events);
   }, [events]);
 
-const handleRemoveEvent = (removedEvent) => {
-  setModalEvents(prevEvents =>
-    prevEvents.filter(event => event.id !== removedEvent.id)
-  );
-
+ const handleUnRSVP = async (removedEvent) => {
+   try {
+     const response = await backend.post('/rsvp/', { event_id: removedEvent.id });
+     console.log(response.data)
+     setModalEvents(prevEvents =>
+         prevEvents.filter(event => event.id !== removedEvent.id)
+     );
+   }
+   catch (err){
+     console.log(err)
+   }
 };
 
   return (
@@ -29,7 +36,7 @@ const handleRemoveEvent = (removedEvent) => {
       <div className="flex flex-col gap-3">
         {modalEvents.map((modalEvent, index) => (
           <div key={index}>
-            <EventModalCard title={modalEvent.title} date={modalEvent.start_time} host={modalEvent.host} profilebanner={modalEvent.profilebanner} id = {modalEvent.id} upcoming={upcoming} onClose={() => handleRemoveEvent(modalEvent)}/>
+            <EventModalCard title={modalEvent.title} date={modalEvent.start_time} host={modalEvent.host} profilebanner={modalEvent.profilebanner} upcoming={upcoming} onClose={() => handleUnRSVP(modalEvent)}/>
           </div>
         ))}
       </div>

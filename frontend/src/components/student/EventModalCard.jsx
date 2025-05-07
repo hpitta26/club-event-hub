@@ -12,7 +12,6 @@ function EventModalCard({
   date = "TBD", 
   host = "Unknown Host", 
   profilebanner = "",
-  id = 0,
   upcoming = false,
   onClose
 }) {
@@ -63,7 +62,7 @@ function EventModalCard({
                 :
                  <div className="flex items-center text-center">
                      <div className="bg-blue-500 rounded-md py-1 px-1 cursor-pointer border-[1.5px] border-black"
-                          onClick={onClos}>
+                          onClick={onClose}>
                           <FiX/>
                      </div>
                  </div>

@@ -1,4 +1,5 @@
 import EventModalCard from "./EventModalCard";
+import {useEffect, useState} from "react";
 
 const customScrollbarStyle = {
   scrollbarWidth: "none",  
@@ -10,12 +11,25 @@ const customScrollbarStyle = {
 
 function EventModalUpcomingList({ events = [], upcoming = false }) {
 
+const [modalEvents, setModalEvents] = useState(events)
+
+  useEffect(() => {
+    setModalEvents(events);
+  }, [events]);
+
+const handleRemoveEvent = (removedEvent) => {
+  setModalEvents(prevEvents =>
+    prevEvents.filter(event => event.id !== removedEvent.id)
+  );
+
+};
+
   return (
     <div className="w-full h-full rounded-md pr-1 pb-2" style={customScrollbarStyle}>
       <div className="flex flex-col gap-3">
-        {events.map((event, index) => (
+        {modalEvents.map((modalEvent, index) => (
           <div key={index}>
-            <EventModalCard title={event.title} date={event.start_time} host={event.host} profilebanner={event.profilebanner} upcoming={upcoming} />
+            <EventModalCard title={modalEvent.title} date={modalEvent.start_time} host={modalEvent.host} profilebanner={modalEvent.profilebanner} id = {modalEvent.id} upcoming={upcoming} onClose={() => handleRemoveEvent(modalEvent)}/>
           </div>
         ))}
       </div>

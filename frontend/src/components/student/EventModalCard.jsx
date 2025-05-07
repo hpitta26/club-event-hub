@@ -5,13 +5,16 @@ import { dateFormat } from "../../utils/dates";
 import SurveyModal from "./SurveyModal";
 import { FcSurvey } from "react-icons/fc";
 import { LuAward } from "react-icons/lu";
+import {FiX} from "react-icons/fi";
 
 function EventModalCard({ 
   title = "Untitled Event", 
   date = "TBD", 
   host = "Unknown Host", 
   profilebanner = "",
+  id = 0,
   upcoming = false,
+  onClose
 }) {
 
     const [isSurveyOpen, setIsSurveyOpen] = useState(false)
@@ -21,7 +24,7 @@ function EventModalCard({
     const closeSurvey = () => {
         setIsSurveyOpen(false)
     }
-    
+
 
     return (
         <div className="container flex gap-3 w-full px-4 py-4 bg-white rounded-xl hover:bg-[#f7f7f5] transition border-[1.5px] border-black shadow-[2px_2px_0px_#000000]">
@@ -51,14 +54,20 @@ function EventModalCard({
                     Hosted by: {host}
                 </p>
             </div>
-            { !upcoming ? 
+            { !upcoming ?
                 <div className="flex items-center">
-                    <div className="bg-green-400 rounded-md py-1 px-1 cursor-pointer border-[1.5px] border-black" onClick={openSurvey}> 
-                        <FcSurvey className="w-12 h-12" /> 
+                    <div className="bg-green-400 rounded-md py-1 px-1 cursor-pointer border-[1.5px] border-black" onClick={openSurvey}>
+                        <FcSurvey className="w-12 h-12" />
                     </div>
                 </div>
                 :
-                <></>
+                 <div className="flex items-center text-center">
+                     <div className="bg-blue-500 rounded-md py-1 px-1 cursor-pointer border-[1.5px] border-black"
+                          onClick={onClos}>
+                          <FiX/>
+                     </div>
+                 </div>
+
             }
 
             <SurveyModal
@@ -69,7 +78,7 @@ function EventModalCard({
                 eventHost={'GatherU'}
             />
 
-            
+
         </div>
     );
 };

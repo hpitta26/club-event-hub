@@ -26,7 +26,7 @@ function EventModalCard({
 
 
     return (
-        <div className="container flex gap-3 w-full px-4 py-4 bg-white rounded-xl hover:bg-[#f7f7f5] transition border-[1.5px] border-black shadow-[2px_2px_0px_#000000]">
+        <div className="container flex gap-3 w-full px-4 py-4 bg-white rounded-xl hover:bg-[#f7f7f5] transition border-[1.5px] border-black shadow-[2px_2px_0px_#000000] justify-between">
             <div className="relative w-[104px] h-[104px] flex-shrink-0 rounded-lg overflow-hidden border-2 border-black">
                 {/* Spirit Points Badge */}
                 { upcoming ? 

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import backend from "../../middleware/backend";
 import EventListCard from "../../components/club/EventListCard";
-import EventModal from "../../components/student/EventModal.jsx";
 import EditEventModal from "../../components/club/EditEventModal.jsx";
 
 function ClubEvents() {
@@ -81,9 +80,16 @@ function ClubEvents() {
 
   const currentDate = new Date();
 
-  const filteredEvents = events.filter((event) => {
+  const filteredEvents = events
+  .filter((event) => {
     const eventDate = new Date(event.start_time);
     return filter === "upcoming" ? eventDate >= currentDate : eventDate < currentDate;
+  })
+  .sort((a, b) => {
+    if (filter === "upcoming") {
+      return new Date(a.start_time) - new Date(b.start_time); // Sort upcoming events by closest time (ascending)
+    }
+    return 0; // Keep past events in their current order
   });
 
   const groupedEvents = filteredEvents.reduce((acc, event) => {

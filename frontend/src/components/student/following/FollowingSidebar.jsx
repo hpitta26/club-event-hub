@@ -41,8 +41,8 @@ const FollowingSidebar = () => {
       {/* New Events Section */}
       <div className="flex flex-col items-center">
         <div>
-          <h2 className="font-normal text-[26px] leading-[31px] text-black mb-2">Following</h2>
-          <div className="flex flex-col gap-3">
+          <h2 className="font-medium text-xl leading-[31px] text-black mb-2">Following</h2>
+          <div className="flex flex-col gap-2">
             {followedClubs.map((club) => (
               <SidebarCard 
                 key={club.id} 

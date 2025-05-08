@@ -3,6 +3,7 @@ import SidebarCard from "./SidebarCard";
 import backend from "../../../middleware/backend.jsx";
 import {UserContext} from "../../../context/UserContext.jsx";
 import dummyInitLogo from "../../../assets/dummyInitLogo.png";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const DiscoverSidebar = () => {
 
@@ -61,10 +62,8 @@ useEffect(() => {
         {/* New Events Section */}
         <div className="flex flex-col items-center">
           <div>
-            <h2 className="font-normal text-[26px] leading-[31px] text-black mb-2">
-              New
-            </h2>
-            <div className="flex flex-col gap-3">
+            <h2 className="font-medium text-xl leading-[31px] text-black mb-2">New</h2>
+            <div className="flex flex-col gap-2">
               {newClubs.slice(0, showNewCardsLimit).map((club) => (
                   <SidebarCard
                       key={club.club_name}
@@ -75,27 +74,31 @@ useEffect(() => {
             </div>
             {/* Only show the button if there are more events than the initial limit */}
             {newClubs.length > initialShowCardsLimit && (
-                <button>
-                  <p
-                    className="mt-3 text-white hover:text-sky-100 text-sm font-medium"
-                    onClick={toggleNewClubs}
-                  >
-                    {showNewCardsLimit === initialShowCardsLimit
-                      ? "Show All"
-                      : "Show Less"}
-                  </p>
-                </button>
+              <button
+                onClick={toggleNewClubs}
+                className="relative w-[200px] py-2 rounded-[10px] flex justify-center items-center mt-3 hover:bg-[#4287ff] transition-all duration-200"
+              >
+                <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white text-xl">
+                  {showNewCardsLimit === initialShowCardsLimit ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                </div>
+
+                <span className="text-white text-sm">
+                  {showNewCardsLimit === initialShowCardsLimit ? "Show more" : "Show less"}
+                </span>
+              </button>
             )}
           </div>
         </div>
 
+        <hr className="border-t border-black my-4" />
+
         {/* Featured Events Section */}
         <div className="flex flex-col items-center">
-          <div className="mt-2 ">
+          <div className="mt-1">
             {userContext &&
-                <h2 className="font-normal text-[26px] leading-[31px] text-black mb-2">Recommended</h2>
+                <h2 className="font-medium text-xl leading-[31px] text-black mb-2">Recommended</h2>
             }
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
               {recommendedClubs.slice(0, showRecommendedCardsLimit).map((recommendedClub) => (
                   <SidebarCard
                       key={recommendedClub.club_name}
@@ -104,17 +107,20 @@ useEffect(() => {
                   />
               ))}
             </div>
+
             {recommendedClubs.length > initialShowCardsLimit && (
-                <button>
-                  <p
-                      className="mt-3 text-white hover:text-sky-100 text-sm font-medium"
-                      onClick={toggleRecommendedClubs}
-                  >
-                    {showRecommendedCardsLimit === initialShowCardsLimit
-                        ? "Show All"
-                        : "Show Less"}
-                  </p>
-                </button>
+              <button
+                onClick={toggleRecommendedClubs}
+                className="relative w-[200px] py-2 rounded-[10px] flex justify-center items-center mt-3 hover:bg-[#4287ff] transition-all duration-200"
+              >
+                <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white text-xl">
+                  {showRecommendedCardsLimit === initialShowCardsLimit ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                </div>
+
+                <span className="text-white text-sm">
+                  {showRecommendedCardsLimit === initialShowCardsLimit ? "Show more" : "Show less"}
+                </span>
+              </button>
             )}
           </div>
         </div>

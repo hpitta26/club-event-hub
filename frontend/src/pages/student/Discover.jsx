@@ -76,6 +76,36 @@ const Discover = () => {
       }
   }, []);
 
+  useEffect(() => {
+      // Listen for RSVP changes from EventModal
+      const handleRsvpChange = (event) => {
+        const { eventId, isRsvped } = event.detail;
+        console.log(event.detail)
+        handleRsvpUpdate(eventId, isRsvped);
+        console.log(event.detail)
+        console.log(`${eventId} has been set to ${isRsvped}`);
+      };
+
+      window.addEventListener('rsvpChange', handleRsvpChange);
+      // Clean up
+      return () => {
+        window.removeEventListener('rsvpChange', handleRsvpChange);
+      };
+    }, []);
+
+    // New function to handle RSVP updates across components
+  const handleRsvpUpdate = (eventId,isRsvped) =>{
+      setAllEvents(prev => prev.map(event=>
+          event.id === eventId?{...event,is_rsvped:isRsvped,attending:isRsvped?event.attending+1 : event.attending-1} : event
+      ))
+      setFilteredEvents(prev => prev.map(event=>
+          event.id === eventId?{...event,is_rsvped:isRsvped,attending:isRsvped?event.attending+1 : event.attending-1} : event
+      ))
+      setRecommendedEvents(prev => prev.map(event=>
+          event.id === eventId?{...event,is_rsvped:isRsvped,attending:isRsvped?event.attending+1 : event.attending-1} : event
+      ))
+  }
+
   return (
     <div className="max-w-[1400px] mx-auto h-[calc(100vh)]">
       <div className="flex h-full">
@@ -102,12 +132,12 @@ const Discover = () => {
             </div>
             {/* Event Grid */}
             <div className="overflow-y-auto flex-1 p-6 px-10 pr-14">
-                {recommendedEvents.length>3 && <RecommendedEvents events={recommendedEvents}/>}
+                {recommendedEvents.length>3 && <RecommendedEvents events={recommendedEvents} onRsvpUpdate={handleRsvpUpdate}/>}
                       {selectedFilter === "All"
                           ? <h1 className="text-lg font-bold mb-4">Events This Week</h1>
                           : <h1 className="text-lg font-bold mb-4">{selectedFilter} Events</h1>
                       }
-                <EventGrid events={filteredEvents} />
+                <EventGrid events={filteredEvents} onRsvpUpdate={handleRsvpUpdate}/>
             </div>
           </div>
         </div>

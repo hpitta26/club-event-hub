@@ -23,6 +23,15 @@ function EventModal({ events = { upcoming: [], past: [] }, onClose }) {
         } else {
           setPastEvents(prev => prev.filter(event => event.id !== removedEvent.id));
         }
+
+        // Dispatch a custom event to notify the app about the RSVP change
+        // This provides a way to communicate between disconnected components
+        const rsvpChangeEvent = new CustomEvent('rsvpChange', {
+          detail: { eventId: removedEvent.id, isRsvped: false }
+        });
+        console.log("Dispatching rsvpChange event:", rsvpChangeEvent.detail);
+        window.dispatchEvent(rsvpChangeEvent);
+
       } catch (err) {
         console.error('Error updating RSVP:', err);
       }

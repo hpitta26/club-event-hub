@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, {useContext, useEffect} from "react";
 import { FiChevronsRight } from "react-icons/fi";
 import { FiCalendar, FiMapPin, FiUsers } from "react-icons/fi";
 import dummyEventCardCover from "../../assets/dummyEventCardCover.jpg";
@@ -29,7 +29,8 @@ function EventDetailsCard({
   profilePicture = dummyInitLogo,
   image = dummyEventCardCover,
   isRSVP = false,
-  setIsRSVP = () => {}
+  setIsRSVP = () => {},
+  onRsvpUpdate = () =>{}
 }) {
   if (!isOpen) return null;
   const { userContext } = useContext(UserContext);
@@ -37,6 +38,11 @@ function EventDetailsCard({
   const handleCardClick = (e) => {
     e.stopPropagation();
   };
+
+  useEffect(() => {
+    // This ensures the component reflects the latest RSVP state
+    setIsRSVP(isRSVP);
+  }, [isRSVP, setIsRSVP]);
 
   const handleRSVP = async (e) => {
     try {
@@ -54,6 +60,9 @@ function EventDetailsCard({
           setAttendees((prev) => prev + 1);
           setCapacity((prev) => prev - 1);
         }
+        onRsvpUpdate(event_id, !isRSVP);
+        console.log(`RSVP Updated for event ${event_id}: ${!isRSVP}`);
+
       }
     } catch (error) {
       if (error.status === 403) {

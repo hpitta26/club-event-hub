@@ -1,7 +1,7 @@
 import React from "react";
 import EventCard from "../EventCard.jsx";
 
-const RecommendedEvents = ({ events }) => {
+const RecommendedEvents = ({ events,onRsvpUpdate }) => {
   return (
       <div>
           <h1 className="text-lg font-bold mb-4">Recommended Events</h1>
@@ -22,6 +22,7 @@ const RecommendedEvents = ({ events }) => {
                       // coverImage={event.coverImage}
                       // hostLogo={event.hostLogo}
                       is_rsvped={event.is_rsvped}
+                      onRsvpUpdate={onRsvpUpdate}
                   />
               </div>
               )

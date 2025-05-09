@@ -2,7 +2,7 @@ import React from "react";
 import EventCard from "../EventCard";
 import PropTypes from 'prop-types';
 
-const EventGrid = ({ events }) => {
+const EventGrid = ({ events,onRsvpUpdate }) => {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-7">
       {events.length > 0 ? (
@@ -22,6 +22,7 @@ const EventGrid = ({ events }) => {
               // coverImage={event.coverImage}
               // hostLogo={event.hostLogo}
               is_rsvped={event.is_rsvped}
+              onRsvpUpdate={onRsvpUpdate}
             />
           </div>
         ))

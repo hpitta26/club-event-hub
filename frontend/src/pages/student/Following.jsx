@@ -25,6 +25,30 @@ const Following = () => {
       });
   }, []);
 
+  useEffect(() => {
+      // Listen for RSVP changes from EventModal
+      const handleRsvpChange = (event) => {
+        const { eventId, isRsvped } = event.detail;
+        console.log(event.detail)
+        handleRsvpUpdate(eventId, isRsvped);
+        console.log(event.detail)
+        console.log(`${eventId} has been set to ${isRsvped}`);
+      };
+
+      window.addEventListener('rsvpChange', handleRsvpChange);
+      // Clean up
+      return () => {
+        window.removeEventListener('rsvpChange', handleRsvpChange);
+      };
+    }, []);
+
+    // New function to handle RSVP updates across components
+  const handleRsvpUpdate = (eventId,isRsvped) =>{
+      setAllEvents(prev => prev.map(event=>
+          event.id === eventId?{...event,is_rsvped:isRsvped,attending:isRsvped?event.attending+1 : event.attending-1} : event
+      ))
+  }
+
   const filteredEvents = allEvents;
 
   if (loading) {
@@ -57,7 +81,7 @@ const Following = () => {
               </div>
               {/* Event Grid */}
               <div className="overflow-y-auto flex-1 p-6 px-10 pr-14">
-                <EventGrid events={filteredEvents} />
+                <EventGrid events={filteredEvents} onRsvpUpdate={handleRsvpUpdate}/>
               </div>
             </div>
           </div>

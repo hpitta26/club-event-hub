@@ -25,13 +25,20 @@ function EventCard({
   description= "No detailed description available.",
   universityName = "Florida International University",
   is_rsvped = false,
-  show_model= true
+  show_model= true,
+  onRsvpUpdate=()=>{}
 }) {
   const [showDetails, setShowDetails] = useState(false);
   const cardRef = useRef(null);
   const [numAttendees, setNumAttendees] = useState(attendees);
   const [numCapacity, setNumCapacity] = useState(capacity);
   const [isRSVP, setIsRSVP] = useState(is_rsvped);
+
+  useEffect(() => {
+    setIsRSVP(is_rsvped);
+    setNumAttendees(attendees);
+    setNumCapacity(capacity)
+  }, [is_rsvped, attendees]);
 
   // Click outside  to close the details card
   useEffect(() => {
@@ -60,6 +67,13 @@ function EventCard({
   };
   const handleCloseDetails = () => {
     setShowDetails(false);
+  };
+
+  // Handle RSVP updates locally before propagating up
+  const handleLocalRsvpUpdate = (eventId, newRsvpState) => {
+    setIsRSVP(newRsvpState);
+    // Propagate change upward
+    onRsvpUpdate(eventId, newRsvpState);
   };
 
   const spotsLeft = numCapacity === "N/A" ? "N/A" : numCapacity;
@@ -171,6 +185,7 @@ function EventCard({
           image={profilebanner}
           isRSVP={isRSVP}
           setIsRSVP={setIsRSVP}
+          onRsvpUpdate={handleLocalRsvpUpdate}
         />
       )}
     </>

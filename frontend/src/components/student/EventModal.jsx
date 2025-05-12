@@ -1,14 +1,44 @@
-import { useState, useMemo } from 'react';
+import {useState, useMemo, useEffect} from 'react';
 import EventModalUpcomingList from "./EventModalList";
 import { FiChevronsRight } from "react-icons/fi";
+import backend from "../../middleware/backend.jsx";
 
 function EventModal({ events = { upcoming: [], past: [] }, onClose }) {
   const [isUpcoming, setIsUpcoming] = useState(true);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [pastEvents, setPastEvents] = useState([]);
 
-  // Cache the event list to avoid unnecessary re-renders
-  const eventList = useMemo(() => {
-    return isUpcoming ? events.upcoming : events.past;
-  }, [events.upcoming, events.past, isUpcoming]);
+  useEffect(() => {
+    setUpcomingEvents(events.upcoming || []);
+    setPastEvents(events.past || []);
+  }, [events]);
+
+    const handleUnRSVP = async (removedEvent) => {
+      try {
+        const response = await backend.post('/rsvp/', { event_id: removedEvent.id });
+
+        // Update the appropriate events list
+        if (isUpcoming) {
+          setUpcomingEvents(prev => prev.filter(event => event.id !== removedEvent.id));
+        } else {
+          setPastEvents(prev => prev.filter(event => event.id !== removedEvent.id));
+        }
+
+        // Dispatch a custom event to notify the app about the RSVP change
+        // This provides a way to communicate between disconnected components
+        const rsvpChangeEvent = new CustomEvent('rsvpChange', {
+          detail: { eventId: removedEvent.id, isRsvped: false }
+        });
+        console.log("Dispatching rsvpChange event:", rsvpChangeEvent.detail);
+        window.dispatchEvent(rsvpChangeEvent);
+
+      } catch (err) {
+        console.error('Error updating RSVP:', err);
+      }
+  };
+
+  // Determine which events to display based on current tab
+  const displayedEvents = isUpcoming ? upcomingEvents : pastEvents;
 
   return (
     <div className="fixed top-0 right-0 z-50 h-screen flex items-start justify-end p-4">
@@ -41,7 +71,8 @@ function EventModal({ events = { upcoming: [], past: [] }, onClose }) {
             </div>
           </div>
         </div>
-        <EventModalUpcomingList events={eventList} upcoming={isUpcoming} />
+        <EventModalUpcomingList events={displayedEvents} upcoming={isUpcoming}           onRemoveEvent={handleUnRSVP}
+/>
       </div>
     </div>
   );

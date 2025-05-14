@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import gatherULogo from '../../assets/icons/GatherUIcon.png';
-import { useNavigate } from 'react-router-dom';
-import StudentOrClubModal from '../StudentOrClubModal';
-import { Link, useLocation } from 'react-router-dom';
-import { useSidebar } from '../../context/SidebarContext';
+import React, { useState, useEffect, useRef } from "react";
+import gatherULogo from "../../assets/icons/GatherUIcon.png";
+import { useNavigate } from "react-router-dom";
+import StudentOrClubModal from "../StudentOrClubModal";
+import { Link, useLocation } from "react-router-dom";
+import { useSidebar } from "../../context/SidebarContext";
 import { HiMiniBars3 } from "react-icons/hi2";
 
 const LoggedOutNavbar = () => {
@@ -16,14 +16,13 @@ const LoggedOutNavbar = () => {
   const dropdownRef = useRef(null);
   const location = useLocation();
   const isActiveLink = (path) => location.pathname === path;
-  const { toggleSidebar } = useSidebar(); 
-  const showHamburgerIcon = ['/discover'].includes(location.pathname);
+  const { toggleSidebar } = useSidebar();
+  const showHamburgerIcon = ["/discover"].includes(location.pathname);
 
   const handleLinkClick = (link) => {
     setClickedLink(link);
     setTimeout(() => setClickedLink(null), 300);
   };
-
 
   const handleSignupClick = () => {
     setSignupClicked(true);
@@ -34,7 +33,7 @@ const LoggedOutNavbar = () => {
   const handleLoginClick = () => {
     setLoginClicked(true);
     setTimeout(() => setLoginClicked(false), 300);
-    navigate('/login');
+    navigate("/login");
   };
 
   useEffect(() => {
@@ -43,9 +42,9 @@ const LoggedOutNavbar = () => {
         setMobileOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -69,7 +68,13 @@ const LoggedOutNavbar = () => {
         <div className="absolute left-0 right-0 flex justify-center items-center h-full pointer-events-none">
           <Link
             to="/discover"
-            className={`` + (isActiveLink('/discover') ? 'font-normal text-pink-500 border-pink-500 border-b-2' : 'font-normal text-black') + ` text-lg tracking-wide hover:text-pink-500 pointer-events-auto`}
+            className={
+              `` +
+              (isActiveLink("/discover")
+                ? "font-bold text-black"
+                : "font-normal text-black") +
+              ` text-lg tracking-wide hover:font-bold pointer-events-auto ease-in-out duration-300`
+            }
           >
             Discover
           </Link>
@@ -93,9 +98,12 @@ const LoggedOutNavbar = () => {
           </div>
 
           {/* Dropdown button */}
-            <div ref={dropdownRef} className="flex items-center space-x-8">
-                <HiMiniBars3 className="md:hidden block text-black w-8 h-8 cursor-pointer" onClick={() => setMobileOpen(!mobileOpen)} />
-            </div>
+          <div ref={dropdownRef} className="flex items-center space-x-8">
+            <HiMiniBars3
+              className="md:hidden block text-black w-8 h-8 cursor-pointer"
+              onClick={() => setMobileOpen(!mobileOpen)}
+            />
+          </div>
         </div>
       </div>
 

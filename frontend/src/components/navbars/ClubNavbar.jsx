@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
-import gatherULogo from '../../assets/icons/GatherUIcon.png';
+import React, { useState, useRef, useEffect, useContext } from "react";
+import gatherULogo from "../../assets/icons/GatherUIcon.png";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import { UserContext } from '../../context/UserContext';
+import { UserContext } from "../../context/UserContext";
 
 const ClubNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -19,13 +19,16 @@ const ClubNavbar = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
+      if (
+        profileDropdownRef.current &&
+        !profileDropdownRef.current.contains(event.target)
+      ) {
         setProfileDropdownOpen(false);
       }
       // Close mobile menu when clicking outside
       if (
-        mobileOpen && 
-        mobileMenuRef.current && 
+        mobileOpen &&
+        mobileMenuRef.current &&
         !mobileMenuRef.current.contains(event.target) &&
         burgerButtonRef.current &&
         !burgerButtonRef.current.contains(event.target)
@@ -69,13 +72,25 @@ const ClubNavbar = () => {
         <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex space-x-16">
           <Link
             to="/analytics"
-            className={`` + (isActiveLink('/analytics') ? 'font-normal text-pink-500 border-pink-500 border-b-2' : 'font-normal text-black') + ` text-lg tracking-wide hover:text-pink-500`}
+            className={
+              `` +
+              (isActiveLink("/analytics")
+                ? "font-bold text-black"
+                : "font-normal text-black") +
+              ` text-lg tracking-wide hover:font-bold ease-in-out duration-300`
+            }
           >
             Analytics
           </Link>
-          <Link 
+          <Link
             to="/events"
-            className={`` + (isActiveLink('/events') ? 'font-normal text-blue-500 border-blue-500 border-b-2' : 'font-normal text-black') + ` text-lg tracking-wide hover:text-blue-500`}
+            className={
+              `` +
+              (isActiveLink("/events")
+                ? "font-bold text-black"
+                : "font-normal text-black") +
+              ` text-lg tracking-wide hover:font-bold ease-in-out duration-300`
+            }
           >
             Events
           </Link>
@@ -87,28 +102,41 @@ const ClubNavbar = () => {
               className="bg-[#FD4EB7] hover:bg-[#ff23a7] text-white font-normal text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 rounded-md border border-black sm:border-[1.5px] hover:shadow-[2px_2px_0_#000] transition-all duration-300 mr-2"
               onClick={handleEventsClick}
             >
-             New Event
+              New Event
             </button>
-            
+
             <div className="relative">
               <div
                 className="w-[50px] h-[50px] bg-white border-[1.5px] border-black rounded-full overflow-hidden cursor-pointer"
                 onClick={toggleProfileDropdown}
               >
-                <img src={userContext.profile_picture || "something"} alt="Profile" className="w-full h-full object-cover" />
+                <img
+                  src={userContext.profile_picture || "something"}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
               </div>
               {isProfileDropdownOpen && (
                 <div
                   ref={profileDropdownRef}
                   className="absolute right-0 mt-1 py-2 w-48 bg-white border-[1.5px] border-black shadow-[2px_2px_0px_#000000] rounded-md"
                 >
-                  <Link to={`/club/${userContext.club_slug}`} className="block px-4 py-2 text-sm text-black hover:bg-gray-100">
+                  <Link
+                    to={`/club/${userContext.club_slug}`}
+                    className="block px-4 py-2 text-sm text-black hover:bg-gray-100"
+                  >
                     Profile
                   </Link>
-                  <Link to="/club-settings" className="block px-4 py-2 text-sm text-black hover:bg-gray-100">
+                  <Link
+                    to="/club-settings"
+                    className="block px-4 py-2 text-sm text-black hover:bg-gray-100"
+                  >
                     Settings
                   </Link>
-                  <div onClick={handleLogout} className="block px-4 py-2 text-sm text-black hover:bg-gray-100 cursor-pointer">
+                  <div
+                    onClick={handleLogout}
+                    className="block px-4 py-2 text-sm text-black hover:bg-gray-100 cursor-pointer"
+                  >
                     Logout
                   </div>
                 </div>
@@ -129,9 +157,17 @@ const ClubNavbar = () => {
               viewBox="0 0 24 24"
             >
               {mobileOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               )}
             </svg>
           </button>
@@ -146,16 +182,16 @@ const ClubNavbar = () => {
           <Link
             to="/analytics"
             className={`block px-4 py-2 text-sm text-black rounded-md hover:bg-gray-100
-              ${clickedLink === 'Analytics' ? 'bg-pink-500/20 text-pink-500' : ''}`}
-            onClick={() => handleLinkClick('Analytics')}
+              ${clickedLink === "Analytics" ? "bg-pink-500/20 text-pink-500" : ""}`}
+            onClick={() => handleLinkClick("Analytics")}
           >
             Analytics
           </Link>
           <Link
             to="/events"
             className={`block px-4 py-2 text-sm text-black rounded-md hover:bg-gray-100
-              ${clickedLink === 'Events' ? 'bg-blue-500/20 text-blue-500' : ''}`}
-            onClick={() => handleLinkClick('Events')}
+              ${clickedLink === "Events" ? "bg-blue-500/20 text-blue-500" : ""}`}
+            onClick={() => handleLinkClick("Events")}
           >
             Events
           </Link>

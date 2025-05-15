@@ -164,29 +164,27 @@ function EventCard({
       </div>
 
       {/* Event Details Card */}
-      {showDetails && show_model && (
-        <EventDetailsCard
-          event_id={id}
-          isOpen={showDetails}
-          onClose={handleCloseDetails}
-          title={title}
-          club={host}
-          day={formatDay(date)}
-          time={formatTimeRange(date)}
-          description={description}
-          universityName={universityName}
-          roomLocation={location}
-          attendees={numAttendees}
-          setAttendees={setNumAttendees}
-          capacity={numCapacity}
-          tags={tags}
-          setCapacity={setNumCapacity}
-          image={profilebanner}
-          isRSVP={isRSVP}
-          setIsRSVP={setIsRSVP}
-          onRsvpUpdate={handleLocalRsvpUpdate}
-        />
-      )}
+      <EventDetailsCard
+        event_id={id}
+        isOpen={showDetails}
+        onClose={handleCloseDetails}
+        title={title}
+        club={host}
+        day={formatDay(date)}
+        time={formatTimeRange(date)}
+        description={description}
+        universityName={universityName}
+        roomLocation={location}
+        attendees={numAttendees}
+        setAttendees={setNumAttendees}
+        capacity={numCapacity}
+        tags={tags}
+        setCapacity={setNumCapacity}
+        image={profilebanner}
+        isRSVP={isRSVP}
+        setIsRSVP={setIsRSVP}
+        onRsvpUpdate={handleLocalRsvpUpdate}
+      />
     </>
   );
 }

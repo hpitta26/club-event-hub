@@ -85,7 +85,9 @@ function EventDetailsCard({
   };
 
   return (
-    <div className="fixed top-0 right-0 z-50 h-screen flex items-start justify-end p-4">
+    <div
+      className={`fixed top-0 right-0 z-50 h-screen flex items-start justify-end p-4 ${isOpen ? "visible pointer-events-auto" : "invisible pointer-events-none"} transition-opacity duration-300`}
+    >
       {/* Dark overlay */}
       <div
         className={`fixed inset-0 bg-black transition-opacity duration-300 ${isOpen ? "bg-opacity-50 pointer-events-auto" : "bg-opacity-0 pointer-events-none"} z-40`}

@@ -209,13 +209,13 @@ const StudentNavbar = () => {
 
           {/* Right: Events, Notifications, and Profile */}
           <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4">
-            <div className="bg-[#FDD74D] hover:bg-yellow-400 text-black p-1 sm:p-2 rounded-md border border-black sm:border-[1.5px] hover:shadow-[2px_2px_0px_#000000] transition-all flex flex-row">
+            <div className="bg-[#FDD74D] hover:bg-yellow-400 text-black p-1 sm:p-2 rounded-md border border-black sm:border-[1.5px]  hover:shadow-[2px_2px_0_#000] ease-in-out duration-300 flex flex-row">
               <LuAward className="w-5 h-5" />{" "}
               <span className="ml-1 -mt-[2px]">{spiritPoints}</span>
             </div>
             {/* Events Button */}
             <button
-              className="bg-[#FD4EB7] hover:bg-[#ff23a7] text-black font-normal text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 rounded-md border border-black sm:border-[1.5px] hover:shadow-[2px_2px_0_#000] transition-all"
+              className="bg-[#FD4EB7] hover:bg-[#ff23a7] text-black font-normal text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 rounded-md border border-black sm:border-[1.5px] hover:shadow-[2px_2px_0_#000] ease-in-out duration-300"
               onClick={handleEventsClick}
             >
               Your Events
@@ -223,7 +223,7 @@ const StudentNavbar = () => {
             {/* Notifications */}
             <div className="relative" ref={notificationsRef}>
               <button
-                className="bg-[#4D9FFD] hover:bg-[#4287ff] text-black p-1 sm:p-2 rounded-md border border-black sm:border-[1.5px] hover:shadow-[2px_2px_0px_#000000] transition-all"
+                className="bg-[#4D9FFD] hover:bg-[#4287ff] text-black p-1 sm:p-2 rounded-md border border-black sm:border-[1.5px] hover:shadow-[2px_2px_0_#000] ease-in-out duration-300"
                 onClick={toggleNotifications}
               >
                 <GoBell className="w-5 h-5" />
@@ -236,7 +236,7 @@ const StudentNavbar = () => {
 
             {/* Profile Icon */}
             <div
-              className="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] bg-white border border-black sm:border-[1.5px] rounded-full overflow-hidden cursor-pointer"
+              className="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] bg-white border border-black sm:border-[1.5px] rounded-full overflow-hidden cursor-pointer hover:shadow-[2px_2px_0px_#000000] ease-in-out duration-300"
               onClick={toggleProfileDropdown}
             >
               <img

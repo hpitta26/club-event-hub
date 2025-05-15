@@ -99,7 +99,7 @@ const ClubNavbar = () => {
         <div className="pr-4 flex items-center space-x-2 sm:space-x-3 md:space-x-4">
           <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4">
             <button
-              className="bg-[#FD4EB7] hover:bg-[#ff23a7] text-white font-normal text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 rounded-md border border-black sm:border-[1.5px] hover:shadow-[2px_2px_0_#000] transition-all duration-300 mr-2"
+              className="bg-[#FD4EB7] hover:bg-[#ff23a7] text-black font-normal text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 rounded-md border border-black sm:border-[1.5px] hover:shadow-[2px_2px_0_#000] transition-all ease-in-out duration-300 mr-2"
               onClick={handleEventsClick}
             >
               New Event
@@ -107,7 +107,7 @@ const ClubNavbar = () => {
 
             <div className="relative">
               <div
-                className="w-[50px] h-[50px] bg-white border-[1.5px] border-black rounded-full overflow-hidden cursor-pointer"
+                className="w-[50px] h-[50px] bg-white border-[1.5px] border-black rounded-full overflow-hidden cursor-pointer hover:shadow-[2px_2px_0_#000] ease-in-out duration-300"
                 onClick={toggleProfileDropdown}
               >
                 <img

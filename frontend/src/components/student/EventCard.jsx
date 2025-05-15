@@ -2,14 +2,13 @@ import React, { useState, useRef, useEffect } from "react";
 import dummyInitLogo from "../../assets/dummyInitLogo.png";
 import { GrLocation } from "react-icons/gr";
 import EventDetailsCard from "./EventDetailsCard";
-import { dateFormat, formatDay, formatTimeRange } from '../../utils/dates';
+import { dateFormat, formatDay, formatTimeRange } from "../../utils/dates";
 import { truncate } from "../../utils/truncate";
 import { LuAward } from "react-icons/lu";
 import dummyEventCardCover from "../../assets/dummyEventCardCover.jpg";
 import dummyAvatar0 from "../../assets/dummy-avatar0.png";
 import dummyAvatar1 from "../../assets/dummy-avatar1.png";
 import dummyAvatar2 from "../../assets/dummy-avatar2.png";
-
 
 function EventCard({
   id = 0,
@@ -19,14 +18,14 @@ function EventCard({
   location = "Location TBD",
   attendees = 79,
   capacity = "N/A",
-  tags=[],
+  tags = [],
   profilebanner = "",
   hostLogo = dummyInitLogo,
-  description= "No detailed description available.",
+  description = "No detailed description available.",
   universityName = "Florida International University",
   is_rsvped = false,
-  show_model= true,
-  onRsvpUpdate=()=>{}
+  show_model = true,
+  onRsvpUpdate = () => {},
 }) {
   const [showDetails, setShowDetails] = useState(false);
   const cardRef = useRef(null);
@@ -37,7 +36,7 @@ function EventCard({
   useEffect(() => {
     setIsRSVP(is_rsvped);
     setNumAttendees(attendees);
-    setNumCapacity(capacity)
+    setNumCapacity(capacity);
   }, [is_rsvped, attendees]);
 
   // Click outside  to close the details card
@@ -89,8 +88,8 @@ function EventCard({
     <>
       <div
         ref={cardRef}
-        className="relative w-[237.5px] h-[268.75px] bg-white border-[1.5px] border-black shadow-[2px_2px_0px_#000000] rounded-xl 
-                      hover:shadow-[4px_4px_0_#000] duration-200 transition-all transform hover:-translate-y-1 flex flex-col cursor-pointer"
+        className="relative w-[237.5px] h-[268.75px] bg-white border-[1.5px] border-black hover:shadow-[3px_3px_0px_#000000] rounded-xl
+                       duration-300 ease-in-out transition-all transform hover:-translate-y-1 flex flex-col cursor-pointer"
         onClick={handleOnClick}
       >
         {/* Event Banner */}
@@ -165,29 +164,27 @@ function EventCard({
       </div>
 
       {/* Event Details Card */}
-      {showDetails && show_model && (
-        <EventDetailsCard
-          event_id={id}
-          isOpen={showDetails}
-          onClose={handleCloseDetails}
-          title={title}
-          club={host}
-          day={formatDay(date)}
-          time={formatTimeRange(date)}
-          description={description}
-          universityName={universityName}
-          roomLocation={location}
-          attendees={numAttendees}
-          setAttendees={setNumAttendees}
-          capacity={numCapacity}
-          tags={tags}
-          setCapacity={setNumCapacity}
-          image={profilebanner}
-          isRSVP={isRSVP}
-          setIsRSVP={setIsRSVP}
-          onRsvpUpdate={handleLocalRsvpUpdate}
-        />
-      )}
+      <EventDetailsCard
+        event_id={id}
+        isOpen={showDetails}
+        onClose={handleCloseDetails}
+        title={title}
+        club={host}
+        day={formatDay(date)}
+        time={formatTimeRange(date)}
+        description={description}
+        universityName={universityName}
+        roomLocation={location}
+        attendees={numAttendees}
+        setAttendees={setNumAttendees}
+        capacity={numCapacity}
+        tags={tags}
+        setCapacity={setNumCapacity}
+        image={profilebanner}
+        isRSVP={isRSVP}
+        setIsRSVP={setIsRSVP}
+        onRsvpUpdate={handleLocalRsvpUpdate}
+      />
     </>
   );
 }

@@ -215,7 +215,7 @@ const StudentNavbar = () => {
             </div>
             {/* Events Button */}
             <button
-              className="bg-[#FD4EB7] hover:bg-[#ff23a7] text-white font-normal text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 rounded-md border border-black sm:border-[1.5px] hover:shadow-[2px_2px_0_#000] transition-all"
+              className="bg-[#FD4EB7] hover:bg-[#ff23a7] text-black font-normal text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 rounded-md border border-black sm:border-[1.5px] hover:shadow-[2px_2px_0_#000] transition-all"
               onClick={handleEventsClick}
             >
               Your Events

@@ -173,6 +173,27 @@ class Event(models.Model):
     # (allows for customizability like notion, obsidian, ...)
 
 
+ALLOWED_DESCRIPTORS = ["Inspiring","Informative","Well-organized","Engaging","Fun","Adequate","Expected","Standard","Typical","Boring","Confusing","Disorganized","Too long","Rushed"]
+def validate_descriptors(descriptor_list):
+    if not isinstance(descriptor_list, list):
+        raise TypeError("Descriptors must be a list")
+    for descriptor in descriptor_list:
+        if descriptor not in ALLOWED_DESCRIPTORS:
+            raise ValueError(f"{descriptor} is not a valid descriptor. Descriptor must be one of {ALLOWED_DESCRIPTORS}")
+
+class Survey(models.Model):
+    event = models.ForeignKey(
+        Event, on_delete=models.CASCADE, related_name='surveys'
+    )
+    student = models.ForeignKey(
+        Student, on_delete=models.CASCADE, related_name='surveys'
+    )  # accessible through Club as events
+    sentiment = models.CharField(max_length=255)
+    enjoyabilityRating = models.PositiveIntegerField()
+    eventDescriptors = models.JSONField(blank=True,validators=[validate_descriptors],default=list)
+    organizationRating = models.PositiveIntegerField()
+    recommendationRating = models.PositiveIntegerField()
+
 
 
 # ---- Additional Fields ----:

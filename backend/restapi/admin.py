@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Club, Student, Event, CustomUser
+from .models import Club, Student, Event, CustomUser,Survey
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 class ClubAdmin(admin.ModelAdmin):
@@ -29,6 +29,10 @@ class EventAdmin(admin.ModelAdmin):
     list_display = ('title', 'club', 'start_time', 'end_time', 'location')
     search_fields = ('title', 'description', 'club__user__email')
 
+class SurveyAdmin(admin.ModelAdmin):
+    list_display = ('event','student','sentiment', 'enjoyabilityRating', 'eventDescriptors')
+    search_fields = ('student__user__email', 'event__title',)
+
 class NewUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
@@ -55,3 +59,4 @@ admin.site.register(CustomUser, NewUserAdmin)
 admin.site.register(Club, ClubAdmin)
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Event, EventAdmin)
+admin.site.register(Survey, SurveyAdmin)
